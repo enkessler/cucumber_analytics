@@ -22,10 +22,13 @@ Feature: The gem can analyze .feature files that have Background elements.
     Then the feature is found to have the following properties:
       | has_background? | true |
 
+  Scenario: The parser can extract the background name.
+    Then the background is found to have the following properties:
+      | name | Some general test setup stuff. |
+
   Scenario: The parser can extract the background description.
     Then the background's descriptive lines are as follows:
-      | Some general test setup stuff. |
-      | A little more information.     |
+      | A little more information. |
 
   Scenario: The parser can extract the background steps.
     Then the background's steps are as follows:

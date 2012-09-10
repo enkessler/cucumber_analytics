@@ -1,5 +1,8 @@
 require File.dirname(__FILE__) + '/../../lib/cucumber-analytics'
 
+Bundler.require
+
+include Wrong
 
 TEST_FILE = 'test_file.feature'
 TEST_FILE_DIRECTORY = "#{File.dirname(__FILE__)}/../test_files"

@@ -1,5 +1,9 @@
-Then /^the feature is found to have the following properties:$/ do |table|
-  pending
+Then /^the feature is found to have the following properties:$/ do |properties|
+  properties = properties.rows_hash
+
+  properties.each do |property, expected_value|
+    assert { expected_value == @parsed_file.feature.send(property.to_sym).to_s }
+  end
 end
 
 Then /^the feature's descriptive lines are as follows:$/ do |table|
