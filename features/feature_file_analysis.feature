@@ -56,10 +56,9 @@ Feature: The gem has the ability to lex a .feature file and extract various
   Scenario: The parser can extract various information about the feature.
     Then the feature is found to have the following properties:
       | name           | The test feature name.                                                         |
-      | scenario_count | 3                                                                              |
+      | scenario_count | 2                                                                              |
       | test_count     | 4                                                                              |
       | outline_count  | 1                                                                              |
-      | file           | C:\devl\repos\cucumber-analytics\features\support\..\test_files\test_file.feature |
 
   Scenario: The parser can extract a feature's description.
     Then the feature's descriptive lines are as follows:

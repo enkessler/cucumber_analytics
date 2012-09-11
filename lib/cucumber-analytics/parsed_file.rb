@@ -36,6 +36,22 @@ module Cucumber
       def parse_feature(lines)
         feature = ParsedFeature.new
 
+        lines.take_while { |line| !(line =~/^\s*Feature/) }.tap do |tag_lines|
+          tag_lines.join(' ').delete(' ').split('@').each do |tag|
+            feature.tags << "@#{tag.strip}"
+          end
+        end
+        feature.tags.shift
+
+        while lines.first =~ /^\s*@/
+          lines.shift
+        end
+
+        feature.name.replace(lines.first.match(/^\s*Feature:(.*)/)[1].strip)
+        lines.shift
+
+        feature.description.concat lines.collect { |line| line.strip }
+
         feature
       end
 
@@ -70,7 +86,6 @@ module Cucumber
         end
 
         scenario.name= lines.first.match(/^\s*Scenario:(.*)/)[1].strip
-
         lines.shift
 
         until lines.first =~ /^\s*(?:Given|When|Then|\*)/
@@ -83,20 +98,28 @@ module Cucumber
         scenario
       end
 
+      def parse_scenario_outline(lines)
+        scenario = ParsedScenarioOutline.new
+
+
+
+        scenario
+      end
+
       def parse_scenarios(lines)
         until lines.empty?
           current_scenario_line = lines.index { |line| line =~ /^\s*(?:Scenario:|(?:Scenario Outline:))/ }
 
           scenario_lines = lines.slice!(0..current_scenario_line)
-          next_scenario_line = lines.index { |line| line =~ /^\s*(?:Scenario:|(?:Scenario Outline:))/ }
 
+          next_scenario_line = lines.index { |line| line =~ /^\s*(?:Scenario:|(?:Scenario Outline:))/ }
           if next_scenario_line.nil?
             scenario_lines.concat(lines.slice!(0..lines.count))
           else
             while  lines[next_scenario_line - 1] =~ /^\s*@/
               next_scenario_line -= 1
             end
-            scenario_lines.concat(lines.slice!(0..next_scenario_line))
+            scenario_lines.concat(lines.slice!(0...next_scenario_line))
           end
 
           if scenario_lines[current_scenario_line] =~ /^\s*Scenario Outline:/

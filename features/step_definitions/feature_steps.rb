@@ -6,10 +6,14 @@ Then /^the feature is found to have the following properties:$/ do |properties|
   end
 end
 
-Then /^the feature's descriptive lines are as follows:$/ do |table|
-  pending
+Then /^the feature's descriptive lines are as follows:$/ do |lines|
+  expected_description = lines.raw.flatten
+
+  assert { @parsed_file.feature.description == expected_description }
 end
 
-Then /^the feature is found to have the following tags:$/ do |table|
-  pending
+Then /^the feature is found to have the following tags:$/ do |tags|
+  expected_tags = tags.raw.flatten
+
+  assert { @parsed_file.feature.tags == expected_tags }
 end
