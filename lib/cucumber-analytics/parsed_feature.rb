@@ -28,7 +28,7 @@ module Cucumber
       end
 
       def test_count
-        scenario_count + scenarios.select { |scenario| scenario.is_a? ParsedScenarioOutline }.reduce(0){ |sum, outline| sum += outline.examples }
+        scenario_count + scenarios.select { |scenario| scenario.is_a? ParsedScenarioOutline }.reduce(0){ |sum, outline| sum += outline.examples.count }
       end
 
     end

@@ -15,11 +15,14 @@ Feature: The gem can analyze .feature files that have Scenario Outline elements.
         When the second "<param2>"
         Then the third step
       Examples: text describing the significance of the examples
+        And even more description if you really need it.
         | param1 | param2 |
         #A more random comment
         | x      | y      |
-        @example_tag
+        @example_tag @another_one
       Examples: some examples with different significance and a tag
+        Words, words, words, words,
+         why so many words?
         | param1 | param2 |
         | a      | b      |
     """
@@ -49,12 +52,17 @@ Feature: The gem can analyze .feature files that have Scenario Outline elements.
       | @outline_tag |
 
   Scenario Outline: The parser can extract a scenario outline's examples.
-    Then "<outline>" example "<set>" has a "<description>"
-    And "<outline>" example "<set>" has "<tags>"
+    Then "<outline>" example "<set>" has a "<name>"
+    And "<outline>" example "<set>" descriptive lines are as follows:
+      | <description1> |
+      | <description2> |
+    And "<outline>" example "<set>" tags are as follows:
+      | <tag1> |
+      | <tag2> |
     And "<outline>" example "<set>" rows are as follows:
       | <row1> |
       | <row2> |
   Examples:
-    | outline | set | description                                      | tags         | row1                   | row2                   |
-    | 1       | 1   | text describing the significance of the examples |              | \| param1 \| param2 \| | \| x      \| y      \| |
-    | 1       | 2   | some examples with different significance        | @example_tag | \| param1 \| param2 \| | \| a      \| b      \| |
+    | outline | set | name                                                | description1                                     | description2       | tag1         | tag2         | row1                   | row2                   |
+    | 1       | 1   | text describing the significance of the examples    | And even more description if you really need it. |                    |              |              | \| param1 \| param2 \| | \| x      \| y      \| |
+    | 1       | 2   | some examples with different significance and a tag | Words, words, words, words,                      | why so many words? | @example_tag | @another_one | \| param1 \| param2 \| | \| a      \| b      \| |
