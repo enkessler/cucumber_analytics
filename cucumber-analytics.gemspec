@@ -4,8 +4,8 @@ require File.expand_path('../lib/cucumber-analytics/version', __FILE__)
 Gem::Specification.new do |gem|
   gem.authors       = ["Eric Kessler"]
   gem.email         = ["morrow748@gmail.com"]
-  gem.description   = %q{TODO: Write a gem description}
-  gem.summary       = %q{TODO: Write a gem summary}
+  gem.description   = %q{Static analysis of Cucumber tests made easy.}
+  gem.summary       = %q{This gem provides an API to programmatically break down Cucumber feature files so that they can be inspected and analyzed in a straightforward manner.}
   gem.homepage      = ""
 
   gem.files         = `git ls-files`.split($\)
