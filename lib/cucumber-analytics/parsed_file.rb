@@ -12,17 +12,31 @@ module Cucumber
         background_lines = []
 
         File.open(@file, 'r') { |file| file_lines = file.readlines }
-        file_lines.delete_if { |line| line =~ /^\s*#/ }
-        file_lines.delete_if { |line| !(line =~ /\S/) }
 
-        feature_start_line = file_lines.index { |line| line =~ /^s*Feature:/ }
-        feature_lines.concat(file_lines.slice!(0..feature_start_line))
+        until file_lines.first =~ /^s*Feature:/
+          unless ignored_line?(file_lines.first)
+            feature_lines << file_lines.first
+          end
+          file_lines.shift
+        end
 
-        feature_end_line = file_lines.index { |line| line =~ /^\s*(?:@|Background:|Scenario:|(?:Scenario Outline:))/ }
-        feature_lines.concat(file_lines.slice!(0...feature_end_line))
+        until file_lines.first =~ /^\s*(?:@|Background:|Scenario:|(?:Scenario Outline:))/
+          unless ignored_line?(file_lines.first)
+            feature_lines << file_lines.first
+          end
+          file_lines.shift
+        end
 
-        background_end_line = file_lines.index { |line| line =~ /^\s*(?:@|Scenario:|(?:Scenario Outline:))/ }
-        background_lines.concat(file_lines.slice!(0...background_end_line))
+        until file_lines.first =~ /^\s*(?:@|Scenario:|(?:Scenario Outline:))/
+          if file_lines.first =~ /^\s*"""/
+            background_lines.concat(extract_doc_string!(file_lines))
+          else
+            unless ignored_line?(file_lines.first)
+              background_lines << file_lines.first
+            end
+            file_lines.shift
+          end
+        end
 
         @feature = parse_feature(feature_lines)
 
@@ -66,7 +80,30 @@ module Cucumber
           lines.shift
         end
 
-        background.steps.concat lines.collect { |line| line.strip }
+        until lines.empty?
+          line = lines.first
+
+          if line =~ /^\s*"""/
+            leading_whitespace = line[/^\s*/]
+
+            background.steps << line.strip
+            lines.shift
+
+            line = lines.first
+            until line =~ /^\s*"""/
+              leading_whitespace.length.times do |count|
+                line.slice!(0, 1) if line[0] =~ /\s/
+              end
+
+              background.steps << line.chomp
+              lines.shift
+              line = lines.first
+            end
+          end
+
+          background.steps << line.strip
+          lines.shift
+        end
 
         background
       end
@@ -93,7 +130,31 @@ module Cucumber
           lines.shift
         end
 
-        scenario.steps.concat lines.collect { |line| line.strip }
+        until lines.empty?
+          line = lines.first
+
+          if line =~ /^\s*"""/
+            leading_whitespace = line[/^\s*/]
+
+            scenario.steps << line.strip
+            lines.shift
+
+            line = lines.first
+            until line =~ /^\s*"""/
+
+              leading_whitespace.length.times do |count|
+                line.slice!(0, 1) if line[0] =~ /\s/
+              end
+
+              scenario.steps << line.chomp
+              lines.shift
+              line = lines.first
+            end
+          end
+
+          scenario.steps << line.strip
+          lines.shift
+        end
 
         scenario
       end
@@ -121,7 +182,28 @@ module Cucumber
         end
 
         until lines.first =~ /^\s*(?:@|Examples:)/
-          scenario.steps << lines.first.strip
+          line = lines.first
+
+          if line =~ /^\s*"""/
+            leading_whitespace = line[/^\s*/]
+
+            scenario.steps << line.strip
+            lines.shift
+
+            line = lines.first
+            until line =~ /^\s*"""/
+
+              leading_whitespace.length.times do |count|
+                line.slice!(0, 1) if line[0] =~ /\s/
+              end
+
+              scenario.steps << line.chomp
+              lines.shift
+              line = lines.first
+            end
+          end
+
+          scenario.steps << line.strip
           lines.shift
         end
 
@@ -176,19 +258,36 @@ module Cucumber
       end
 
       def parse_scenarios(lines)
+        scenario_lines = []
+
         until lines.empty?
           current_scenario_line = lines.index { |line| line =~ /^\s*(?:Scenario:|(?:Scenario Outline:))/ }
 
-          scenario_lines = lines.slice!(0..current_scenario_line)
-
-          next_scenario_line = lines.index { |line| line =~ /^\s*(?:Scenario:|(?:Scenario Outline:))/ }
-          if next_scenario_line.nil?
-            scenario_lines.concat(lines.slice!(0..lines.count))
-          else
-            while  lines[next_scenario_line - 1] =~ /^\s*@/
-              next_scenario_line -= 1
+          until lines.first =~ /^\s*(?:Scenario:|(?:Scenario Outline:))/
+            unless ignored_line?(lines.first)
+              scenario_lines << lines.first
             end
-            scenario_lines.concat(lines.slice!(0...next_scenario_line))
+            lines.shift
+          end
+
+          scenario_lines << lines.first
+          lines.shift
+
+          until (lines.first =~ /^\s*(?:Scenario:|(?:Scenario Outline:))/) or lines.empty?
+            if (lines.first =~ /^\s*"""/)
+              scenario_lines.concat(extract_doc_string!(lines))
+            else
+              unless ignored_line?(lines.first)
+                scenario_lines << lines.first
+              end
+              lines.shift
+            end
+          end
+
+          unless lines.empty?
+            while  (scenario_lines.last =~ /^\s*@/)
+              lines = [scenario_lines.pop].concat(lines)
+            end
           end
 
           if scenario_lines[current_scenario_line] =~ /^\s*Scenario Outline:/
@@ -199,6 +298,27 @@ module Cucumber
 
           @feature.scenarios << next_scenario
         end
+      end
+
+      def extract_doc_string!(lines)
+        doc_block = []
+
+        doc_block << lines.first
+        lines.shift
+
+        until lines.first =~ /^\s*"""/
+          doc_block << lines.first
+          lines.shift
+        end
+
+        doc_block << lines.first
+        lines.shift
+
+        doc_block
+      end
+
+      def ignored_line?(line)
+        line =~ /^\s*#/ or !(line =~ /\S/)
       end
 
     end

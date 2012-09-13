@@ -13,7 +13,13 @@ Then /^the background's descriptive lines are as follows:$/ do |lines|
 end
 
 Then /^the background's steps are as follows:$/ do |steps|
-  steps = steps.raw.flatten
+  steps = steps.raw.flatten.collect do |step|
+    if step.start_with? "'"
+      step.slice(1..step.length - 2)
+    else
+      step
+    end
+  end
 
   assert { @parsed_file.feature.background.steps == steps }
 end
