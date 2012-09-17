@@ -11,11 +11,16 @@ Feature: The gem can analyze .feature files that have Scenario elements.
 
       @another_tag@yet_another_tag
       Scenario: The first scenario's name.
+    #a comment
+
         Some text describing the scenario.
         More text.
         Given the first step
+
         When the second step
+          #here too
         Then the third step
+
     """
     When the file is parsed
 

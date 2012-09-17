@@ -3,6 +3,7 @@ Feature: A feature file containing elements that use doc strings.
 
   Background: Some general test setup stuff.
     * some big setup step:
+    #random comment
     """
   some text
 
@@ -19,9 +20,13 @@ Feature: A feature file containing elements that use doc strings.
     *
         some more text
     """
-    * some setup step
 
+
+    * some setup step
+    #
+  #
   Scenario: The first scenario's name.
+
     Given the first step
     When a big step:
     """
@@ -63,6 +68,10 @@ Feature: A feature file containing elements that use doc strings.
     """
     When the second "<param2>"
     Then the third step
+    #
+
   Examples:
+   #
     | param1 | param2 |
+
     | x      | y      |

@@ -12,19 +12,33 @@ Feature: The gem can analyze .feature files that have Scenario Outline elements.
         Some text describing the scenario.
         More text.
         Given the first "<param1>"
+
+
         When the second "<param2>"
+        #
         Then the third step
+
       Examples: text describing the significance of the examples
+        #
+        #
         And even more description if you really need it.
         | param1 | param2 |
         #A more random comment
         | x      | y      |
         @example_tag @another_one
       Examples: some examples with different significance and a tag
+
         Words, words, words, words,
+
          why so many words?
+         #
+
         | param1 | param2 |
+        #
+
+        #
         | a      | b      |
+
     """
     When the file is parsed
 

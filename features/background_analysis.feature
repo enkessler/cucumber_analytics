@@ -7,7 +7,15 @@ Feature: The gem can analyze .feature files that have Background elements.
       Some more feature description.
 
       Background: Some general test setup stuff.
+      #unimportant text
+      #   more of the same
         A little more information.
+
+
+        * some setup step
+
+        * some setup step
+#
         * some setup step
 
       Scenario: The first scenario's name.
@@ -32,4 +40,6 @@ Feature: The gem can analyze .feature files that have Background elements.
 
   Scenario: The parser can extract the background steps.
     Then the background's steps are as follows:
+      | * some setup step |
+      | * some setup step |
       | * some setup step |
