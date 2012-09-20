@@ -1,0 +1,44 @@
+= Cucumber::Analytics
+
+The intention of this gem is to provide a useful mechanism by which to answer
+all of the burning questions that one might have about their Cucumber test base.
+
+* Did old features get removed and leave dead step definitions behind? Or
+perhaps the other way around and half of the steps in the code base are
+undefined?
+
+* Are there duplicate scenarios strewn about everywhere that only differ in
+their step arguments and could be reduced into a single outline?
+
+* Just how many different tags *are* there in this thing?
+
+These are the kinds of questions that this gem aims to make answering easy,
+either through directly providing the answer or by providing sufficient tools
+that determining the answer yourself is just a few straightforward object
+manipulations away.
+
+== Installation
+
+Add this line to your application's Gemfile:
+
+    gem 'cucumber-analytics'
+
+And then execute:
+
+    $ bundle
+
+Or install it yourself as:
+
+    $ gem install cucumber-analytics
+
+== Usage
+
+TODO: Write usage instructions here
+
+## Contributing
+
+1. Fork it
+2. Create your feature branch (`git checkout -b my-new-feature`)
+3. Commit your changes (`git commit -am 'Added some feature'`)
+4. Push to the branch (`git push origin my-new-feature`)
+5. Create new Pull Request
