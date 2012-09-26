@@ -160,8 +160,6 @@ module Cucumber
       end
 
       def parse_scenario_outline(lines)
-        puts 'outline lines to lex:'
-        puts lines
         scenario = ParsedScenarioOutline.new
 
         lines.take_while { |line| !(line =~/^\s*Scenario Outline:/) }.tap do |tag_lines|

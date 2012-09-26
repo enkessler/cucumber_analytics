@@ -23,3 +23,15 @@ Then /^the background's steps are as follows:$/ do |steps|
 
   assert { @parsed_file.feature.background.steps == steps }
 end
+
+Then /^the background's stripped steps are as follows:$/ do |steps|
+  steps = steps.raw.flatten.collect do |step|
+    if step.start_with? "'"
+      step.slice(1..step.length - 2)
+    else
+      step
+    end
+  end
+
+  assert { @parsed_file.feature.background.stripped_steps(@left_delimiter, @right_delimiter, @keywords_included) == steps }
+end
