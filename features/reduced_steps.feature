@@ -31,37 +31,31 @@ Feature: Feature elements with steps can provide them without arguments.
     When the file is parsed
 
   Scenario: Backgrounds can extract stripped steps
-    When including step keywords
-    Then the background's stripped steps are as follows:
+    Then the background's stripped steps "with" keywords are as follows:
       | Given a defined step |
       | And a step with a ** |
       | And ** ** **         |
-    When not including step keywords
-    Then the background's stripped steps are as follows:
+    Then the background's stripped steps "without" keywords are as follows:
       | a defined step   |
       | a step with a ** |
       | ** ** **         |
 
   Scenario: Scenarios can extract stripped steps
-    When including step keywords
-    Then scenario "1" stripped steps are as follows:
+    Then scenario "1" stripped steps "with" keywords are as follows:
       | Given a defined step |
       | And a step with a ** |
       | And ** ** **         |
-    When not including step keywords
-    Then scenario "1" stripped steps are as follows:
+    Then scenario "1" stripped steps "without" keywords are as follows:
       | a defined step   |
       | a step with a ** |
       | ** ** **         |
 
   Scenario: Outlines can extract stripped steps
-    When including step keywords
-    Then scenario "2" stripped steps are as follows:
+    Then scenario "2" stripped steps "with" keywords are as follows:
       | Given a defined step |
       | And a step with a ** |
       | And ** ** **         |
-    When not including step keywords
-    Then scenario "2" stripped steps are as follows:
+    Then scenario "2" stripped steps "without" keywords are as follows:
       | a defined step   |
       | a step with a ** |
       | ** ** **         |

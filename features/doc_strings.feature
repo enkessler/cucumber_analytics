@@ -4,7 +4,7 @@ Feature: Doc strings are parsed correctly.
     Given the file "doc_string_test_file.feature" is parsed
 
   Scenario: Backgrounds can handle doc strings.
-    Then the background's steps are as follows:
+    Then the background's steps "with" keywords are as follows:
       | * some big setup step: |
       | """                    |
       | 'some text'            |
@@ -25,7 +25,7 @@ Feature: Doc strings are parsed correctly.
       | * some setup step      |
 
   Scenario: Scenarios can handle doc strings.
-    Then scenario "1" steps are as follows:
+    Then scenario "1" steps "with" keywords are as follows:
       | Given the first step |
       | When a big step:     |
       | """                  |
@@ -47,7 +47,7 @@ Feature: Doc strings are parsed correctly.
       | Then the third step  |
 
   Scenario: Outlines can handle doc strings.
-    Then scenario "2" steps are as follows:
+    Then scenario "2" steps "with" keywords are as follows:
       | Given the first "<param1>" |
       | When a big step:           |
       | """                        |

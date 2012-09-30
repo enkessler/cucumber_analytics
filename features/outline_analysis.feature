@@ -56,7 +56,7 @@ Feature: The gem can analyze .feature files that have Scenario Outline elements.
       | More text.                         |
 
   Scenario: The parser can extract a scenario outline's steps.
-    Then scenario "1" steps are as follows:
+    Then scenario "1" steps "with" keywords are as follows:
       | Given the first "<param1>" |
       | When the second "<param2>" |
       | Then the third step        |

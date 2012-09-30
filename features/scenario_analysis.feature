@@ -38,10 +38,14 @@ Feature: The gem can analyze .feature files that have Scenario elements.
       | More text.                         |
 
   Scenario: The parser can extract a scenario's steps.
-    Then scenario "1" steps are as follows:
+    Then scenario "1" steps "with" keywords are as follows:
       | Given the first step |
       | When the second step |
       | Then the third step  |
+    And scenario "1" steps "without" keywords are as follows:
+      | the first step  |
+      | the second step |
+      | the third step  |
 
   Scenario: The parser can extract a scenario's tags
     Then scenario "1" is found to have the following tags:

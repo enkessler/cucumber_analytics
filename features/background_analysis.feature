@@ -39,7 +39,11 @@ Feature: The gem can analyze .feature files that have Background elements.
       | A little more information. |
 
   Scenario: The parser can extract the background steps.
-    Then the background's steps are as follows:
+    Then the background's steps "with" keywords are as follows:
       | * some setup step |
       | * some setup step |
       | * some setup step |
+    And the background's steps "without" keywords are as follows:
+      | some setup step |
+      | some setup step |
+      | some setup step |

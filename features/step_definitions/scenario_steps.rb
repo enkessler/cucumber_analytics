@@ -12,7 +12,7 @@ Then /^scenario "([^"]*)" descriptive lines are as follows:$/ do |scenario, line
   assert { @parsed_file.feature.scenarios[scenario - 1].description == lines }
 end
 
-Then /^scenario "([^"]*)" steps are as follows:$/ do |scenario, steps|
+Then /^scenario "([^"]*)" steps "([^"]*)" keywords are as follows:$/ do |scenario, keywords, steps|
   steps = steps.raw.flatten.collect do |step|
     if step.start_with? "'"
       step.slice(1..step.length - 2)
@@ -21,7 +21,7 @@ Then /^scenario "([^"]*)" steps are as follows:$/ do |scenario, steps|
     end
   end
 
-  assert { @parsed_file.feature.scenarios[scenario - 1].steps == steps }
+  assert { @parsed_file.feature.scenarios[scenario - 1].steps(keywords == 'with' ? true : false) == steps }
 end
 
 Then /^scenario "([^"]*)" is found to have the following tags:$/ do |scenario, tags|
@@ -30,7 +30,7 @@ Then /^scenario "([^"]*)" is found to have the following tags:$/ do |scenario, t
   assert { @parsed_file.feature.scenarios[scenario - 1].tags == tags }
 end
 
-Then /^scenario "([^"]*)" stripped steps are as follows:$/ do |scenario, steps|
+Then /^scenario "([^"]*)" stripped steps "([^"]*)" keywords are as follows:$/ do |scenario, keywords, steps|
   steps = steps.raw.flatten.collect do |step|
     if step.start_with? "'"
       step.slice(1..step.length - 2)
@@ -39,13 +39,5 @@ Then /^scenario "([^"]*)" stripped steps are as follows:$/ do |scenario, steps|
     end
   end
 
-  assert { @parsed_file.feature.scenarios[scenario - 1].stripped_steps(@left_delimiter, @right_delimiter, @keywords_included) == steps }
-end
-
-When /^not including step keywords$/ do
-  @keywords_included = false
-end
-
-When /^including step keywords$/ do
-  @keywords_included = true
+  assert { @parsed_file.feature.scenarios[scenario - 1].stripped_steps(@left_delimiter, @right_delimiter, keywords == 'with' ? true : false) == steps }
 end

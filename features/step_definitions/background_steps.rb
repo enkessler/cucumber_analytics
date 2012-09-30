@@ -12,7 +12,7 @@ Then /^the background's descriptive lines are as follows:$/ do |lines|
   assert { @parsed_file.feature.background.description == expected_description }
 end
 
-Then /^the background's steps are as follows:$/ do |steps|
+Then /^the background's steps "([^"]*)" keywords are as follows:$/ do |keywords, steps|
   steps = steps.raw.flatten.collect do |step|
     if step.start_with? "'"
       step.slice(1..step.length - 2)
@@ -21,10 +21,10 @@ Then /^the background's steps are as follows:$/ do |steps|
     end
   end
 
-  assert { @parsed_file.feature.background.steps == steps }
+  assert { @parsed_file.feature.background.steps(keywords == 'with' ? true : false) == steps }
 end
 
-Then /^the background's stripped steps are as follows:$/ do |steps|
+Then /^the background's stripped steps "([^"]*)" keywords are as follows:$/ do |keywords,steps|
   steps = steps.raw.flatten.collect do |step|
     if step.start_with? "'"
       step.slice(1..step.length - 2)
@@ -33,5 +33,5 @@ Then /^the background's stripped steps are as follows:$/ do |steps|
     end
   end
 
-  assert { @parsed_file.feature.background.stripped_steps(@left_delimiter, @right_delimiter, @keywords_included) == steps }
+  assert { @parsed_file.feature.background.stripped_steps(@left_delimiter, @right_delimiter, keywords == 'with' ? true : false) == steps }
 end

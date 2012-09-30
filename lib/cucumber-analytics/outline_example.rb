@@ -1,17 +1,23 @@
 module Cucumber
   module Analytics
-    class OutlineExample
+    class OutlineExample < FeatureElement
 
-      attr_accessor :name
-      attr_accessor :description
       attr_accessor :tags
       attr_accessor :rows
 
-      def initialize
-        @name = ''
-        @description = []
+      def initialize(source_lines)
+        super
+
         @tags = []
         @rows = []
+
+        parse_feature_element(source_lines) if source_lines
+      end
+
+      def parse_feature_element(source_lines)
+        parse_feature_element_tags(source_lines)
+        super(source_lines)
+        rows.concat source_lines.collect { |line| line.strip }
       end
 
     end

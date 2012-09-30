@@ -27,7 +27,7 @@ module Cucumber
           file_lines.shift
         end
 
-        until file_lines.first =~ /^\s*(?:@|Scenario:|(?:Scenario Outline:))/
+        until file_lines.first =~ /^\s*(?:@|Scenario:|(?:Scenario Outline:))/  or file_lines.empty?
           if file_lines.first =~ /^\s*"""/
             background_lines.concat(extract_doc_string!(file_lines))
           else
@@ -38,223 +38,13 @@ module Cucumber
           end
         end
 
-        @feature = parse_feature(feature_lines)
+        @feature = ParsedFeature.new(feature_lines)
 
         unless background_lines.empty?
-          @feature.background = parse_background(background_lines)
+          @feature.background = ParsedBackground.new(background_lines)
         end
 
         parse_scenarios(file_lines)
-      end
-
-      def parse_feature(lines)
-        feature = ParsedFeature.new
-
-        lines.take_while { |line| !(line =~/^\s*Feature/) }.tap do |tag_lines|
-          tag_lines.join(' ').delete(' ').split('@').each do |tag|
-            feature.tags << "@#{tag.strip}"
-          end
-        end
-        feature.tags.shift
-
-        while lines.first =~ /^\s*@/
-          lines.shift
-        end
-
-        feature.name.replace(lines.first.match(/^\s*Feature:(.*)/)[1].strip)
-        lines.shift
-
-        feature.description.concat lines.collect { |line| line.strip }
-
-        feature
-      end
-
-      def parse_background(lines)
-        background = ParsedBackground.new
-
-        background.name.replace lines.first.match(/^\s*Background:(.*)/)[1].strip
-        lines.shift
-
-        until lines.first =~ /^\s*(?:(?:Given )|(?:When )|(?:Then )|(?:\* ))/
-          background.description << lines.first.strip
-          lines.shift
-        end
-
-        until lines.empty?
-          line = lines.first
-
-          if line =~ /^\s*"""/
-            leading_whitespace = line[/^\s*/]
-
-            background.steps << line.strip
-            lines.shift
-
-            line = lines.first
-            until line =~ /^\s*"""/
-              leading_whitespace.length.times do |count|
-                line.slice!(0, 1) if line[0] =~ /\s/
-              end
-
-              background.steps << line.chomp
-              lines.shift
-              line = lines.first
-            end
-          end
-
-          background.steps << line.strip
-          lines.shift
-        end
-
-        background
-      end
-
-      def parse_scenario(lines)
-        scenario = ParsedScenario.new
-
-        lines.take_while { |line| !(line =~/^\s*Scenario:/) }.tap do |tag_lines|
-          tag_lines.join(' ').delete(' ').split('@').each do |tag|
-            scenario.tags << "@#{tag.strip}"
-          end
-        end
-        scenario.tags.shift
-
-        while lines.first =~ /^\s*@/
-          lines.shift
-        end
-
-        scenario.name= lines.first.match(/^\s*Scenario:(.*)/)[1].strip
-        lines.shift
-
-        until lines.first =~ /^\s*(?:Given|When|Then|\*)/
-          scenario.description << lines.first.strip
-          lines.shift
-        end
-
-        until lines.empty?
-          line = lines.first
-
-          if line =~ /^\s*"""/
-            leading_whitespace = line[/^\s*/]
-
-            scenario.steps << line.strip
-            lines.shift
-
-            line = lines.first
-            until line =~ /^\s*"""/
-
-              leading_whitespace.length.times do |count|
-                line.slice!(0, 1) if line[0] =~ /\s/
-              end
-
-              scenario.steps << line.chomp
-              lines.shift
-              line = lines.first
-            end
-          end
-
-          scenario.steps << line.strip
-          lines.shift
-        end
-
-        scenario
-      end
-
-      def parse_scenario_outline(lines)
-        scenario = ParsedScenarioOutline.new
-
-        lines.take_while { |line| !(line =~/^\s*Scenario Outline:/) }.tap do |tag_lines|
-          tag_lines.join(' ').delete(' ').split('@').each do |tag|
-            scenario.tags << "@#{tag.strip}"
-          end
-        end
-        scenario.tags.shift
-
-        while lines.first =~ /^\s*@/
-          lines.shift
-        end
-
-        scenario.name = lines.first.match(/^\s*Scenario Outline:(.*)/)[1].strip
-        lines.shift
-
-        until lines.first =~ /^\s*(?:Given|When|Then|\*)/
-          scenario.description << lines.first.strip
-          lines.shift
-        end
-
-        until lines.first =~ /^\s*(?:@|Examples:)/
-          line = lines.first
-
-          if line =~ /^\s*"""/
-            leading_whitespace = line[/^\s*/]
-
-            scenario.steps << line.strip
-            lines.shift
-
-            line = lines.first
-            until line =~ /^\s*"""/
-
-              leading_whitespace.length.times do |count|
-                line.slice!(0, 1) if line[0] =~ /\s/
-              end
-
-              scenario.steps << line.chomp
-              lines.shift
-              line = lines.first
-            end
-          end
-
-          scenario.steps << line.strip
-          lines.shift
-        end
-
-        until lines.empty?
-          current_example_line = lines.index { |line| line =~ /^\s*Examples/ }
-
-          example_lines = lines.slice!(0..current_example_line)
-
-          next_example_line = lines.index { |line| line =~ /^\s*Examples:/ }
-
-          if next_example_line.nil?
-            example_lines.concat(lines.slice!(0..lines.count))
-          else
-            while  lines[next_example_line - 1] =~ /^\s*@/
-              next_example_line -= 1
-            end
-
-            example_lines.concat(lines.slice!(0...next_example_line))
-          end
-
-          scenario.examples << parse_outline_example(example_lines)
-        end
-
-        scenario
-      end
-
-      def parse_outline_example(lines)
-        example = OutlineExample.new
-
-        lines.take_while { |line| !(line =~/^\s*Examples:/) }.tap do |tag_lines|
-          tag_lines.join(' ').delete(' ').split('@').each do |tag|
-            example.tags << "@#{tag.strip}"
-          end
-        end
-        example.tags.shift
-
-        while lines.first =~ /^\s*@/
-          lines.shift
-        end
-
-        example.name= lines.first.match(/^\s*Examples:(.*)/)[1].strip
-        lines.shift
-
-        until lines.first =~ /^\s*\|/
-          example.description << lines.first.strip
-          lines.shift
-        end
-
-        example.rows.concat lines.collect { |line| line.strip }
-
-        example
       end
 
       def parse_scenarios(lines)
@@ -291,9 +81,9 @@ module Cucumber
           end
 
           if scenario_lines[current_scenario_line] =~ /^\s*Scenario Outline:/
-            next_scenario = parse_scenario_outline(scenario_lines)
+            next_scenario = ParsedScenarioOutline.new(scenario_lines)
           else
-            next_scenario = parse_scenario(scenario_lines)
+            next_scenario = ParsedScenario.new(scenario_lines)
           end
 
           @feature.scenarios << next_scenario
