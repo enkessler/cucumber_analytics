@@ -5,9 +5,11 @@ Bundler.require
 include Wrong
 
 TEST_FEATURE_FILE_NAME = 'test_feature.feature'
+TEST_STEP_FILE_NAME = 'test_steps.rb'
 TEMP_FILE_DIRECTORY = "#{File.dirname(__FILE__)}/../temp_files"
 TEST_FILE_DIRECTORY = "#{File.dirname(__FILE__)}/../test_files"
 TEST_FEATURE_FILE_LOCATION = "#{TEMP_FILE_DIRECTORY}/#{TEST_FEATURE_FILE_NAME}"
+TEST_STEP_FILE_LOCATION = "#{TEMP_FILE_DIRECTORY}/#{TEST_STEP_FILE_NAME}"
 
 
 Before do
@@ -15,6 +17,7 @@ Before do
   @test_file_directory = TEST_FILE_DIRECTORY
   @temp_file_directory = TEMP_FILE_DIRECTORY
   @test_feature_file_location = TEST_FEATURE_FILE_LOCATION
+  @test_step_file_location = TEST_STEP_FILE_LOCATION
 
   FileUtils.mkdir(@temp_file_directory)
 end

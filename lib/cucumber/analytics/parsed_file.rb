@@ -27,7 +27,7 @@ module Cucumber
           file_lines.shift
         end
 
-        until file_lines.first =~ /^\s*(?:@|Scenario:|(?:Scenario Outline:))/  or file_lines.empty?
+        until file_lines.first =~ /^\s*(?:@|Scenario:|(?:Scenario Outline:))/ or file_lines.empty?
           if file_lines.first =~ /^\s*"""/
             background_lines.concat(extract_doc_string!(file_lines))
           else
@@ -46,6 +46,22 @@ module Cucumber
 
         parse_scenarios(file_lines)
       end
+
+      def steps(include_keywords = false)
+        feature.steps(include_keywords)
+      end
+
+      def defined_steps(include_keywords = false)
+        feature.defined_steps(include_keywords)
+      end
+
+      def undefined_steps(include_keywords = false)
+        feature.undefined_steps(include_keywords)
+      end
+
+
+      private
+
 
       def parse_scenarios(lines)
         scenario_lines = []

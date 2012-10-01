@@ -31,3 +31,9 @@ When /^the directory(?: "([^"]*)")? is read$/ do |directory_name|
 
   @parsed_directory = Cucumber::Analytics::ParsedDirectory.new(@test_directory)
 end
+
+When /^the following step definition file:$/ do |file_text|
+  File.open(@test_step_file_location, 'w') { |file|
+    file.write(file_text)
+  }
+end
