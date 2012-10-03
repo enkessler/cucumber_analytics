@@ -1,21 +1,25 @@
-Then /^"([^"]*)" example "([^"]*)" has a "([^"]*)"$/ do |scenario, example, name|
-  assert { @parsed_file.feature.scenarios[scenario - 1].examples[example - 1].name == name }
+Then /^(?:feature "([^"]*)" )?"([^"]*)" example "([^"]*)" has a "([^"]*)"$/ do |file, scenario, example, name|
+  file ||= 1
+  assert { @parsed_files[file - 1].feature.scenarios[scenario - 1].examples[example - 1].name == name }
 end
 
-When /^"([^"]*)" example "([^"]*)" descriptive lines are as follows:$/ do |scenario, example, lines|
+When /^(?:feature "([^"]*)" )?"([^"]*)" example "([^"]*)" descriptive lines are as follows:$/ do |file, scenario, example, lines|
+  file ||= 1
   lines = lines.raw.flatten.delete_if { |line| line == '' }
 
-  assert { @parsed_file.feature.scenarios[scenario - 1].examples[example - 1].description == lines }
+  assert { @parsed_files[file - 1].feature.scenarios[scenario - 1].examples[example - 1].description == lines }
 end
 
-When /^"([^"]*)" example "([^"]*)" tags are as follows:$/ do |scenario, example, tags|
+When /^(?:feature "([^"]*)" )?"([^"]*)" example "([^"]*)" tags are as follows:$/ do |file, scenario, example, tags|
+  file ||= 1
   tags = tags.raw.flatten.delete_if { |line| line == '' }
 
-  assert { @parsed_file.feature.scenarios[scenario - 1].examples[example - 1].tags == tags }
+  assert { @parsed_files[file - 1].feature.scenarios[scenario - 1].examples[example - 1].tags == tags }
 end
 
-When /^"([^"]*)" example "([^"]*)" rows are as follows:$/ do |scenario, example, rows|
+When /^(?:feature "([^"]*)" )?"([^"]*)" example "([^"]*)" rows are as follows:$/ do |file, scenario, example, rows|
+  file ||= 1
   rows = rows.raw.flatten
 
-  assert { @parsed_file.feature.scenarios[scenario - 1].examples[example - 1].rows == rows }
+  assert { @parsed_files[file - 1].feature.scenarios[scenario - 1].examples[example - 1].rows == rows }
 end

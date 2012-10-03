@@ -46,6 +46,7 @@ module Cucumber
         steps(include_keywords).delete_if { |step| World.defined_step_patterns.any? { |pattern| step.sub(/#{World::STEP_KEYWORD_PATTERN}/, '') =~ Regexp.new(pattern) } }
       end
 
+
       private
 
 
@@ -73,7 +74,10 @@ module Cucumber
       end
 
       def parse_feature_element_description(source_lines)
-        until source_lines.first =~ /^\s*(?:(?:Given )|(?:When )|(?:Then )|(?:\* ))/ or source_lines.first =~ /^\s*\|/
+        until source_lines.first =~ /^\s*(?:(?:Given )|(?:When )|(?:Then )|(?:\* ))/ or
+            source_lines.first =~ /^\s*\|/ or
+            source_lines.empty?
+
           @description << source_lines.first.strip
           source_lines.shift
         end

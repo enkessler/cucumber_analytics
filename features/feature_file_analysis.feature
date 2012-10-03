@@ -1,8 +1,9 @@
-Feature: The gem has the ability to lex a .feature file and extract various
-  pieces of information from it.
+Feature: Feature files can be lexed.
+  A .feature file can be broken down into its component parts for further
+  analysis. Even if there isn't anything worth breaking down...
 
   Background: Test file setup.
-    Given the following feature file:
+    Given the following feature file "much_stuff.feature":
     """
     #Don't mind me.
     #Or any line that is a comment, really.
@@ -51,22 +52,42 @@ Feature: The gem has the ability to lex a .feature file and extract various
         Then the third step
 
     """
-    When the file is parsed
+    And the following feature file "barely_any_stuff.feature":
+    """
+    Feature:
+
+      Background:
+
+      Scenario:
+
+      Scenario Outline:
+      Examples:
+    """
+    When the file "much_stuff.feature" is parsed
+    And the file "barely_any_stuff.feature" is parsed
+
 
   Scenario: The parser can extract various information about the feature.
-    Then the feature is found to have the following properties:
-      | name           | The test feature name.                                                         |
-      | scenario_count | 2                                                                              |
-      | test_count     | 4                                                                              |
-      | outline_count  | 1                                                                              |
+    Then feature "1" is found to have the following properties:
+      | name           | The test feature name. |
+      | scenario_count | 2                      |
+      | test_count     | 4                      |
+      | outline_count  | 1                      |
+    And feature "2" is found to have the following properties:
+      | name           |   |
+      | scenario_count | 1 |
+      | test_count     | 1 |
+      | outline_count  | 1 |
 
   Scenario: The parser can extract a feature's description.
-    Then the feature's descriptive lines are as follows:
+    Then the descriptive lines of feature "1" are as follows:
       | Some more feature description. |
       | And some more.                 |
+    And feature "2" has no descriptive lines
 
   Scenario: The parser can extract a feature's tags
-    Then the feature is found to have the following tags:
+    Then feature "1" is found to have the following tags:
       | @a_feature_level_tag |
       | @and_another         |
       | @and_another         |
+    And feature "2" has no tags

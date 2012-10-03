@@ -1,18 +1,21 @@
-Then /^the background is found to have the following properties:$/ do |properties|
+Then /^the(?: feature "([^"]*)")? background is found to have the following properties:$/ do |file, properties|
+  file ||= 1
   properties = properties.rows_hash
 
   properties.each do |property, expected_value|
-    assert { expected_value == @parsed_file.feature.background.send(property.to_sym).to_s }
+    assert { expected_value == @parsed_files[file - 1].feature.background.send(property.to_sym).to_s }
   end
 end
 
-Then /^the background's descriptive lines are as follows:$/ do |lines|
+Then /^the(?: feature "([^"]*)")? background's descriptive lines are as follows:$/ do |file, lines|
+  file ||= 1
   expected_description = lines.raw.flatten
 
-  assert { @parsed_file.feature.background.description == expected_description }
+  assert { @parsed_files[file - 1].feature.background.description == expected_description }
 end
 
-Then /^the background's steps "([^"]*)" keywords are as follows:$/ do |keywords, steps|
+Then /^the(?: feature "([^"]*)")? background's steps "([^"]*)" keywords are as follows:$/ do |file, keywords, steps|
+  file ||= 1
   steps = steps.raw.flatten.collect do |step|
     if step.start_with? "'"
       step.slice(1..step.length - 2)
@@ -21,10 +24,11 @@ Then /^the background's steps "([^"]*)" keywords are as follows:$/ do |keywords,
     end
   end
 
-  assert { @parsed_file.feature.background.steps(keywords == 'with' ? true : false) == steps }
+  assert { @parsed_files[file - 1].feature.background.steps(keywords == 'with' ? true : false) == steps }
 end
 
-Then /^the background's stripped steps "([^"]*)" keywords are as follows:$/ do |keywords,steps|
+Then /^the(?: feature "([^"]*)")? background's stripped steps "([^"]*)" keywords are as follows:$/ do |file, keywords, steps|
+  file ||= 1
   steps = steps.raw.flatten.collect do |step|
     if step.start_with? "'"
       step.slice(1..step.length - 2)
@@ -33,5 +37,5 @@ Then /^the background's stripped steps "([^"]*)" keywords are as follows:$/ do |
     end
   end
 
-  assert { @parsed_file.feature.background.stripped_steps(@left_delimiter, @right_delimiter, keywords == 'with' ? true : false) == steps }
+  assert { @parsed_files[file - 1].feature.background.stripped_steps(@left_delimiter, @right_delimiter, keywords == 'with' ? true : false) == steps }
 end

@@ -1,7 +1,8 @@
 Feature: Doc strings are parsed correctly.
 
   Background: Test file setup.
-    Given the file "doc_string_test_file.feature" is parsed
+    Given a directory "../test_files"
+    When the file "doc_string_test_file.feature" is parsed
 
   Scenario: Backgrounds can handle doc strings.
     Then the background's steps "with" keywords are as follows:
