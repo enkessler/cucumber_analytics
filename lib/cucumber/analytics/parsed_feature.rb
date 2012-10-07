@@ -33,21 +33,21 @@ module Cucumber
         scenario_count + scenarios.select { |scenario| scenario.is_a? ParsedScenarioOutline }.reduce(0) { |sum, outline| sum += outline.examples.count }
       end
 
-      def steps(include_keywords = false)
+      def steps(include_keywords = true)
         background_steps = @background ? background.steps(include_keywords) : []
         scenarios_steps = scenarios.reduce([]) { |accumulated_steps, scenario| accumulated_steps.concat(scenario.steps(include_keywords)) }
 
         background_steps.concat(scenarios_steps)
       end
 
-      def defined_steps(include_keywords = false)
+      def defined_steps(include_keywords = true)
         background_steps = @background ? background.defined_steps(include_keywords) : []
         scenarios_steps = scenarios.reduce([]) { |accumulated_steps, scenario| accumulated_steps.concat(scenario.defined_steps(include_keywords)) }
 
         background_steps.concat(scenarios_steps)
       end
 
-      def undefined_steps(include_keywords = false)
+      def undefined_steps(include_keywords = true)
         background_steps = @background ? background.undefined_steps(include_keywords) : []
         scenarios_steps = scenarios.reduce([]) { |accumulated_steps, scenario| accumulated_steps.concat(scenario.undefined_steps(include_keywords)) }
 

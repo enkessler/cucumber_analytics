@@ -4,7 +4,27 @@ module Cucumber
 
       attr_reader :feature
 
-      def initialize(file_parsed)
+      def initialize(file_parsed = nil)
+        parse_file(file_parsed) if file_parsed
+      end
+
+      def steps(include_keywords = true)
+        feature.steps(include_keywords)
+      end
+
+      def defined_steps(include_keywords = true)
+        feature.defined_steps(include_keywords)
+      end
+
+      def undefined_steps(include_keywords = true)
+        feature.undefined_steps(include_keywords)
+      end
+
+
+      private
+
+
+      def parse_file(file_parsed)
         @file = file_parsed
 
         file_lines = []
@@ -46,22 +66,6 @@ module Cucumber
 
         parse_scenarios(file_lines)
       end
-
-      def steps(include_keywords = false)
-        feature.steps(include_keywords)
-      end
-
-      def defined_steps(include_keywords = false)
-        feature.defined_steps(include_keywords)
-      end
-
-      def undefined_steps(include_keywords = false)
-        feature.undefined_steps(include_keywords)
-      end
-
-
-      private
-
 
       def parse_scenarios(lines)
         scenario_lines = []

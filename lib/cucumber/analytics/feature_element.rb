@@ -11,11 +11,11 @@ module Cucumber
         @steps =[]
       end
 
-      def steps(include_keywords = false)
+      def steps(include_keywords = true)
         include_keywords ? @steps : @steps.map { |step| step.sub(/#{World::STEP_KEYWORD_PATTERN}/, '') }
       end
 
-      def stripped_steps(left_delimiter, right_delimiter, include_keywords = false)
+      def stripped_steps(left_delimiter, right_delimiter, include_keywords = true)
         original_left = left_delimiter
         original_right = right_delimiter
 
@@ -38,11 +38,11 @@ module Cucumber
         end
       end
 
-      def defined_steps(include_keywords = false)
+      def defined_steps(include_keywords = true)
         steps(include_keywords).keep_if { |step| World.defined_step_patterns.any? { |pattern| step.sub(/#{World::STEP_KEYWORD_PATTERN}/, '') =~ Regexp.new(pattern) } }
       end
 
-      def undefined_steps(include_keywords = false)
+      def undefined_steps(include_keywords = true)
         steps(include_keywords).delete_if { |step| World.defined_step_patterns.any? { |pattern| step.sub(/#{World::STEP_KEYWORD_PATTERN}/, '') =~ Regexp.new(pattern) } }
       end
 
