@@ -1,7 +1,11 @@
-require File.dirname(__FILE__) + '/../../lib/cucumber-analytics'
-Bundler.require
+require 'simplecov'
+SimpleCov.start
 
+Bundler.require
 include Wrong
+
+require File.dirname(__FILE__) + '/../../lib/cucumber-analytics'
+
 
 DEFAULT_FEATURE_FILE_NAME = 'test_feature.feature'
 DEFAULT_STEP_FILE_NAME = 'test_steps.rb'

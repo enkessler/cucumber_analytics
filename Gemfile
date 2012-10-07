@@ -5,3 +5,4 @@ gemspec
 
 gem 'cucumber'
 gem 'wrong'
+gem 'simplecov'
