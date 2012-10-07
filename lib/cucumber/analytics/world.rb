@@ -23,6 +23,24 @@ module Cucumber
         @@defined_expressions
       end
 
+      def self.steps_in(container, include_keywords = true)
+        Array.new.tap do |accumulated_steps|
+          collect_steps(accumulated_steps, container, include_keywords)
+        end
+      end
+
+      def self.undefined_steps_in(container, include_keywords = true)
+        all_steps = steps_in(container, include_keywords)
+
+        all_steps.delete_if { |step| World.defined_step_patterns.any? { |pattern| step.sub(/#{World::STEP_KEYWORD_PATTERN}/, '') =~ Regexp.new(pattern) } }
+      end
+
+      def self.defined_steps_in(container, include_keywords = true)
+        all_steps = steps_in(container, include_keywords)
+
+        all_steps.keep_if { |step| World.defined_step_patterns.any? { |pattern| step.sub(/#{World::STEP_KEYWORD_PATTERN}/, '') =~ Regexp.new(pattern) } }
+      end
+
 
       private
 
@@ -44,6 +62,16 @@ module Cucumber
 
       def self.extract_regular_expression(line)
         desanitize_line(sanitize_line(line).match(/^#{World::STEP_KEYWORD_PATTERN}\/([^\/]*)\//)[1])
+      end
+
+      def self.collect_steps(accumulated_steps, container, include_keywords = true)
+        accumulated_steps.concat container.steps(include_keywords) if container.respond_to?(:steps)
+
+        if container.respond_to?(:contains)
+          container.contains.each do |child_container|
+            collect_steps(accumulated_steps, child_container, include_keywords)
+          end
+        end
       end
 
     end

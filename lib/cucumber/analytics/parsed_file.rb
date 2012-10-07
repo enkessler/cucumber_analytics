@@ -8,16 +8,8 @@ module Cucumber
         parse_file(file_parsed) if file_parsed
       end
 
-      def steps(include_keywords = true)
-        feature.steps(include_keywords)
-      end
-
-      def defined_steps(include_keywords = true)
-        feature.defined_steps(include_keywords)
-      end
-
-      def undefined_steps(include_keywords = true)
-        feature.undefined_steps(include_keywords)
+      def contains
+        [@feature]
       end
 
 

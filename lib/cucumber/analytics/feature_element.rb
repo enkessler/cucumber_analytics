@@ -38,14 +38,6 @@ module Cucumber
         end
       end
 
-      def defined_steps(include_keywords = true)
-        steps(include_keywords).keep_if { |step| World.defined_step_patterns.any? { |pattern| step.sub(/#{World::STEP_KEYWORD_PATTERN}/, '') =~ Regexp.new(pattern) } }
-      end
-
-      def undefined_steps(include_keywords = true)
-        steps(include_keywords).delete_if { |step| World.defined_step_patterns.any? { |pattern| step.sub(/#{World::STEP_KEYWORD_PATTERN}/, '') =~ Regexp.new(pattern) } }
-      end
-
 
       private
 
