@@ -21,6 +21,10 @@ module Cucumber
         parse_feature_element_examples(source_lines)
       end
 
+      def contains
+        @examples
+      end
+
     end
   end
 end

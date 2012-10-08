@@ -23,6 +23,12 @@ module Cucumber
         @@defined_expressions
       end
 
+      def self.tags_in(container)
+        Array.new.tap do |accumulated_tags|
+          collect_tags(accumulated_tags, container)
+        end
+      end
+
       def self.steps_in(container, include_keywords = true)
         Array.new.tap do |accumulated_steps|
           collect_steps(accumulated_steps, container, include_keywords)
@@ -62,6 +68,16 @@ module Cucumber
 
       def self.extract_regular_expression(line)
         desanitize_line(sanitize_line(line).match(/^#{World::STEP_KEYWORD_PATTERN}\/([^\/]*)\//)[1])
+      end
+
+      def self.collect_tags(accumulated_tags, container)
+        accumulated_tags.concat container.tags if container.respond_to?(:tags)
+
+        if container.respond_to?(:contains)
+          container.contains.each do |child_container|
+            collect_tags(accumulated_tags, child_container)
+          end
+        end
       end
 
       def self.collect_steps(accumulated_steps, container, include_keywords = true)
