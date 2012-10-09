@@ -29,20 +29,29 @@ module Cucumber
         end
       end
 
-      def self.steps_in(container, include_keywords = true)
+      def self.steps_in(container, options = {})
+        options = {with_keywords: true,
+                   with_arguments: true}.merge(options)
+
         Array.new.tap do |accumulated_steps|
-          collect_steps(accumulated_steps, container, include_keywords)
+          collect_steps(accumulated_steps, container, options)
         end
       end
 
-      def self.undefined_steps_in(container, include_keywords = true)
-        all_steps = steps_in(container, include_keywords)
+      def self.undefined_steps_in(container, options = {})
+        options = {with_keywords: true,
+                   with_arguments: true}.merge(options)
+
+        all_steps = steps_in(container, options)
 
         all_steps.delete_if { |step| World.defined_step_patterns.any? { |pattern| step.sub(/#{World::STEP_KEYWORD_PATTERN}/, '') =~ Regexp.new(pattern) } }
       end
 
-      def self.defined_steps_in(container, include_keywords = true)
-        all_steps = steps_in(container, include_keywords)
+      def self.defined_steps_in(container, options = {})
+        options = {with_keywords: true,
+                   with_arguments: true}.merge(options)
+
+        all_steps = steps_in(container, options)
 
         all_steps.keep_if { |step| World.defined_step_patterns.any? { |pattern| step.sub(/#{World::STEP_KEYWORD_PATTERN}/, '') =~ Regexp.new(pattern) } }
       end
@@ -80,12 +89,12 @@ module Cucumber
         end
       end
 
-      def self.collect_steps(accumulated_steps, container, include_keywords = true)
-        accumulated_steps.concat container.steps(include_keywords) if container.respond_to?(:steps)
+      def self.collect_steps(accumulated_steps, container, options)
+        accumulated_steps.concat container.steps(options) if container.respond_to?(:steps)
 
         if container.respond_to?(:contains)
           container.contains.each do |child_container|
-            collect_steps(accumulated_steps, child_container, include_keywords)
+            collect_steps(accumulated_steps, child_container, options)
           end
         end
       end

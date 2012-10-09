@@ -16,6 +16,8 @@ end
 
 Then /^(?:feature "([^"]*)" )?scenario "([^"]*)" steps "([^"]*)" keywords are as follows:$/ do |file, scenario, keywords, steps|
   file ||= 1
+  options = keywords == 'with' ? {:with_keywords => true} : {:with_keywords => false}
+
   steps = steps.raw.flatten.collect do |step|
     if step.start_with? "'"
       step.slice(1..step.length - 2)
@@ -24,7 +26,7 @@ Then /^(?:feature "([^"]*)" )?scenario "([^"]*)" steps "([^"]*)" keywords are as
     end
   end
 
-  assert { @parsed_files[file - 1].feature.scenarios[scenario - 1].steps(keywords == 'with' ? true : false) == steps }
+  assert { @parsed_files[file - 1].feature.scenarios[scenario - 1].steps(options) == steps }
 end
 
 Then /^(?:feature "([^"]*)" )?scenario "([^"]*)" is found to have the following tags:$/ do |file, scenario, tags|
@@ -36,6 +38,8 @@ end
 
 Then /^(?:feature "([^"]*)" )?scenario "([^"]*)" stripped steps "([^"]*)" keywords are as follows:$/ do |file, scenario, keywords, steps|
   file ||= 1
+  options = keywords == 'with' ? {:with_keywords => true, :with_arguments => false, :left_delimiter => @left_delimiter, :right_delimiter => @right_delimiter} : {:with_keywords => false, :with_arguments => false, :left_delimiter => @left_delimiter, :right_delimiter => @right_delimiter}
+
   steps = steps.raw.flatten.collect do |step|
     if step.start_with? "'"
       step.slice(1..step.length - 2)
@@ -44,5 +48,5 @@ Then /^(?:feature "([^"]*)" )?scenario "([^"]*)" stripped steps "([^"]*)" keywor
     end
   end
 
-  assert { @parsed_files[file - 1].feature.scenarios[scenario - 1].stripped_steps(@left_delimiter, @right_delimiter, keywords == 'with' ? true : false) == steps }
+  assert { @parsed_files[file - 1].feature.scenarios[scenario - 1].steps(options) == steps }
 end

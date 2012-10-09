@@ -11,31 +11,38 @@ module Cucumber
         @steps =[]
       end
 
-      def steps(include_keywords = true)
-        include_keywords ? @steps : @steps.map { |step| step.sub(/#{World::STEP_KEYWORD_PATTERN}/, '') }
-      end
+      def steps(options = {})
+        options = {with_keywords: true,
+                   with_arguments: true}.merge(options)
 
-      def stripped_steps(left_delimiter, right_delimiter, include_keywords = true)
-        original_left = left_delimiter
-        original_right = right_delimiter
+        final_steps = options[:with_keywords] ? @steps : @steps.map { |step| step.sub(/#{World::STEP_KEYWORD_PATTERN}/, '') }
 
-        begin
-          Regexp.new(left_delimiter)
-        rescue RegexpError
-          left_delimiter = '\\' + left_delimiter
-        end
+        unless options[:with_arguments]
+          left_delimiter = options[:left_delimiter]
+          right_delimiter = options[:right_delimiter]
+          original_left = options[:left_delimiter]
+          original_right = options[:right_delimiter]
 
-        begin
-          Regexp.new(right_delimiter)
-        rescue RegexpError
-          right_delimiter = '\\' + right_delimiter
-        end
+          begin
+            Regexp.new(left_delimiter)
+          rescue RegexpError
+            left_delimiter = '\\' + left_delimiter
+          end
 
-        Array.new.tap do |cleaned_steps|
-          steps(include_keywords).each do |step|
-            cleaned_steps << step.gsub(Regexp.new("#{left_delimiter}.*?#{right_delimiter}"), original_left + original_right)
+          begin
+            Regexp.new(right_delimiter)
+          rescue RegexpError
+            right_delimiter = '\\' + right_delimiter
+          end
+
+          final_steps = Array.new.tap do |cleaned_steps|
+            final_steps.each do |step|
+              cleaned_steps << step.gsub(Regexp.new("#{left_delimiter}.*?#{right_delimiter}"), original_left + original_right)
+            end
           end
         end
+
+        final_steps
       end
 
 

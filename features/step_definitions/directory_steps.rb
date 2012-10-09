@@ -15,9 +15,13 @@ Then /^there are "([^"]*)" defined steps$/ do |step_count|
 end
 
 When /^the undefined steps "([^"]*)" keywords are:$/ do |keywords, steps|
-  assert { Cucumber::Analytics::World.undefined_steps_in(@parsed_directory, keywords == 'with' ? true : false).sort == steps.raw.flatten.sort }
+  options = keywords == 'with' ? {:with_keywords => true} : {:with_keywords => false}
+
+  assert { Cucumber::Analytics::World.undefined_steps_in(@parsed_directory, options).sort == steps.raw.flatten.sort }
 end
 
 When /^the defined steps "([^"]*)" keywords are:$/ do |keywords, steps|
-  assert { Cucumber::Analytics::World.defined_steps_in(@parsed_directory, keywords == 'with' ? true : false).sort == steps.raw.flatten.sort }
+  options = keywords == 'with' ? {:with_keywords => true} : {:with_keywords => false}
+
+  assert { Cucumber::Analytics::World.defined_steps_in(@parsed_directory, options).sort == steps.raw.flatten.sort }
 end

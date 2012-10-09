@@ -16,6 +16,8 @@ end
 
 Then /^the(?: feature "([^"]*)")? background's steps "([^"]*)" keywords are as follows:$/ do |file, keywords, steps|
   file ||= 1
+  options = keywords == 'with' ? {:with_keywords => true} : {:with_keywords => false}
+
   steps = steps.raw.flatten.collect do |step|
     if step.start_with? "'"
       step.slice(1..step.length - 2)
@@ -24,11 +26,13 @@ Then /^the(?: feature "([^"]*)")? background's steps "([^"]*)" keywords are as f
     end
   end
 
-  assert { @parsed_files[file - 1].feature.background.steps(keywords == 'with' ? true : false) == steps }
+  assert { @parsed_files[file - 1].feature.background.steps(options) == steps }
 end
 
 Then /^the(?: feature "([^"]*)")? background's stripped steps "([^"]*)" keywords are as follows:$/ do |file, keywords, steps|
   file ||= 1
+  options = keywords == 'with' ? {:with_keywords => true, :with_arguments => false, :left_delimiter => @left_delimiter, :right_delimiter => @right_delimiter} : {:with_keywords => false, :with_arguments => false, :left_delimiter => @left_delimiter, :right_delimiter => @right_delimiter}
+
   steps = steps.raw.flatten.collect do |step|
     if step.start_with? "'"
       step.slice(1..step.length - 2)
@@ -37,5 +41,5 @@ Then /^the(?: feature "([^"]*)")? background's stripped steps "([^"]*)" keywords
     end
   end
 
-  assert { @parsed_files[file - 1].feature.background.stripped_steps(@left_delimiter, @right_delimiter, keywords == 'with' ? true : false) == steps }
+  assert { @parsed_files[file - 1].feature.background.steps(options) == steps }
 end
