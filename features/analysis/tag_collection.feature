@@ -1,6 +1,16 @@
 Feature: Tags can be collected from arbitrary parts of the codebase.
 
 
+  Acceptance criteria
+
+  Tags can be collected from:
+    1. scenarios
+    2. outlines
+    3. features
+    4. files
+    5. directories
+
+
   Background: Setup test codebase
     Given a directory "feature_directory"
     And the following feature file "test_file_1.feature":
@@ -28,7 +38,7 @@ Feature: Tags can be collected from arbitrary parts of the codebase.
         | param1 | param2 |
         | a      | b      |
     """
-    And the file "test_file_1.feature" is parsed
+    And the file "test_file_1.feature" is read
     And a directory "feature_directory/nested_directory"
     And the following feature file "test_file_2.feature":
     """
@@ -41,7 +51,7 @@ Feature: Tags can be collected from arbitrary parts of the codebase.
         When the second step
         Then the third step
     """
-    And the file "test_file_2.feature" is parsed
+    And the file "test_file_2.feature" is read
     When the directory "feature_directory" is read
 
   Scenario: Tags can be collected from scenarios

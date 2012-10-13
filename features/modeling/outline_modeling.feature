@@ -1,4 +1,15 @@
-Feature: The gem can analyze .feature files that have Scenario Outline elements.
+Feature: Scenario Outline elements can be modeled.
+
+
+  Acceptance criteria
+
+  All conceptual pieces of a Scenario Outline can be modeled:
+    1. the outline's name
+    2. the outline's description
+    3. the outline's steps
+    4. the outline's tags
+    5. the outline's example rows
+
 
   Background: Test file setup.
     Given the following feature file:
@@ -11,12 +22,31 @@ Feature: The gem can analyze .feature files that have Scenario Outline elements.
       Scenario Outline: The scenario outline's name.
         Some text describing the scenario.
         More text.
-        Given the first "<param1>"
+        Given this *parameterized* step takes a table:
+          | <param1> |
+          | <param2> |
+        And some setup step
+#
+        When a step with a *parameter*
+        And a big step:
+        #random comment
+        -"-"-"-
+      some text
 
-
-        When the second "<param2>"
-        #
-        Then the third step
+        #some comments
+        Scenario:
+        Scenario Outline:
+        Examples:
+        @
+        Feature:
+        |
+        Given
+        When
+        Then
+        *
+            some more text
+        -"-"-"-
+        Then *lots* *of* *parameters*
 
       Examples: text describing the significance of the examples
         #
@@ -40,32 +70,106 @@ Feature: The gem can analyze .feature files that have Scenario Outline elements.
         | a      | b      |
 
     """
-    When the file is parsed
+    And parameter delimiters of "*" and "*"
+    When the file is read
 
-  Scenario: The parser can extract various information about the feature.
-    Then the feature is found to have the following properties:
-      | outline_count | 1 |
 
-  Scenario: The parser can extract a scenario outline's name.
-    Then scenario "1" is found to have the following properties:
+  Scenario: The outline name is modeled.
+    Then the outline is found to have the following properties:
       | name | The scenario outline's name. |
 
-  Scenario: The parser can extract a scenario outline description.
-    Then scenario "1" descriptive lines are as follows:
+  Scenario: The outline description is modeled.
+    Then the outline descriptive lines are as follows:
       | Some text describing the scenario. |
       | More text.                         |
 
-  Scenario: The parser can extract a scenario outline's steps.
-    Then scenario "1" steps "with" keywords are as follows:
-      | Given the first "<param1>" |
-      | When the second "<param2>" |
-      | Then the third step        |
+  Scenario: The outline steps are modeled.
+    Then the outline steps are as follows:
+      | Given this *parameterized* step takes a table: |
+      | \| <param1> \|                                 |
+      | \| <param2> \|                                 |
+      | And some setup step                            |
+      | When a step with a *parameter*                 |
+      | And a big step:                                |
+      | """                                            |
+      | 'some text'                                    |
+      | ''                                             |
+      | '#some comments'                               |
+      | 'Scenario:'                                    |
+      | 'Scenario Outline:'                            |
+      | 'Examples:'                                    |
+      | '@'                                            |
+      | 'Feature:'                                     |
+      | '\|'                                           |
+      | 'Given'                                        |
+      | 'When'                                         |
+      | 'Then'                                         |
+      | '*'                                            |
+      | '    some more text'                           |
+      | """                                            |
+      | Then *lots* *of* *parameters*                  |
+    And the outline steps "without" arguments are as follows:
+      | Given this ** step takes a table: |
+      | And some setup step               |
+      | When a step with a **             |
+      | And a big step:                   |
+      | Then ** ** **                     |
+    And the outline steps "without" keywords are as follows:
+      | this *parameterized* step takes a table: |
+      | \| <param1> \|                           |
+      | \| <param2> \|                           |
+      | some setup step                          |
+      | a step with a *parameter*                |
+      | a big step:                              |
+      | """                                      |
+      | 'some text'                              |
+      | ''                                       |
+      | '#some comments'                         |
+      | 'Scenario:'                              |
+      | 'Scenario Outline:'                      |
+      | 'Examples:'                              |
+      | '@'                                      |
+      | 'Feature:'                               |
+      | '\|'                                     |
+      | 'Given'                                  |
+      | 'When'                                   |
+      | 'Then'                                   |
+      | '*'                                      |
+      | '    some more text'                     |
+      | """                                      |
+      | *lots* *of* *parameters*                 |
+    And the outline steps "without" arguments "without" keywords are as follows:
+      | this ** step takes a table: |
+      | some setup step             |
+      | a step with a **            |
+      | a big step:                 |
+      | ** ** **                    |
+    And the outline step "1" has the following block:
+      | \| <param1> \| |
+      | \| <param2> \| |
+    And the outline step "4" has the following block:
+      | """                  |
+      | 'some text'          |
+      | ''                   |
+      | '#some comments'     |
+      | 'Scenario:'          |
+      | 'Scenario Outline:'  |
+      | 'Examples:'          |
+      | '@'                  |
+      | 'Feature:'           |
+      | '\|'                 |
+      | 'Given'              |
+      | 'When'               |
+      | 'Then'               |
+      | '*'                  |
+      | '    some more text' |
+      | """                  |
 
-  Scenario: The parser can extract a scenario outline's tags
-    Then scenario "1" is found to have the following tags:
+  Scenario: The outline tags are modeled.
+    Then the outline is found to have the following tags:
       | @outline_tag |
 
-  Scenario Outline: The parser can extract a scenario outline's examples.
+  Scenario Outline: The outline examples are modeled.
     Then "<outline>" example "<set>" has a "<name>"
     And "<outline>" example "<set>" descriptive lines are as follows:
       | <description1> |

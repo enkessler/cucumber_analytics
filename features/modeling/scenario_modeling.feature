@@ -1,4 +1,14 @@
-Feature: The gem can analyze .feature files that have Scenario elements.
+Feature: Scenario elements can be modeled.
+
+
+  Acceptance criteria
+
+  All conceptual pieces of a Scenario can be modeled:
+    1. the scenario's name
+    2. the scenario's description
+    3. the scenario's steps
+    4. the scenario's tags
+
 
   Background: Test file setup.
     Given the following feature file:
@@ -15,40 +25,130 @@ Feature: The gem can analyze .feature files that have Scenario elements.
 
         Some text describing the scenario.
         More text.
-        Given the first step
+        Given this *parameterized* step takes a table:
+          | data      |
+          | more data |
+        And some setup step
+#
+        When a step with a *parameter*
+        And a big step:
+        #random comment
+        -"-"-"-
+      some text
 
-        When the second step
-          #here too
-        Then the third step
+        #some comments
+        Scenario:
+        Scenario Outline:
+        Examples:
+        @
+        Feature:
+        |
+        Given
+        When
+        Then
+        *
+            some more text
+        -"-"-"-
+        Then *lots* *of* *parameters*
 
     """
-    When the file is parsed
+    And parameter delimiters of "*" and "*"
+    When the file is read
 
-  Scenario: The parser can extract various information about the feature.
-    Then the feature is found to have the following properties:
-      | scenario_count | 1 |
 
-  Scenario: The parser can extract a scenario's name.
-    Then scenario "1" is found to have the following properties:
+  Scenario: The scenario name is modeled.
+    Then the scenario is found to have the following properties:
       | name | The first scenario's name. |
 
-  Scenario: The parser can extract a scenario description.
-    Then scenario "1" descriptive lines are as follows:
+  Scenario: The scenario description is modeled.
+    Then the scenario descriptive lines are as follows:
       | Some text describing the scenario. |
       | More text.                         |
 
-  Scenario: The parser can extract a scenario's steps.
-    Then scenario "1" steps "with" keywords are as follows:
-      | Given the first step |
-      | When the second step |
-      | Then the third step  |
-    And scenario "1" steps "without" keywords are as follows:
-      | the first step  |
-      | the second step |
-      | the third step  |
+  Scenario: The scenario steps are modeled.
+    Then the scenario steps are as follows:
+      | Given this *parameterized* step takes a table: |
+      | \| data      \|                                |
+      | \| more data \|                                |
+      | And some setup step                            |
+      | When a step with a *parameter*                 |
+      | And a big step:                                |
+      | """                                            |
+      | 'some text'                                    |
+      | ''                                             |
+      | '#some comments'                               |
+      | 'Scenario:'                                    |
+      | 'Scenario Outline:'                            |
+      | 'Examples:'                                    |
+      | '@'                                            |
+      | 'Feature:'                                     |
+      | '\|'                                           |
+      | 'Given'                                        |
+      | 'When'                                         |
+      | 'Then'                                         |
+      | '*'                                            |
+      | '    some more text'                           |
+      | """                                            |
+      | Then *lots* *of* *parameters*                  |
+    And the scenario steps "without" arguments are as follows:
+      | Given this ** step takes a table: |
+      | And some setup step               |
+      | When a step with a **             |
+      | And a big step:                   |
+      | Then ** ** **                     |
+    And the scenario steps "without" keywords are as follows:
+      | this *parameterized* step takes a table: |
+      | \| data      \|                          |
+      | \| more data \|                          |
+      | some setup step                          |
+      | a step with a *parameter*                |
+      | a big step:                              |
+      | """                                      |
+      | 'some text'                              |
+      | ''                                       |
+      | '#some comments'                         |
+      | 'Scenario:'                              |
+      | 'Scenario Outline:'                      |
+      | 'Examples:'                              |
+      | '@'                                      |
+      | 'Feature:'                               |
+      | '\|'                                     |
+      | 'Given'                                  |
+      | 'When'                                   |
+      | 'Then'                                   |
+      | '*'                                      |
+      | '    some more text'                     |
+      | """                                      |
+      | *lots* *of* *parameters*                 |
+    And the scenario steps "without" arguments "without" keywords are as follows:
+      | this ** step takes a table: |
+      | some setup step             |
+      | a step with a **            |
+      | a big step:                 |
+      | ** ** **                    |
+    And the scenario step "1" has the following block:
+      | \| data      \| |
+      | \| more data \| |
+    And the scenario step "4" has the following block:
+      | """                  |
+      | 'some text'          |
+      | ''                   |
+      | '#some comments'     |
+      | 'Scenario:'          |
+      | 'Scenario Outline:'  |
+      | 'Examples:'          |
+      | '@'                  |
+      | 'Feature:'           |
+      | '\|'                 |
+      | 'Given'              |
+      | 'When'               |
+      | 'Then'               |
+      | '*'                  |
+      | '    some more text' |
+      | """                  |
 
-  Scenario: The parser can extract a scenario's tags
-    Then scenario "1" is found to have the following tags:
+  Scenario: The scenario tags are modeled.
+    Then the scenario is found to have the following tags:
       | @a_tag           |
       | @another_tag     |
       | @yet_another_tag |
