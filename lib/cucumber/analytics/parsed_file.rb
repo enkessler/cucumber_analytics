@@ -2,10 +2,20 @@ module Cucumber
   module Analytics
     class ParsedFile
 
+
       attr_reader :feature
+
 
       def initialize(file_parsed = nil)
         parse_file(file_parsed) if file_parsed
+      end
+
+      def name
+        File.basename(@file.gsub('\\', '/'))
+      end
+
+      def path
+        @file
       end
 
       def contains
@@ -32,7 +42,7 @@ module Cucumber
           file_lines.shift
         end
 
-        until file_lines.first =~ /^\s*(?:@|Background:|Scenario:|(?:Scenario Outline:))/
+        until file_lines.first =~ /^\s*(?:@|Background:|Scenario:|(?:Scenario Outline:))/ or file_lines.empty?
           unless ignored_line?(file_lines.first)
             feature_lines << file_lines.first
           end

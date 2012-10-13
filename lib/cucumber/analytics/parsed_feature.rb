@@ -2,11 +2,13 @@ module Cucumber
   module Analytics
     class ParsedFeature
 
+
       attr_reader :tags
       attr_reader :name
       attr_reader :description
       attr_accessor :background
       attr_accessor :scenarios
+
 
       def initialize(source_lines = nil)
         @tags = []
@@ -34,7 +36,7 @@ module Cucumber
       end
 
       def contains
-         [@background] + @scenarios
+        [@background] + @scenarios
       end
 
 

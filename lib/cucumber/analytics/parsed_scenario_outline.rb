@@ -2,8 +2,10 @@ module Cucumber
   module Analytics
     class ParsedScenarioOutline < FeatureElement
 
+
       attr_accessor :tags
       attr_accessor :examples
+
 
       def initialize(source_lines = nil)
         super

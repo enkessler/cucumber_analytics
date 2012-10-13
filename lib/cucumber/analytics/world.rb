@@ -2,6 +2,7 @@ module Cucumber
   module Analytics
     module World
 
+
       SANITARY_STRING = '___!!!___'
       STEP_KEYWORD_PATTERN = '\s*(?:Given|When|Then|And|\*)\s*'
 
@@ -29,31 +30,22 @@ module Cucumber
         end
       end
 
-      def self.steps_in(container, options = {})
-        options = {with_keywords: true,
-                   with_arguments: true}.merge(options)
-
+      def self.steps_in(container)
         Array.new.tap do |accumulated_steps|
-          collect_steps(accumulated_steps, container, options)
+          collect_steps(accumulated_steps, container)
         end
       end
 
-      def self.undefined_steps_in(container, options = {})
-        options = {with_keywords: true,
-                   with_arguments: true}.merge(options)
+      def self.undefined_steps_in(container)
+        all_steps = steps_in(container)
 
-        all_steps = steps_in(container, options)
-
-        all_steps.delete_if { |step| World.defined_step_patterns.any? { |pattern| step.sub(/#{World::STEP_KEYWORD_PATTERN}/, '') =~ Regexp.new(pattern) } }
+        all_steps.select { |step| !World.defined_step_patterns.any? { |pattern| step.base =~ Regexp.new(pattern) } }
       end
 
-      def self.defined_steps_in(container, options = {})
-        options = {with_keywords: true,
-                   with_arguments: true}.merge(options)
+      def self.defined_steps_in(container)
+        all_steps = steps_in(container)
 
-        all_steps = steps_in(container, options)
-
-        all_steps.keep_if { |step| World.defined_step_patterns.any? { |pattern| step.sub(/#{World::STEP_KEYWORD_PATTERN}/, '') =~ Regexp.new(pattern) } }
+        all_steps.select { |step| World.defined_step_patterns.any? { |pattern| step.base =~ Regexp.new(pattern) } }
       end
 
 
@@ -89,12 +81,12 @@ module Cucumber
         end
       end
 
-      def self.collect_steps(accumulated_steps, container, options)
-        accumulated_steps.concat container.steps(options) if container.respond_to?(:steps)
+      def self.collect_steps(accumulated_steps, container)
+        accumulated_steps.concat container.steps if container.respond_to?(:steps)
 
         if container.respond_to?(:contains)
           container.contains.each do |child_container|
-            collect_steps(accumulated_steps, child_container, options)
+            collect_steps(accumulated_steps, child_container)
           end
         end
       end

@@ -2,8 +2,10 @@ module Cucumber
   module Analytics
     class OutlineExample < FeatureElement
 
+
       attr_accessor :tags
       attr_accessor :rows
+
 
       def initialize(source_lines = nil)
         super

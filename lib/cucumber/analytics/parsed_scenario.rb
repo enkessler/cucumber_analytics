@@ -2,7 +2,9 @@ module Cucumber
   module Analytics
     class ParsedScenario < FeatureElement
 
+
       attr_accessor :tags
+
 
       def initialize(source_lines = nil)
         super

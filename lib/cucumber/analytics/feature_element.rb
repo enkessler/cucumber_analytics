@@ -2,47 +2,16 @@ module Cucumber
   module Analytics
     class FeatureElement
 
+
       attr_reader :name
       attr_reader :description
+      attr_reader :steps
+
 
       def initialize(source_lines = nil)
         @name = ''
         @description =[]
         @steps =[]
-      end
-
-      def steps(options = {})
-        options = {with_keywords: true,
-                   with_arguments: true}.merge(options)
-
-        final_steps = options[:with_keywords] ? @steps : @steps.map { |step| step.sub(/#{World::STEP_KEYWORD_PATTERN}/, '') }
-
-        unless options[:with_arguments]
-          left_delimiter = options[:left_delimiter]
-          right_delimiter = options[:right_delimiter]
-          original_left = options[:left_delimiter]
-          original_right = options[:right_delimiter]
-
-          begin
-            Regexp.new(left_delimiter)
-          rescue RegexpError
-            left_delimiter = '\\' + left_delimiter
-          end
-
-          begin
-            Regexp.new(right_delimiter)
-          rescue RegexpError
-            right_delimiter = '\\' + right_delimiter
-          end
-
-          final_steps = Array.new.tap do |cleaned_steps|
-            final_steps.each do |step|
-              cleaned_steps << step.gsub(Regexp.new("#{left_delimiter}.*?#{right_delimiter}"), original_left + original_right)
-            end
-          end
-        end
-
-        final_steps
       end
 
 
@@ -85,28 +54,19 @@ module Cucumber
       def parse_feature_element_steps(source_lines)
         until source_lines.empty? or source_lines.first =~ /^\s*(?:@|Examples:)/
           line = source_lines.first
+          block = nil
 
-          if line =~ /^\s*"""/
-            leading_whitespace = line[/^\s*/]
-
-            @steps << line.strip
-            source_lines.shift
-
-            line = source_lines.first
-            until line =~ /^\s*"""/
-
-              leading_whitespace.length.times do |count|
-                line.slice!(0, 1) if line[0] =~ /\s/
-              end
-
-              @steps << line.chomp
+          case
+            when line =~ /^\s*"""/
+              block = extract_doc_block(source_lines)
+              @steps[@steps.size - 1] = Step.new(@steps.last.keyword + ' ' + @steps.last.base, block)
+            when line =~ /^\s*\|/
+              block = extract_table_block(source_lines)
+              @steps[@steps.size - 1] = Step.new(@steps.last.keyword + ' ' + @steps.last.base, block)
+            else
+              @steps << Step.new(line.strip)
               source_lines.shift
-              line = source_lines.first
-            end
           end
-
-          @steps << line.strip
-          source_lines.shift
         end
       end
 
@@ -130,6 +90,51 @@ module Cucumber
 
           @examples << OutlineExample.new(example_lines)
         end
+      end
+
+      def extract_doc_block(source_lines)
+        step_block = []
+
+        line = source_lines.first
+        leading_whitespace = line[/^\s*/]
+
+        step_block << line.strip
+        source_lines.shift
+
+        line = source_lines.first
+        until line =~ /^\s*"""/
+
+          leading_whitespace.length.times do
+            line.slice!(0, 1) if line[0] =~ /\s/
+          end
+
+          step_block << line.chomp
+          source_lines.shift
+          line = source_lines.first
+        end
+
+        step_block << line.strip
+        source_lines.shift
+
+        step_block
+      end
+
+      def extract_table_block(source_lines)
+        step_block = []
+
+        line = source_lines.first
+
+        step_block << line.strip
+        source_lines.shift
+
+        line = source_lines.first
+        while line =~ /^\s*\|/
+          step_block << line.strip
+          source_lines.shift
+          line = source_lines.first
+        end
+
+        step_block
       end
 
     end
