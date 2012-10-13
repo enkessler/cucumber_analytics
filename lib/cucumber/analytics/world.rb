@@ -30,6 +30,12 @@ module Cucumber
         end
       end
 
+      def self.scenarios_in(container)
+        Array.new.tap do |accumulated_scenarios|
+          collect_scenarios(accumulated_scenarios, container)
+        end
+      end
+
       def self.steps_in(container)
         Array.new.tap do |accumulated_steps|
           collect_steps(accumulated_steps, container)
@@ -77,6 +83,16 @@ module Cucumber
         if container.respond_to?(:contains)
           container.contains.each do |child_container|
             collect_tags(accumulated_tags, child_container)
+          end
+        end
+      end
+
+      def self.collect_scenarios(accumulated_scenarios, container)
+        accumulated_scenarios.concat container.scenarios if container.respond_to?(:scenarios)
+
+        if container.respond_to?(:contains)
+          container.contains.each do |child_container|
+            collect_scenarios(accumulated_scenarios, child_container)
           end
         end
       end

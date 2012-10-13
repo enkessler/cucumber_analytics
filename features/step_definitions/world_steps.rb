@@ -112,3 +112,27 @@ When /^the(?: "([^"]*)")? steps collected from the directory are as follows:$/ d
 
   assert { expected_steps.collect { |step| step.text_step }.flatten.sort == steps.sort }
 end
+
+Then /^the scenarios collected from feature "([^"]*)" are as follows:$/ do |file, scenarios|
+  file ||= 1
+
+  actual_scenarios = Cucumber::Analytics::World.scenarios_in(@parsed_files[file - 1].feature).collect { |scenario| scenario.name }
+
+  assert { actual_scenarios.flatten.sort == scenarios.raw.flatten.sort }
+end
+
+Then /^the scenarios collected from file "([^"]*)" are as follows:$/ do |file, scenarios|
+  file ||= 1
+
+  actual_scenarios = Cucumber::Analytics::World.scenarios_in(@parsed_files[file - 1]).collect { |scenario| scenario.name }
+
+  assert { actual_scenarios.flatten.sort == scenarios.raw.flatten.sort }
+end
+
+Then /^the scenarios collected from directory "([^"]*)" are as follows:$/ do |directory, scenarios|
+  directory ||= 1
+
+  actual_scenarios = Cucumber::Analytics::World.scenarios_in(@parsed_directories[directory - 1]).collect { |scenario| scenario.name }
+
+  assert { actual_scenarios.flatten.sort == scenarios.raw.flatten.sort }
+end
