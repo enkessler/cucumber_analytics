@@ -16,6 +16,14 @@ module Cucumber
         scan_directory if directory_parsed
       end
 
+      def name
+        File.basename(@directory.gsub('\\', '/'))
+      end
+
+      def path
+        @directory
+      end
+
       def feature_file_count
         @feature_files.count
       end

@@ -4,7 +4,9 @@ Feature: Directories can be modeled.
   Acceptance criteria
 
   Directories containing feature files can be modeled:
-    1. all feature files contained
+    1. the directory's name
+    2. the directory's full path
+    3. all feature files contained
 
 
   Background: Setup test directories
@@ -68,13 +70,17 @@ Feature: Directories can be modeled.
 
   Scenario: The directory's feature files are modeled.
     Then directory "1" is found to have the following properties:
-      | feature_file_count | 3 |
+      | name               | feature_directory         |
+      | path               | path_to/feature_directory |
+      | feature_file_count | 3                         |
     And directory "1" feature files are as follows:
       | test_file_1.feature |
       | test_file_2.feature |
       | test_file_3.feature |
     Then directory "2" is found to have the following properties:
-      | feature_file_count | 2 |
+      | name               | nested_directory                           |
+      | path               | path_to/feature_directory/nested_directory |
+      | feature_file_count | 2                                          |
     And directory "2" feature files are as follows:
       | test_file_4.feature |
       | test_file_5.feature |

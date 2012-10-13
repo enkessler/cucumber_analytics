@@ -3,6 +3,10 @@ Then /^(?:the )?directory(?: "([^"]*)")? is found to have the following properti
   properties = properties.rows_hash
 
   properties.each do |property, expected_value|
+    if property == 'path'
+      expected_value.sub!('path_to', @default_file_directory)
+    end
+
     assert { expected_value == @parsed_directories[directory - 1].send(property.to_sym).to_s }
   end
 end
