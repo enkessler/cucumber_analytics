@@ -1,5 +1,6 @@
 Then /^(?:feature "([^"]*)" )?"([^"]*)" example "([^"]*)" has a "([^"]*)"$/ do |file, scenario, example, name|
   file ||= 1
+
   assert { @parsed_files[file - 1].feature.scenarios[scenario - 1].examples[example - 1].name == name }
 end
 

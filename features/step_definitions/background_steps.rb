@@ -14,9 +14,14 @@ Then /^the(?: feature "([^"]*)")? background's descriptive lines are as follows:
   assert { @parsed_files[file - 1].feature.background.description == expected_description }
 end
 
-Then /^the(?: feature "([^"]*)")? background's steps "([^"]*)" keywords are as follows:$/ do |file, keywords, steps|
+Then /^the(?: feature "([^"]*)")? background's steps(?: "([^"]*)" arguments)?(?: "([^"]*)" keywords)? are as follows:$/ do |file, arguments, keywords, steps|
   file ||= 1
-  options = keywords == 'with' ? {:with_keywords => true} : {:with_keywords => false}
+  arguments ||= 'with'
+  keywords ||= 'with'
+  translate = {'with' => true,
+               'without' => false}
+
+  options = {:with_keywords => translate[keywords], :with_arguments => translate[arguments], :left_delimiter => @left_delimiter, :right_delimiter => @right_delimiter}
 
   steps = steps.raw.flatten.collect do |step|
     if step.start_with? "'"
@@ -26,20 +31,25 @@ Then /^the(?: feature "([^"]*)")? background's steps "([^"]*)" keywords are as f
     end
   end
 
-  assert { @parsed_files[file - 1].feature.background.steps(options) == steps }
+  actual_steps = Array.new.tap do |steps|
+    @parsed_files[file - 1].feature.background.steps.each do |step|
+      steps << step.text_step(options)
+    end
+  end
+
+  assert { actual_steps.flatten == steps }
 end
 
-Then /^the(?: feature "([^"]*)")? background's stripped steps "([^"]*)" keywords are as follows:$/ do |file, keywords, steps|
+When /^step "([^"]*)" of the background (?:of feature "([^"]*)" )?has the following block:$/ do |step, file, block|
   file ||= 1
-  options = keywords == 'with' ? {:with_keywords => true, :with_arguments => false, :left_delimiter => @left_delimiter, :right_delimiter => @right_delimiter} : {:with_keywords => false, :with_arguments => false, :left_delimiter => @left_delimiter, :right_delimiter => @right_delimiter}
 
-  steps = steps.raw.flatten.collect do |step|
-    if step.start_with? "'"
-      step.slice(1..step.length - 2)
+  block = block.raw.flatten.collect do |line|
+    if line.start_with? "'"
+      line.slice(1..line.length - 2)
     else
-      step
+      line
     end
   end
 
-  assert { @parsed_files[file - 1].feature.background.steps(options) == steps }
+  assert { @parsed_files[file - 1].feature.background.steps[step - 1].block == block }
 end

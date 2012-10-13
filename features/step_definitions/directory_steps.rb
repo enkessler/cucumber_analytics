@@ -1,27 +1,16 @@
-Then /^the directory is found to have the following properties:$/ do |properties|
+Then /^(?:the )?directory(?: "([^"]*)")? is found to have the following properties:$/ do |directory, properties|
+  directory ||= 1
   properties = properties.rows_hash
 
   properties.each do |property, expected_value|
-    assert { expected_value == @parsed_directory.send(property.to_sym).to_s }
+    assert { expected_value == @parsed_directories[directory - 1].send(property.to_sym).to_s }
   end
 end
 
-Then /^there are "([^"]*)" undefined steps$/ do |step_count|
-  assert { Cucumber::Analytics::World.undefined_steps_in(@parsed_directory).count == step_count }
-end
+When /^(?:the )?directory(?: "([^"]*)")? feature files are as follows:$/ do |directory, files|
+  directory ||= 1
 
-Then /^there are "([^"]*)" defined steps$/ do |step_count|
-  assert { Cucumber::Analytics::World.defined_steps_in(@parsed_directory).count == step_count }
-end
+  actual_files = @parsed_directories[directory - 1].feature_files.collect { |file| file.name }
 
-When /^the undefined steps "([^"]*)" keywords are:$/ do |keywords, steps|
-  options = keywords == 'with' ? {:with_keywords => true} : {:with_keywords => false}
-
-  assert { Cucumber::Analytics::World.undefined_steps_in(@parsed_directory, options).sort == steps.raw.flatten.sort }
-end
-
-When /^the defined steps "([^"]*)" keywords are:$/ do |keywords, steps|
-  options = keywords == 'with' ? {:with_keywords => true} : {:with_keywords => false}
-
-  assert { Cucumber::Analytics::World.defined_steps_in(@parsed_directory, options).sort == steps.raw.flatten.sort }
+  assert { actual_files.flatten.sort == files.raw.flatten.sort }
 end
