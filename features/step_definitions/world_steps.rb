@@ -152,3 +152,11 @@ Then /^the features collected from directory "([^"]*)" are as follows:$/ do |dir
 
   assert { actual_features.flatten.sort == features.raw.flatten.sort }
 end
+
+Then /^the files collected from directory "([^"]*)" are as follows:$/ do |directory, files|
+  directory ||= 1
+
+  actual_files = Cucumber::Analytics::World.files_in(@parsed_directories[directory - 1]).collect { |file| file.name }
+
+  assert { actual_files.flatten.sort == files.raw.flatten.sort }
+end

@@ -30,6 +30,12 @@ module Cucumber
         end
       end
 
+      def self.files_in(container)
+        Array.new.tap do |accumulated_files|
+          collect_files(accumulated_files, container)
+        end
+      end
+
       def self.features_in(container)
         Array.new.tap do |accumulated_features|
           collect_features(accumulated_features, container)
@@ -89,6 +95,16 @@ module Cucumber
         if container.respond_to?(:contains)
           container.contains.each do |child_container|
             collect_tags(accumulated_tags, child_container)
+          end
+        end
+      end
+
+      def self.collect_files(accumulated_files, container)
+        accumulated_files.concat container.feature_files if container.respond_to?(:feature_files)
+
+        if container.respond_to?(:contains)
+          container.contains.each do |child_container|
+            collect_files(accumulated_files, child_container)
           end
         end
       end
