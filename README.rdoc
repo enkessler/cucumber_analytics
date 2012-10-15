@@ -60,7 +60,7 @@ Now it's time to take a look around and see what we can see.
   puts all_steps.collect{ |step| step.step_text(with_keywords: false)}
   #=> ["some step", "the user logs in", "the user will log in", "another step", "the user "Bob" logs in"]
 
-So with a few simple commands we have discoverd that there are five different
+So with a few simple commands we have discovered that there are five different
 tags in our codebase and that @wip tags account for half of all usages. We have
 also discovered that our team is creating several redundant steps that could be
 rewritten into a single, reusable step.
