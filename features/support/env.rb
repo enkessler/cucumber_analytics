@@ -16,6 +16,7 @@ TEST_STEP_FILE_LOCATION = "#{DEFAULT_FILE_DIRECTORY}/#{DEFAULT_STEP_FILE_NAME}"
 
 Before do
   @default_feature_file_name = DEFAULT_FEATURE_FILE_NAME
+  @default_step_file_name = DEFAULT_STEP_FILE_NAME
   @test_file_directory = TEST_FILE_DIRECTORY
   @default_file_directory = DEFAULT_FILE_DIRECTORY
   @test_step_file_location = TEST_STEP_FILE_LOCATION

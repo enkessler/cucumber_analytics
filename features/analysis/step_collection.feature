@@ -44,18 +44,22 @@ Feature: Steps can be collected from arbitrary parts of the codebase.
         | a    | b         |
     """
     And the file "test_file_2.feature" is read
-    And the following step definition file:
+    And the following step definition file "some_step_defs.rb":
     """
     Given /^a defined step$/ do
       pending
     end
-
+    """
+    And the following step definition file "more_step_defs.rb":
+    """
     Given /^another defined step$/ do
       pending
     end
     """
-    When the directory "feature_directory" is read
-    And the step definitions are loaded
+    When the step definition file "some_step_defs.rb" is read
+    And the step definition file "more_step_defs.rb" is read
+    And the directory "feature_directory" is read
+
 
 
   Scenario: Steps can be collected from backgrounds

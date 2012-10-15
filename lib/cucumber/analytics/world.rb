@@ -8,7 +8,7 @@ module Cucumber
 
 
       def self.load_step_file(file_path)
-        @@defined_expressions = []
+        @@defined_expressions ||= []
 
         File.open(file_path, 'r') do |file|
           file.readlines.each do |line|
