@@ -38,7 +38,7 @@ Then /^(?:the )?(?:feature "([^"]*)" )?(?:scenario|outline)(?: "([^"]*)")? steps
 
   actual_steps = Array.new.tap do |steps|
     @parsed_files[file - 1].feature.scenarios[scenario - 1].steps.each do |step|
-      steps << step.text_step(options)
+      steps << step.step_text(options)
     end
   end
 

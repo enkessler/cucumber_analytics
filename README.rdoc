@@ -33,9 +33,40 @@ Or install it yourself as:
 
 == Usage
 
-TODO: Write usage instructions here
+First things first. Load up the gem code.
 
-## Contributing
+  require 'cucumber-analytics'
+
+Next, let's generate a model for our Cucumber suite.
+
+  directory = Cucumber::Analytics::ParsedDirectory.new('path/to/the/code_directory')
+
+Now it's time to take a look around and see what we can see.
+
+  all_tags = world.tags_in(directory)
+  puts all_tags
+  #=> ["@Unit", "@Fragile", "@wip", "@wip", "@Critical", "@Unit", "@wip", "@Deprecated", "@wip", "@wip"]
+
+  puts all_tags.uniq
+  #=> ["@Unit", "@Fragile", "@wip", "@Critical", "@Deprecated"]
+
+  wip_tags = all_tags.select{ |tag| tag == '@wip' }
+
+  puts wip_tags.count.to_f / all_tags.count
+  #=> 0.5
+
+
+  all_steps = world.steps_in(directory)
+  puts all_steps.collect{ |step| step.step_text(with_keywords: false)}
+  #=> ["some step", "the user logs in", "the user will log in", "another step", "the user "Bob" logs in"]
+
+So with a few simple commands we have discoverd that there are five different
+tags in our codebase and that @wip tags account for half of all usages. We have
+also discovered that our team is creating several redundant steps that could be
+rewritten into a single, reusable step.
+
+
+== Contributing
 
 1. Fork it
 2. Create your feature branch (`git checkout -b my-new-feature`)

@@ -43,7 +43,7 @@ Then /^the(?: "([^"]*)")? steps collected from feature "([^"]*)" background are 
       expected_steps = Cucumber::Analytics::World.steps_in(container)
   end
 
-  assert { expected_steps.collect { |step| step.text_step }.flatten.sort == steps.sort }
+  assert { expected_steps.collect { |step| step.step_text }.flatten.sort == steps.sort }
 end
 
 Then /^the(?: "([^"]*)")? steps collected from feature "([^"]*)" scenario "([^"]*)" are as follows:$/ do |defined, file, scenario, steps|
@@ -60,7 +60,7 @@ Then /^the(?: "([^"]*)")? steps collected from feature "([^"]*)" scenario "([^"]
       expected_steps = Cucumber::Analytics::World.steps_in(container)
   end
 
-  assert { expected_steps.collect { |step| step.text_step }.flatten.sort == steps.sort }
+  assert { expected_steps.collect { |step| step.step_text }.flatten.sort == steps.sort }
 end
 
 When /^the(?: "([^"]*)")? steps collected from (?:the )?feature(?: "([^"]*)")? are as follows:$/ do |defined, file, steps|
@@ -77,7 +77,7 @@ When /^the(?: "([^"]*)")? steps collected from (?:the )?feature(?: "([^"]*)")? a
       expected_steps = Cucumber::Analytics::World.steps_in(container)
   end
 
-  assert { expected_steps.collect { |step| step.text_step }.flatten.sort == steps.sort }
+  assert { expected_steps.collect { |step| step.step_text }.flatten.sort == steps.sort }
 end
 
 When /^the(?: "([^"]*)")? steps collected from (?:the )?file(?: "([^"]*)")? are as follows:$/ do |defined, file, steps|
@@ -94,7 +94,7 @@ When /^the(?: "([^"]*)")? steps collected from (?:the )?file(?: "([^"]*)")? are 
       expected_steps = Cucumber::Analytics::World.steps_in(container)
   end
 
-  assert { expected_steps.collect { |step| step.text_step }.flatten.sort == steps.sort }
+  assert { expected_steps.collect { |step| step.step_text }.flatten.sort == steps.sort }
 end
 
 When /^the(?: "([^"]*)")? steps collected from the directory are as follows:$/ do |defined, steps|
@@ -110,7 +110,7 @@ When /^the(?: "([^"]*)")? steps collected from the directory are as follows:$/ d
       expected_steps = Cucumber::Analytics::World.steps_in(container)
   end
 
-  assert { expected_steps.collect { |step| step.text_step }.flatten.sort == steps.sort }
+  assert { expected_steps.collect { |step| step.step_text }.flatten.sort == steps.sort }
 end
 
 Then /^the scenarios collected from feature "([^"]*)" are as follows:$/ do |file, scenarios|

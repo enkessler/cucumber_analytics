@@ -33,7 +33,7 @@ Then /^the(?: feature "([^"]*)")? background's steps(?: "([^"]*)" arguments)?(?:
 
   actual_steps = Array.new.tap do |steps|
     @parsed_files[file - 1].feature.background.steps.each do |step|
-      steps << step.text_step(options)
+      steps << step.step_text(options)
     end
   end
 

@@ -13,7 +13,7 @@ module Cucumber
         @keyword = step.slice(/#{World::STEP_KEYWORD_PATTERN}/).strip
       end
 
-      def text_step(options = {})
+      def step_text(options = {})
         options = {with_keywords: true,
                    with_arguments: true}.merge(options)
 
