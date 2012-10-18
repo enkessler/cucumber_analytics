@@ -15,7 +15,9 @@ module Cucumber
 
       def step_text(options = {})
         options = {with_keywords: true,
-                   with_arguments: true}.merge(options)
+                   with_arguments: true,
+                   left_delimiter: World.left_delimiter,
+                   right_delimiter: World.right_delimiter}.merge(options)
 
         final_step = []
         step_text = ''

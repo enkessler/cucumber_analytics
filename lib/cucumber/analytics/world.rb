@@ -7,6 +7,22 @@ module Cucumber
       STEP_KEYWORD_PATTERN = '\s*(?:Given|When|Then|And|\*)\s*'
 
 
+      def self.left_delimiter
+        @left_delimiter || @right_delimiter
+      end
+
+      def self.left_delimiter=(new_delimiter)
+        @left_delimiter = new_delimiter
+      end
+
+      def self.right_delimiter
+        @right_delimiter || @left_delimiter
+      end
+
+      def self.right_delimiter=(new_delimiter)
+        @right_delimiter = new_delimiter
+      end
+
       def self.load_step_file(file_path)
         @@defined_expressions ||= []
 

@@ -25,7 +25,7 @@ Then /^(?:the )?(?:feature "([^"]*)" )?(?:scenario|outline)(?: "([^"]*)")? steps
   translate = {'with' => true,
                'without' => false}
 
-  options = {:with_keywords => translate[keywords], :with_arguments => translate[arguments], :left_delimiter => @left_delimiter, :right_delimiter => @right_delimiter}
+  options = {:with_keywords => translate[keywords], :with_arguments => translate[arguments]}
 
 
   steps = steps.raw.flatten.collect do |step|
@@ -65,4 +65,18 @@ Then /^(?:the )?(?:feature "([^"]*)" )?(?:scenario|outline)(?: "([^"]*)")? step 
   end
 
   assert { @parsed_files[file - 1].feature.scenarios[scenario - 1].steps[step - 1].block == block }
+end
+
+Then /^(?:the )?(?:feature "([^"]*)" )?(?:scenario|outline)(?: "([^"]*)")? is equal to scenario "([^"]*)"$/ do |file, first_scenario, second_scenario|
+  file ||= 1
+  first_scenario ||= 1
+
+  assert { @parsed_files[file - 1].feature.scenarios[first_scenario - 1] == @parsed_files[file - 1].feature.scenarios[second_scenario - 1] }
+end
+
+Then /^(?:the )?(?:feature "([^"]*)" )?(?:scenario|outline)(?: "([^"]*)")? is not equal to scenario "([^"]*)"$/ do |file, first_scenario, second_scenario|
+  file ||= 1
+  first_scenario ||= 1
+
+  assert { @parsed_files[file - 1].feature.scenarios[first_scenario - 1] != @parsed_files[file - 1].feature.scenarios[second_scenario - 1] }
 end

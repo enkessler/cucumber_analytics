@@ -21,7 +21,7 @@ Then /^the(?: feature "([^"]*)")? background's steps(?: "([^"]*)" arguments)?(?:
   translate = {'with' => true,
                'without' => false}
 
-  options = {:with_keywords => translate[keywords], :with_arguments => translate[arguments], :left_delimiter => @left_delimiter, :right_delimiter => @right_delimiter}
+  options = {:with_keywords => translate[keywords], :with_arguments => translate[arguments]}
 
   steps = steps.raw.flatten.collect do |step|
     if step.start_with? "'"

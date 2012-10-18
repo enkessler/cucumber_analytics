@@ -23,8 +23,8 @@ When /^the step definition file "([^"]*)" is read$/ do |file_name|
 end
 
 When /^parameter delimiters of "([^"]*)" and "([^"]*)"$/ do |left_delimiter, right_delimiter|
-  @left_delimiter = left_delimiter
-  @right_delimiter = right_delimiter
+  Cucumber::Analytics::World.left_delimiter = left_delimiter
+  Cucumber::Analytics::World.right_delimiter = right_delimiter
 end
 
 Given /^a directory "([^"]*)"$/ do |directory_name|

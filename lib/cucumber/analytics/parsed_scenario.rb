@@ -14,6 +14,17 @@ module Cucumber
         parse_feature_element(source_lines) if source_lines
       end
 
+      def ==(other_scenario)
+        left_steps = steps.collect { |step| step.step_text(with_keywords: false, with_arguments: false) }.flatten
+        right_steps = other_scenario.steps.collect { |step| step.step_text(with_keywords: false, with_arguments: false) }.flatten
+
+        left_steps == right_steps
+      end
+
+
+      private
+
+
       def parse_feature_element(source_lines)
         parse_feature_element_tags(source_lines)
         super(source_lines)
