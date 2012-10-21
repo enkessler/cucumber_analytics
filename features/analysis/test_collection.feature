@@ -1,9 +1,9 @@
-Feature: Scenarios can be collected from arbitrary parts of the codebase.
+Feature: Tests can be collected from arbitrary parts of the codebase.
 
 
   Acceptance criteria
 
-  Scenarios can be collected from:
+  Tests can be collected from:
     1. features
     2. files
     3. directories
@@ -46,24 +46,24 @@ Feature: Scenarios can be collected from arbitrary parts of the codebase.
     When the directory "feature_directory" is read
     And the directory "feature_directory/nested_directory" is read
 
-  Scenario: Scenarios can be collected from features
-    Then the scenarios collected from feature "1" are as follows:
+  Scenario: Tests can be collected from features
+    Then the tests collected from feature "1" are as follows:
       | Test 1 |
       | Test 2 |
-    Then the scenarios collected from feature "2" are as follows:
+    Then the tests collected from feature "2" are as follows:
       | Test 3 |
 
-  Scenario: Scenarios can be collected from files
-    Then the scenarios collected from file "1" are as follows:
+  Scenario: Tests can be collected from files
+    Then the tests collected from file "1" are as follows:
       | Test 1 |
       | Test 2 |
-    Then the scenarios collected from file "2" are as follows:
+    Then the tests collected from file "2" are as follows:
       | Test 3 |
 
-  Scenario: Scenarios can be collected from directories
-    Then the scenarios collected from directory "1" are as follows:
+  Scenario: Tests can be collected from directories
+    Then the tests collected from directory "1" are as follows:
       | Test 1 |
       | Test 2 |
       | Test 3 |
-    And the scenarios collected from directory "2" are as follows:
+    And the tests collected from directory "2" are as follows:
       | Test 3 |

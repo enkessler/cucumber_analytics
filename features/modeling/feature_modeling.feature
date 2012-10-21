@@ -11,6 +11,7 @@ Feature: Features can be modeled.
     5. the feature's outlines
     6. the feature's background
     7. the feature's total number of tests
+    8. the feature's total number of test cases
 
 
   Background: Test file setup.
@@ -93,14 +94,18 @@ Feature: Features can be modeled.
 
   Scenario: The feature's properties are modeled.
     Then feature "1" is found to have the following properties:
-      | name       | The test feature name. |
-      | test_count | 4                      |
+      | name            | The test feature name. |
+      | test_count      | 3                      |
+      | test_case_count | 4                      |
     And feature "2" is found to have the following properties:
-      | name       |   |
-      | test_count | 1 |
+      | name            |   |
+      | test_count      | 2 |
+      | test_case_count | 1 |
+
     And feature "3" is found to have the following properties:
-      | name       |   |
-      | test_count | 0 |
+      | name            |   |
+      | test_count      | 0 |
+      | test_case_count | 0 |
 
   Scenario: The feature's description is modeled.
     Then the descriptive lines of feature "1" are as follows:

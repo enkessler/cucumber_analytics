@@ -66,49 +66,49 @@ module Cucumber
           @feature.background = ParsedBackground.new(background_lines)
         end
 
-        parse_scenarios(file_lines)
+        parse_tests(file_lines)
       end
 
-      def parse_scenarios(lines)
-        scenario_lines = []
+      def parse_tests(lines)
+        test_lines = []
 
         until lines.empty?
-          current_scenario_line = lines.index { |line| line =~ /^\s*(?:Scenario:|(?:Scenario Outline:))/ }
+          current_test_line = lines.index { |line| line =~ /^\s*(?:Scenario:|(?:Scenario Outline:))/ }
 
           until lines.first =~ /^\s*(?:Scenario:|(?:Scenario Outline:))/
             unless ignored_line?(lines.first)
-              scenario_lines << lines.first
+              test_lines << lines.first
             end
             lines.shift
           end
 
-          scenario_lines << lines.first
+          test_lines << lines.first
           lines.shift
 
           until (lines.first =~ /^\s*(?:Scenario:|(?:Scenario Outline:))/) or lines.empty?
             if (lines.first =~ /^\s*"""/)
-              scenario_lines.concat(extract_doc_string!(lines))
+              test_lines.concat(extract_doc_string!(lines))
             else
               unless ignored_line?(lines.first)
-                scenario_lines << lines.first
+                test_lines << lines.first
               end
               lines.shift
             end
           end
 
           unless lines.empty?
-            while  (scenario_lines.last =~ /^\s*@/)
-              lines = [scenario_lines.pop].concat(lines)
+            while  (test_lines.last =~ /^\s*@/)
+              lines = [test_lines.pop].concat(lines)
             end
           end
 
-          if scenario_lines[current_scenario_line] =~ /^\s*Scenario Outline:/
-            next_scenario = ParsedScenarioOutline.new(scenario_lines)
+          if test_lines[current_test_line] =~ /^\s*Scenario Outline:/
+            next_test = ParsedScenarioOutline.new(test_lines)
           else
-            next_scenario = ParsedScenario.new(scenario_lines)
+            next_test = ParsedScenario.new(test_lines)
           end
 
-          @feature.scenarios << next_scenario
+          @feature.tests << next_test
         end
       end
 

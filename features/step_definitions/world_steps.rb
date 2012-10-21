@@ -1,8 +1,8 @@
-Then /^the tags collected from (?:feature "([^"]*)" )?scenario "([^"]*)" are as follows:$/ do |file, scenario, tags|
+Then /^the tags collected from (?:feature "([^"]*)" )?test "([^"]*)" are as follows:$/ do |file, test, tags|
   file ||= 1
   tags = tags.raw.flatten
 
-  assert { Cucumber::Analytics::World.tags_in(@parsed_files[file - 1].feature.scenarios[scenario - 1]).sort == tags.sort }
+  assert { Cucumber::Analytics::World.tags_in(@parsed_files[file - 1].feature.tests[test - 1]).sort == tags.sort }
 end
 
 Then /^the tags collected from feature "([^"]*)" are as follows:$/ do |file, tags|
@@ -42,10 +42,10 @@ Then /^the(?: "([^"]*)")? steps collected from feature "([^"]*)" background are 
   assert { expected_steps.collect { |step| step.step_text }.flatten.sort == steps.sort }
 end
 
-Then /^the(?: "([^"]*)")? steps collected from feature "([^"]*)" scenario "([^"]*)" are as follows:$/ do |defined, file, scenario, steps|
+Then /^the(?: "([^"]*)")? steps collected from feature "([^"]*)" test "([^"]*)" are as follows:$/ do |defined, file, test, steps|
   file ||= 1
   steps = steps.raw.flatten
-  container = @parsed_files[file - 1].feature.scenarios[scenario - 1]
+  container = @parsed_files[file - 1].feature.tests[test - 1]
 
   case defined
     when 'defined'
@@ -109,28 +109,28 @@ When /^the(?: "([^"]*)")? steps collected from the directory are as follows:$/ d
   assert { expected_steps.collect { |step| step.step_text }.flatten.sort == steps.sort }
 end
 
-Then /^the scenarios collected from feature "([^"]*)" are as follows:$/ do |file, scenarios|
+Then /^the tests collected from feature "([^"]*)" are as follows:$/ do |file, tests|
   file ||= 1
 
-  actual_scenarios = Cucumber::Analytics::World.scenarios_in(@parsed_files[file - 1].feature).collect { |scenario| scenario.name }
+  actual_tests = Cucumber::Analytics::World.tests_in(@parsed_files[file - 1].feature).collect { |test| test.name }
 
-  assert { actual_scenarios.flatten.sort == scenarios.raw.flatten.sort }
+  assert { actual_tests.flatten.sort == tests.raw.flatten.sort }
 end
 
-Then /^the scenarios collected from file "([^"]*)" are as follows:$/ do |file, scenarios|
+Then /^the tests collected from file "([^"]*)" are as follows:$/ do |file, tests|
   file ||= 1
 
-  actual_scenarios = Cucumber::Analytics::World.scenarios_in(@parsed_files[file - 1]).collect { |scenario| scenario.name }
+  actual_tests = Cucumber::Analytics::World.tests_in(@parsed_files[file - 1]).collect { |test| test.name }
 
-  assert { actual_scenarios.flatten.sort == scenarios.raw.flatten.sort }
+  assert { actual_tests.flatten.sort == tests.raw.flatten.sort }
 end
 
-Then /^the scenarios collected from directory "([^"]*)" are as follows:$/ do |directory, scenarios|
+Then /^the tests collected from directory "([^"]*)" are as follows:$/ do |directory, tests|
   directory ||= 1
 
-  actual_scenarios = Cucumber::Analytics::World.scenarios_in(@parsed_directories[directory - 1]).collect { |scenario| scenario.name }
+  actual_tests = Cucumber::Analytics::World.tests_in(@parsed_directories[directory - 1]).collect { |test| test.name }
 
-  assert { actual_scenarios.flatten.sort == scenarios.raw.flatten.sort }
+  assert { actual_tests.flatten.sort == tests.raw.flatten.sort }
 end
 
 Then /^the features collected from file "([^"]*)" are as follows:$/ do |file, features|

@@ -4,8 +4,8 @@ Feature: Test equality can be determined.
   Acceptance criteria
 
   Tests can be compared for equality.
-    1. tests whose steps are the same except for arguments and keywords (i.e. they
-       match the same step definition) are equal
+    1. tests whose steps are the same except for arguments and keywords (i.e.
+       they match the same step definition) are equal
 
 
   Background: Test file setup.
@@ -56,7 +56,7 @@ Feature: Test equality can be determined.
         | param1 | param2 |
         | a      | b      |
 
-      Scenario Outline: And the same outline with different arguments and keywords
+      Scenario Outline: Same outline, different arguments and keywords
         Given this *similarly parameterized* step takes a table:
           | <param3> |
           | <param4> |
@@ -111,13 +111,13 @@ Feature: Test equality can be determined.
 
 
   Scenario: Scenario to Scenario comparison
-    Then scenario "1" is equal to scenario "2"
-    And scenario "1" is not equal to scenario "5"
+    Then test "1" is equal to test "2"
+    And test "1" is not equal to test "5"
 
   Scenario: Outline to Outline comparison
-    Then scenario "3" is equal to scenario "4"
-    And scenario "3" is not equal to scenario "6"
+    Then test "3" is equal to test "4"
+    And test "3" is not equal to test "6"
 
   Scenario: Scenario to Outline comparison
-    Then scenario "1" is equal to scenario "3"
-    And scenario "1" is not equal to scenario "6"
+    Then test "1" is equal to test "3"
+    And test "1" is not equal to test "6"

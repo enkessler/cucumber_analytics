@@ -30,7 +30,7 @@ end
 When /^(?:the )?feature(?: "([^"]*)")? scenarios are as follows:$/ do |file, scenarios|
   file ||= 1
 
-  actual_scenarios = @parsed_files[file - 1].feature.scenarios.select { |scenario| scenario.is_a?(Cucumber::Analytics::ParsedScenario) }.collect { |scenario| scenario.name }
+  actual_scenarios = @parsed_files[file - 1].feature.scenarios.collect { |scenario| scenario.name }
 
   assert { actual_scenarios.flatten.sort == scenarios.raw.flatten.sort }
 end
@@ -38,9 +38,9 @@ end
 When /^(?:the )?feature(?: "([^"]*)")? outlines are as follows:$/ do |file, outlines|
   file ||= 1
 
-  actual_scenarios = @parsed_files[file - 1].feature.scenarios.select { |scenario| scenario.is_a?(Cucumber::Analytics::ParsedScenarioOutline) }.collect { |scenario| scenario.name }
+  actual_outlines = @parsed_files[file - 1].feature.outlines.collect { |outline| outline.name }
 
-  assert { actual_scenarios.flatten.sort == outlines.raw.flatten.sort }
+  assert { actual_outlines.flatten.sort == outlines.raw.flatten.sort }
 end
 
 When /^(?:the )?feature(?: "([^"]*)")? background is as follows:$/ do |file, background|
@@ -50,11 +50,11 @@ When /^(?:the )?feature(?: "([^"]*)")? background is as follows:$/ do |file, bac
 end
 
 When /^feature "([^"]*)" has no scenarios$/ do |file|
-  assert { @parsed_files[file - 1].feature.scenarios.select { |scenario| scenario.is_a?(Cucumber::Analytics::ParsedScenario) } == [] }
+  assert { @parsed_files[file - 1].feature.scenarios == [] }
 end
 
 When /^feature "([^"]*)" has no outlines/ do |file|
-  assert { @parsed_files[file - 1].feature.scenarios.select { |scenario| scenario.is_a?(Cucumber::Analytics::ParsedScenarioOutline) } == [] }
+  assert { @parsed_files[file - 1].feature.outlines == [] }
 end
 
 When /^feature "([^"]*)" has no background/ do |file|

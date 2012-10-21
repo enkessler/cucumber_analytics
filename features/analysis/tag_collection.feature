@@ -55,11 +55,11 @@ Feature: Tags can be collected from arbitrary parts of the codebase.
     When the directory "feature_directory" is read
 
   Scenario: Tags can be collected from scenarios
-    Then the tags collected from feature "1" scenario "1" are as follows:
+    Then the tags collected from feature "1" test "1" are as follows:
       | @scenario_tag_1 |
 
   Scenario: Tags can be collected from scenario outlines
-    Then the tags collected from feature "1" scenario "2" are as follows:
+    Then the tags collected from feature "1" test "2" are as follows:
       | @outline_tag_1 |
       | @example_tag_1 |
       | @example_tag_2 |

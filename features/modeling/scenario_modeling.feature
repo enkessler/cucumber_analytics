@@ -57,16 +57,16 @@ Feature: Scenario elements can be modeled.
 
 
   Scenario: The scenario name is modeled.
-    Then the scenario is found to have the following properties:
+    Then the test is found to have the following properties:
       | name | The first scenario's name. |
 
   Scenario: The scenario description is modeled.
-    Then the scenario descriptive lines are as follows:
+    Then the test descriptive lines are as follows:
       | Some text describing the scenario. |
       | More text.                         |
 
   Scenario: The scenario steps are modeled.
-    Then the scenario steps are as follows:
+    Then the test steps are as follows:
       | Given this *parameterized* step takes a table: |
       | \| data      \|                                |
       | \| more data \|                                |
@@ -90,13 +90,13 @@ Feature: Scenario elements can be modeled.
       | '    some more text'                           |
       | """                                            |
       | Then *lots* *of* *parameters*                  |
-    And the scenario steps "without" arguments are as follows:
+    And the test steps "without" arguments are as follows:
       | Given this ** step takes a table: |
       | And some setup step               |
       | When a step with a **             |
       | And a big step:                   |
       | Then ** ** **                     |
-    And the scenario steps "without" keywords are as follows:
+    And the test steps "without" keywords are as follows:
       | this *parameterized* step takes a table: |
       | \| data      \|                          |
       | \| more data \|                          |
@@ -120,16 +120,16 @@ Feature: Scenario elements can be modeled.
       | '    some more text'                     |
       | """                                      |
       | *lots* *of* *parameters*                 |
-    And the scenario steps "without" arguments "without" keywords are as follows:
+    And the test steps "without" arguments "without" keywords are as follows:
       | this ** step takes a table: |
       | some setup step             |
       | a step with a **            |
       | a big step:                 |
       | ** ** **                    |
-    And the scenario step "1" has the following block:
+    And the test step "1" has the following block:
       | \| data      \| |
       | \| more data \| |
-    And the scenario step "4" has the following block:
+    And the test step "4" has the following block:
       | """                  |
       | 'some text'          |
       | ''                   |
@@ -148,7 +148,7 @@ Feature: Scenario elements can be modeled.
       | """                  |
 
   Scenario: The scenario tags are modeled.
-    Then the scenario is found to have the following tags:
+    Then the test is found to have the following tags:
       | @a_tag           |
       | @another_tag     |
       | @yet_another_tag |

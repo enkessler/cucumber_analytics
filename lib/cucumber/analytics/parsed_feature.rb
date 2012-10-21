@@ -7,14 +7,14 @@ module Cucumber
       attr_reader :name
       attr_reader :description
       attr_accessor :background
-      attr_accessor :scenarios
+      attr_accessor :tests
 
 
       def initialize(source_lines = nil)
         @tags = []
         @name = ''
         @description = []
-        @scenarios = []
+        @tests = []
 
         parse_feature(source_lines) if source_lines
       end
@@ -23,20 +23,32 @@ module Cucumber
         !@background.nil?
       end
 
+      def scenarios
+        @tests.select { |test| test.is_a? ParsedScenario }
+      end
+
+      def outlines
+        @tests.select { |test| test.is_a? ParsedScenarioOutline }
+      end
+
       def scenario_count
-        @scenarios.select { |scenario| scenario.is_a? ParsedScenario }.count
+        scenarios.count
       end
 
       def outline_count
-        @scenarios.select { |scenario| scenario.is_a? ParsedScenarioOutline }.count
+        outlines.count
       end
 
       def test_count
-        scenario_count + scenarios.select { |scenario| scenario.is_a? ParsedScenarioOutline }.reduce(0) { |sum, outline| sum += outline.examples.count }
+        @tests.count
+      end
+
+      def test_case_count
+        scenario_count + outlines.reduce(0) { |sum, outline| sum += outline.examples.count }
       end
 
       def contains
-        [@background] + @scenarios
+        [@background] + @tests
       end
 
 

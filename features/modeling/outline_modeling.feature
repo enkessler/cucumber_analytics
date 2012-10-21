@@ -75,16 +75,16 @@ Feature: Scenario Outline elements can be modeled.
 
 
   Scenario: The outline name is modeled.
-    Then the outline is found to have the following properties:
+    Then the test is found to have the following properties:
       | name | The scenario outline's name. |
 
   Scenario: The outline description is modeled.
-    Then the outline descriptive lines are as follows:
+    Then the test descriptive lines are as follows:
       | Some text describing the scenario. |
       | More text.                         |
 
   Scenario: The outline steps are modeled.
-    Then the outline steps are as follows:
+    Then the test steps are as follows:
       | Given this *parameterized* step takes a table: |
       | \| <param1> \|                                 |
       | \| <param2> \|                                 |
@@ -108,13 +108,13 @@ Feature: Scenario Outline elements can be modeled.
       | '    some more text'                           |
       | """                                            |
       | Then *lots* *of* *parameters*                  |
-    And the outline steps "without" arguments are as follows:
+    And the test steps "without" arguments are as follows:
       | Given this ** step takes a table: |
       | And some setup step               |
       | When a step with a **             |
       | And a big step:                   |
       | Then ** ** **                     |
-    And the outline steps "without" keywords are as follows:
+    And the test steps "without" keywords are as follows:
       | this *parameterized* step takes a table: |
       | \| <param1> \|                           |
       | \| <param2> \|                           |
@@ -138,16 +138,16 @@ Feature: Scenario Outline elements can be modeled.
       | '    some more text'                     |
       | """                                      |
       | *lots* *of* *parameters*                 |
-    And the outline steps "without" arguments "without" keywords are as follows:
+    And the test steps "without" arguments "without" keywords are as follows:
       | this ** step takes a table: |
       | some setup step             |
       | a step with a **            |
       | a big step:                 |
       | ** ** **                    |
-    And the outline step "1" has the following block:
+    And the test step "1" has the following block:
       | \| <param1> \| |
       | \| <param2> \| |
-    And the outline step "4" has the following block:
+    And the test step "4" has the following block:
       | """                  |
       | 'some text'          |
       | ''                   |
@@ -166,7 +166,7 @@ Feature: Scenario Outline elements can be modeled.
       | """                  |
 
   Scenario: The outline tags are modeled.
-    Then the outline is found to have the following tags:
+    Then the test is found to have the following tags:
       | @outline_tag |
 
   Scenario Outline: The outline examples are modeled.

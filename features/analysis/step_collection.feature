@@ -72,23 +72,23 @@ Feature: Steps can be collected from arbitrary parts of the codebase.
       | And an undefined step |
 
   Scenario: Steps can be collected from scenarios
-    Then the steps collected from feature "1" scenario "1" are as follows:
+    Then the steps collected from feature "1" test "1" are as follows:
       | Given another defined step  |
       | Then another undefined step |
-    And the "defined" steps collected from feature "1" scenario "1" are as follows:
+    And the "defined" steps collected from feature "1" test "1" are as follows:
       | Given another defined step |
-    And the "undefined" steps collected from feature "1" scenario "1" are as follows:
+    And the "undefined" steps collected from feature "1" test "1" are as follows:
       | Then another undefined step |
 
   Scenario: Steps can be collected from scenario outlines
-    Then the steps collected from feature "2" scenario "1" are as follows:
+    Then the steps collected from feature "2" test "1" are as follows:
       | Given a defined step                  |
       | When another defined step             |
       | Then *<this>* *step is* *<undefined>* |
-    And the "defined" steps collected from feature "2" scenario "1" are as follows:
+    And the "defined" steps collected from feature "2" test "1" are as follows:
       | Given a defined step      |
       | When another defined step |
-    And the "undefined" steps collected from feature "2" scenario "1" are as follows:
+    And the "undefined" steps collected from feature "2" test "1" are as follows:
       | Then *<this>* *step is* *<undefined>* |
 
   Scenario: Steps can be collected from features
