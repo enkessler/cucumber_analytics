@@ -33,7 +33,7 @@ Feature: Scenario elements can be modeled.
         When a step with a *parameter*
         And a big step:
         #random comment
-        -"-"-"-
+        \"\"\"
       some text
 
         #some comments
@@ -48,7 +48,7 @@ Feature: Scenario elements can be modeled.
         Then
         *
             some more text
-        -"-"-"-
+        \"\"\"
         Then *lots* *of* *parameters*
 
     """

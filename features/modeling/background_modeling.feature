@@ -28,7 +28,7 @@ Feature: Background elements can be modeled.
         * a step with a *parameter*
         * some big setup step:
         #random comment
-        -"-"-"-
+        \"\"\"
       some text
 
         #some comments
@@ -43,7 +43,7 @@ Feature: Background elements can be modeled.
         Then
         *
             some more text
-        -"-"-"-
+        \"\"\"
         * *lots* *of* *parameters*
 
 

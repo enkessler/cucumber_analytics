@@ -30,7 +30,7 @@ Feature: Scenario Outline elements can be modeled.
         When a step with a *parameter*
         And a big step:
         #random comment
-        -"-"-"-
+        \"\"\"
       some text
 
         #some comments
@@ -45,7 +45,7 @@ Feature: Scenario Outline elements can be modeled.
         Then
         *
             some more text
-        -"-"-"-
+        \"\"\"
         Then *lots* *of* *parameters*
 
       Examples: text describing the significance of the examples

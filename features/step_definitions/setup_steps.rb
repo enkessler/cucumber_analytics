@@ -3,7 +3,7 @@ Given /^the following(?: feature)? file(?: "([^"]*)")?:$/ do |file_name, file_te
   file_name ||= @default_feature_file_name
 
   File.open("#{@test_directory}/#{file_name}", 'w') { |file|
-    file.write(file_text.gsub(/-"-"-"-/, '"""'))
+    file.write(file_text)
   }
 end
 

@@ -20,9 +20,9 @@ Feature: Test equality can be determined.
         And some setup step
         When a step with a *parameter*
         And a big step:
-        -"-"-"-
+        \"\"\"
         little doc block
-        -"-"-"-
+        \"\"\"
         Then *lots* *of* *parameters*
 
       Scenario: Same test, different arguments and keywords
@@ -32,10 +32,10 @@ Feature: Test equality can be determined.
         Given some setup step
         When a step with a *parameter*
         * a big step:
-        -"-"-"-
+        \"\"\"
         A little
         bigger doc block
-        -"-"-"-
+        \"\"\"
         Then *lots* *of* *parameters*
 
       Scenario Outline: This is the same test as an outline
@@ -45,9 +45,9 @@ Feature: Test equality can be determined.
         And some setup step
         When a step with a *parameter*
         And a big step:
-        -"-"-"-
+        \"\"\"
         little doc block
-        -"-"-"-
+        \"\"\"
         Then *lots* *of* *parameters*
       Examples:
         | param1 | param2 |
@@ -63,10 +63,10 @@ Feature: Test equality can be determined.
         Given some setup step
         When a step with a *slightly different parameter*
         * a big step:
-        -"-"-"-
+        \"\"\"
         A little
         bigger doc block
-        -"-"-"-
+        \"\"\"
         Then *lots* *of effectively the same* *parameters*
       Examples:
         | param1 | param2 |
@@ -82,9 +82,9 @@ Feature: Test equality can be determined.
         And not the same setup step as before
         When a step with a *parameter*
         And a big step:
-        -"-"-"-
+        \"\"\"
         little doc block
-        -"-"-"-
+        \"\"\"
         Then *lots* *of* *parameters*
 
       Scenario Outline: This is the same different test as an outline
@@ -94,10 +94,10 @@ Feature: Test equality can be determined.
         And not the same setup step as before
         When a step with a *slightly different parameter*
         And a big step:
-        -"-"-"-
+        \"\"\"
         A little
         bigger doc block
-        -"-"-"-
+        \"\"\"
         Then *lots* *of effectively the same* *parameters*
       Examples:
         | param1 | param2 |
