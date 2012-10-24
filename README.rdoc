@@ -21,7 +21,7 @@ manipulations away.
 
 Add this line to your application's Gemfile:
 
-    gem 'cucumber-analytics'
+    gem 'cucumber_analytics'
 
 And then execute:
 
@@ -29,13 +29,13 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install cucumber-analytics
+    $ gem install cucumber_analytics
 
 == Usage
 
 First things first. Load up the gem code.
 
-  require 'cucumber-analytics'
+  require 'cucumber_analytics'
 
 Next, let's generate a model for our Cucumber suite.
 

@@ -4,7 +4,7 @@ SimpleCov.start
 Bundler.require
 include Wrong
 
-require File.dirname(__FILE__) + '/../../lib/cucumber-analytics'
+require File.dirname(__FILE__) + '/../../lib/cucumber_analytics'
 
 
 DEFAULT_FEATURE_FILE_NAME = 'test_feature.feature'
