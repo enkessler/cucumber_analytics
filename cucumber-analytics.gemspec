@@ -13,5 +13,5 @@ Gem::Specification.new do |gem|
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
   gem.name          = "cucumber-analytics"
   gem.require_paths = ["lib"]
-  gem.version       = Cucumber::Analytics::VERSION
+  gem.version       = CucumberAnalytics::VERSION
 end

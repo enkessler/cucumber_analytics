@@ -1,4 +1,4 @@
-= Cucumber::Analytics
+= CucumberAnalytics
 
 The intention of this gem is to provide a useful mechanism by which to answer
 all of the burning questions that one might have about their Cucumber test base.
@@ -39,8 +39,8 @@ First things first. Load up the gem code.
 
 Next, let's generate a model for our Cucumber suite.
 
-  directory = Cucumber::Analytics::ParsedDirectory.new('path/to/the/code_directory')
-  world = Cucumber::Analytics::World
+  directory = CucumberAnalytics::ParsedDirectory.new('path/to/the/code_directory')
+  world = CucumberAnalytics::World
 
 Now it's time to take a look around and see what we can see.
 
