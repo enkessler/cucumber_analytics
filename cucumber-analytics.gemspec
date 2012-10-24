@@ -1,5 +1,5 @@
 # -*- encoding: utf-8 -*-
-require File.expand_path('../lib/cucumber/analytics/version', __FILE__)
+require File.expand_path('../lib/cucumber_analytics/version', __FILE__)
 
 Gem::Specification.new do |gem|
   gem.authors       = ["Eric Kessler"]
