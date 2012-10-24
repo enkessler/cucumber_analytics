@@ -1,7 +1,7 @@
 require 'simplecov'
 SimpleCov.start
 
-Bundler.require
+require 'wrong'
 include Wrong
 
 require File.dirname(__FILE__) + '/../../lib/cucumber_analytics'

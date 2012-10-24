@@ -6,7 +6,7 @@ Gem::Specification.new do |gem|
   gem.email         = ["morrow748@gmail.com"]
   gem.description   = %q{Static analysis of Cucumber tests made easy.}
   gem.summary       = %q{This gem provides an API to programmatically break down Cucumber feature files so that they can be inspected and analyzed in a straightforward manner.}
-  gem.homepage      = ""
+  gem.homepage      = "https://github.com/enkessler/cucumber_analytics"
 
   gem.files         = `git ls-files`.split($\)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
@@ -14,4 +14,9 @@ Gem::Specification.new do |gem|
   gem.name          = "cucumber_analytics"
   gem.require_paths = ["lib"]
   gem.version       = CucumberAnalytics::VERSION
+
+  gem.add_development_dependency("rake")
+  gem.add_development_dependency("cucumber")
+  gem.add_development_dependency("wrong")
+  gem.add_development_dependency("simplecov")
 end
