@@ -1,5 +1,5 @@
 module CucumberAnalytics
-  class ParsedScenario < FeatureElement
+  class ParsedScenario < TestElement
 
 
     attr_accessor :tags
@@ -10,24 +10,17 @@ module CucumberAnalytics
 
       @tags = []
 
-      parse_feature_element(source_lines) if source_lines
-    end
-
-    def ==(other_scenario)
-      left_steps = steps.collect { |step| step.step_text(with_keywords: false, with_arguments: false) }.flatten
-      right_steps = other_scenario.steps.collect { |step| step.step_text(with_keywords: false, with_arguments: false) }.flatten
-
-      left_steps == right_steps
+      parse_scenario(source_lines) if source_lines
     end
 
 
     private
 
 
-    def parse_feature_element(source_lines)
+    def parse_scenario(source_lines)
       parse_feature_element_tags(source_lines)
-      super(source_lines)
-      parse_feature_element_steps(source_lines)
+      parse_feature_element(source_lines)
+      parse_test_element_steps(source_lines)
     end
 
   end

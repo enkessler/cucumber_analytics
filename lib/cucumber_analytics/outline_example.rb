@@ -12,12 +12,16 @@ module CucumberAnalytics
       @tags = []
       @rows = []
 
-      parse_feature_element(source_lines) if source_lines
+      parse_example(source_lines) if source_lines
     end
 
-    def parse_feature_element(source_lines)
+
+    private
+
+
+    def parse_example(source_lines)
       parse_feature_element_tags(source_lines)
-      super(source_lines)
+      parse_feature_element(source_lines)
       rows.concat source_lines.collect { |line| line.strip }
     end
 

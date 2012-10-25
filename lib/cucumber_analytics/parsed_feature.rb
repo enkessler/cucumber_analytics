@@ -1,18 +1,16 @@
 module CucumberAnalytics
-  class ParsedFeature
+  class ParsedFeature < FeatureElement
 
 
     attr_reader :tags
-    attr_reader :name
-    attr_reader :description
     attr_accessor :background
     attr_accessor :tests
 
 
     def initialize(source_lines = nil)
+      super
+
       @tags = []
-      @name = ''
-      @description = []
       @tests = []
 
       parse_feature(source_lines) if source_lines
@@ -55,21 +53,8 @@ module CucumberAnalytics
 
 
     def parse_feature(source_lines)
-      source_lines.take_while { |line| !(line =~/^\s*Feature/) }.tap do |tag_lines|
-        tag_lines.join(' ').delete(' ').split('@').each do |tag|
-          tags << "@#{tag.strip}"
-        end
-      end
-      tags.shift
-
-      while source_lines.first =~ /^\s*@/
-        source_lines.shift
-      end
-
-      name.replace(source_lines.first.match(/^\s*Feature:(.*)/)[1].strip)
-      source_lines.shift
-
-      description.concat source_lines.collect { |line| line.strip }
+      parse_feature_element_tags(source_lines)
+      parse_feature_element(source_lines)
     end
 
   end
