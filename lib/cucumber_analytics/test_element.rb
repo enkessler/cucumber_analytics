@@ -5,15 +5,18 @@ module CucumberAnalytics
     attr_reader :steps
 
 
+    # Creates a new TestElement object.
     def initialize(source_lines = nil)
       super
 
       @steps = []
     end
 
-    def ==(other_scenario)
+    # Return true if the two elements have the same steps, minus any keywords
+    # and arguments, and false otherwise.
+    def ==(other_element)
       left_steps = steps.collect { |step| step.step_text(with_keywords: false, with_arguments: false) }.flatten
-      right_steps = other_scenario.steps.collect { |step| step.step_text(with_keywords: false, with_arguments: false) }.flatten
+      right_steps = other_element.steps.collect { |step| step.step_text(with_keywords: false, with_arguments: false) }.flatten
 
       left_steps == right_steps
     end

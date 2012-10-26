@@ -5,6 +5,8 @@ module CucumberAnalytics
     attr_accessor :tags
 
 
+    # Creates a new ParsedScenario object and, if *source_lines* is provided,
+    # populates the object.
     def initialize(source_lines = nil)
       super
 

@@ -6,6 +6,8 @@ module CucumberAnalytics
     attr_accessor :rows
 
 
+    # Creates a new OutlineExample object and, if *source_lines* is provided,
+    # populates the object.
     def initialize(source_lines = nil)
       super
 

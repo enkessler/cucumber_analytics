@@ -5,14 +5,18 @@ module CucumberAnalytics
     attr_reader :feature
 
 
+    # Creates a new ParsedFile object and, if *file_parsed* is provided,
+    # populates the object.
     def initialize(file_parsed = nil)
       parse_file(file_parsed) if file_parsed
     end
 
+    # Returns the name of the file.
     def name
       File.basename(@file.gsub('\\', '/'))
     end
 
+    # Returns the path of the file.
     def path
       @file
     end

@@ -5,7 +5,8 @@ module CucumberAnalytics
     attr_accessor :tags
     attr_accessor :examples
 
-
+    # Creates a new ParsedScenarioOutline object and, if *source_lines* is
+    # provided, populates the object.
     def initialize(source_lines = nil)
       super
 

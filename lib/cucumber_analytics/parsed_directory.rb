@@ -6,6 +6,8 @@ module CucumberAnalytics
     attr_reader :feature_directories
 
 
+    # Creates a new ParsedDirectory object and, if *directory_parsed* is
+    # provided, populates the object.
     def initialize(directory_parsed = nil)
       @directory = directory_parsed
 
@@ -15,14 +17,17 @@ module CucumberAnalytics
       scan_directory if directory_parsed
     end
 
+    # Returns the name of the directory.
     def name
       File.basename(@directory.gsub('\\', '/'))
     end
 
+    # Returns the path of the directory.
     def path
       @directory
     end
 
+    # Returns the number of features files contained in the directory.
     def feature_file_count
       @feature_files.count
     end

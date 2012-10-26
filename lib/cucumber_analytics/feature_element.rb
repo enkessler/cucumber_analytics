@@ -6,6 +6,7 @@ module CucumberAnalytics
     attr_reader :description
 
 
+    # Creates a new FeatureElement object.
     def initialize(source_lines = nil)
       @name = ''
       @description =[]
