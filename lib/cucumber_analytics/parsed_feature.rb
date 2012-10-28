@@ -10,6 +10,8 @@ module CucumberAnalytics
     # Creates a new ParsedFeature object and, if *source_lines* is provided,
     # populates the object.
     def initialize(source_lines = nil)
+      CucumberAnalytics::Logging.logger.debug('ParsedFeature#initialize')
+
       super
 
       @tags = []

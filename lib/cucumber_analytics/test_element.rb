@@ -7,6 +7,8 @@ module CucumberAnalytics
 
     # Creates a new TestElement object.
     def initialize(source_lines = nil)
+      CucumberAnalytics::Logging.logger.debug('TestElement#initialize')
+
       super
 
       @steps = []

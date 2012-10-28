@@ -8,6 +8,7 @@ module CucumberAnalytics
     # Creates a new ParsedScenario object and, if *source_lines* is provided,
     # populates the object.
     def initialize(source_lines = nil)
+      CucumberAnalytics::Logging.logger.debug('ParsedScenario#initialize')
       super
 
       @tags = []

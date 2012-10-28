@@ -8,6 +8,8 @@ module CucumberAnalytics
     # Creates a new ParsedFile object and, if *file_parsed* is provided,
     # populates the object.
     def initialize(file_parsed = nil)
+      CucumberAnalytics::Logging.logger.debug('ParsedFile#initialize')
+
       parse_file(file_parsed) if file_parsed
     end
 

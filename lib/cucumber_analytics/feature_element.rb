@@ -8,6 +8,8 @@ module CucumberAnalytics
 
     # Creates a new FeatureElement object.
     def initialize(source_lines = nil)
+      CucumberAnalytics::Logging.logger.debug('FeatureElement#initialize')
+
       @name = ''
       @description =[]
     end

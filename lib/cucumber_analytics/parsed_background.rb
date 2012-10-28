@@ -5,6 +5,8 @@ module CucumberAnalytics
     # Creates a new ParsedBackground object and, if *source_lines* is provided,
     # populates the object.
     def initialize(source_lines = nil)
+      CucumberAnalytics::Logging.logger.debug('ParsedBackground#initialize')
+
       super
 
       parse_background(source_lines) if source_lines
