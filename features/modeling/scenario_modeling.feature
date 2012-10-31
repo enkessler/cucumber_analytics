@@ -21,10 +21,17 @@ Feature: Scenario elements can be modeled.
 
       @another_tag@yet_another_tag
       Scenario: The first scenario's name.
-    #a comment
+        My big hunk of perfectly valid description:
+          |
 
-        Some text describing the scenario.
-        More text.
+          Scenario Outline
+          Examples
+          \"\"\"
+          Background
+           this is still one big valid description
+          # Basically, if it's not a step keyword or tag then I will accept
+          # it as description here. Cucumber might not but but that's between
+          # you and its lexxer/parser. ;)
         Given this *parameterized* step takes a table:
           | data      |
           | more data |
@@ -62,8 +69,13 @@ Feature: Scenario elements can be modeled.
 
   Scenario: The scenario description is modeled.
     Then the test descriptive lines are as follows:
-      | Some text describing the scenario. |
-      | More text.                         |
+      | My big hunk of perfectly valid description:                       |
+      | \|                                                                |
+      | Scenario Outline                                                  |
+      | Examples                                                          |
+      | """                                                               |
+      | Background                                                        |
+      | this is still one big valid description                           |
 
   Scenario: The scenario steps are modeled.
     Then the test steps are as follows:

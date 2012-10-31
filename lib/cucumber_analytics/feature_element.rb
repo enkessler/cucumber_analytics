@@ -40,15 +40,5 @@ module CucumberAnalytics
       source_lines.shift
     end
 
-    def parse_feature_element_description(source_lines)
-      until source_lines.first =~ /^\s*(?:(?:Given )|(?:When )|(?:Then )|(?:\* ))/ or
-          source_lines.first =~ /^\s*\|/ or
-          source_lines.empty?
-
-        @description << source_lines.first.strip
-        source_lines.shift
-      end
-    end
-
   end
 end

@@ -15,11 +15,17 @@ Feature: Background elements can be modeled.
       Some more feature description.
 
       Background: Some general test setup stuff.
-      #unimportant text
-      #   more of the same
-        A little more information.
+       My big hunk of perfectly valid description:
+          |
 
-
+          Scenario Outline
+          Examples
+          \"\"\"
+          Background
+           this is still one big valid description
+          # Basically, if it's not a step keyword or tag then I will accept
+          # it as description here. Cucumber might not but but that's between
+          # you and its lexxer/parser. ;)
         * this *parameterized* step takes a table:
           | data      |
           | more data |
@@ -62,7 +68,13 @@ Feature: Background elements can be modeled.
 
   Scenario: The background description is modeled.
     Then the background's descriptive lines are as follows:
-      | A little more information. |
+      | My big hunk of perfectly valid description:                       |
+      | \|                                                                |
+      | Scenario Outline                                                  |
+      | Examples                                                          |
+      | """                                                               |
+      | Background                                                        |
+      | this is still one big valid description                           |
 
   Scenario: The background steps are modeled.
     Then the background's steps are as follows:

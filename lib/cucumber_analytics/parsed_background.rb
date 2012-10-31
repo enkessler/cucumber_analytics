@@ -19,5 +19,14 @@ module CucumberAnalytics
       parse_test_element_steps(source_lines)
     end
 
+    def parse_feature_element_description(source_lines)
+      until source_lines.first =~ /^\s*(?:(?:Given )|(?:When )|(?:Then )|(?:And )|(?:\* ))/ or
+          source_lines.empty?
+
+        @description << source_lines.first.strip
+        source_lines.shift
+      end
+    end
+
   end
 end

@@ -27,5 +27,14 @@ module CucumberAnalytics
       rows.concat source_lines.collect { |line| line.strip }
     end
 
+    def parse_feature_element_description(source_lines)
+      until source_lines.first =~ /^\s*\|/ or
+          source_lines.empty?
+
+        @description << source_lines.first.strip
+        source_lines.shift
+      end
+    end
+
   end
 end
