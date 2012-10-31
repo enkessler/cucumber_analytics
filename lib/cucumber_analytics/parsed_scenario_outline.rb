@@ -31,6 +31,15 @@ module CucumberAnalytics
       parse_outline_examples(source_lines)
     end
 
+    def parse_feature_element_description(source_lines)
+      until source_lines.first =~ /^\s*(?:(?:Given )|(?:When )|(?:Then )|(?:And )|(?:\* )| (?:Examples: ))/ or
+          source_lines.empty?
+
+        @description << source_lines.first.strip
+        source_lines.shift
+      end
+    end
+
     def parse_outline_examples(source_lines)
       until source_lines.empty?
         current_example_line = source_lines.index { |line| line =~ /^\s*Examples/ }

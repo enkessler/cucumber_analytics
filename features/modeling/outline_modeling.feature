@@ -20,8 +20,18 @@ Feature: Scenario Outline elements can be modeled.
 
       @outline_tag
       Scenario Outline: The scenario outline's name.
-        Some text describing the scenario.
-        More text.
+        My big hunk of perfectly valid description:
+          |
+
+          Scenario Outline
+          Examples
+          \"\"\"
+          Background
+           this is still one big valid description
+          # Basically, if it's not a step keyword or tag then I will accept
+          # it as description here. Cucumber might not but but that's between
+          # you and its lexxer/parser. ;)
+
         Given this *parameterized* step takes a table:
           | <param1> |
           | <param2> |
@@ -49,9 +59,8 @@ Feature: Scenario Outline elements can be modeled.
         Then *lots* *of* *parameters*
 
       Examples: text describing the significance of the examples
-        #
-        #
-        And even more description if you really need it.
+          Anything besides the | that starts a row should be valid
+          description at this point in the test. YMMV
         | param1 | param2 |
         #A more random comment
         | x      | y      |
@@ -80,8 +89,13 @@ Feature: Scenario Outline elements can be modeled.
 
   Scenario: The outline description is modeled.
     Then the test descriptive lines are as follows:
-      | Some text describing the scenario. |
-      | More text.                         |
+      | My big hunk of perfectly valid description:                       |
+      | \|                                                                |
+      | Scenario Outline                                                  |
+      | Examples                                                          |
+      | """                                                               |
+      | Background                                                        |
+      | this is still one big valid description                           |
 
   Scenario: The outline steps are modeled.
     Then the test steps are as follows:
@@ -181,6 +195,6 @@ Feature: Scenario Outline elements can be modeled.
       | <row1> |
       | <row2> |
   Examples:
-    | outline | set | name                                                | description1                                     | description2       | tag1         | tag2         | row1                   | row2                   |
-    | 1       | 1   | text describing the significance of the examples    | And even more description if you really need it. |                    |              |              | \| param1 \| param2 \| | \| x      \| y      \| |
-    | 1       | 2   | some examples with different significance and a tag | Words, words, words, words,                      | why so many words? | @example_tag | @another_one | \| param1 \| param2 \| | \| a      \| b      \| |
+    | outline | set | name                                                | description1                                              | description2                                | tag1         | tag2         | row1                   | row2                   |
+    | 1       | 1   | text describing the significance of the examples    | Anything besides the \| that starts a row should be valid | description at this point in the test. YMMV |              |              | \| param1 \| param2 \| | \| x      \| y      \| |
+    | 1       | 2   | some examples with different significance and a tag | Words, words, words, words,                               | why so many words?                          | @example_tag | @another_one | \| param1 \| param2 \| | \| a      \| b      \| |

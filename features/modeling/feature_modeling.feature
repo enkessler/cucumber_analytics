@@ -26,6 +26,23 @@ Feature: Features can be modeled.
 
       And some more.
 
+      Scenario but not really because I left out the magic ':'
+        Given some description that uses keywords
+        And more of it
+        When I chuck the kitchen sink at it:
+        *
+        |
+
+        Scenario Outline
+        Examples
+        \"\"\"
+        Background
+        Then this is still one big valid description
+        # Oddly enough, if this comment had come earlier in the description
+        # it would have broken Cucumber. Comments can't be mixed into the
+        # freeform text for some reason.
+
+
       Background: Some general test setup stuff.
         A little more information.
         * some setup step
@@ -109,8 +126,19 @@ Feature: Features can be modeled.
 
   Scenario: The feature's description is modeled.
     Then the descriptive lines of feature "1" are as follows:
-      | Some more feature description. |
-      | And some more.                 |
+      | Some more feature description.                                      |
+      | And some more.                                                      |
+      | Scenario but not really because I left out the magic ':'            |
+      | Given some description that uses keywords                           |
+      | And more of it                                                      |
+      | When I chuck the kitchen sink at it:                                |
+      | *                                                                   |
+      | \|                                                                  |
+      | Scenario Outline                                                    |
+      | Examples                                                            |
+      | """                                                                 |
+      | Background                                                          |
+      | Then this is still one big valid description                        |
     And feature "2" has no descriptive lines
     And feature "3" has no descriptive lines
 
