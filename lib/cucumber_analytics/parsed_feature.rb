@@ -52,7 +52,11 @@ module CucumberAnalytics
 
     # Returns the number of test cases contained in the feature.
     def test_case_count
-      scenario_count + outlines.reduce(0) { |sum, outline| sum += outline.examples.count }
+      scenario_count + outlines.reduce(0) { |outline_sum, outline|
+        outline_sum += outline.examples.reduce(0) { |example_sum, example|
+          example_sum += example.rows.count - 1
+        }
+      }
     end
 
     def contains
