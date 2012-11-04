@@ -17,6 +17,15 @@ module CucumberAnalytics
       @keyword = step.slice(/#{World::STEP_KEYWORD_PATTERN}/).strip
     end
 
+    # Returns true if the two steps have the same text, minus any keywords
+    # and arguments, and false otherwise.
+    def ==(other_step)
+      left_step = step_text(with_keywords: false, with_arguments: false)
+      right_step = other_step.step_text(with_keywords: false, with_arguments: false)
+
+      left_step == right_step
+    end
+
     # Returns the text of the step. Options can be set to selectively exclude
     # certain portions of the text. *left_delimiter* and *right_delimiter* are
     # used to determine which parts of the step are arguments.
