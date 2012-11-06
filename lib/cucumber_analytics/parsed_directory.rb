@@ -9,7 +9,7 @@ module CucumberAnalytics
     # Creates a new ParsedDirectory object and, if *directory_parsed* is
     # provided, populates the object.
     def initialize(directory_parsed = nil)
-      CucumberAnalytics::Logging.logger.debug('ParsedDirectory#initialize')
+      CucumberAnalytics::Logging.logger.info('ParsedDirectory#initialize')
 
       @directory = directory_parsed
 

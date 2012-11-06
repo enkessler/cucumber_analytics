@@ -178,5 +178,11 @@ module CucumberAnalytics
       end
     end
 
+    # Returns true if the line is ignored when reading source code, false
+    # otherwise.
+    def self.ignored_line?(line)
+      line =~ /^\s*#/ or !(line =~ /\S/)
+    end
+
   end
 end

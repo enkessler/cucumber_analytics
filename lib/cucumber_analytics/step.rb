@@ -10,7 +10,8 @@ module CucumberAnalytics
     # Creates a new Step object based on the passed string. If the optional
     # string array is provided, it becomes the block for the step.
     def initialize(step, block = nil)
-      CucumberAnalytics::Logging.logger.debug('Step#initialize')
+      CucumberAnalytics::Logging.logger.info('Step#initialize')
+      CucumberAnalytics::Logging.logger.debug("step: #{step}")
 
       @base = step.sub(/#{World::STEP_KEYWORD_PATTERN}/, '')
       @block = block
