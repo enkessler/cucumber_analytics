@@ -1,0 +1,16 @@
+=== Version 0.0.3 / 2012-11-10
+
+* 'But' has been added to the list of recognized step keywords (formerly Given,
+When,Then, And, and *)
+* Bug fix: the number of test cases a feature is considered to contain now
+properly takes into account an outline's example rows.
+
+
+=== Version 0.0.2 / 2012-11-1
+
+* Bug fix: descriptions are no longer cut short due to the presence of keywords
+
+
+=== Version 0.0.1 / 2012-10-28
+
+* Initial release
