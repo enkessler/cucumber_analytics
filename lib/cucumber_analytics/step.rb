@@ -10,9 +10,21 @@ module CucumberAnalytics
     # Creates a new Step object based on the passed string. If the optional
     # string array is provided, it becomes the block for the step.
     def initialize(step, block = nil)
+      CucumberAnalytics::Logging.logger.info('Step#initialize')
+      CucumberAnalytics::Logging.logger.debug("step: #{step}")
+
       @base = step.sub(/#{World::STEP_KEYWORD_PATTERN}/, '')
       @block = block
       @keyword = step.slice(/#{World::STEP_KEYWORD_PATTERN}/).strip
+    end
+
+    # Returns true if the two steps have the same text, minus any keywords
+    # and arguments, and false otherwise.
+    def ==(other_step)
+      left_step = step_text(with_keywords: false, with_arguments: false)
+      right_step = other_step.step_text(with_keywords: false, with_arguments: false)
+
+      left_step == right_step
     end
 
     # Returns the text of the step. Options can be set to selectively exclude

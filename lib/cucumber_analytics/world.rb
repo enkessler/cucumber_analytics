@@ -3,7 +3,7 @@ module CucumberAnalytics
 
 
     SANITARY_STRING = '___!!!___'
-    STEP_KEYWORD_PATTERN = '\s*(?:Given|When|Then|And|\*)\s*'
+    STEP_KEYWORD_PATTERN = '\s*(?:Given|When|Then|And|But|\*)\s*'
 
 
     # Returns the left delimiter, which is used to mark the beginning of a step
@@ -176,6 +176,12 @@ module CucumberAnalytics
           collect_steps(accumulated_steps, child_container)
         end
       end
+    end
+
+    # Returns true if the line is ignored when reading source code, false
+    # otherwise.
+    def self.ignored_line?(line)
+      line =~ /^\s*#/ or !(line =~ /\S/)
     end
 
   end

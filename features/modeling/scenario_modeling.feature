@@ -36,9 +36,10 @@ Feature: Scenario elements can be modeled.
           | data      |
           | more data |
         And some setup step
+        * some setup step
 #
         When a step with a *parameter*
-        And a big step:
+        But a big step:
         #random comment
         \"\"\"
       some text
@@ -53,6 +54,8 @@ Feature: Scenario elements can be modeled.
         Given
         When
         Then
+        And
+        But
         *
             some more text
         \"\"\"
@@ -69,13 +72,13 @@ Feature: Scenario elements can be modeled.
 
   Scenario: The scenario description is modeled.
     Then the test descriptive lines are as follows:
-      | My big hunk of perfectly valid description:                       |
-      | \|                                                                |
-      | Scenario Outline                                                  |
-      | Examples                                                          |
-      | """                                                               |
-      | Background                                                        |
-      | this is still one big valid description                           |
+      | My big hunk of perfectly valid description: |
+      | \|                                          |
+      | Scenario Outline                            |
+      | Examples                                    |
+      | """                                         |
+      | Background                                  |
+      | this is still one big valid description     |
 
   Scenario: The scenario steps are modeled.
     Then the test steps are as follows:
@@ -83,8 +86,9 @@ Feature: Scenario elements can be modeled.
       | \| data      \|                                |
       | \| more data \|                                |
       | And some setup step                            |
+      | * some setup step                              |
       | When a step with a *parameter*                 |
-      | And a big step:                                |
+      | But a big step:                                |
       | """                                            |
       | 'some text'                                    |
       | ''                                             |
@@ -98,6 +102,8 @@ Feature: Scenario elements can be modeled.
       | 'Given'                                        |
       | 'When'                                         |
       | 'Then'                                         |
+      | 'And'                                          |
+      | 'But'                                          |
       | '*'                                            |
       | '    some more text'                           |
       | """                                            |
@@ -105,13 +111,15 @@ Feature: Scenario elements can be modeled.
     And the test steps "without" arguments are as follows:
       | Given this ** step takes a table: |
       | And some setup step               |
+      | * some setup step                 |
       | When a step with a **             |
-      | And a big step:                   |
+      | But a big step:                   |
       | Then ** ** **                     |
     And the test steps "without" keywords are as follows:
       | this *parameterized* step takes a table: |
       | \| data      \|                          |
       | \| more data \|                          |
+      | some setup step                          |
       | some setup step                          |
       | a step with a *parameter*                |
       | a big step:                              |
@@ -128,6 +136,8 @@ Feature: Scenario elements can be modeled.
       | 'Given'                                  |
       | 'When'                                   |
       | 'Then'                                   |
+      | 'And'                                    |
+      | 'But'                                    |
       | '*'                                      |
       | '    some more text'                     |
       | """                                      |
@@ -135,13 +145,14 @@ Feature: Scenario elements can be modeled.
     And the test steps "without" arguments "without" keywords are as follows:
       | this ** step takes a table: |
       | some setup step             |
+      | some setup step             |
       | a step with a **            |
       | a big step:                 |
       | ** ** **                    |
     And the test step "1" has the following block:
       | \| data      \| |
       | \| more data \| |
-    And the test step "4" has the following block:
+    And the test step "5" has the following block:
       | """                  |
       | 'some text'          |
       | ''                   |
@@ -155,6 +166,8 @@ Feature: Scenario elements can be modeled.
       | 'Given'              |
       | 'When'               |
       | 'Then'               |
+      | 'And'                |
+      | 'But'                |
       | '*'                  |
       | '    some more text' |
       | """                  |

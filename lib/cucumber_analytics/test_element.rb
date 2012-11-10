@@ -7,18 +7,17 @@ module CucumberAnalytics
 
     # Creates a new TestElement object.
     def initialize(source_lines = nil)
+      CucumberAnalytics::Logging.logger.info('TestElement#initialize')
+
       super
 
       @steps = []
     end
 
-    # Return true if the two elements have the same steps, minus any keywords
+    # Returns true if the two elements have the same steps, minus any keywords
     # and arguments, and false otherwise.
     def ==(other_element)
-      left_steps = steps.collect { |step| step.step_text(with_keywords: false, with_arguments: false) }.flatten
-      right_steps = other_element.steps.collect { |step| step.step_text(with_keywords: false, with_arguments: false) }.flatten
-
-      left_steps == right_steps
+      steps == other_element.steps
     end
 
 
@@ -26,6 +25,12 @@ module CucumberAnalytics
 
 
     def parse_test_element_steps(source_lines)
+      CucumberAnalytics::Logging.logger.info('TestElement#parse_test_element_steps')
+      CucumberAnalytics::Logging.logger.debug('source lines')
+      source_lines.each do |line|
+        CucumberAnalytics::Logging.logger.debug(line.chomp)
+      end
+
       until source_lines.empty? or source_lines.first =~ /^\s*(?:@|Examples:)/
         line = source_lines.first
         block = nil
@@ -38,13 +43,22 @@ module CucumberAnalytics
             block = extract_table_block(source_lines)
             @steps[@steps.size - 1] = Step.new(@steps.last.keyword + ' ' + @steps.last.base, block)
           else
-            @steps << Step.new(line.strip)
+            unless World.ignored_line?(line)
+              @steps << Step.new(line.strip)
+            end
+
             source_lines.shift
         end
       end
     end
 
     def extract_doc_block(source_lines)
+      CucumberAnalytics::Logging.logger.info('TestElement#extract_doc_block')
+      CucumberAnalytics::Logging.logger.debug('source lines')
+      source_lines.each do |line|
+        CucumberAnalytics::Logging.logger.debug(line.chomp)
+      end
+
       step_block = []
 
       line = source_lines.first
@@ -72,6 +86,12 @@ module CucumberAnalytics
     end
 
     def extract_table_block(source_lines)
+      CucumberAnalytics::Logging.logger.info('TestElement#extract_table_block')
+      CucumberAnalytics::Logging.logger.debug('source lines')
+      source_lines.each do |line|
+        CucumberAnalytics::Logging.logger.debug(line.chomp)
+      end
+
       step_block = []
 
       line = source_lines.first

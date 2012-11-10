@@ -8,6 +8,8 @@ module CucumberAnalytics
     # Creates a new ParsedFile object and, if *file_parsed* is provided,
     # populates the object.
     def initialize(file_parsed = nil)
+      CucumberAnalytics::Logging.logger.info('ParsedFile#initialize')
+
       parse_file(file_parsed) if file_parsed
     end
 
@@ -30,6 +32,8 @@ module CucumberAnalytics
 
 
     def parse_file(file_parsed)
+      CucumberAnalytics::Logging.logger.info('ParsedFile#parse_file')
+
       @file = file_parsed
 
       file_lines = []
@@ -40,47 +44,44 @@ module CucumberAnalytics
 
       # collect feature tag lines
       until file_lines.first =~ /^s*Feature:/
-        unless ignored_line?(file_lines.first)
-          feature_lines << file_lines.first
-        end
+        feature_lines << file_lines.first
         file_lines.shift
       end
 
       # collect everything else until the end of the feature section
-      until file_lines.first =~ /^\s*(?:@|Background:|Scenario:|(?:Scenario Outline:))/ or file_lines.empty?
-        unless ignored_line?(file_lines.first)
-          feature_lines << file_lines.first
-        end
+      until file_lines.first =~ /^\s*(?:@|Background:|Scenario:|(?:Scenario Outline:))/ or
+          file_lines.empty?
+
+        feature_lines << file_lines.first
         file_lines.shift
       end
+
+      # create a new feature bases on the collected lines
+      @feature = ParsedFeature.new(feature_lines)
 
       if file_lines.first =~ /^\s*Background:/
 
         # collect the background description lines
-        until (file_lines.first =~ /^\s*(?:(?:Given )|(?:When )|(?:Then )|(?:And )|(?:\* )|@|Scenario:|(?:Scenario Outline:))/) or file_lines.empty?
-          unless ignored_line?(file_lines.first)
-            background_lines << file_lines.first
-          end
+        until (file_lines.first =~ /^\s*(?:(?:Given )|(?:When )|(?:Then )|(?:And )|(?:\* )|@|Scenario:|(?:Scenario Outline:))/) or
+            file_lines.empty?
+
+          background_lines << file_lines.first
           file_lines.shift
         end
 
         # collect everything else up to the first test
-        until file_lines.first =~ /^\s*(?:@|Scenario:|(?:Scenario Outline:))/ or file_lines.empty?
+        until file_lines.first =~ /^\s*(?:@|Scenario:|(?:Scenario Outline:))/ or
+          file_lines.empty?
+
           if file_lines.first =~ /^\s*"""/
             background_lines.concat(extract_doc_string!(file_lines))
           else
-            unless ignored_line?(file_lines.first)
-              background_lines << file_lines.first
-            end
+            background_lines << file_lines.first
             file_lines.shift
           end
         end
 
-      end
-
-      @feature = ParsedFeature.new(feature_lines)
-
-      unless background_lines.empty?
+        # create a new background based on the collected lines
         @feature.background = ParsedBackground.new(background_lines)
       end
 
@@ -88,18 +89,22 @@ module CucumberAnalytics
     end
 
     def parse_tests(lines)
-      test_lines = []
+      CucumberAnalytics::Logging.logger.info('ParsedFile#parse_tests')
+      CucumberAnalytics::Logging.logger.debug('lines')
+      lines.each do |line|
+        CucumberAnalytics::Logging.logger.debug(line.chomp)
+      end
 
       until lines.empty?
         # we'll need this in order to figure out whether we are dealing with a
         # scenario or an outline
         current_test_line = lines.index { |line| line =~ /^\s*(?:Scenario:|(?:Scenario Outline:))/ }
 
+        test_lines = []
+
         # collect the tag lines
         until lines.first =~ /^\s*(?:Scenario:|(?:Scenario Outline:))/
-          unless ignored_line?(lines.first)
-            test_lines << lines.first
-          end
+          test_lines << lines.first
           lines.shift
         end
 
@@ -107,28 +112,28 @@ module CucumberAnalytics
         lines.shift
 
         # collect the description lines
-        until (lines.first =~ /^\s*(?:(?:Given )|(?:When )|(?:Then )|(?:And )|(?:\* )|Scenario:|(?:Scenario Outline:))/) or lines.empty?
-          unless ignored_line?(lines.first)
-            test_lines << lines.first
-          end
+        until (lines.first =~ /^\s*(?:(?:Given )|(?:When )|(?:Then )|(?:And )|(?:\* )|Scenario:|(?:Scenario Outline:))/) or
+            lines.empty?
+
+          test_lines << lines.first
           lines.shift
         end
 
         # collect everything else up to the next test
-        until (lines.first =~ /^\s*(?:Scenario:|(?:Scenario Outline:))/) or lines.empty?
+        until (lines.first =~ /^\s*(?:Scenario:|(?:Scenario Outline:))/) or
+            lines.empty?
+
           if (lines.first =~ /^\s*"""/)
             test_lines.concat(extract_doc_string!(lines))
           else
-            unless ignored_line?(lines.first)
-              test_lines << lines.first
-            end
+            test_lines << lines.first
             lines.shift
           end
         end
 
         # backtrack in order to not end up stealing the next test's tag lines
         unless lines.empty?
-          while  (test_lines.last =~ /^\s*@/)
+          while (test_lines.last =~ /^\s*@/) or World.ignored_line?(test_lines.last)
             lines = [test_lines.pop].concat(lines)
           end
         end
@@ -145,6 +150,12 @@ module CucumberAnalytics
     end
 
     def extract_doc_string!(lines)
+      CucumberAnalytics::Logging.logger.info('ParsedFile#extract_doc_string!')
+      CucumberAnalytics::Logging.logger.debug('lines')
+      lines.each do |line|
+        CucumberAnalytics::Logging.logger.debug(line.chomp)
+      end
+
       doc_block = []
 
       doc_block << lines.first
@@ -159,10 +170,6 @@ module CucumberAnalytics
       lines.shift
 
       doc_block
-    end
-
-    def ignored_line?(line)
-      line =~ /^\s*#/ or !(line =~ /\S/)
     end
 
   end

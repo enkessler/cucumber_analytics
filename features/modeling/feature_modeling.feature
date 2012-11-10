@@ -30,6 +30,7 @@ Feature: Features can be modeled.
         Given some description that uses keywords
         And more of it
         When I chuck the kitchen sink at it:
+        But
         *
         |
 
@@ -79,6 +80,7 @@ Feature: Features can be modeled.
       Examples: some examples with different significance and a tag
         | param1 | param2 |
         | a      | b      |
+        | c      | d      |
 
 
       Scenario: The second scenario's name.
@@ -113,7 +115,7 @@ Feature: Features can be modeled.
     Then feature "1" is found to have the following properties:
       | name            | The test feature name. |
       | test_count      | 3                      |
-      | test_case_count | 4                      |
+      | test_case_count | 5                      |
     And feature "2" is found to have the following properties:
       | name            |   |
       | test_count      | 2 |
@@ -132,6 +134,7 @@ Feature: Features can be modeled.
       | Given some description that uses keywords                           |
       | And more of it                                                      |
       | When I chuck the kitchen sink at it:                                |
+      | But                                                                 |
       | *                                                                   |
       | \|                                                                  |
       | Scenario Outline                                                    |
