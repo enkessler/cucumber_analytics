@@ -36,9 +36,10 @@ Feature: Scenario Outline elements can be modeled.
           | <param1> |
           | <param2> |
         And some setup step
+        * some setup step
 #
         When a step with a *parameter*
-        And a big step:
+        But a big step:
         #random comment
         \"\"\"
       some text
@@ -53,6 +54,8 @@ Feature: Scenario Outline elements can be modeled.
         Given
         When
         Then
+        And
+        But
         *
             some more text
         \"\"\"
@@ -103,8 +106,9 @@ Feature: Scenario Outline elements can be modeled.
       | \| <param1> \|                                 |
       | \| <param2> \|                                 |
       | And some setup step                            |
+      | * some setup step                              |
       | When a step with a *parameter*                 |
-      | And a big step:                                |
+      | But a big step:                                |
       | """                                            |
       | 'some text'                                    |
       | ''                                             |
@@ -118,6 +122,8 @@ Feature: Scenario Outline elements can be modeled.
       | 'Given'                                        |
       | 'When'                                         |
       | 'Then'                                         |
+      | 'And'                                          |
+      | 'But'                                          |
       | '*'                                            |
       | '    some more text'                           |
       | """                                            |
@@ -125,13 +131,15 @@ Feature: Scenario Outline elements can be modeled.
     And the test steps "without" arguments are as follows:
       | Given this ** step takes a table: |
       | And some setup step               |
+      | * some setup step                 |
       | When a step with a **             |
-      | And a big step:                   |
+      | But a big step:                   |
       | Then ** ** **                     |
     And the test steps "without" keywords are as follows:
       | this *parameterized* step takes a table: |
       | \| <param1> \|                           |
       | \| <param2> \|                           |
+      | some setup step                          |
       | some setup step                          |
       | a step with a *parameter*                |
       | a big step:                              |
@@ -148,6 +156,8 @@ Feature: Scenario Outline elements can be modeled.
       | 'Given'                                  |
       | 'When'                                   |
       | 'Then'                                   |
+      | 'And'                                    |
+      | 'But'                                    |
       | '*'                                      |
       | '    some more text'                     |
       | """                                      |
@@ -155,13 +165,14 @@ Feature: Scenario Outline elements can be modeled.
     And the test steps "without" arguments "without" keywords are as follows:
       | this ** step takes a table: |
       | some setup step             |
+      | some setup step             |
       | a step with a **            |
       | a big step:                 |
       | ** ** **                    |
     And the test step "1" has the following block:
       | \| <param1> \| |
       | \| <param2> \| |
-    And the test step "4" has the following block:
+    And the test step "5" has the following block:
       | """                  |
       | 'some text'          |
       | ''                   |
@@ -175,6 +186,8 @@ Feature: Scenario Outline elements can be modeled.
       | 'Given'              |
       | 'When'               |
       | 'Then'               |
+      | 'And'                |
+      | 'But'                |
       | '*'                  |
       | '    some more text' |
       | """                  |

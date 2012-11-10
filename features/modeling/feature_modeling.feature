@@ -30,6 +30,7 @@ Feature: Features can be modeled.
         Given some description that uses keywords
         And more of it
         When I chuck the kitchen sink at it:
+        But
         *
         |
 
@@ -133,6 +134,7 @@ Feature: Features can be modeled.
       | Given some description that uses keywords                           |
       | And more of it                                                      |
       | When I chuck the kitchen sink at it:                                |
+      | But                                                                 |
       | *                                                                   |
       | \|                                                                  |
       | Scenario Outline                                                    |

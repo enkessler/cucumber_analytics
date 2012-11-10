@@ -26,13 +26,14 @@ Feature: Background elements can be modeled.
           # Basically, if it's not a step keyword or tag then I will accept
           # it as description here. Cucumber might not but but that's between
           # you and its lexxer/parser. ;)
-        * this *parameterized* step takes a table:
+        Given this *parameterized* step takes a table:
           | data      |
           | more data |
-        * some setup step
+        When some setup step
+        But some setup step
 #
-        * a step with a *parameter*
-        * some big setup step:
+        Then a step with a *parameter*
+        And some big setup step:
         #random comment
         \"\"\"
       some text
@@ -47,6 +48,8 @@ Feature: Background elements can be modeled.
         Given
         When
         Then
+        And
+        But
         *
             some more text
         \"\"\"
@@ -78,39 +81,44 @@ Feature: Background elements can be modeled.
 
   Scenario: The background steps are modeled.
     Then the background's steps are as follows:
-      | * this *parameterized* step takes a table: |
-      | \| data      \|                            |
-      | \| more data \|                            |
-      | * some setup step                          |
-      | * a step with a *parameter*                |
-      | * some big setup step:                     |
-      | """                                        |
-      | 'some text'                                |
-      | ''                                         |
-      | '#some comments'                           |
-      | 'Scenario:'                                |
-      | 'Scenario Outline:'                        |
-      | 'Examples:'                                |
-      | '@'                                        |
-      | 'Feature:'                                 |
-      | '\|'                                       |
-      | 'Given'                                    |
-      | 'When'                                     |
-      | 'Then'                                     |
-      | '*'                                        |
-      | '    some more text'                       |
-      | """                                        |
-      | * *lots* *of* *parameters*                 |
+      | Given this *parameterized* step takes a table: |
+      | \| data      \|                                |
+      | \| more data \|                                |
+      | When some setup step                           |
+      | But some setup step                            |
+      | Then a step with a *parameter*                 |
+      | And some big setup step:                       |
+      | """                                            |
+      | 'some text'                                    |
+      | ''                                             |
+      | '#some comments'                               |
+      | 'Scenario:'                                    |
+      | 'Scenario Outline:'                            |
+      | 'Examples:'                                    |
+      | '@'                                            |
+      | 'Feature:'                                     |
+      | '\|'                                           |
+      | 'Given'                                        |
+      | 'When'                                         |
+      | 'Then'                                         |
+      | 'And'                                          |
+      | 'But'                                          |
+      | '*'                                            |
+      | '    some more text'                           |
+      | """                                            |
+      | * *lots* *of* *parameters*                     |
     And the background's steps "without" arguments are as follows:
-      | * this ** step takes a table: |
-      | * some setup step             |
-      | * a step with a **            |
-      | * some big setup step:        |
-      | * ** ** **                    |
+      | Given this ** step takes a table: |
+      | When some setup step              |
+      | But some setup step               |
+      | Then a step with a **             |
+      | And some big setup step:          |
+      | * ** ** **                        |
     And the background's steps "without" keywords are as follows:
       | this *parameterized* step takes a table: |
       | \| data      \|                          |
       | \| more data \|                          |
+      | some setup step                          |
       | some setup step                          |
       | a step with a *parameter*                |
       | some big setup step:                     |
@@ -127,6 +135,8 @@ Feature: Background elements can be modeled.
       | 'Given'                                  |
       | 'When'                                   |
       | 'Then'                                   |
+      | 'And'                                    |
+      | 'But'                                    |
       | '*'                                      |
       | '    some more text'                     |
       | """                                      |
@@ -134,13 +144,14 @@ Feature: Background elements can be modeled.
     And the background's steps "without" arguments "without" keywords are as follows:
       | this ** step takes a table: |
       | some setup step             |
+      | some setup step             |
       | a step with a **            |
       | some big setup step:        |
       | ** ** **                    |
     And step "1" of the background has the following block:
       | \| data      \| |
       | \| more data \| |
-    And step "4" of the background has the following block:
+    And step "5" of the background has the following block:
       | """                  |
       | 'some text'          |
       | ''                   |
@@ -154,6 +165,8 @@ Feature: Background elements can be modeled.
       | 'Given'              |
       | 'When'               |
       | 'Then'               |
+      | 'And'                |
+      | 'But'                |
       | '*'                  |
       | '    some more text' |
       | """                  |
