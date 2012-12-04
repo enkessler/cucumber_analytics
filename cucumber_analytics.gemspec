@@ -19,5 +19,4 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency("cucumber")
   gem.add_development_dependency("wrong")
   gem.add_development_dependency("simplecov")
-  gem.add_development_dependency("log4r")
 end

@@ -6,14 +6,7 @@ include Wrong
 
 require File.dirname(__FILE__) + '/../../lib/cucumber_analytics'
 
-Log4r::Logger.root.level = Log4r::OFF
-
-Log4r::FileOutputter.new('logfile',
-                         :filename=>'test_log.txt',
-                         :trunc=>true,
-                         :level=>Log4r::DEBUG)
-
-CucumberAnalytics::Logging.logger.add('logfile')
+CucumberAnalytics::Logging.set_log_level(Logger::FATAL)
 
 
 DEFAULT_FEATURE_FILE_NAME = 'test_feature.feature'
