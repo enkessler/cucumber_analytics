@@ -1,8 +1,9 @@
-require 'simplecov'
-SimpleCov.start
+unless RUBY_VERSION.to_s < '1.9.0'
+  require 'simplecov'
+  SimpleCov.start
+end
 
-require 'wrong'
-include Wrong
+include Test::Unit::Assertions
 
 require File.dirname(__FILE__) + '/../../lib/cucumber_analytics'
 

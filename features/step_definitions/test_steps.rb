@@ -5,7 +5,7 @@ Then /^(?:the )?(?:feature "([^"]*)" )?test(?: "([^"]*)")? is found to have the 
   properties = properties.rows_hash
 
   properties.each do |property, value|
-    assert { value == @parsed_files[file - 1].feature.tests[test - 1].send(property.to_sym).to_s }
+    assert value == @parsed_files[file - 1].feature.tests[test - 1].send(property.to_sym).to_s
   end
 end
 
@@ -14,7 +14,7 @@ Then /^(?:the )?(?:feature "([^"]*)" )?test(?: "([^"]*)")? descriptive lines are
   test ||= 1
   lines = lines.raw.flatten
 
-  assert { @parsed_files[file - 1].feature.tests[test - 1].description == lines }
+  assert @parsed_files[file - 1].feature.tests[test - 1].description == lines
 end
 
 Then /^(?:the )?(?:feature "([^"]*)" )?test(?: "([^"]*)")? steps(?: "([^"]*)" arguments)?(?: "([^"]*)" keywords)? are as follows:$/ do |file, test, arguments, keywords, steps|
@@ -42,14 +42,14 @@ Then /^(?:the )?(?:feature "([^"]*)" )?test(?: "([^"]*)")? steps(?: "([^"]*)" ar
     end
   end
 
-  assert { actual_steps.flatten == steps }
+  assert actual_steps.flatten == steps
 end
 
 Then /^(?:the )?(?:feature "([^"]*)" )?test(?: "([^"]*)")? is found to have the following tags:$/ do |file, test, tags|
   file ||= 1
   test ||= 1
 
-  assert { @parsed_files[file - 1].feature.tests[test - 1].tags == tags.raw.flatten }
+  assert @parsed_files[file - 1].feature.tests[test - 1].tags == tags.raw.flatten
 end
 
 Then /^(?:the )?(?:feature "([^"]*)" )?test(?: "([^"]*)")? step "([^"]*)" has the following block:$/ do |file, test, step, block|
@@ -64,19 +64,19 @@ Then /^(?:the )?(?:feature "([^"]*)" )?test(?: "([^"]*)")? step "([^"]*)" has th
     end
   end
 
-  assert { @parsed_files[file - 1].feature.tests[test - 1].steps[step - 1].block == block }
+  assert @parsed_files[file - 1].feature.tests[test - 1].steps[step - 1].block == block
 end
 
 Then /^(?:the )?(?:feature "([^"]*)" )?test(?: "([^"]*)")? is equal to test "([^"]*)"$/ do |file, first_test, second_test|
   file ||= 1
   first_test ||= 1
 
-  assert { @parsed_files[file - 1].feature.tests[first_test - 1] == @parsed_files[file - 1].feature.tests[second_test - 1] }
+  assert @parsed_files[file - 1].feature.tests[first_test - 1] == @parsed_files[file - 1].feature.tests[second_test - 1]
 end
 
 Then /^(?:the )?(?:feature "([^"]*)" )?test(?: "([^"]*)")? is not equal to test "([^"]*)"$/ do |file, first_test, second_test|
   file ||= 1
   first_test ||= 1
 
-  assert { @parsed_files[file - 1].feature.tests[first_test - 1] != @parsed_files[file - 1].feature.tests[second_test - 1] }
+  assert @parsed_files[file - 1].feature.tests[first_test - 1] != @parsed_files[file - 1].feature.tests[second_test - 1]
 end

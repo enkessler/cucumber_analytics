@@ -3,7 +3,7 @@ Then /^the(?: feature "([^"]*)")? background is found to have the following prop
   properties = properties.rows_hash
 
   properties.each do |property, expected_value|
-    assert { expected_value == @parsed_files[file - 1].feature.background.send(property.to_sym).to_s }
+    assert expected_value == @parsed_files[file - 1].feature.background.send(property.to_sym).to_s
   end
 end
 
@@ -11,7 +11,7 @@ Then /^the(?: feature "([^"]*)")? background's descriptive lines are as follows:
   file ||= 1
   expected_description = lines.raw.flatten
 
-  assert { @parsed_files[file - 1].feature.background.description == expected_description }
+  assert @parsed_files[file - 1].feature.background.description == expected_description
 end
 
 Then /^the(?: feature "([^"]*)")? background's steps(?: "([^"]*)" arguments)?(?: "([^"]*)" keywords)? are as follows:$/ do |file, arguments, keywords, steps|
@@ -37,7 +37,7 @@ Then /^the(?: feature "([^"]*)")? background's steps(?: "([^"]*)" arguments)?(?:
     end
   end
 
-  assert { actual_steps.flatten == steps }
+  assert actual_steps.flatten == steps
 end
 
 When /^step "([^"]*)" of the background (?:of feature "([^"]*)" )?has the following block:$/ do |step, file, block|
@@ -51,5 +51,5 @@ When /^step "([^"]*)" of the background (?:of feature "([^"]*)" )?has the follow
     end
   end
 
-  assert { @parsed_files[file - 1].feature.background.steps[step - 1].block == block }
+  assert @parsed_files[file - 1].feature.background.steps[step - 1].block == block
 end

@@ -7,7 +7,7 @@ Then /^(?:the )?directory(?: "([^"]*)")? is found to have the following properti
       expected_value.sub!('path_to', @default_file_directory)
     end
 
-    assert { expected_value == @parsed_directories[directory - 1].send(property.to_sym).to_s }
+    assert expected_value == @parsed_directories[directory - 1].send(property.to_sym).to_s
   end
 end
 
@@ -16,5 +16,5 @@ When /^(?:the )?directory(?: "([^"]*)")? feature files are as follows:$/ do |dir
 
   actual_files = @parsed_directories[directory - 1].feature_files.collect { |file| file.name }
 
-  assert { actual_files.flatten.sort == files.raw.flatten.sort }
+  assert actual_files.flatten.sort == files.raw.flatten.sort
 end
