@@ -21,8 +21,8 @@ module CucumberAnalytics
     # Returns true if the two steps have the same text, minus any keywords
     # and arguments, and false otherwise.
     def ==(other_step)
-      left_step = step_text(with_keywords: false, with_arguments: false)
-      right_step = other_step.step_text(with_keywords: false, with_arguments: false)
+      left_step = step_text(:with_keywords => false, :with_arguments => false)
+      right_step = other_step.step_text(:with_keywords => false, :with_arguments => false)
 
       left_step == right_step
     end
@@ -35,18 +35,18 @@ module CucumberAnalytics
     #
     #  a_step.step_text
     #  #=> ['Given *some* step with a block:', 'block line 1', 'block line 2']
-    #  a_step.step_text(with_keywords: false)
+    #  a_step.step_text(:with_keywords => false)
     #  #=> ['*some* step with a block:', 'block line 1', 'block line 2']
-    #  a_step.step_text(with_arguments: false, left_delimiter: '*', right_delimiter: '*')
+    #  a_step.step_text(:with_arguments => false, :left_delimiter => '*', :right_delimiter => '*')
     #  #=> ['Given ** step with a block:']
-    #  a_step.step_text(with_keywords: false, with_arguments: false, left_delimiter: '-', right_delimiter: '-'))
+    #  a_step.step_text(:with_keywords => false, :with_arguments => false, :left_delimiter => '-', :right_delimiter => '-'))
     #  #=> ['*some* step with a block:']
     #
     def step_text(options = {})
-      options = {with_keywords: true,
-                 with_arguments: true,
-                 left_delimiter: World.left_delimiter,
-                 right_delimiter: World.right_delimiter}.merge(options)
+      options = {:with_keywords => true,
+                 :with_arguments => true,
+                 :left_delimiter => World.left_delimiter,
+                 :right_delimiter => World.right_delimiter}.merge(options)
 
       final_step = []
       step_text = ''

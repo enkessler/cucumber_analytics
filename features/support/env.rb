@@ -1,19 +1,13 @@
-require 'simplecov'
-SimpleCov.start
+unless RUBY_VERSION.to_s < '1.9.0'
+  require 'simplecov'
+  SimpleCov.start
+end
 
-require 'wrong'
-include Wrong
+include Test::Unit::Assertions
 
 require File.dirname(__FILE__) + '/../../lib/cucumber_analytics'
 
-Log4r::Logger.root.level = Log4r::OFF
-
-Log4r::FileOutputter.new('logfile',
-                         :filename=>'test_log.txt',
-                         :trunc=>true,
-                         :level=>Log4r::DEBUG)
-
-CucumberAnalytics::Logging.logger.add('logfile')
+CucumberAnalytics::Logging.set_log_level(Logger::FATAL)
 
 
 DEFAULT_FEATURE_FILE_NAME = 'test_feature.feature'
