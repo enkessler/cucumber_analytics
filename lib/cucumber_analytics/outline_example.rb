@@ -23,6 +23,14 @@ module CucumberAnalytics
       parse_example(source_lines) if source_lines
     end
 
+    def add_row(row)
+      rows << row
+    end
+
+    def remove_row(row)
+      rows.delete(row)
+    end
+
 
     private
 
