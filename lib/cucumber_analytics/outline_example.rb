@@ -4,6 +4,7 @@ module CucumberAnalytics
 
     attr_accessor :tags
     attr_accessor :rows
+    attr_accessor :parameters
 
 
     # Creates a new OutlineExample object and, if *source_lines* is provided,
@@ -19,16 +20,26 @@ module CucumberAnalytics
 
       @tags = []
       @rows = []
+      @parameters = []
 
       parse_example(source_lines) if source_lines
     end
 
     def add_row(row)
-      rows << row
+      if row.is_a?(Array)
+        @rows << Hash[@parameters.zip(row.collect { |value| value.strip })]
+      else
+        @rows << row
+      end
     end
 
     def remove_row(row)
-      rows.delete(row)
+      if row.is_a?(Array)
+        location = @rows.index { |row_hash| row_hash.values_at(*@parameters) == row }
+      else
+        location = @rows.index { |row_hash| row_hash == row }
+      end
+      @rows.delete_at(location) if location
     end
 
 
@@ -41,8 +52,24 @@ module CucumberAnalytics
       parse_feature_element_tags(source_lines)
       parse_feature_element(source_lines)
 
-      source_lines.delete_if { |line| World.ignored_line?(line)}
-      rows.concat source_lines.collect { |line| line.strip }
+      source_lines.delete_if { |line| World.ignored_line?(line) }
+
+      unless source_lines.empty?
+        @parameters = source_lines.shift.split('|')
+        @parameters.shift
+        @parameters.pop
+
+        @parameters.collect! { |param| param.strip }
+      end
+
+      unless source_lines.empty?
+        @rows = source_lines.collect { |row| row.split('|') }.collect do |row|
+          row.shift
+          row.collect { |value| value.strip }
+        end
+
+        @rows.collect! { |row| Hash[@parameters.zip(row)] }
+      end
     end
 
     def parse_feature_element_description(source_lines)

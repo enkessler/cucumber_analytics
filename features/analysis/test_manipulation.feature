@@ -26,14 +26,12 @@ Feature: Tests can be manipulated in various ways.
 
   Scenario: Rows can be added to an outline
     When the test example block has the following rows added to it:
-      | \| 1      \| 2      \| |
+      | 1,2 |
     Then the test example block rows are as follows:
-      | \| param1 \| param2 \| |
-      | \| x      \| y      \| |
-      | \| 1      \| 2      \| |
+      | x,y |
+      | 1,2 |
 
   Scenario: Rows can be removed from an outline
     When the test example block has the following rows removed from it:
-      | \| x      \| y      \| |
-    Then the test example block rows are as follows:
-      | \| param1 \| param2 \| |
+      | x,y |
+    Then the test example block has no rows

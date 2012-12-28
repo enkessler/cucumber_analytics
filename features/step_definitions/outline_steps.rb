@@ -53,8 +53,12 @@ Then /^(?:the )?(?:feature "([^"]*)" )?test(?: "([^"]*)")? example block(?: "([^
   example ||= 1
 
   rows = rows.raw.flatten
+  examples = @parsed_files[file - 1].feature.tests[test - 1].examples[example - 1]
 
-  assert @parsed_files[file - 1].feature.tests[test - 1].examples[example - 1].rows == rows
+  expected = rows.collect { |row| row.split(',') }.collect { |row| Hash[examples.parameters.zip(row)] }
+  actual = examples.rows
+
+  assert(actual == expected, "Expected: #{expected}\n but was: #{actual}")
 end
 
 When /^(?:the )?(?:feature "([^"]*)" )?test(?: "([^"]*)")? example block(?: "([^"]*)")? has the following rows added to it:$/ do |file, test, example, rows|
@@ -65,6 +69,7 @@ When /^(?:the )?(?:feature "([^"]*)" )?test(?: "([^"]*)")? example block(?: "([^
   rows = rows.raw.flatten
 
   rows.each do |row|
+    row = row.split(',')
     @parsed_files[file - 1].feature.tests[test - 1].examples[example - 1].add_row(row)
   end
 end
@@ -77,6 +82,47 @@ When /^(?:the )?(?:feature "([^"]*)" )?test(?: "([^"]*)")? example block(?: "([^
   rows = rows.raw.flatten
 
   rows.each do |row|
+    row = row.split(',')
     @parsed_files[file - 1].feature.tests[test - 1].examples[example - 1].remove_row(row)
   end
+end
+
+Then /^(?:the )?(?:feature "([^"]*)" )?test(?: "([^"]*)")? example block(?: "([^"]*)")? parameters are as follows:$/ do |file, test, example, parameters|
+  file ||= 1
+  test ||= 1
+  example ||= 1
+
+  parameters = parameters.raw.flatten
+
+  expected = parameters
+  actual =@parsed_files[file - 1].feature.tests[test - 1].examples[example - 1].parameters
+
+  assert(actual == expected, "Expected: #{expected}\n but was: #{actual}")
+end
+
+Then /^(?:the )?(?:feature "([^"]*)" )?test(?: "([^"]*)")? example block(?: "([^"]*)")? has no descriptive lines$/ do |file, test, example|
+  file ||= 1
+  test ||= 1
+  example ||= 1
+
+  assert @parsed_files[file - 1].feature.tests[test - 1].examples[example - 1].description == []
+end
+
+Then /^(?:the )?(?:feature "([^"]*)" )?test(?: "([^"]*)")? example block(?: "([^"]*)")? has no parameters$/ do |file, test, example|
+  file ||= 1
+  test ||= 1
+  example ||= 1
+
+  assert @parsed_files[file - 1].feature.tests[test - 1].examples[example - 1].parameters == []
+end
+
+Then /^(?:the )?(?:feature "([^"]*)" )?test(?: "([^"]*)")? example block(?: "([^"]*)")? has no rows$/ do |file, test, example|
+  file ||= 1
+  test ||= 1
+  example ||= 1
+
+  expected = []
+  actual = @parsed_files[file - 1].feature.tests[test - 1].examples[example - 1].rows
+
+  assert(actual == expected, "Expected: #{expected}\n but was: #{actual}")
 end
