@@ -27,12 +27,17 @@ module CucumberAnalytics
       [@feature]
     end
 
+    def feature_count
+      @feature.nil? ? 0 : 1
+    end
+
 
     private
 
 
     def parse_file(file_parsed)
       CucumberAnalytics::Logging.logger.info('ParsedFile#parse_file')
+      CucumberAnalytics::Logging.logger.debug("Parsing file: #{file_parsed}")
 
       @file = file_parsed
 
@@ -43,7 +48,9 @@ module CucumberAnalytics
       File.open(@file, 'r') { |file| file_lines = file.readlines }
 
       # collect feature tag lines
-      until file_lines.first =~ /^s*Feature:/
+      until file_lines.first =~ /^s*Feature:/ or
+          file_lines.empty?
+
         feature_lines << file_lines.first
         file_lines.shift
       end
@@ -57,7 +64,7 @@ module CucumberAnalytics
       end
 
       # create a new feature bases on the collected lines
-      @feature = ParsedFeature.new(feature_lines)
+      @feature = feature_lines.empty? ? nil : ParsedFeature.new(feature_lines)
 
       if file_lines.first =~ /^\s*Background:/
 
@@ -71,7 +78,7 @@ module CucumberAnalytics
 
         # collect everything else up to the first test
         until file_lines.first =~ /^\s*(?:@|Scenario:|(?:Scenario Outline:))/ or
-          file_lines.empty?
+            file_lines.empty?
 
           if file_lines.first =~ /^\s*"""/
             background_lines.concat(extract_doc_string!(file_lines))

@@ -16,3 +16,9 @@ When /^(?:the )?file(?: "([^"]*)")? features are as follows:$/ do |file, feature
 
   assert @parsed_files[file - 1].feature.name == feature.raw.flatten.first
 end
+
+When /^(?:the )?file(?: "([^"]*)")? has no features$/ do |file|
+  file ||= 1
+
+  assert @parsed_files[file - 1].feature.nil?
+end
