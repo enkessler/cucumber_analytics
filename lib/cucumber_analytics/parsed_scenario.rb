@@ -22,6 +22,8 @@ module CucumberAnalytics
       parse_scenario(source_lines) if source_lines
     end
 
+    # Returns tags which are applicable to the scenario which have been
+    # inherited from the feature level.
     def applied_tags
       additional_tags = @parent_element.tags
       additional_tags.concat(@parent_element.applied_tags) if @parent_element.respond_to?(:applied_tags)

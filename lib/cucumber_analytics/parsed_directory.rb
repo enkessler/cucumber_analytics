@@ -34,6 +34,8 @@ module CucumberAnalytics
       @feature_files.count
     end
 
+    # Returns the immediate child elements of the directory (i.e. its .feature
+    # files and .feature file containing sub-directories).
     def contains
       @feature_files + @feature_directories
     end
