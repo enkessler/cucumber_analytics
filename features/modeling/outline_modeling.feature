@@ -8,7 +8,8 @@ Feature: Scenario Outline elements can be modeled.
     2. the outline's description
     3. the outline's steps
     4. the outline's tags
-    5. the outline's example blocks
+    5. the outline's applied tags
+    6. the outline's example blocks
 
 
   Background: Test file setup.
@@ -195,6 +196,10 @@ Feature: Scenario Outline elements can be modeled.
   Scenario: The outline tags are modeled.
     Then the test is found to have the following tags:
       | @outline_tag |
+
+  Scenario: The outline applied tags are modeled.
+    Then the test is found to have the following applied tags:
+      | @a_feature_level_tag |
 
   Scenario: The outline example blocks are modeled.
     And the test example blocks are as follows:

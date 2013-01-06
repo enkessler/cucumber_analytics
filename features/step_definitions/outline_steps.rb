@@ -39,6 +39,19 @@ Then /^(?:the )?(?:feature "([^"]*)" )?test(?: "([^"]*)")? example block(?: "([^
   assert @parsed_files[file - 1].feature.tests[test - 1].examples[example - 1].tags == tags
 end
 
+Then /^(?:the )?(?:feature "([^"]*)" )?test(?: "([^"]*)")? example block(?: "([^"]*)")? is found to have the following applied tags:$/ do |file, test, example, tags|
+  file ||= 1
+  test ||= 1
+  example ||= 1
+
+  tags = tags.raw.flatten
+
+  expected = tags.sort
+  actual = @parsed_files[file - 1].feature.tests[test - 1].examples[example - 1].applied_tags.sort
+
+  assert(actual == expected, "Expected: #{expected}\n but was: #{actual}")
+end
+
 Then /^(?:the )?(?:feature "([^"]*)" )?test(?: "([^"]*)")? example block(?: "([^"]*)")? has no tags$/ do |file, test, example|
   file ||= 1
   test ||= 1

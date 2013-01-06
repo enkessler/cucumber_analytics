@@ -9,6 +9,7 @@ Feature: Example elements can be modeled.
     3. the examples' parameters
     4. the examples' rows
     5. the examples' tags
+    6. the examples's applied tags
 
 
   Background: Test file setup.
@@ -75,6 +76,10 @@ Feature: Example elements can be modeled.
       | @another_one |
     And the test example block "3" has no tags
 
+  Scenario: The examples' applied tags are modeled.
+    Then the test example block "2" is found to have the following applied tags:
+      | @a_feature_level_tag |
+      | @outline_tag         |
 
   Scenario: The examples' parameters are modeled.
     Then the test example block "1" parameters are as follows:

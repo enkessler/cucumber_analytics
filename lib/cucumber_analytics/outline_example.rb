@@ -5,6 +5,7 @@ module CucumberAnalytics
     attr_accessor :tags
     attr_accessor :rows
     attr_accessor :parameters
+    attr_accessor :parent_element
 
 
     # Creates a new OutlineExample object and, if *source_lines* is provided,
@@ -40,6 +41,13 @@ module CucumberAnalytics
         location = @rows.index { |row_hash| row_hash == row }
       end
       @rows.delete_at(location) if location
+    end
+
+    def applied_tags
+      additional_tags = @parent_element.tags
+      additional_tags.concat(@parent_element.applied_tags) if @parent_element.respond_to?(:applied_tags)
+
+      additional_tags
     end
 
 

@@ -152,6 +152,7 @@ module CucumberAnalytics
           next_test = ParsedScenario.new(test_lines)
         end
 
+        next_test.parent_element = @feature
         @feature.tests << next_test
       end
     end

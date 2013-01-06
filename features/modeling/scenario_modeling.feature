@@ -8,6 +8,7 @@ Feature: Scenario elements can be modeled.
     2. the scenario's description
     3. the scenario's steps
     4. the scenario's tags
+    5. the scenario's applied tags
 
 
   Background: Test file setup.
@@ -177,3 +178,7 @@ Feature: Scenario elements can be modeled.
       | @a_tag           |
       | @another_tag     |
       | @yet_another_tag |
+
+  Scenario: The scenario applied tags are modeled.
+    Then the test is found to have the following applied tags:
+      | @a_feature_level_tag |
