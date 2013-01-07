@@ -8,7 +8,8 @@ Feature: Scenario Outline elements can be modeled.
     2. the outline's description
     3. the outline's steps
     4. the outline's tags
-    5. the outline's example rows
+    5. the outline's applied tags
+    6. the outline's example blocks
 
 
   Background: Test file setup.
@@ -196,18 +197,11 @@ Feature: Scenario Outline elements can be modeled.
     Then the test is found to have the following tags:
       | @outline_tag |
 
-  Scenario Outline: The outline examples are modeled.
-    Then "<outline>" example "<set>" has a "<name>"
-    And "<outline>" example "<set>" descriptive lines are as follows:
-      | <description1> |
-      | <description2> |
-    And "<outline>" example "<set>" tags are as follows:
-      | <tag1> |
-      | <tag2> |
-    And "<outline>" example "<set>" rows are as follows:
-      | <row1> |
-      | <row2> |
-  Examples:
-    | outline | set | name                                                | description1                                              | description2                                | tag1         | tag2         | row1                   | row2                   |
-    | 1       | 1   | text describing the significance of the examples    | Anything besides the \| that starts a row should be valid | description at this point in the test. YMMV |              |              | \| param1 \| param2 \| | \| x      \| y      \| |
-    | 1       | 2   | some examples with different significance and a tag | Words, words, words, words,                               | why so many words?                          | @example_tag | @another_one | \| param1 \| param2 \| | \| a      \| b      \| |
+  Scenario: The outline applied tags are modeled.
+    Then the test is found to have the following applied tags:
+      | @a_feature_level_tag |
+
+  Scenario: The outline example blocks are modeled.
+    And the test example blocks are as follows:
+      | text describing the significance of the examples    |
+      | some examples with different significance and a tag |

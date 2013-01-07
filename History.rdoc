@@ -1,3 +1,16 @@
+=== Version 0.0.6 / 2013-01-07
+
+* Improved support for example blocks in outlines.
+* Modeling of empty feature files is now possible.
+* Modeling of inherited tags has been added.
+
+
+=== Version 0.0.5 / 2012-12-16
+
+* Bug fix: a missing 'require' statement that was causing loading erros has
+  been fixed.
+
+
 === Version 0.0.4 / 2012-12-13
 
 * Removed an unintentional gem dependency

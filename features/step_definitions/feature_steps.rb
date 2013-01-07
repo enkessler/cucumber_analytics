@@ -3,7 +3,10 @@ Then /^(?:the )?feature(?: "([^"]*)")? is found to have the following properties
   properties = properties.rows_hash
 
   properties.each do |property, expected_value|
-    assert expected_value == @parsed_files[file - 1].feature.send(property.to_sym).to_s
+    expected = expected_value
+    actual = @parsed_files[file - 1].feature.send(property.to_sym).to_s
+
+    assert(actual == expected, "Expected: #{expected}\n but was: #{actual}")
   end
 end
 

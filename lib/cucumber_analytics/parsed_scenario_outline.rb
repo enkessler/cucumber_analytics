@@ -4,6 +4,8 @@ module CucumberAnalytics
 
     attr_accessor :tags
     attr_accessor :examples
+    attr_accessor :parent_element
+
 
     # Creates a new ParsedScenarioOutline object and, if *source_lines* is
     # provided, populates the object.
@@ -22,8 +24,19 @@ module CucumberAnalytics
       parse_outline(source_lines) if source_lines
     end
 
+    # Returns the immediate child elements of the outline (i.e. its example
+    # blocks).
     def contains
       @examples
+    end
+
+    # Returns tags which are applicable to the outline which have been
+    # inherited from the feature level.
+    def applied_tags
+      additional_tags = @parent_element.tags
+      additional_tags.concat(@parent_element.applied_tags) if @parent_element.respond_to?(:applied_tags)
+
+      additional_tags
     end
 
 
@@ -97,7 +110,10 @@ module CucumberAnalytics
         end
 
         # use the collected lines to create an example
-        @examples << OutlineExample.new(example_lines)
+        example = OutlineExample.new(example_lines)
+        example.parent_element = self
+
+        @examples << example
       end
     end
 

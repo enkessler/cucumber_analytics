@@ -54,11 +54,13 @@ module CucumberAnalytics
     def test_case_count
       scenario_count + outlines.reduce(0) { |outline_sum, outline|
         outline_sum += outline.examples.reduce(0) { |example_sum, example|
-          example_sum += example.rows.count - 1
+          example_sum += example.rows.count
         }
       }
     end
 
+    # Returns the immediate child elements of the feature (i.e. its background
+    # and tests).
     def contains
       [@background] + @tests
     end
@@ -81,7 +83,7 @@ module CucumberAnalytics
         CucumberAnalytics::Logging.logger.debug(line.chomp)
       end
 
-      source_lines.delete_if { |line| World.ignored_line?(line)}
+      source_lines.delete_if { |line| World.ignored_line?(line) }
 
       until source_lines.first =~ /^\s*(?:(?:Scenario: )|(?:Scenario Outline: )|(?:Background: )|(?:@ ))/ or
           source_lines.empty?
