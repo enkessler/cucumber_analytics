@@ -147,7 +147,7 @@ module CucumberAnalytics
 
     # Recursively gathers all features found in the passed container.
     def self.collect_features(accumulated_features, container)
-      accumulated_features << container.feature if container.respond_to?(:feature)
+      accumulated_features << container.feature if container.respond_to?(:feature) && container.feature
 
       if container.respond_to?(:contains)
         container.contains.each do |child_container|

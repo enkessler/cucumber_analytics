@@ -26,7 +26,7 @@ module CucumberAnalytics
     # Returns the immediate child elements of the feature file(i.e. its
     # feature).
     def contains
-      [@feature]
+      @feature ? [@feature] : []
     end
 
     # Returns the number of features contained in the file.
