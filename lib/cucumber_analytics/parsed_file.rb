@@ -1,23 +1,23 @@
-#module CucumberAnalytics
-#  class ParsedFile
-#
-#
+module CucumberAnalytics
+  class ParsedFile
+
+
 #    attr_reader :feature
-#
-#
-#    # Creates a new ParsedFile object and, if *file_parsed* is provided,
-#    # populates the object.
-#    def initialize(file_parsed = nil)
-#      CucumberAnalytics::Logging.logger.info('ParsedFile#initialize')
-#
-#      parse_file(file_parsed) if file_parsed
-#    end
-#
-#    # Returns the name of the file.
-#    def name
-#      File.basename(@file.gsub('\\', '/'))
-#    end
-#
+
+
+    # Creates a new ParsedFile object and, if *file_parsed* is provided,
+    # populates the object.
+    def initialize(file_parsed = nil)
+      CucumberAnalytics::Logging.logger.info('ParsedFile#initialize')
+
+      parse_file(file_parsed) if file_parsed
+    end
+
+    # Returns the name of the file.
+    def name
+      File.basename(@file.gsub('\\', '/'))
+    end
+
 #    # Returns the path of the file.
 #    def path
 #      @file
@@ -33,16 +33,16 @@
 #    def feature_count
 #      @feature.nil? ? 0 : 1
 #    end
-#
-#
-#    private
-#
-#
-#    def parse_file(file_parsed)
-#      CucumberAnalytics::Logging.logger.info('ParsedFile#parse_file')
-#      CucumberAnalytics::Logging.logger.debug("Parsing file: #{file_parsed}")
-#
-#      @file = file_parsed
+
+
+    private
+
+
+    def parse_file(file_parsed)
+      CucumberAnalytics::Logging.logger.info('ParsedFile#parse_file')
+      CucumberAnalytics::Logging.logger.debug("Parsing file: #{file_parsed}")
+
+      @file = file_parsed
 #
 #      file_lines = []
 #      feature_lines = []
@@ -96,8 +96,8 @@
 #      end
 #
 #      parse_tests(file_lines)
-#    end
-#
+    end
+
 #    def parse_tests(lines)
 #      CucumberAnalytics::Logging.logger.info('ParsedFile#parse_tests')
 #      CucumberAnalytics::Logging.logger.debug('lines')
@@ -182,6 +182,6 @@
 #
 #      doc_block
 #    end
-#
-#  end
-#end
+
+  end
+end

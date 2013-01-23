@@ -7,7 +7,10 @@ Then /^(?:the )?directory(?: "([^"]*)")? is found to have the following properti
       expected_value.sub!('path_to', @default_file_directory)
     end
 
-    assert expected_value == @parsed_directories[directory - 1].send(property.to_sym).to_s
+    expected = expected_value
+    actual = @parsed_directories[directory - 1].send(property.to_sym).to_s
+
+    assert(actual == expected, "Expected: #{expected}\n but was: #{actual}")
   end
 end
 
