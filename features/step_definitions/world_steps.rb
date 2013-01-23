@@ -155,5 +155,8 @@ Then /^the files collected from directory "([^"]*)" are as follows:$/ do |direct
 
   actual_files = CucumberAnalytics::World.files_in(@parsed_directories[directory - 1]).collect { |file| file.name }
 
-  assert actual_files.flatten.sort == files.raw.flatten.sort
+  expected = files.raw.flatten.sort
+  actual = actual_files.flatten.sort
+
+  assert(actual == expected, "Expected: #{expected}\n but was: #{actual}")
 end

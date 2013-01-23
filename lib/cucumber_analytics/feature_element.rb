@@ -1,30 +1,32 @@
-#module CucumberAnalytics
-#  class FeatureElement
-#
-#
-#    attr_reader :name
+module CucumberAnalytics
+  class FeatureElement
+
+
+    attr_reader :name
 #    attr_reader :description
-#
-#
-#    # Creates a new FeatureElement object.
-#    def initialize(source_lines = nil)
-#      CucumberAnalytics::Logging.logger.info('FeatureElement#initialize')
-#
-#      @name = ''
+
+
+    # Creates a new FeatureElement object.
+    def initialize(parsed_element = nil)
+      CucumberAnalytics::Logging.logger.info('FeatureElement#initialize')
+
+      @name = ''
 #      @description =[]
-#    end
-#
-#
-#    private
-#
-#
-#    def parse_feature_element(source_lines)
-#      CucumberAnalytics::Logging.logger.info('FeatureElement#parse_feature_element')
-#
+      parse_feature_element(parsed_element) if parsed_element
+    end
+
+
+    private
+
+
+    def parse_feature_element(parsed_element)
+      CucumberAnalytics::Logging.logger.info('FeatureElement#parse_feature_element')
+
+      @name = parsed_element['name']
 #      parse_feature_element_name(source_lines)
 #      parse_feature_element_description(source_lines)
-#    end
-#
+    end
+
 #    #todo - move this elsewhere
 #    def parse_feature_element_tags(source_lines)
 #      CucumberAnalytics::Logging.logger.info('FeatureElement#parse_feature_element_tags')
@@ -57,6 +59,6 @@
 #      @name.replace source_lines.first.match(/^\s*(?:[A-Z a-z])+:(.*)/)[1].strip
 #      source_lines.shift
 #    end
-#
-#  end
-#end
+
+  end
+end

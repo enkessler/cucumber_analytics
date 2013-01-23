@@ -1,7 +1,7 @@
-#module CucumberAnalytics
-#  module World
-#
-#
+module CucumberAnalytics
+  module World
+
+
 #    SANITARY_STRING = '___!!!___'
 #    STEP_KEYWORD_PATTERN = '\s*(?:Given|When|Then|And|But|\*)\s*'
 #
@@ -55,14 +55,14 @@
 #        collect_tags(accumulated_tags, container)
 #      end
 #    end
-#
-#    # Returns all feature files found in the passed container.
-#    def self.files_in(container)
-#      Array.new.tap do |accumulated_files|
-#        collect_files(accumulated_files, container)
-#      end
-#    end
-#
+
+    # Returns all feature files found in the passed container.
+    def self.files_in(container)
+      Array.new.tap do |accumulated_files|
+        collect_files(accumulated_files, container)
+      end
+    end
+
 #    # Returns all features found in the passed container.
 #    def self.features_in(container)
 #      Array.new.tap do |accumulated_features|
@@ -97,11 +97,11 @@
 #
 #      all_steps.select { |step| World.defined_step_patterns.any? { |pattern| step.base =~ Regexp.new(pattern) } }
 #    end
-#
-#
-#    private
-#
-#
+
+
+    private
+
+
 #    # Make life easier by ensuring that the only forward slashes in the
 #    # regular expression are the important ones.
 #    def self.sanitize_line(line)
@@ -133,18 +133,18 @@
 #        end
 #      end
 #    end
-#
-#    # Recursively gathers all feature files found in the passed container.
-#    def self.collect_files(accumulated_files, container)
-#      accumulated_files.concat container.feature_files if container.respond_to?(:feature_files)
-#
-#      if container.respond_to?(:contains)
-#        container.contains.each do |child_container|
-#          collect_files(accumulated_files, child_container)
-#        end
-#      end
-#    end
-#
+
+    # Recursively gathers all feature files found in the passed container.
+    def self.collect_files(accumulated_files, container)
+      accumulated_files.concat container.feature_files if container.respond_to?(:feature_files)
+
+      if container.respond_to?(:contains)
+        container.contains.each do |child_container|
+          collect_files(accumulated_files, child_container)
+        end
+      end
+    end
+
 #    # Recursively gathers all features found in the passed container.
 #    def self.collect_features(accumulated_features, container)
 #      accumulated_features << container.feature if container.respond_to?(:feature) && container.feature
@@ -183,6 +183,6 @@
 #    def self.ignored_line?(line)
 #      line =~ /^\s*#/ or !(line =~ /\S/)
 #    end
-#
-#  end
-#end
+
+  end
+end

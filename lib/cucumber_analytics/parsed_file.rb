@@ -2,7 +2,7 @@ module CucumberAnalytics
   class ParsedFile
 
 
-#    attr_reader :feature
+    attr_reader :feature
 
 
     # Creates a new ParsedFile object and, if *file_parsed* is provided,
@@ -18,32 +18,42 @@ module CucumberAnalytics
       File.basename(@file.gsub('\\', '/'))
     end
 
-#    # Returns the path of the file.
-#    def path
-#      @file
-#    end
-#
+    # Returns the path of the file.
+    def path
+      @file
+    end
+
 #    # Returns the immediate child elements of the feature file(i.e. its
 #    # feature).
 #    def contains
 #      @feature ? [@feature] : []
 #    end
-#
-#    # Returns the number of features contained in the file.
-#    def feature_count
-#      @feature.nil? ? 0 : 1
-#    end
+
+    # Returns the number of features contained in the file.
+    def feature_count
+      @feature.nil? ? 0 : 1
+    end
 
 
     private
 
 
-    def parse_file(file_parsed)
+    def parse_file(file_to_parse)
       CucumberAnalytics::Logging.logger.info('ParsedFile#parse_file')
-      CucumberAnalytics::Logging.logger.debug("Parsing file: #{file_parsed}")
+      CucumberAnalytics::Logging.logger.debug("Parsing file: #{file_to_parse}")
 
-      @file = file_parsed
-#
+      io = StringIO.new
+      formatter = Gherkin::Formatter::JSONFormatter.new(io)
+      parser = Gherkin::Parser::Parser.new(formatter)
+      parser.parse(IO.read(file_to_parse), file_to_parse, 0)
+      formatter.done
+      parsed_file = JSON.parse(io.string)
+
+      CucumberAnalytics::Logging.logger.debug('Parsed file:')
+      CucumberAnalytics::Logging.logger.debug(parsed_file.to_yaml)
+
+      @file = file_to_parse
+      @feature = parsed_file.empty? ? nil : ParsedFeature.new(parsed_file.first)
 #      file_lines = []
 #      feature_lines = []
 #      background_lines = []

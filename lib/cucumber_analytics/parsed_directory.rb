@@ -3,7 +3,7 @@ module CucumberAnalytics
 
 
     attr_reader :feature_files
-#    attr_reader :feature_directories
+    attr_reader :feature_directories
 
 
     # Creates a new ParsedDirectory object and, if *directory_parsed* is
@@ -14,7 +14,7 @@ module CucumberAnalytics
       @directory = directory_parsed
 
       @feature_files = []
-#      @feature_directories = []
+      @feature_directories = []
 
       scan_directory if directory_parsed
     end
@@ -34,11 +34,11 @@ module CucumberAnalytics
       @feature_files.count
     end
 
-#    # Returns the immediate child elements of the directory (i.e. its .feature
-#    # files and .feature file containing sub-directories).
-#    def contains
-#      @feature_files + @feature_directories
-#    end
+    # Returns the immediate child elements of the directory (i.e. its .feature
+    # files and .feature file containing sub-directories).
+    def contains
+      @feature_files + @feature_directories
+    end
 
 
     private
@@ -51,7 +51,7 @@ module CucumberAnalytics
 
       entries.each do |entry|
         entry = @directory + '/' + entry
-#        @feature_directories << ParsedDirectory.new(entry) if File.directory?(entry)
+        @feature_directories << ParsedDirectory.new(entry) if File.directory?(entry)
         @feature_files << ParsedFile.new(entry) if entry =~ /\.feature$/
       end
     end

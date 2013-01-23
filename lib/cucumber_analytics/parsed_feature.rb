@@ -1,25 +1,25 @@
-#module CucumberAnalytics
-#  class ParsedFeature < FeatureElement
-#
-#
+module CucumberAnalytics
+  class ParsedFeature < FeatureElement
+
+
 #    attr_reader :tags
 #    attr_accessor :background
 #    attr_accessor :tests
-#
-#
-#    # Creates a new ParsedFeature object and, if *source_lines* is provided,
-#    # populates the object.
-#    def initialize(source_lines = nil)
-#      CucumberAnalytics::Logging.logger.info('ParsedFeature#initialize')
-#
-#      super
-#
+
+
+    # Creates a new ParsedFeature object and, if *source_lines* is provided,
+    # populates the object.
+    def initialize(parsed_feature = nil)
+      CucumberAnalytics::Logging.logger.info('ParsedFeature#initialize')
+
+      super
+
 #      @tags = []
 #      @tests = []
 #
 #      parse_feature(source_lines) if source_lines
-#    end
-#
+    end
+
 #    # Returns true if the feature contains a background, false otherwise.
 #    def has_background?
 #      !@background.nil?
@@ -92,6 +92,6 @@
 #        source_lines.shift
 #      end
 #    end
-#
-#  end
-#end
+
+  end
+end
