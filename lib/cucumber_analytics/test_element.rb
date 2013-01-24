@@ -1,7 +1,7 @@
-#module CucumberAnalytics
-#  class TestElement < FeatureElement
-#
-#
+module CucumberAnalytics
+  class TestElement < FeatureElement
+
+
 #    attr_reader :steps
 #
 #
@@ -108,6 +108,6 @@
 #
 #      step_block
 #    end
-#
-#  end
-#end
+
+  end
+end

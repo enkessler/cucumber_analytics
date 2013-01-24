@@ -13,13 +13,19 @@ end
 Then /^the descriptive lines of feature "([^"]*)" are as follows:$/ do |file, lines|
   expected_description = lines.raw.flatten
 
-  assert @parsed_files[file - 1].feature.description == expected_description
+  expected = expected_description
+  actual = @parsed_files[file - 1].feature.description
+
+  assert(actual == expected, "Expected: #{expected}\n but was: #{actual}")
 end
 
 Then /^feature "([^"]*)" is found to have the following tags:$/ do |file, tags|
   expected_tags = tags.raw.flatten
 
-  assert @parsed_files[file - 1].feature.tags == expected_tags
+  expected = expected_tags
+  actual = @parsed_files[file - 1].feature.tags
+
+  assert(actual == expected, "Expected: #{expected}\n but was: #{actual}")
 end
 
 Then /^feature "([^"]*)" has no descriptive lines$/ do |file|
@@ -43,7 +49,10 @@ When /^(?:the )?feature(?: "([^"]*)")? outlines are as follows:$/ do |file, outl
 
   actual_outlines = @parsed_files[file - 1].feature.outlines.collect { |outline| outline.name }
 
-  assert actual_outlines.flatten.sort == outlines.raw.flatten.sort
+  expected = outlines.raw.flatten.sort
+  actual = actual_outlines.flatten.sort
+
+  assert(actual == expected, "Expected: #{expected}\n but was: #{actual}")
 end
 
 When /^(?:the )?feature(?: "([^"]*)")? background is as follows:$/ do |file, background|

@@ -63,13 +63,13 @@ module CucumberAnalytics
       end
     end
 
-#    # Returns all features found in the passed container.
-#    def self.features_in(container)
-#      Array.new.tap do |accumulated_features|
-#        collect_features(accumulated_features, container)
-#      end
-#    end
-#
+    # Returns all features found in the passed container.
+    def self.features_in(container)
+      Array.new.tap do |accumulated_features|
+        collect_features(accumulated_features, container)
+      end
+    end
+
 #    # Returns all tests found in the passed container.
 #    def self.tests_in(container)
 #      Array.new.tap do |accumulated_tests|
@@ -145,17 +145,17 @@ module CucumberAnalytics
       end
     end
 
-#    # Recursively gathers all features found in the passed container.
-#    def self.collect_features(accumulated_features, container)
-#      accumulated_features << container.feature if container.respond_to?(:feature) && container.feature
-#
-#      if container.respond_to?(:contains)
-#        container.contains.each do |child_container|
-#          collect_features(accumulated_features, child_container)
-#        end
-#      end
-#    end
-#
+    # Recursively gathers all features found in the passed container.
+    def self.collect_features(accumulated_features, container)
+      accumulated_features << container.feature if container.respond_to?(:feature) && container.feature
+
+      if container.respond_to?(:contains)
+        container.contains.each do |child_container|
+          collect_features(accumulated_features, child_container)
+        end
+      end
+    end
+
 #    # Recursively gathers all tests found in the passed container.
 #    def self.collect_tests(accumulated_tests, container)
 #      accumulated_tests.concat container.tests if container.respond_to?(:tests)

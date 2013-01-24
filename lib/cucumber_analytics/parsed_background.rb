@@ -1,7 +1,7 @@
-#module CucumberAnalytics
-#  class ParsedBackground < TestElement
-#
-#
+module CucumberAnalytics
+  class ParsedBackground < TestElement
+
+
 #    # Creates a new ParsedBackground object and, if *source_lines* is provided,
 #    # populates the object.
 #    def initialize(source_lines = nil)
@@ -40,6 +40,6 @@
 #        source_lines.shift
 #      end
 #    end
-#
-#  end
-#end
+
+  end
+end

@@ -1,16 +1,16 @@
-#module CucumberAnalytics
-#  class OutlineExample < FeatureElement
-#
-#
+module CucumberAnalytics
+  class OutlineExample < FeatureElement
+
+
 #    attr_accessor :tags
-#    attr_accessor :rows
+    attr_accessor :rows
 #    attr_accessor :parameters
 #    attr_accessor :parent_element
-#
-#
-#    # Creates a new OutlineExample object and, if *source_lines* is provided,
-#    # populates the object.
-#    def initialize(source_lines = nil)
+
+
+# Creates a new OutlineExample object and, if *source_lines* is provided,
+# populates the object.
+    def initialize(parsed_example = nil)
 #      CucumberAnalytics::Logging.logger.info('OutlineExample#initialize')
 #      CucumberAnalytics::Logging.logger.debug('source lines')
 #      source_lines.each do |line|
@@ -20,12 +20,12 @@
 #      super
 #
 #      @tags = []
-#      @rows = []
+      @rows = []
 #      @parameters = []
 #
-#      parse_example(source_lines) if source_lines
-#    end
-#
+      parse_example(parsed_example) if parsed_example
+    end
+
 #    # Adds a row to the example block. The row can be given as a Hash of column
 #    # headers and their corresponding values or as an Array of values which
 #    # will be assigned in order.
@@ -57,14 +57,21 @@
 #
 #      additional_tags
 #    end
-#
-#
-#    private
-#
-#
-#    def parse_example(source_lines)
-#      CucumberAnalytics::Logging.logger.info('OutlineExample#parse_example')
-#
+
+
+    private
+
+
+    def parse_example(parsed_example)
+      CucumberAnalytics::Logging.logger.info('OutlineExample#parse_example')
+      CucumberAnalytics::Logging.logger.debug('Parsed example:')
+      CucumberAnalytics::Logging.logger.debug(parsed_example.to_yaml)
+
+      parsed_example['rows'].shift
+      parsed_example['rows'].each do |row|
+        @rows << row
+      end
+
 #      parse_feature_element_tags(source_lines)
 #      parse_feature_element(source_lines)
 #
@@ -86,8 +93,8 @@
 #
 #        @rows.collect! { |row| Hash[@parameters.zip(row)] }
 #      end
-#    end
-#
+    end
+
 #    def parse_feature_element_description(source_lines)
 #      CucumberAnalytics::Logging.logger.info('OutlineExample#parse_feature_element_description')
 #      CucumberAnalytics::Logging.logger.debug('source lines')
@@ -105,6 +112,6 @@
 #        source_lines.shift
 #      end
 #    end
-#
-#  end
-#end
+
+  end
+end

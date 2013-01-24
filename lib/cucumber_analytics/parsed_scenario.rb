@@ -1,7 +1,7 @@
-#module CucumberAnalytics
-#  class ParsedScenario < TestElement
-#
-#
+module CucumberAnalytics
+  class ParsedScenario < TestElement
+
+
 #    attr_accessor :tags
 #    attr_accessor :parent_element
 #
@@ -60,6 +60,6 @@
 #        source_lines.shift
 #      end
 #    end
-#
-#  end
-#end
+
+  end
+end
