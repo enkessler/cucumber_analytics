@@ -2,7 +2,7 @@ module CucumberAnalytics
   class ParsedFeature < FeatureElement
 
 
-    attr_reader :tags
+    attr_accessor :tags
     attr_accessor :background
     attr_accessor :tests
 

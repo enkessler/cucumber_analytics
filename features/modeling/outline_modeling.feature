@@ -205,3 +205,12 @@ Feature: Scenario Outline elements can be modeled.
     And the test example blocks are as follows:
       | text describing the significance of the examples    |
       | some examples with different significance and a tag |
+
+  Scenario Outline: Outline models pass all other specifications
+  Exact specifications detailing the API for Scenario Outline models.
+    Given that there are "<additional specifications>" detailing models
+    When the corresponding unit tests are run
+    Then all of those specifications are met
+  Examples:
+    | additional specifications |
+    | outline_spec.rb          |

@@ -11,9 +11,7 @@ module CucumberAnalytics
     def initialize(source_lines = nil)
       CucumberAnalytics::Logging.logger.info('ParsedScenario#initialize')
       CucumberAnalytics::Logging.logger.debug('source lines')
-      source_lines.each do |line|
-      CucumberAnalytics::Logging.logger.debug(line.chomp)
-      end
+      source_lines.each { |line| CucumberAnalytics::Logging.logger.debug(line.chomp) } if source_lines
 
       super
 
@@ -29,6 +27,11 @@ module CucumberAnalytics
       additional_tags.concat(@parent_element.applied_tags) if @parent_element.respond_to?(:applied_tags)
 
       additional_tags
+    end
+
+    # Returns all tags which are applicable to the scenario.
+    def all_tags
+      applied_tags.concat(@tags)
     end
 
 
