@@ -3,7 +3,6 @@ module CucumberAnalytics
 
 
     attr_accessor :tags
-    attr_accessor :parent_element
 
 
     # Creates a new ParsedScenario object and, if *source_lines* is provided,

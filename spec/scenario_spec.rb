@@ -14,4 +14,20 @@ describe "ParsedScenario" do
     scenario.all_tags.sort.should == ['@feature_tag', '@scenario_tag'].sort
   end
 
+  it 'knows its parent element' do
+    file_path = "#{@default_file_directory}/#{@default_feature_file_name}"
+
+    File.open(file_path, "w") { |file|
+      file.puts('Feature: Test feature')
+      file.puts('  Scenario: Test scenario')
+    }
+
+    file = CucumberAnalytics::ParsedFile.new(file_path)
+
+    feature = file.feature
+    scenario = feature.tests.first
+
+    scenario.parent_element.should equal feature
+  end
+
 end

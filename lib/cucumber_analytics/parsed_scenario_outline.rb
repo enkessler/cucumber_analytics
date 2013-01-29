@@ -4,7 +4,6 @@ module CucumberAnalytics
 
     attr_accessor :tags
     attr_accessor :examples
-    attr_accessor :parent_element
 
 
     # Creates a new ParsedScenarioOutline object and, if *source_lines* is

@@ -14,4 +14,19 @@ describe "ParsedOutline" do
     outline.all_tags.sort.should == ['@feature_tag', '@outline_tag'].sort
   end
 
+  it 'knows its parent element' do
+    file_path = "#{@default_file_directory}/#{@default_feature_file_name}"
+
+    File.open(file_path, "w") { |file|
+      file.puts('Feature: Test feature')
+      file.puts('  Scenario Outline: Test outline')
+    }
+
+    file = CucumberAnalytics::ParsedFile.new(file_path)
+
+    feature = file.feature
+    outline = feature.tests.first
+
+    outline.parent_element.should equal feature
+  end
 end

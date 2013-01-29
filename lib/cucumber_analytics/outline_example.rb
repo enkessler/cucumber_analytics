@@ -5,7 +5,6 @@ module CucumberAnalytics
     attr_accessor :tags
     attr_accessor :rows
     attr_accessor :parameters
-    attr_accessor :parent_element
 
 
     # Creates a new OutlineExample object and, if *source_lines* is provided,

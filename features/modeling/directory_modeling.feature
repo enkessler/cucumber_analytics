@@ -84,3 +84,12 @@ Feature: Directories can be modeled.
     And directory "2" feature files are as follows:
       | test_file_4.feature |
       | test_file_5.feature |
+
+  Scenario Outline: Directory models pass all other specifications
+  Exact specifications detailing the API for directory models.
+    Given that there are "<additional specifications>" detailing models
+    When the corresponding unit tests are run
+    Then all of those specifications are met
+  Examples:
+    | additional specifications |
+    | directory_spec.rb         |

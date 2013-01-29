@@ -38,13 +38,24 @@ module CucumberAnalytics
         case
           when line =~ /^\s*"""/
             block = extract_doc_block(source_lines)
-            @steps[@steps.size - 1] = Step.new(@steps.last.keyword + ' ' + @steps.last.base, block)
+
+            found_step = Step.new(@steps.last.keyword + ' ' + @steps.last.base, block)
+            found_step.parent_element = self
+
+            @steps[@steps.size - 1] = found_step
           when line =~ /^\s*\|/
             block = extract_table_block(source_lines)
-            @steps[@steps.size - 1] = Step.new(@steps.last.keyword + ' ' + @steps.last.base, block)
+
+            found_step = Step.new(@steps.last.keyword + ' ' + @steps.last.base, block)
+            found_step.parent_element = self
+
+            @steps[@steps.size - 1] = found_step
           else
             unless World.ignored_line?(line)
-              @steps << Step.new(line.strip)
+              found_step = Step.new(line.strip)
+              found_step.parent_element = self
+
+              @steps << found_step
             end
 
             source_lines.shift

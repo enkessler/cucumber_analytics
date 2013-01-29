@@ -3,6 +3,7 @@ module CucumberAnalytics
 
 
     attr_reader :feature
+    attr_accessor :parent_element
 
 
     # Creates a new ParsedFile object and, if *file_parsed* is provided,
@@ -67,7 +68,15 @@ module CucumberAnalytics
       end
 
       # create a new feature bases on the collected lines
-      @feature = feature_lines.empty? ? nil : ParsedFeature.new(feature_lines)
+      if feature_lines.empty?
+        @feature = nil
+      else
+        found_feature = ParsedFeature.new(feature_lines)
+        found_feature.parent_element = self
+
+        @feature = found_feature
+      end
+
 
       if file_lines.first =~ /^\s*Background:/
 
@@ -92,7 +101,10 @@ module CucumberAnalytics
         end
 
         # create a new background based on the collected lines
-        @feature.background = ParsedBackground.new(background_lines)
+        found_background = ParsedBackground.new(background_lines)
+        found_background.parent_element = @feature
+
+        @feature.background = found_background
       end
 
       parse_tests(file_lines)

@@ -5,6 +5,7 @@ module CucumberAnalytics
     attr_reader :keyword
     attr_reader :base
     attr_reader :block
+    attr_accessor :parent_element
 
 
     # Creates a new Step object based on the passed string. If the optional

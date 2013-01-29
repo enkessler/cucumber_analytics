@@ -46,3 +46,12 @@ Feature: Feature files can be modeled.
       | path          | path_to/why_would_you_make_an_empty_file.feature |
       | feature_count | 0                                                |
     And file "3" has no features
+
+  Scenario Outline: Feature file models pass all other specifications
+  Exact specifications detailing the API for .feature file models.
+    Given that there are "<additional specifications>" detailing models
+    When the corresponding unit tests are run
+    Then all of those specifications are met
+  Examples:
+    | additional specifications |
+    | file_spec.rb              |
