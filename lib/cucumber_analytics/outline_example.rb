@@ -5,7 +5,6 @@ module CucumberAnalytics
     attr_accessor :tags
     attr_accessor :rows
     attr_accessor :parameters
-    attr_accessor :parent_element
 
 
     # Creates a new OutlineExample object and, if *source_lines* is provided,
@@ -13,9 +12,7 @@ module CucumberAnalytics
     def initialize(source_lines = nil)
       CucumberAnalytics::Logging.logger.info('OutlineExample#initialize')
       CucumberAnalytics::Logging.logger.debug('source lines')
-      source_lines.each do |line|
-        CucumberAnalytics::Logging.logger.debug(line.chomp)
-      end
+      source_lines.each { |line| CucumberAnalytics::Logging.logger.debug(line.chomp) } if source_lines
 
       super
 
@@ -49,8 +46,7 @@ module CucumberAnalytics
       @rows.delete_at(location) if location
     end
 
-    # Returns tags which are applicable to the example block which have been
-    # inherited from the outline level.
+    # Returns tags which have been inherited from the outline level.
     def applied_tags
       additional_tags = @parent_element.tags
       additional_tags.concat(@parent_element.applied_tags) if @parent_element.respond_to?(:applied_tags)
@@ -58,6 +54,10 @@ module CucumberAnalytics
       additional_tags
     end
 
+    # Returns all tags which are applicable to the scenario.
+    def all_tags
+      applied_tags.concat(@tags)
+    end
 
     private
 

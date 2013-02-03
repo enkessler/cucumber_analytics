@@ -144,9 +144,10 @@ end
 Then /^the features collected from directory "([^"]*)" are as follows:$/ do |directory, features|
   directory ||= 1
 
-  actual_features = CucumberAnalytics::World.features_in(@parsed_directories[directory - 1]).collect { |feature| feature.name }
+  expected = features.raw.flatten.sort
+  actual = CucumberAnalytics::World.features_in(@parsed_directories[directory - 1]).collect { |feature| feature.name }
 
-  assert actual_features.flatten.sort == features.raw.flatten.sort
+  assert(actual == expected, "Expected: #{expected}\n but was: #{actual}")
 end
 
 Then /^the files collected from directory "([^"]*)" are as follows:$/ do |directory, files|

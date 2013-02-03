@@ -4,7 +4,6 @@ module CucumberAnalytics
 
     attr_accessor :tags
     attr_accessor :examples
-    attr_accessor :parent_element
 
 
     # Creates a new ParsedScenarioOutline object and, if *source_lines* is
@@ -12,9 +11,7 @@ module CucumberAnalytics
     def initialize(source_lines = nil)
       CucumberAnalytics::Logging.logger.info('ParsedScenarioOutline#initialize')
       CucumberAnalytics::Logging.logger.debug('source lines')
-      source_lines.each do |line|
-        CucumberAnalytics::Logging.logger.debug(line.chomp)
-      end
+      source_lines.each { |line| CucumberAnalytics::Logging.logger.debug(line.chomp) } if source_lines
 
       super
 
@@ -30,13 +27,17 @@ module CucumberAnalytics
       @examples
     end
 
-    # Returns tags which are applicable to the outline which have been
-    # inherited from the feature level.
+    # Returns tags which have been inherited from the feature level.
     def applied_tags
       additional_tags = @parent_element.tags
       additional_tags.concat(@parent_element.applied_tags) if @parent_element.respond_to?(:applied_tags)
 
       additional_tags
+    end
+
+    # Returns all tags which are applicable to the scenario.
+    def all_tags
+      applied_tags.concat(@tags)
     end
 
 

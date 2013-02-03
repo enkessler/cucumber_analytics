@@ -10,7 +10,12 @@ module CucumberAnalytics
       end
 
       def logger
-        @logger ||= Logger.new('logfile.log')
+        unless @logger
+          @logger = Logger.new('logfile.log')
+          set_log_level(Logger::FATAL)
+        end
+
+        @logger
       end
 
       def logger=(new_logger)

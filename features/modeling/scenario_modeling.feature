@@ -182,3 +182,12 @@ Feature: Scenario elements can be modeled.
   Scenario: The scenario applied tags are modeled.
     Then the test is found to have the following applied tags:
       | @a_feature_level_tag |
+
+  Scenario Outline: Scenario models pass all other specifications
+  Exact specifications detailing the API for Scenario models.
+    Given that there are "<additional specifications>" detailing models
+    When the corresponding unit tests are run
+    Then all of those specifications are met
+  Examples:
+    | additional specifications |
+    | scenario_spec.rb          |

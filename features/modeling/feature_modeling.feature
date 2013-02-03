@@ -192,3 +192,12 @@ Feature: Features can be modeled.
     And feature "3" is found to have the following properties:
       | has_background? | false |
     And feature "3" has no background
+
+  Scenario Outline: Feature models pass all other specifications
+  Exact specifications detailing the API for Feature models.
+    Given that there are "<additional specifications>" detailing models
+    When the corresponding unit tests are run
+    Then all of those specifications are met
+  Examples:
+    | additional specifications |
+    | feature_spec.rb           |

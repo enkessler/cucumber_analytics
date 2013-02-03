@@ -1,3 +1,11 @@
+=== Version 0.0.7 / 2013-02-01
+
+* Bug fix: Feature collection no longer returns nil values for feature files
+  that do not contain features.
+* Elements now know the element that contains them.
+* Adjusted the default logging level so tht logging does not occur by default.
+
+
 === Version 0.0.6 / 2013-01-07
 
 * Improved support for example blocks in outlines.
@@ -7,7 +15,7 @@
 
 === Version 0.0.5 / 2012-12-16
 
-* Bug fix: a missing 'require' statement that was causing loading erros has
+* Bug fix: a missing 'require' statement that was causing loading errors has
   been fixed.
 
 

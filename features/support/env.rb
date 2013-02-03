@@ -1,6 +1,6 @@
 unless RUBY_VERSION.to_s < '1.9.0'
   require 'simplecov'
-  SimpleCov.start
+  SimpleCov.command_name('cucumber_tests')
 end
 
 include Test::Unit::Assertions
@@ -15,6 +15,8 @@ DEFAULT_STEP_FILE_NAME = 'test_steps.rb'
 DEFAULT_FILE_DIRECTORY = "#{File.dirname(__FILE__)}/../temp_files"
 TEST_FILE_DIRECTORY = "#{File.dirname(__FILE__)}/../test_files"
 TEST_STEP_FILE_LOCATION = "#{DEFAULT_FILE_DIRECTORY}/#{DEFAULT_STEP_FILE_NAME}"
+
+SPEC_DIRECTORY = "#{File.dirname(__FILE__)}/../../spec"
 
 
 Before do

@@ -4,6 +4,7 @@ module CucumberAnalytics
 
     attr_reader :feature_files
     attr_reader :feature_directories
+    attr_accessor :parent_element
 
 
     # Creates a new ParsedDirectory object and, if *directory_parsed* is
@@ -51,8 +52,20 @@ module CucumberAnalytics
 
       entries.each do |entry|
         entry = @directory + '/' + entry
-        @feature_directories << ParsedDirectory.new(entry) if File.directory?(entry)
-        @feature_files << ParsedFile.new(entry) if entry =~ /\.feature$/
+
+        if File.directory?(entry)
+          found_directory = ParsedDirectory.new(entry)
+          found_directory.parent_element = self
+
+          @feature_directories << found_directory
+        end
+
+        if entry =~ /\.feature$/
+          found_feature_file = ParsedFile.new(entry)
+          found_feature_file.parent_element = self
+
+          @feature_files << found_feature_file
+        end
       end
     end
 
