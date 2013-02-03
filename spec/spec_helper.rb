@@ -4,6 +4,8 @@ require 'simplecov' unless RUBY_VERSION.to_s < '1.9.0'
 
 require "#{File.dirname(__FILE__)}/../lib/cucumber_analytics"
 
+CucumberAnalytics::Logging.set_log_level(Logger::FATAL)
+
 
 DEFAULT_FEATURE_FILE_NAME = 'test_feature.feature'
 DEFAULT_FILE_DIRECTORY = "#{File.dirname(__FILE__)}/temp_files"
