@@ -20,7 +20,7 @@ Feature: Scenario Outline elements can be modeled.
       Some more feature description.
 
       @outline_tag
-      Scenario Outline: The scenario outline's name.
+      Scenario Outline:The scenario outline's name.
         My big hunk of perfectly valid description:
           |
 
@@ -62,7 +62,7 @@ Feature: Scenario Outline elements can be modeled.
         \"\"\"
         Then *lots* *of* *parameters*
 
-      Examples: text describing the significance of the examples
+      Examples:text describing the significance of the examples
           Anything besides the | that starts a row should be valid
           description at this point in the test. YMMV
         | param1 | param2 |

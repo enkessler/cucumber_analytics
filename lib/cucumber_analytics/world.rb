@@ -4,6 +4,7 @@ module CucumberAnalytics
 
     SANITARY_STRING = '___!!!___'
     STEP_KEYWORD_PATTERN = '\s*(?:Given|When|Then|And|But|\*)\s*'
+    TEST_ELEMENT_START_PATTERN = '\s*(?:@|Background:|Scenario:|(?:Scenario Outline:))'
 
 
     # Returns the left delimiter, which is used to mark the beginning of a step

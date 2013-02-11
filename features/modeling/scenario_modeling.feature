@@ -21,7 +21,7 @@ Feature: Scenario elements can be modeled.
       @a_tag
 
       @another_tag@yet_another_tag
-      Scenario: The first scenario's name.
+      Scenario:The first scenario's name.
         My big hunk of perfectly valid description:
           |
 

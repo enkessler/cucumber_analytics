@@ -21,7 +21,7 @@ Feature: Features can be modeled.
     #Or any line that is a comment, really.
     @a_feature_level_tag @and_another@and_another
 
-    Feature: The test feature name.
+     Feature:The test feature name.
       Some more feature description.
 
       And some more.
@@ -44,7 +44,7 @@ Feature: Features can be modeled.
         # freeform text for some reason.
 
 
-      Background: Some general test setup stuff.
+      Background:Some general test setup stuff.
         A little more information.
         * some setup step
 
