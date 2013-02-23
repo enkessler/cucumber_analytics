@@ -37,7 +37,7 @@ module CucumberAnalytics
 
     # Returns all tags which are applicable to the scenario.
     def all_tags
-      applied_tags.concat(@tags)
+      applied_tags + @tags
     end
 
 
