@@ -85,7 +85,7 @@ module CucumberAnalytics
 
       source_lines.delete_if { |line| World.ignored_line?(line) }
 
-      until source_lines.first =~ /^\s*(?:(?:Scenario: )|(?:Scenario Outline: )|(?:Background: )|(?:@ ))/ or
+      until source_lines.first =~ /#{World::TEST_ELEMENT_START_PATTERN}/ or
           source_lines.empty?
 
         @description << source_lines.first.strip

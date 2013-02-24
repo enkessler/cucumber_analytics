@@ -49,7 +49,10 @@ Then /^(?:the )?(?:feature "([^"]*)" )?test(?: "([^"]*)")? is found to have the 
   file ||= 1
   test ||= 1
 
-  assert @parsed_files[file - 1].feature.tests[test - 1].tags == tags.raw.flatten
+  expected = tags.raw.flatten
+  actual = @parsed_files[file - 1].feature.tests[test - 1].tags
+
+  assert(actual == expected, "Expected: #{expected}\n but was: #{actual}")
 end
 
 Then /^(?:the )?(?:feature "([^"]*)" )?test(?: "([^"]*)")? is found to have the following applied tags:$/ do |file, test, tags|

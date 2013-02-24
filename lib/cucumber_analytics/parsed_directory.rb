@@ -30,6 +30,11 @@ module CucumberAnalytics
       @directory
     end
 
+    # Returns the number of sub-directories contained in the directory.
+    def directory_count
+      @feature_directories.count
+    end
+
     # Returns the number of features files contained in the directory.
     def feature_file_count
       @feature_files.count

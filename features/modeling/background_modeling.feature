@@ -14,7 +14,7 @@ Feature: Background elements can be modeled.
     Feature: The test feature name.
       Some more feature description.
 
-      Background: Some general test setup stuff.
+      Background:Some general test setup stuff.
        My big hunk of perfectly valid description:
           |
 

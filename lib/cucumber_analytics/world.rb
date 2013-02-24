@@ -4,6 +4,7 @@ module CucumberAnalytics
 
     SANITARY_STRING = '___!!!___'
     STEP_KEYWORD_PATTERN = '\s*(?:Given|When|Then|And|But|\*)\s*'
+    TEST_ELEMENT_START_PATTERN = '\s*(?:@|Background:|Scenario:|(?:Scenario Outline:))'
 
 
     # Returns the left delimiter, which is used to mark the beginning of a step
@@ -53,6 +54,13 @@ module CucumberAnalytics
     def self.tags_in(container)
       Array.new.tap do |accumulated_tags|
         collect_tags(accumulated_tags, container)
+      end
+    end
+
+    # Returns all directories found in the passed container.
+    def self.directories_in(container)
+      Array.new.tap do |accumulated_directories|
+        collect_directories(accumulated_directories, container)
       end
     end
 
@@ -130,6 +138,17 @@ module CucumberAnalytics
       if container.respond_to?(:contains)
         container.contains.each do |child_container|
           collect_tags(accumulated_tags, child_container)
+        end
+      end
+    end
+
+    # Recursively gathers all directories found in the passed container.
+    def self.collect_directories(accumulated_directories, container)
+      accumulated_directories.concat container.feature_directories if container.respond_to?(:feature_directories)
+
+      if container.respond_to?(:contains)
+        container.contains.each do |child_container|
+          collect_directories(accumulated_directories, child_container)
         end
       end
     end

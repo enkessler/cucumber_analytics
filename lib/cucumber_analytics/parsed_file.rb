@@ -52,7 +52,7 @@ module CucumberAnalytics
       File.open(@file, 'r') { |file| file_lines = file.readlines }
 
       # collect feature tag lines
-      until file_lines.first =~ /^s*Feature:/ or
+      until file_lines.first =~ /^\s*Feature:/ or
           file_lines.empty?
 
         feature_lines << file_lines.first
@@ -60,7 +60,7 @@ module CucumberAnalytics
       end
 
       # collect everything else until the end of the feature section
-      until file_lines.first =~ /^\s*(?:@|Background:|Scenario:|(?:Scenario Outline:))/ or
+      until file_lines.first =~ /#{World::TEST_ELEMENT_START_PATTERN}/ or
           file_lines.empty?
 
         feature_lines << file_lines.first

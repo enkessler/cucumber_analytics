@@ -1,9 +1,18 @@
+=== Version 0.0.8 / 2013-02-24
+
+* Bug fix: Replaced some destructive method calls with non-destructive
+  equivalents.
+* Bug fix: Fixed some parsing bugs based around whitespace.
+* Subdirectories within a directory are now modeled.
+* Directory collection added
+
+
 === Version 0.0.7 / 2013-02-01
 
 * Bug fix: Feature collection no longer returns nil values for feature files
   that do not contain features.
 * Elements now know the element that contains them.
-* Adjusted the default logging level so tht logging does not occur by default.
+* Adjusted the default logging level so that logging does not occur by default.
 
 
 === Version 0.0.6 / 2013-01-07
