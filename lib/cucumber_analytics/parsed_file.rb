@@ -3,6 +3,7 @@ module CucumberAnalytics
 
 
     attr_reader :feature
+    attr_accessor :parent_element
 
 
     # Creates a new ParsedFile object and, if *file_parsed* is provided,
