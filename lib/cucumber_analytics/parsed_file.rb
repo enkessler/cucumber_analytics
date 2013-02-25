@@ -54,7 +54,13 @@ module CucumberAnalytics
       CucumberAnalytics::Logging.logger.debug(parsed_file.to_yaml)
 
       @file = file_to_parse
-      @feature = parsed_file.empty? ? nil : ParsedFeature.new(parsed_file.first)
+      @feature = nil
+
+      unless parsed_file.empty?
+        feature_found = ParsedFeature.new(parsed_file.first)
+        feature_found.parent_element = self
+        @feature = feature_found
+      end
 #      file_lines = []
 #      feature_lines = []
 #      background_lines = []
