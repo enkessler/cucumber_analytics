@@ -56,6 +56,13 @@ module CucumberAnalytics
 #      end
 #    end
 
+    # Returns all directories found in the passed container.
+    def self.directories_in(container)
+      Array.new.tap do |accumulated_directories|
+        collect_directories(accumulated_directories, container)
+      end
+    end
+
     # Returns all feature files found in the passed container.
     def self.files_in(container)
       Array.new.tap do |accumulated_files|
@@ -133,6 +140,17 @@ module CucumberAnalytics
 #        end
 #      end
 #    end
+
+# Recursively gathers all directories found in the passed container.
+    def self.collect_directories(accumulated_directories, container)
+      accumulated_directories.concat container.feature_directories if container.respond_to?(:feature_directories)
+
+      if container.respond_to?(:contains)
+        container.contains.each do |child_container|
+          collect_directories(accumulated_directories, child_container)
+        end
+      end
+    end
 
     # Recursively gathers all feature files found in the passed container.
     def self.collect_files(accumulated_files, container)

@@ -65,12 +65,7 @@ module CucumberAnalytics
           @feature_directories << found_directory
         end
 
-        if entry =~ /\.feature$/
-          found_feature_file = ParsedFile.new(entry)
-          found_feature_file.parent_element = self
-
-          @feature_files << found_feature_file
-        end
+        @feature_files << ParsedFile.new(entry) if entry =~ /\.feature$/
       end
     end
 
