@@ -14,7 +14,7 @@ Feature: Background elements can be modeled.
     Feature: The test feature name.
       Some more feature description.
 
-      Background: Some general test setup stuff.
+      Background:Some general test setup stuff.
        My big hunk of perfectly valid description:
           |
 
@@ -170,3 +170,12 @@ Feature: Background elements can be modeled.
       | '*'                  |
       | '    some more text' |
       | """                  |
+
+  Scenario Outline: Background models pass all other specifications
+  Exact specifications detailing the API for Background models.
+    Given that there are "<additional specifications>" detailing models
+    When the corresponding unit tests are run
+    Then all of those specifications are met
+  Examples:
+    | additional specifications |
+    | background_spec.rb        |

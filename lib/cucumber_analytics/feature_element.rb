@@ -4,6 +4,7 @@ module CucumberAnalytics
 
     attr_reader :name
     attr_reader :description
+    attr_accessor :parent_element
 
 
     # Creates a new FeatureElement object.

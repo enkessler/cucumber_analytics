@@ -21,7 +21,7 @@ Feature: Features can be modeled.
     #Or any line that is a comment, really.
     @a_feature_level_tag @and_another@and_another
 
-    Feature: The test feature name.
+     Feature:The test feature name.
       Some more feature description.
 
       And some more.
@@ -44,7 +44,7 @@ Feature: Features can be modeled.
         # freeform text for some reason.
 
 
-      Background: Some general test setup stuff.
+      Background:Some general test setup stuff.
         A little more information.
         * some setup step
 
@@ -192,3 +192,12 @@ Feature: Features can be modeled.
     And feature "3" is found to have the following properties:
       | has_background? | false |
     And feature "3" has no background
+
+  Scenario Outline: Feature models pass all other specifications
+  Exact specifications detailing the API for Feature models.
+    Given that there are "<additional specifications>" detailing models
+    When the corresponding unit tests are run
+    Then all of those specifications are met
+  Examples:
+    | additional specifications |
+    | feature_spec.rb           |

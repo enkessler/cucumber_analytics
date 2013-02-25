@@ -11,18 +11,14 @@ Then /^(?:the )?feature(?: "([^"]*)")? is found to have the following properties
 end
 
 Then /^the descriptive lines of feature "([^"]*)" are as follows:$/ do |file, lines|
-  expected_description = lines.raw.flatten
-
-  expected = expected_description
+  expected = lines.raw.flatten
   actual = @parsed_files[file - 1].feature.description
 
   assert(actual == expected, "Expected: #{expected}\n but was: #{actual}")
 end
 
 Then /^feature "([^"]*)" is found to have the following tags:$/ do |file, tags|
-  expected_tags = tags.raw.flatten
-
-  expected = expected_tags
+  expected = tags.raw.flatten
   actual = @parsed_files[file - 1].feature.tags
 
   assert(actual == expected, "Expected: #{expected}\n but was: #{actual}")

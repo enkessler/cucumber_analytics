@@ -160,3 +160,20 @@ Then /^the files collected from directory "([^"]*)" are as follows:$/ do |direct
 
   assert(actual == expected, "Expected: #{expected}\n but was: #{actual}")
 end
+
+Then /^the directories collected from directory "([^"]*)" are as follows:$/ do |directory, directories|
+  directory ||= 1
+
+  expected = directories.raw.flatten.sort
+  actual = CucumberAnalytics::World.directories_in(@parsed_directories[directory - 1]).collect { |sub_directory| sub_directory.name }
+
+  assert(actual == expected, "Expected: #{expected}\n but was: #{actual}")
+end
+
+Then /^there are no directories collected from directory "([^"]*)"$/ do |directory|
+  directory ||= 1
+
+  actual_directories = CucumberAnalytics::World.directories_in(@parsed_directories[directory - 1])
+
+  assert actual_directories.flatten == []
+end

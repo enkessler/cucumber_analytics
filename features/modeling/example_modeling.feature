@@ -25,15 +25,15 @@ Feature: Example elements can be modeled.
           | <param2> |
         Then I don't really need another step
 
-      Examples: text describing the significance of the examples
+      Examples:text describing the significance of the examples
           Anything besides the | that starts a row should be valid
           description at this point in the test. YMMV
-        | param1 | param2 | extra param |
+        |param1| param2 | extra param |
         #A more random comment
-        | x      | y      |      ?      |
-        | 1      | 2      |      3      |
+        |x     | y      |      ?      |
+        |1     | 2      |      3      |
         @example_tag @another_one
-      Examples: some examples with different significance and a tag
+      Examples:some examples with different significance and a tag
 
         Words, words, words, words,
 
@@ -90,7 +90,6 @@ Feature: Example elements can be modeled.
       | param1 |
     And the test example block "3" has no parameters
 
-
   Scenario: The examples' rows are modeled.
     Then the test example block "1" rows are as follows:
       | x,y,? |
@@ -98,3 +97,12 @@ Feature: Example elements can be modeled.
     And the test example block "2" rows are as follows:
       | a |
     And the test example block "3" has no rows
+
+  Scenario Outline: Example models pass all other specifications
+  Exact specifications detailing the API for Examples models.
+    Given that there are "<additional specifications>" detailing models
+    When the corresponding unit tests are run
+    Then all of those specifications are met
+  Examples:
+    | additional specifications |
+    | example_spec.rb          |

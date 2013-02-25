@@ -20,7 +20,7 @@ Feature: Scenario Outline elements can be modeled.
       Some more feature description.
 
       @outline_tag
-      Scenario Outline: The scenario outline's name.
+      Scenario Outline:The scenario outline's name.
         My big hunk of perfectly valid description:
           |
 
@@ -62,7 +62,7 @@ Feature: Scenario Outline elements can be modeled.
         \"\"\"
         Then *lots* *of* *parameters*
 
-      Examples: text describing the significance of the examples
+      Examples:text describing the significance of the examples
           Anything besides the | that starts a row should be valid
           description at this point in the test. YMMV
         | param1 | param2 |
@@ -205,3 +205,12 @@ Feature: Scenario Outline elements can be modeled.
     And the test example blocks are as follows:
       | text describing the significance of the examples    |
       | some examples with different significance and a tag |
+
+  Scenario Outline: Outline models pass all other specifications
+  Exact specifications detailing the API for Scenario Outline models.
+    Given that there are "<additional specifications>" detailing models
+    When the corresponding unit tests are run
+    Then all of those specifications are met
+  Examples:
+    | additional specifications |
+    | outline_spec.rb          |
