@@ -42,6 +42,7 @@ Feature: Features can be modeled.
         # Oddly enough, if this comment had come earlier in the description
         # it would have broken Cucumber. Comments can't be mixed into the
         # freeform text for some reason.
+        #@commented_tag
 
 
       Background:Some general test setup stuff.

@@ -1,3 +1,9 @@
+=== Version 0.0.9 / 2013-02-25
+
+* Bug fix: Fixed an un-anchored regular expression that was causing
+  feature files to be parsed incorrectly.
+
+
 === Version 0.0.8 / 2013-02-24
 
 * Bug fix: Replaced some destructive method calls with non-destructive
