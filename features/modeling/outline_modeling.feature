@@ -93,105 +93,22 @@ Feature: Scenario Outline elements can be modeled.
 
   Scenario: The outline description is modeled.
     Then the test descriptive lines are as follows:
-      | My big hunk of perfectly valid description:                       |
-      | \|                                                                |
-      | Scenario Outline                                                  |
-      | Examples                                                          |
-      | """                                                               |
-      | Background                                                        |
-      | this is still one big valid description                           |
+      | My big hunk of perfectly valid description: |
+      | \|                                          |
+      | Scenario Outline                            |
+      | Examples                                    |
+      | """                                         |
+      | Background                                  |
+      | this is still one big valid description     |
 
   Scenario: The outline steps are modeled.
     Then the test steps are as follows:
-      | Given this *parameterized* step takes a table: |
-      | \| <param1> \|                                 |
-      | \| <param2> \|                                 |
-      | And some setup step                            |
-      | * some setup step                              |
-      | When a step with a *parameter*                 |
-      | But a big step:                                |
-      | """                                            |
-      | 'some text'                                    |
-      | ''                                             |
-      | '#some comments'                               |
-      | 'Scenario:'                                    |
-      | 'Scenario Outline:'                            |
-      | 'Examples:'                                    |
-      | '@'                                            |
-      | 'Feature:'                                     |
-      | '\|'                                           |
-      | 'Given'                                        |
-      | 'When'                                         |
-      | 'Then'                                         |
-      | 'And'                                          |
-      | 'But'                                          |
-      | '*'                                            |
-      | '    some more text'                           |
-      | """                                            |
-      | Then *lots* *of* *parameters*                  |
-    And the test steps "without" arguments are as follows:
-      | Given this ** step takes a table: |
-      | And some setup step               |
-      | * some setup step                 |
-      | When a step with a **             |
-      | But a big step:                   |
-      | Then ** ** **                     |
-    And the test steps "without" keywords are as follows:
       | this *parameterized* step takes a table: |
-      | \| <param1> \|                           |
-      | \| <param2> \|                           |
       | some setup step                          |
       | some setup step                          |
       | a step with a *parameter*                |
       | a big step:                              |
-      | """                                      |
-      | 'some text'                              |
-      | ''                                       |
-      | '#some comments'                         |
-      | 'Scenario:'                              |
-      | 'Scenario Outline:'                      |
-      | 'Examples:'                              |
-      | '@'                                      |
-      | 'Feature:'                               |
-      | '\|'                                     |
-      | 'Given'                                  |
-      | 'When'                                   |
-      | 'Then'                                   |
-      | 'And'                                    |
-      | 'But'                                    |
-      | '*'                                      |
-      | '    some more text'                     |
-      | """                                      |
       | *lots* *of* *parameters*                 |
-    And the test steps "without" arguments "without" keywords are as follows:
-      | this ** step takes a table: |
-      | some setup step             |
-      | some setup step             |
-      | a step with a **            |
-      | a big step:                 |
-      | ** ** **                    |
-    And the test step "1" has the following block:
-      | \| <param1> \| |
-      | \| <param2> \| |
-    And the test step "5" has the following block:
-      | """                  |
-      | 'some text'          |
-      | ''                   |
-      | '#some comments'     |
-      | 'Scenario:'          |
-      | 'Scenario Outline:'  |
-      | 'Examples:'          |
-      | '@'                  |
-      | 'Feature:'           |
-      | '\|'                 |
-      | 'Given'              |
-      | 'When'               |
-      | 'Then'               |
-      | 'And'                |
-      | 'But'                |
-      | '*'                  |
-      | '    some more text' |
-      | """                  |
 
   Scenario: The outline tags are modeled.
     Then the test is found to have the following tags:
@@ -213,4 +130,4 @@ Feature: Scenario Outline elements can be modeled.
     Then all of those specifications are met
   Examples:
     | additional specifications |
-    | outline_spec.rb          |
+    | outline_spec.rb           |
