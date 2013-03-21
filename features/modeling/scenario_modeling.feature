@@ -83,95 +83,12 @@ Feature: Scenario elements can be modeled.
 
   Scenario: The scenario steps are modeled.
     Then the test steps are as follows:
-      | Given this *parameterized* step takes a table: |
-      | \| data      \|                                |
-      | \| more data \|                                |
-      | And some setup step                            |
-      | * some setup step                              |
-      | When a step with a *parameter*                 |
-      | But a big step:                                |
-      | """                                            |
-      | 'some text'                                    |
-      | ''                                             |
-      | '#some comments'                               |
-      | 'Scenario:'                                    |
-      | 'Scenario Outline:'                            |
-      | 'Examples:'                                    |
-      | '@'                                            |
-      | 'Feature:'                                     |
-      | '\|'                                           |
-      | 'Given'                                        |
-      | 'When'                                         |
-      | 'Then'                                         |
-      | 'And'                                          |
-      | 'But'                                          |
-      | '*'                                            |
-      | '    some more text'                           |
-      | """                                            |
-      | Then *lots* *of* *parameters*                  |
-    And the test steps "without" arguments are as follows:
-      | Given this ** step takes a table: |
-      | And some setup step               |
-      | * some setup step                 |
-      | When a step with a **             |
-      | But a big step:                   |
-      | Then ** ** **                     |
-    And the test steps "without" keywords are as follows:
       | this *parameterized* step takes a table: |
-      | \| data      \|                          |
-      | \| more data \|                          |
       | some setup step                          |
       | some setup step                          |
       | a step with a *parameter*                |
       | a big step:                              |
-      | """                                      |
-      | 'some text'                              |
-      | ''                                       |
-      | '#some comments'                         |
-      | 'Scenario:'                              |
-      | 'Scenario Outline:'                      |
-      | 'Examples:'                              |
-      | '@'                                      |
-      | 'Feature:'                               |
-      | '\|'                                     |
-      | 'Given'                                  |
-      | 'When'                                   |
-      | 'Then'                                   |
-      | 'And'                                    |
-      | 'But'                                    |
-      | '*'                                      |
-      | '    some more text'                     |
-      | """                                      |
       | *lots* *of* *parameters*                 |
-    And the test steps "without" arguments "without" keywords are as follows:
-      | this ** step takes a table: |
-      | some setup step             |
-      | some setup step             |
-      | a step with a **            |
-      | a big step:                 |
-      | ** ** **                    |
-    And the test step "1" has the following block:
-      | \| data      \| |
-      | \| more data \| |
-    And the test step "5" has the following block:
-      | """                  |
-      | 'some text'          |
-      | ''                   |
-      | '#some comments'     |
-      | 'Scenario:'          |
-      | 'Scenario Outline:'  |
-      | 'Examples:'          |
-      | '@'                  |
-      | 'Feature:'           |
-      | '\|'                 |
-      | 'Given'              |
-      | 'When'               |
-      | 'Then'               |
-      | 'And'                |
-      | 'But'                |
-      | '*'                  |
-      | '    some more text' |
-      | """                  |
 
   Scenario: The scenario tags are modeled.
     Then the test is found to have the following tags:

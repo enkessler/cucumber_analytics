@@ -21,4 +21,64 @@ describe 'Step' do
     step.parent_element.should equal scenario
   end
 
+  it 'can determine its arguments based on delimiters' do
+    file_path = "#{@default_file_directory}/#{@default_feature_file_name}"
+
+    File.open(file_path, "w") { |file|
+      file.puts('Feature: Test feature')
+      file.puts('  Scenario: Test scenario')
+      file.puts('    Given a test step with *parameter 1* and !parameter 2- and *parameter 3*')
+    }
+
+    file = CucumberAnalytics::ParsedFile.new(file_path)
+
+    step = file.feature.tests.first.steps.first
+
+    step.scan_arguments('*', '*')
+    step.arguments.should == ['parameter 1', 'parameter 3']
+    step.scan_arguments('!', '-')
+    step.arguments.should == ['parameter 2']
+    step.scan_arguments('!', '!')
+    step.arguments.should == []
+  end
+
+  it 'defaults to the World delimiters when scanning' do
+      file_path = "#{@default_file_directory}/#{@default_feature_file_name}"
+
+      File.open(file_path, "w") { |file|
+        file.puts('Feature: Test feature')
+        file.puts('  Scenario: Test scenario')
+        file.puts('    Given a test step with *parameter 1* and "parameter 2" and *parameter 3*')
+      }
+
+      world = CucumberAnalytics::World
+      world.left_delimiter = '"'
+      world.right_delimiter = '"'
+
+      file = CucumberAnalytics::ParsedFile.new(file_path)
+      step = file.feature.tests.first.steps.first
+
+      step.scan_arguments
+      step.arguments.should == ['parameter 2']
+  end
+
+  it 'attempts to determine its arguments during creation' do
+    file_path = "#{@default_file_directory}/#{@default_feature_file_name}"
+
+    File.open(file_path, "w") { |file|
+      file.puts('Feature: Test feature')
+      file.puts('  Scenario: Test scenario')
+      file.puts('    Given a test step with *parameter 1* and "parameter 2" and *parameter 3*')
+    }
+
+    world = CucumberAnalytics::World
+    world.left_delimiter = '"'
+    world.right_delimiter = '"'
+
+    file = CucumberAnalytics::ParsedFile.new(file_path)
+    step = file.feature.tests.first.steps.first
+
+    step.arguments.should == ['parameter 2']
+  end
+
 end

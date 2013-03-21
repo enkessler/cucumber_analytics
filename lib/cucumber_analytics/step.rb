@@ -5,6 +5,8 @@
 #    attr_reader :keyword
 #    attr_reader :base
 #    attr_reader :block
+#    attr_accessor :parent_element
+#    attr_accessor :arguments
 #
 #
 #    # Creates a new Step object based on the passed string. If the optional
@@ -14,8 +16,9 @@
 #      CucumberAnalytics::Logging.logger.debug("step: #{step}")
 #
 #      @base = step.sub(/#{World::STEP_KEYWORD_PATTERN}/, '')
-#      @block = block
+#      @block = parse_block(block) if block
 #      @keyword = step.slice(/#{World::STEP_KEYWORD_PATTERN}/).strip
+#      scan_arguments if World.left_delimiter || World.right_delimiter
 #    end
 #
 #    # Returns true if the two steps have the same text, minus any keywords
@@ -27,6 +30,8 @@
 #      left_step == right_step
 #    end
 #
+#    # Deprecated
+#    #
 #    # Returns the text of the step. Options can be set to selectively exclude
 #    # certain portions of the text. *left_delimiter* and *right_delimiter* are
 #    # used to determine which parts of the step are arguments.
@@ -65,6 +70,12 @@
 #      final_step
 #    end
 #
+#    def scan_arguments(left_delimiter = World.left_delimiter, right_delimiter  = World.right_delimiter)
+#      pattern = Regexp.new(Regexp.escape(left_delimiter) + '(.*?)' + Regexp.escape(right_delimiter))
+#
+#      @arguments = @base.scan(pattern).flatten
+#    end
+#
 #
 #    private
 #
@@ -87,6 +98,25 @@
 #      end
 #
 #      step.gsub(Regexp.new("#{left_delimiter}.*?#{right_delimiter}"), original_left + original_right)
+#    end
+#
+#    def parse_block(block)
+#
+#      return block if block.first =~ /\s*"""/
+#
+#      Array.new.tap do |table|
+#        block.each do |line|
+#          final_line = sanitize_line(line).split('|')
+#          final_line.shift
+#          final_line.collect! { |cell_value| cell_value.strip }
+#
+#          table << final_line
+#        end
+#      end
+#    end
+#
+#    def sanitize_line(line)
+#      line.gsub('\|', World::SANITARY_STRING)
 #    end
 #
 #  end

@@ -39,7 +39,7 @@ Then /^the(?: "([^"]*)")? steps collected from feature "([^"]*)" background are 
       expected_steps = CucumberAnalytics::World.steps_in(container)
   end
 
-  assert expected_steps.collect { |step| step.step_text }.flatten.sort == steps.sort
+  assert expected_steps.collect { |step| step.base }.flatten.sort == steps.sort
 end
 
 Then /^the(?: "([^"]*)")? steps collected from feature "([^"]*)" test "([^"]*)" are as follows:$/ do |defined, file, test, steps|
@@ -56,7 +56,7 @@ Then /^the(?: "([^"]*)")? steps collected from feature "([^"]*)" test "([^"]*)" 
       expected_steps = CucumberAnalytics::World.steps_in(container)
   end
 
-  assert expected_steps.collect { |step| step.step_text }.flatten.sort == steps.sort
+  assert expected_steps.collect { |step| step.base }.flatten.sort == steps.sort
 end
 
 When /^the(?: "([^"]*)")? steps collected from (?:the )?feature(?: "([^"]*)")? are as follows:$/ do |defined, file, steps|
@@ -73,7 +73,7 @@ When /^the(?: "([^"]*)")? steps collected from (?:the )?feature(?: "([^"]*)")? a
       expected_steps = CucumberAnalytics::World.steps_in(container)
   end
 
-  assert expected_steps.collect { |step| step.step_text }.flatten.sort == steps.sort
+  assert expected_steps.collect { |step| step.base }.flatten.sort == steps.sort
 end
 
 When /^the(?: "([^"]*)")? steps collected from (?:the )?file(?: "([^"]*)")? are as follows:$/ do |defined, file, steps|
@@ -90,7 +90,7 @@ When /^the(?: "([^"]*)")? steps collected from (?:the )?file(?: "([^"]*)")? are 
       expected_steps = CucumberAnalytics::World.steps_in(container)
   end
 
-  assert expected_steps.collect { |step| step.step_text }.flatten.sort == steps.sort
+  assert expected_steps.collect { |step| step.base }.flatten.sort == steps.sort
 end
 
 When /^the(?: "([^"]*)")? steps collected from the directory are as follows:$/ do |defined, steps|
@@ -106,7 +106,7 @@ When /^the(?: "([^"]*)")? steps collected from the directory are as follows:$/ d
       expected_steps = CucumberAnalytics::World.steps_in(container)
   end
 
-  assert expected_steps.collect { |step| step.step_text }.flatten.sort == steps.sort
+  assert expected_steps.collect { |step| step.base }.flatten.sort == steps.sort
 end
 
 Then /^the tests collected from feature "([^"]*)" are as follows:$/ do |file, tests|

@@ -61,77 +61,76 @@ Feature: Steps can be collected from arbitrary parts of the codebase.
     And the directory "feature_directory" is read
 
 
-
   Scenario: Steps can be collected from backgrounds
     Then the steps collected from feature "1" background are as follows:
-      | Given a defined step  |
-      | And an undefined step |
+      | a defined step    |
+      | an undefined step |
     And the "defined" steps collected from feature "1" background are as follows:
-      | Given a defined step |
+      | a defined step |
     And the "undefined" steps collected from feature "1" background are as follows:
-      | And an undefined step |
+      | an undefined step |
 
   Scenario: Steps can be collected from scenarios
     Then the steps collected from feature "1" test "1" are as follows:
-      | Given another defined step  |
-      | Then another undefined step |
+      | another defined step   |
+      | another undefined step |
     And the "defined" steps collected from feature "1" test "1" are as follows:
-      | Given another defined step |
+      | another defined step |
     And the "undefined" steps collected from feature "1" test "1" are as follows:
-      | Then another undefined step |
+      | another undefined step |
 
   Scenario: Steps can be collected from scenario outlines
     Then the steps collected from feature "2" test "1" are as follows:
-      | Given a defined step                  |
-      | When another defined step             |
-      | Then *<this>* *step is* *<undefined>* |
+      | a defined step                   |
+      | another defined step             |
+      | *<this>* *step is* *<undefined>* |
     And the "defined" steps collected from feature "2" test "1" are as follows:
-      | Given a defined step      |
-      | When another defined step |
+      | a defined step       |
+      | another defined step |
     And the "undefined" steps collected from feature "2" test "1" are as follows:
-      | Then *<this>* *step is* *<undefined>* |
+      | *<this>* *step is* *<undefined>* |
 
   Scenario: Steps can be collected from features
     Then the steps collected from feature "1" are as follows:
-      | Given a defined step        |
-      | And an undefined step       |
-      | Given another defined step  |
-      | Then another undefined step |
+      | a defined step         |
+      | an undefined step      |
+      | another defined step   |
+      | another undefined step |
     And the "defined" steps collected from feature "1" are as follows:
-      | Given a defined step       |
-      | Given another defined step |
+      | a defined step       |
+      | another defined step |
     And the "undefined" steps collected from feature "1" are as follows:
-      | And an undefined step       |
-      | Then another undefined step |
+      | an undefined step      |
+      | another undefined step |
 
   Scenario: Steps can be collected from files
     Then the steps collected from file "1" are as follows:
-      | Given a defined step        |
-      | And an undefined step       |
-      | Given another defined step  |
-      | Then another undefined step |
+      | a defined step         |
+      | an undefined step      |
+      | another defined step   |
+      | another undefined step |
     And the "defined" steps collected from file "1" are as follows:
-      | Given a defined step       |
-      | Given another defined step |
+      | a defined step       |
+      | another defined step |
     And the "undefined" steps collected from file "1" are as follows:
-      | And an undefined step       |
-      | Then another undefined step |
+      | an undefined step      |
+      | another undefined step |
 
   Scenario: Steps can be collected from directories
     Then the steps collected from the directory are as follows:
-      | Given a defined step                  |
-      | And an undefined step                 |
-      | Given another defined step            |
-      | Then another undefined step           |
-      | Given a defined step                  |
-      | When another defined step             |
-      | Then *<this>* *step is* *<undefined>* |
+      | a defined step                   |
+      | an undefined step                |
+      | another defined step             |
+      | another undefined step           |
+      | a defined step                   |
+      | another defined step             |
+      | *<this>* *step is* *<undefined>* |
     And the "defined" steps collected from the directory are as follows:
-      | Given a defined step       |
-      | Given another defined step |
-      | Given a defined step       |
-      | When another defined step  |
+      | a defined step       |
+      | another defined step |
+      | a defined step       |
+      | another defined step |
     And the "undefined" steps collected from the directory are as follows:
-      | And an undefined step                 |
-      | Then another undefined step           |
-      | Then *<this>* *step is* *<undefined>* |
+      | an undefined step                |
+      | another undefined step           |
+      | *<this>* *step is* *<undefined>* |
