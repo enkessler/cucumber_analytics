@@ -2,9 +2,9 @@ module CucumberAnalytics
   class ParsedFeature < FeatureElement
 
 
-    attr_reader :tags
+    attr_accessor :tags
     attr_accessor :background
-#    attr_accessor :tests
+    attr_accessor :tests
 
 
     # Creates a new ParsedFeature object and, if *source_lines* is provided,
@@ -110,7 +110,9 @@ module CucumberAnalytics
       test_elements.each do |parsed_test|
         case parsed_test['keyword']
           when 'Scenario'
-            @tests << ParsedScenario.new(parsed_test)
+            element = ParsedScenario.new(parsed_test)
+            element.parent_element = self
+            @tests << element
           when 'Scenario Outline'
             @tests << ParsedScenarioOutline.new(parsed_test)
         end

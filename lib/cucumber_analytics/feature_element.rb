@@ -35,8 +35,10 @@ module CucumberAnalytics
       CucumberAnalytics::Logging.logger.debug('Parsed element:')
       CucumberAnalytics::Logging.logger.debug(parsed_element.to_yaml)
 
-      parsed_element['tags'].each do |tag|
-        @tags << tag['name']
+      if parsed_element['tags']
+        parsed_element['tags'].each do |tag|
+          @tags << tag['name']
+        end
       end
     end
 
