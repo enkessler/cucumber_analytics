@@ -12,25 +12,25 @@ module CucumberAnalytics
 #    def self.left_delimiter
 #      @left_delimiter || @right_delimiter
 #    end
-#
-#    # Sets the left delimiter that will be used by default when determining
-#    # step arguments.
-#    def self.left_delimiter=(new_delimiter)
-#      @left_delimiter = new_delimiter
-#    end
-#
+
+    # Sets the left delimiter that will be used by default when determining
+    # step arguments.
+    def self.left_delimiter=(new_delimiter)
+      @left_delimiter = new_delimiter
+    end
+
 #    # Returns the right delimiter, which is used to mark the end of a step
 #    # argument.
 #    def self.right_delimiter
 #      @right_delimiter || @left_delimiter
 #    end
-#
-#    # Sets the right delimiter that will be used by default when determining
-#    # step arguments.
-#    def self.right_delimiter=(new_delimiter)
-#      @right_delimiter = new_delimiter
-#    end
-#
+
+    # Sets the right delimiter that will be used by default when determining
+    # step arguments.
+    def self.right_delimiter=(new_delimiter)
+      @right_delimiter = new_delimiter
+    end
+
 #    # Loads the step patterns contained in the given file into the World.
 #    def self.load_step_file(file_path)
 #      @@defined_expressions ||= []

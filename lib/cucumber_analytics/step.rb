@@ -1,26 +1,28 @@
-#module CucumberAnalytics
-#  class Step
-#
-#
+module CucumberAnalytics
+  class Step
+
+
 #    attr_reader :keyword
-#    attr_reader :base
+    attr_reader :base
 #    attr_reader :block
 #    attr_accessor :parent_element
 #    attr_accessor :arguments
-#
-#
-#    # Creates a new Step object based on the passed string. If the optional
-#    # string array is provided, it becomes the block for the step.
-#    def initialize(step, block = nil)
-#      CucumberAnalytics::Logging.logger.info('Step#initialize')
-#      CucumberAnalytics::Logging.logger.debug("step: #{step}")
-#
-#      @base = step.sub(/#{World::STEP_KEYWORD_PATTERN}/, '')
+
+
+    # Creates a new Step object based on the passed string. If the optional
+    # string array is provided, it becomes the block for the step.
+    def initialize(step, block = nil)
+      CucumberAnalytics::Logging.logger.info('Step#initialize')
+      CucumberAnalytics::Logging.logger.debug('Step:')
+      CucumberAnalytics::Logging.logger.debug(step.to_yaml)
+
+
+      @base = step['name']
 #      @block = parse_block(block) if block
 #      @keyword = step.slice(/#{World::STEP_KEYWORD_PATTERN}/).strip
 #      scan_arguments if World.left_delimiter || World.right_delimiter
-#    end
-#
+    end
+
 #    # Returns true if the two steps have the same text, minus any keywords
 #    # and arguments, and false otherwise.
 #    def ==(other_step)
@@ -118,6 +120,6 @@
 #    def sanitize_line(line)
 #      line.gsub('\|', World::SANITARY_STRING)
 #    end
-#
-#  end
-#end
+
+  end
+end

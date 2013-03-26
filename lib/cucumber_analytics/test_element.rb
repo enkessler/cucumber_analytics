@@ -2,29 +2,48 @@ module CucumberAnalytics
   class TestElement < FeatureElement
 
 
-#    attr_reader :steps
-#
-#
-#    # Creates a new TestElement object.
-#    def initialize(source_lines = nil)
-#      CucumberAnalytics::Logging.logger.info('TestElement#initialize')
-#
-#      super
-#
-#      @steps = []
-#    end
-#
+    attr_reader :steps
+
+
+    # Creates a new TestElement object.
+    def initialize(parsed_test_element = nil)
+      CucumberAnalytics::Logging.logger.info('TestElement#initialize')
+
+      super
+
+      @steps = []
+
+      parse_test_element(parsed_test_element) if parsed_test_element
+    end
+
 #    # Returns true if the two elements have the same steps, minus any keywords
 #    # and arguments, and false otherwise.
 #    def ==(other_element)
 #      steps == other_element.steps
 #    end
-#
-#
-#    private
-#
-#
-#    def parse_test_element_steps(source_lines)
+
+
+    private
+
+
+    def parse_test_element(parsed_test_element)
+      CucumberAnalytics::Logging.logger.info('TestElement#parse_test_element')
+      CucumberAnalytics::Logging.logger.debug('Parsed test element:')
+      CucumberAnalytics::Logging.logger.debug(parsed_test_element.to_yaml)
+
+      parse_test_element_steps(parsed_test_element)
+    end
+
+    def parse_test_element_steps(parsed_test_element)
+      CucumberAnalytics::Logging.logger.info('TestElement#parse_test_element_steps')
+      CucumberAnalytics::Logging.logger.debug('Parsed test element:')
+      CucumberAnalytics::Logging.logger.debug(parsed_test_element.to_yaml)
+
+      if parsed_test_element['steps']
+        parsed_test_element['steps'].each do |step|
+          @steps << Step.new(step)
+        end
+      end
 #      CucumberAnalytics::Logging.logger.info('TestElement#parse_test_element_steps')
 #      CucumberAnalytics::Logging.logger.debug('source lines')
 #      source_lines.each do |line|
@@ -50,8 +69,8 @@ module CucumberAnalytics
 #            source_lines.shift
 #        end
 #      end
-#    end
-#
+    end
+
 #    def extract_doc_block(source_lines)
 #      CucumberAnalytics::Logging.logger.info('TestElement#extract_doc_block')
 #      CucumberAnalytics::Logging.logger.debug('source lines')

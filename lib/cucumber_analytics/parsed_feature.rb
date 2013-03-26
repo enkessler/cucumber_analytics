@@ -93,7 +93,12 @@ module CucumberAnalytics
       CucumberAnalytics::Logging.logger.debug(parsed_feature.to_yaml)
 
       background_element = parsed_feature['elements'].select { |element| element['keyword'] == 'Background' }.first
-      @background = ParsedBackground.new(background_element) if background_element
+
+      if background_element
+        element = ParsedBackground.new(background_element)
+        element.parent_element = self
+        @background = element
+      end
     end
 
     def parse_tests(parsed_feature)
