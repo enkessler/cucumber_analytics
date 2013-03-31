@@ -2,7 +2,7 @@ module CucumberAnalytics
   class ParsedScenarioOutline < TestElement
 
 
-#    attr_accessor :tags
+    attr_accessor :tags
     attr_accessor :examples
 #    attr_accessor :parent_element
 
@@ -18,7 +18,7 @@ module CucumberAnalytics
 
       super
 
-#      @tags = []
+      @tags = []
       @examples = []
 #
       parse_outline(parsed_outline) if parsed_outline
@@ -30,14 +30,19 @@ module CucumberAnalytics
 #      @examples
 #    end
 #
-#    # Returns tags which are applicable to the outline which have been
-#    # inherited from the feature level.
-#    def applied_tags
-#      additional_tags = @parent_element.tags
-#      additional_tags.concat(@parent_element.applied_tags) if @parent_element.respond_to?(:applied_tags)
-#
-#      additional_tags
-#    end
+    # Returns tags which are applicable to the outline which have been
+    # inherited from the feature level.
+    def applied_tags
+      additional_tags = @parent_element.tags
+      additional_tags.concat(@parent_element.applied_tags) if @parent_element.respond_to?(:applied_tags)
+
+      additional_tags
+    end
+
+    # Returns all tags which are applicable to the scenario outline.
+    def all_tags
+      applied_tags + @tags
+    end
 
 
     private
@@ -49,7 +54,7 @@ module CucumberAnalytics
       CucumberAnalytics::Logging.logger.debug(parsed_outline.to_yaml)
 
 
-#      parse_feature_element_tags(source_lines)
+      parse_feature_element_tags(parsed_outline)
 #      parse_feature_element(source_lines)
 #      parse_test_element_steps(source_lines)
       parse_outline_examples(parsed_outline['examples']) if parsed_outline['examples']

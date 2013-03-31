@@ -114,7 +114,9 @@ module CucumberAnalytics
             element.parent_element = self
             @tests << element
           when 'Scenario Outline'
-            @tests << ParsedScenarioOutline.new(parsed_test)
+            element = ParsedScenarioOutline.new(parsed_test)
+            element.parent_element = self
+            @tests << element
         end
       end
     end

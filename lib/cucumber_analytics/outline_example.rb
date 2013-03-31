@@ -17,7 +17,7 @@ module CucumberAnalytics
 #        CucumberAnalytics::Logging.logger.debug(line.chomp)
 #      end
 #
-#      super
+      super
 #
 #      @tags = []
       @rows = []

@@ -2,9 +2,10 @@ When /^(?:the )?(?:feature "([^"]*)" )?test(?: "([^"]*)")? example blocks are as
   file ||= 1
   test ||= 1
 
-  names = names.raw.flatten
+  expected = names.raw.flatten
+  actual = @parsed_files[file - 1].feature.tests[test - 1].examples.collect { |example| example.name }
 
-  assert @parsed_files[file - 1].feature.tests[test - 1].examples.collect { |example| example.name } == names
+  assert(actual == expected, "Expected: #{expected}\n but was: #{actual}")
 end
 
 Then /^(?:the )?(?:feature "([^"]*)" )?test(?: "([^"]*)")? example block(?: "([^"]*)")? is found to have the following properties:$/ do |file, test, example, properties|
