@@ -85,7 +85,9 @@ module CucumberAnalytics
 
 
       parsed_examples.each do |example|
-        @examples << OutlineExample.new(example)
+        element = OutlineExample.new(example)
+        element.parent_element = self
+        @examples << element
       end
 
 

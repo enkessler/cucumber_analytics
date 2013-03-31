@@ -2,27 +2,26 @@ module CucumberAnalytics
   class OutlineExample < FeatureElement
 
 
-#    attr_accessor :tags
+    attr_accessor :tags
     attr_accessor :rows
-#    attr_accessor :parameters
-#    attr_accessor :parent_element
+    attr_accessor :parameters
+    #attr_accessor :parent_element
 
 
-# Creates a new OutlineExample object and, if *source_lines* is provided,
-# populates the object.
+    # Creates a new OutlineExample object and, if *source_lines* is provided,
+    # populates the object.
     def initialize(parsed_example = nil)
-#      CucumberAnalytics::Logging.logger.info('OutlineExample#initialize')
-#      CucumberAnalytics::Logging.logger.debug('source lines')
-#      source_lines.each do |line|
-#        CucumberAnalytics::Logging.logger.debug(line.chomp)
-#      end
-#
+      CucumberAnalytics::Logging.logger.info('OutlineExample#initialize')
+      CucumberAnalytics::Logging.logger.debug('OutlineExample:')
+      CucumberAnalytics::Logging.logger.debug(parsed_example.to_yaml)
+
+
       super
-#
-#      @tags = []
+
+      @tags = []
       @rows = []
-#      @parameters = []
-#
+      @parameters = []
+
       parse_example(parsed_example) if parsed_example
     end
 
@@ -48,15 +47,20 @@ module CucumberAnalytics
 #      end
 #      @rows.delete_at(location) if location
 #    end
-#
-#    # Returns tags which are applicable to the example block which have been
-#    # inherited from the outline level.
-#    def applied_tags
-#      additional_tags = @parent_element.tags
-#      additional_tags.concat(@parent_element.applied_tags) if @parent_element.respond_to?(:applied_tags)
-#
-#      additional_tags
-#    end
+
+    # Returns tags which are applicable to the example block which have been
+    # inherited from the outline level.
+    def applied_tags
+      additional_tags = @parent_element.tags
+      additional_tags.concat(@parent_element.applied_tags) if @parent_element.respond_to?(:applied_tags)
+
+      additional_tags
+    end
+
+    # Returns all tags which are applicable to the example block.
+    def all_tags
+      applied_tags + @tags
+    end
 
 
     private
@@ -67,12 +71,44 @@ module CucumberAnalytics
       CucumberAnalytics::Logging.logger.debug('Parsed example:')
       CucumberAnalytics::Logging.logger.debug(parsed_example.to_yaml)
 
+      parse_feature_element_tags(parsed_example)
+
+      @parameters = parsed_example['rows'].first['cells']
+
       parsed_example['rows'].shift
       parsed_example['rows'].each do |row|
-        @rows << row
+        @rows << Hash[@parameters.zip(row['cells'])]
       end
 
-#      parse_feature_element_tags(source_lines)
+
+
+
+
+          #  parse_feature_element_tags(source_lines)
+          #  parse_feature_element(source_lines)
+          #
+          #  source_lines.delete_if { |line| World.ignored_line?(line) }
+          #
+          #  unless source_lines.empty?
+          #    @parameters = source_lines.shift.split('|')
+          #    @parameters.shift
+          #    @parameters.pop
+          #
+          #    @parameters.collect! { |param| param.strip }
+          #  end
+          #
+          #  unless source_lines.empty?
+          #    @rows = source_lines.collect { |row| row.split('|') }.collect do |row|
+          #      row.shift
+          #      row.collect { |value| value.strip }
+          #    end
+          #
+          #    @rows.collect! { |row| Hash[@parameters.zip(row)] }
+          #  end
+          #end
+
+
+
 #      parse_feature_element(source_lines)
 #
 #      source_lines.delete_if { |line| World.ignored_line?(line) }
@@ -94,24 +130,6 @@ module CucumberAnalytics
 #        @rows.collect! { |row| Hash[@parameters.zip(row)] }
 #      end
     end
-
-#    def parse_feature_element_description(source_lines)
-#      CucumberAnalytics::Logging.logger.info('OutlineExample#parse_feature_element_description')
-#      CucumberAnalytics::Logging.logger.debug('source lines')
-#      source_lines.each do |line|
-#        CucumberAnalytics::Logging.logger.debug(line.chomp)
-#      end
-#
-#      until source_lines.first =~ /^\s*\|/ or
-#          source_lines.empty?
-#
-#        unless World.ignored_line?(source_lines.first)
-#          @description << source_lines.first.strip
-#        end
-#
-#        source_lines.shift
-#      end
-#    end
 
   end
 end

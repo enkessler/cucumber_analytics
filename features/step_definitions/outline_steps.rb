@@ -35,9 +35,11 @@ Then /^(?:the )?(?:feature "([^"]*)" )?test(?: "([^"]*)")? example block(?: "([^
   test ||= 1
   example ||= 1
 
-  tags = tags.raw.flatten
 
-  assert @parsed_files[file - 1].feature.tests[test - 1].examples[example - 1].tags == tags
+  expected = tags.raw.flatten
+  actual = @parsed_files[file - 1].feature.tests[test - 1].examples[example - 1].tags
+
+  assert(actual == expected, "Expected: #{expected}\n but was: #{actual}")
 end
 
 Then /^(?:the )?(?:feature "([^"]*)" )?test(?: "([^"]*)")? example block(?: "([^"]*)")? is found to have the following applied tags:$/ do |file, test, example, tags|
@@ -58,7 +60,10 @@ Then /^(?:the )?(?:feature "([^"]*)" )?test(?: "([^"]*)")? example block(?: "([^
   test ||= 1
   example ||= 1
 
-  assert @parsed_files[file - 1].feature.tests[test - 1].examples[example - 1].tags == []
+  expected = []
+  actual = @parsed_files[file - 1].feature.tests[test - 1].examples[example - 1].tags
+
+  assert(actual == expected, "Expected: #{expected}\n but was: #{actual}")
 end
 
 Then /^(?:the )?(?:feature "([^"]*)" )?test(?: "([^"]*)")? example block(?: "([^"]*)")? rows are as follows:$/ do |file, test, example, rows|
@@ -109,7 +114,7 @@ Then /^(?:the )?(?:feature "([^"]*)" )?test(?: "([^"]*)")? example block(?: "([^
   parameters = parameters.raw.flatten
 
   expected = parameters
-  actual =@parsed_files[file - 1].feature.tests[test - 1].examples[example - 1].parameters
+  actual = @parsed_files[file - 1].feature.tests[test - 1].examples[example - 1].parameters
 
   assert(actual == expected, "Expected: #{expected}\n but was: #{actual}")
 end
