@@ -23,54 +23,54 @@ module CucumberAnalytics
       scan_arguments if World.left_delimiter || World.right_delimiter
     end
 
-#    # Returns true if the two steps have the same text, minus any keywords
-#    # and arguments, and false otherwise.
-#    def ==(other_step)
-#      left_step = step_text(:with_keywords => false, :with_arguments => false)
-#      right_step = other_step.step_text(:with_keywords => false, :with_arguments => false)
-#
-#      left_step == right_step
-#    end
-#
-#    # Deprecated
-#    #
-#    # Returns the text of the step. Options can be set to selectively exclude
-#    # certain portions of the text. *left_delimiter* and *right_delimiter* are
-#    # used to determine which parts of the step are arguments.
-#    #
-#    #  a_step = CucumberAnalytics.new('Given *some* step with a block:', ['block line 1', 'block line 2'])
-#    #
-#    #  a_step.step_text
-#    #  #=> ['Given *some* step with a block:', 'block line 1', 'block line 2']
-#    #  a_step.step_text(:with_keywords => false)
-#    #  #=> ['*some* step with a block:', 'block line 1', 'block line 2']
-#    #  a_step.step_text(:with_arguments => false, :left_delimiter => '*', :right_delimiter => '*')
-#    #  #=> ['Given ** step with a block:']
-#    #  a_step.step_text(:with_keywords => false, :with_arguments => false, :left_delimiter => '-', :right_delimiter => '-'))
-#    #  #=> ['*some* step with a block:']
-#    #
-#    def step_text(options = {})
-#      options = {:with_keywords => true,
-#                 :with_arguments => true,
-#                 :left_delimiter => World.left_delimiter,
-#                 :right_delimiter => World.right_delimiter}.merge(options)
-#
-#      final_step = []
-#      step_text = ''
-#
-#      step_text += "#{@keyword} " if options[:with_keywords]
-#
-#      if options[:with_arguments]
-#        step_text += @base
-#        final_step << step_text
-#        final_step.concat @block if @block
-#      else
-#        step_text += stripped_step(@base, options[:left_delimiter], options[:right_delimiter])
-#        final_step << step_text
-#      end
-#
-#      final_step
-#    end
+    # Returns true if the two steps have the same text, minus any keywords
+    # and arguments, and false otherwise.
+    def ==(other_step)
+      left_step = step_text(:with_keywords => false, :with_arguments => false)
+      right_step = other_step.step_text(:with_keywords => false, :with_arguments => false)
+
+      left_step == right_step
+    end
+
+    # Deprecated
+    #
+    # Returns the text of the step. Options can be set to selectively exclude
+    # certain portions of the text. *left_delimiter* and *right_delimiter* are
+    # used to determine which parts of the step are arguments.
+    #
+    #  a_step = CucumberAnalytics.new('Given *some* step with a block:', ['block line 1', 'block line 2'])
+    #
+    #  a_step.step_text
+    #  #=> ['Given *some* step with a block:', 'block line 1', 'block line 2']
+    #  a_step.step_text(:with_keywords => false)
+    #  #=> ['*some* step with a block:', 'block line 1', 'block line 2']
+    #  a_step.step_text(:with_arguments => false, :left_delimiter => '*', :right_delimiter => '*')
+    #  #=> ['Given ** step with a block:']
+    #  a_step.step_text(:with_keywords => false, :with_arguments => false, :left_delimiter => '-', :right_delimiter => '-'))
+    #  #=> ['*some* step with a block:']
+    #
+    def step_text(options = {})
+      options = {:with_keywords => true,
+                 :with_arguments => true,
+                 :left_delimiter => World.left_delimiter,
+                 :right_delimiter => World.right_delimiter}.merge(options)
+
+      final_step = []
+      step_text = ''
+
+      step_text += "#{@keyword} " if options[:with_keywords]
+
+      if options[:with_arguments]
+        step_text += @base
+        final_step << step_text
+        final_step.concat @block if @block
+      else
+        step_text += stripped_step(@base, options[:left_delimiter], options[:right_delimiter])
+        final_step << step_text
+      end
+
+      final_step
+    end
 
     def scan_arguments(left_delimiter = World.left_delimiter, right_delimiter  = World.right_delimiter)
       pattern = Regexp.new(Regexp.escape(left_delimiter) + '(.*?)' + Regexp.escape(right_delimiter))
@@ -82,25 +82,25 @@ module CucumberAnalytics
     private
 
 
-#    # Returns the step string minus any arguments based on the given delimiters.
-#    def stripped_step(step, left_delimiter, right_delimiter)
-#      original_left = left_delimiter
-#      original_right = right_delimiter
-#
-#      begin
-#        Regexp.new(left_delimiter)
-#      rescue RegexpError
-#        left_delimiter = '\\' + left_delimiter
-#      end
-#
-#      begin
-#        Regexp.new(right_delimiter)
-#      rescue RegexpError
-#        right_delimiter = '\\' + right_delimiter
-#      end
-#
-#      step.gsub(Regexp.new("#{left_delimiter}.*?#{right_delimiter}"), original_left + original_right)
-#    end
+    # Returns the step string minus any arguments based on the given delimiters.
+    def stripped_step(step, left_delimiter, right_delimiter)
+      original_left = left_delimiter
+      original_right = right_delimiter
+
+      begin
+        Regexp.new(left_delimiter)
+      rescue RegexpError
+        left_delimiter = '\\' + left_delimiter
+      end
+
+      begin
+        Regexp.new(right_delimiter)
+      rescue RegexpError
+        right_delimiter = '\\' + right_delimiter
+      end
+
+      step.gsub(Regexp.new("#{left_delimiter}.*?#{right_delimiter}"), original_left + original_right)
+    end
 
     def parse_block(step)
       CucumberAnalytics::Logging.logger.info('Step#parse_block')

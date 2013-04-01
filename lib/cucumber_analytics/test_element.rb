@@ -16,11 +16,11 @@ module CucumberAnalytics
       parse_test_element(parsed_test_element) if parsed_test_element
     end
 
-#    # Returns true if the two elements have the same steps, minus any keywords
-#    # and arguments, and false otherwise.
-#    def ==(other_element)
-#      steps == other_element.steps
-#    end
+    # Returns true if the two elements have the same steps, minus any keywords
+    # and arguments, and false otherwise.
+    def ==(other_element)
+      steps == other_element.steps
+    end
 
 
     private

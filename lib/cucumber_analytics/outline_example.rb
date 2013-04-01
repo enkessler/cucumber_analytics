@@ -25,28 +25,28 @@ module CucumberAnalytics
       parse_example(parsed_example) if parsed_example
     end
 
-#    # Adds a row to the example block. The row can be given as a Hash of column
-#    # headers and their corresponding values or as an Array of values which
-#    # will be assigned in order.
-#    def add_row(row)
-#      if row.is_a?(Array)
-#        @rows << Hash[@parameters.zip(row.collect { |value| value.strip })]
-#      else
-#        @rows << row
-#      end
-#    end
-#
-#    # Removes a row from the example block. The row can be given as a Hash of
-#    # column headers and their corresponding values or as an Array of values
-#    # which will be assigned in order.
-#    def remove_row(row)
-#      if row.is_a?(Array)
-#        location = @rows.index { |row_hash| row_hash.values_at(*@parameters) == row }
-#      else
-#        location = @rows.index { |row_hash| row_hash == row }
-#      end
-#      @rows.delete_at(location) if location
-#    end
+    # Adds a row to the example block. The row can be given as a Hash of column
+    # headers and their corresponding values or as an Array of values which
+    # will be assigned in order.
+    def add_row(row)
+      if row.is_a?(Array)
+        @rows << Hash[@parameters.zip(row.collect { |value| value.strip })]
+      else
+        @rows << row
+      end
+    end
+
+    # Removes a row from the example block. The row can be given as a Hash of
+    # column headers and their corresponding values or as an Array of values
+    # which will be assigned in order.
+    def remove_row(row)
+      if row.is_a?(Array)
+        location = @rows.index { |row_hash| row_hash.values_at(*@parameters) == row }
+      else
+        location = @rows.index { |row_hash| row_hash == row }
+      end
+      @rows.delete_at(location) if location
+    end
 
     # Returns tags which are applicable to the example block which have been
     # inherited from the outline level.
