@@ -11,7 +11,7 @@ module CucumberAnalytics
 
     # Creates a new Step object based on the passed string. If the optional
     # string array is provided, it becomes the block for the step.
-    def initialize(step, block = nil)
+    def initialize(step)
       CucumberAnalytics::Logging.logger.info('Step#initialize')
       CucumberAnalytics::Logging.logger.debug('Step:')
       CucumberAnalytics::Logging.logger.debug(step.to_yaml)
@@ -120,23 +120,7 @@ module CucumberAnalytics
         else
           @block = nil
       end
-
-#      return block if block.first =~ /\s*"""/
-#
-#      Array.new.tap do |table|
-#        block.each do |line|
-#          final_line = sanitize_line(line).split('|')
-#          final_line.shift
-#          final_line.collect! { |cell_value| cell_value.strip }
-#
-#          table << final_line
-#        end
-#      end
     end
-
-#    def sanitize_line(line)
-#      line.gsub('\|', World::SANITARY_STRING)
-#    end
 
   end
 end
