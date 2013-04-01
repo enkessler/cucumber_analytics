@@ -50,12 +50,12 @@ module CucumberAnalytics
       @@defined_expressions
     end
 
-#    # Returns all tags found in the passed container.
-#    def self.tags_in(container)
-#      Array.new.tap do |accumulated_tags|
-#        collect_tags(accumulated_tags, container)
-#      end
-#    end
+    # Returns all tags found in the passed container.
+    def self.tags_in(container)
+      Array.new.tap do |accumulated_tags|
+        collect_tags(accumulated_tags, container)
+      end
+    end
 
     # Returns all directories found in the passed container.
     def self.directories_in(container)
@@ -78,12 +78,12 @@ module CucumberAnalytics
       end
     end
 
-#    # Returns all tests found in the passed container.
-#    def self.tests_in(container)
-#      Array.new.tap do |accumulated_tests|
-#        collect_tests(accumulated_tests, container)
-#      end
-#    end
+    # Returns all tests found in the passed container.
+    def self.tests_in(container)
+      Array.new.tap do |accumulated_tests|
+        collect_tests(accumulated_tests, container)
+      end
+    end
 
     # Returns all steps found in the passed container.
     def self.steps_in(container)
@@ -131,16 +131,16 @@ module CucumberAnalytics
       desanitize_line(sanitize_line(line).match(/^#{World::STEP_KEYWORD_PATTERN}\/([^\/]*)\//)[1])
     end
 
-#    # Recursively gathers all tags found in the passed container.
-#    def self.collect_tags(accumulated_tags, container)
-#      accumulated_tags.concat container.tags if container.respond_to?(:tags)
-#
-#      if container.respond_to?(:contains)
-#        container.contains.each do |child_container|
-#          collect_tags(accumulated_tags, child_container)
-#        end
-#      end
-#    end
+    # Recursively gathers all tags found in the passed container.
+    def self.collect_tags(accumulated_tags, container)
+      accumulated_tags.concat container.tags if container.respond_to?(:tags)
+
+      if container.respond_to?(:contains)
+        container.contains.each do |child_container|
+          collect_tags(accumulated_tags, child_container)
+        end
+      end
+    end
 
 # Recursively gathers all directories found in the passed container.
     def self.collect_directories(accumulated_directories, container)
@@ -175,16 +175,16 @@ module CucumberAnalytics
       end
     end
 
-#    # Recursively gathers all tests found in the passed container.
-#    def self.collect_tests(accumulated_tests, container)
-#      accumulated_tests.concat container.tests if container.respond_to?(:tests)
-#
-#      if container.respond_to?(:contains)
-#        container.contains.each do |child_container|
-#          collect_tests(accumulated_tests, child_container)
-#        end
-#      end
-#    end
+    # Recursively gathers all tests found in the passed container.
+    def self.collect_tests(accumulated_tests, container)
+      accumulated_tests.concat container.tests if container.respond_to?(:tests)
+
+      if container.respond_to?(:contains)
+        container.contains.each do |child_container|
+          collect_tests(accumulated_tests, child_container)
+        end
+      end
+    end
 
     # Recursively gathers all steps found in the passed container.
     def self.collect_steps(accumulated_steps, container)
