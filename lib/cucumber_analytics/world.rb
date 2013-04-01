@@ -2,16 +2,16 @@ module CucumberAnalytics
   module World
 
 
-#    SANITARY_STRING = '___SANITIZED_BY_CUCUMBER_ANALYTICS___'
-#    STEP_KEYWORD_PATTERN = '\s*(?:Given|When|Then|And|But|\*)\s*'
+    SANITARY_STRING = '___SANITIZED_BY_CUCUMBER_ANALYTICS___'
+    STEP_KEYWORD_PATTERN = '\s*(?:Given|When|Then|And|But|\*)\s*'
 #    TEST_ELEMENT_START_PATTERN = '^\s*(?:@|Background:|Scenario:|(?:Scenario Outline:))'
-#
-#
-#    # Returns the left delimiter, which is used to mark the beginning of a step
-#    # argument.
-#    def self.left_delimiter
-#      @left_delimiter || @right_delimiter
-#    end
+
+
+    # Returns the left delimiter, which is used to mark the beginning of a step
+    # argument.
+    def self.left_delimiter
+      @left_delimiter || @right_delimiter
+    end
 
     # Sets the left delimiter that will be used by default when determining
     # step arguments.
@@ -19,11 +19,11 @@ module CucumberAnalytics
       @left_delimiter = new_delimiter
     end
 
-#    # Returns the right delimiter, which is used to mark the end of a step
-#    # argument.
-#    def self.right_delimiter
-#      @right_delimiter || @left_delimiter
-#    end
+    # Returns the right delimiter, which is used to mark the end of a step
+    # argument.
+    def self.right_delimiter
+      @right_delimiter || @left_delimiter
+    end
 
     # Sets the right delimiter that will be used by default when determining
     # step arguments.
@@ -31,25 +31,25 @@ module CucumberAnalytics
       @right_delimiter = new_delimiter
     end
 
-#    # Loads the step patterns contained in the given file into the World.
-#    def self.load_step_file(file_path)
-#      @@defined_expressions ||= []
-#
-#      File.open(file_path, 'r') do |file|
-#        file.readlines.each do |line|
-#          if step_def_line?(line)
-#            the_reg_ex = extract_regular_expression(line)
-#            @@defined_expressions << the_reg_ex
-#          end
-#        end
-#      end
-#    end
-#
-#    # Returns the step patterns that have been loaded into the World.
-#    def self.defined_step_patterns
-#      @@defined_expressions
-#    end
-#
+    # Loads the step patterns contained in the given file into the World.
+    def self.load_step_file(file_path)
+      @@defined_expressions ||= []
+
+      File.open(file_path, 'r') do |file|
+        file.readlines.each do |line|
+          if step_def_line?(line)
+            the_reg_ex = extract_regular_expression(line)
+            @@defined_expressions << the_reg_ex
+          end
+        end
+      end
+    end
+
+    # Returns the step patterns that have been loaded into the World.
+    def self.defined_step_patterns
+      @@defined_expressions
+    end
+
 #    # Returns all tags found in the passed container.
 #    def self.tags_in(container)
 #      Array.new.tap do |accumulated_tags|
@@ -84,53 +84,53 @@ module CucumberAnalytics
 #        collect_tests(accumulated_tests, container)
 #      end
 #    end
-#
-#    # Returns all steps found in the passed container.
-#    def self.steps_in(container)
-#      Array.new.tap do |accumulated_steps|
-#        collect_steps(accumulated_steps, container)
-#      end
-#    end
-#
-#    # Returns all undefined steps found in the passed container.
-#    def self.undefined_steps_in(container)
-#      all_steps = steps_in(container)
-#
-#      all_steps.select { |step| !World.defined_step_patterns.any? { |pattern| step.base =~ Regexp.new(pattern) } }
-#    end
-#
-#    # Returns all defined steps found in the passed container.
-#    def self.defined_steps_in(container)
-#      all_steps = steps_in(container)
-#
-#      all_steps.select { |step| World.defined_step_patterns.any? { |pattern| step.base =~ Regexp.new(pattern) } }
-#    end
+
+    # Returns all steps found in the passed container.
+    def self.steps_in(container)
+      Array.new.tap do |accumulated_steps|
+        collect_steps(accumulated_steps, container)
+      end
+    end
+
+    # Returns all undefined steps found in the passed container.
+    def self.undefined_steps_in(container)
+      all_steps = steps_in(container)
+
+      all_steps.select { |step| !World.defined_step_patterns.any? { |pattern| step.base =~ Regexp.new(pattern) } }
+    end
+
+    # Returns all defined steps found in the passed container.
+    def self.defined_steps_in(container)
+      all_steps = steps_in(container)
+
+      all_steps.select { |step| World.defined_step_patterns.any? { |pattern| step.base =~ Regexp.new(pattern) } }
+    end
 
 
     private
 
 
-#    # Make life easier by ensuring that the only forward slashes in the
-#    # regular expression are the important ones.
-#    def self.sanitize_line(line)
-#      line.gsub('\/', SANITARY_STRING)
-#    end
-#
-#    # And be sure to restore the line to its original state.
-#    def self.desanitize_line(line)
-#      line.gsub(SANITARY_STRING, '\/')
-#    end
-#
-#    # Returns whether or not the passed line is a step pattern.
-#    def self.step_def_line?(line)
-#      !!(sanitize_line(line) =~ /^#{World::STEP_KEYWORD_PATTERN}\/[^\/]*\//)
-#    end
-#
-#    # Returns the regular expression portion of a step pattern line.
-#    def self.extract_regular_expression(line)
-#      desanitize_line(sanitize_line(line).match(/^#{World::STEP_KEYWORD_PATTERN}\/([^\/]*)\//)[1])
-#    end
-#
+    # Make life easier by ensuring that the only forward slashes in the
+    # regular expression are the important ones.
+    def self.sanitize_line(line)
+      line.gsub('\/', SANITARY_STRING)
+    end
+
+    # And be sure to restore the line to its original state.
+    def self.desanitize_line(line)
+      line.gsub(SANITARY_STRING, '\/')
+    end
+
+    # Returns whether or not the passed line is a step pattern.
+    def self.step_def_line?(line)
+      !!(sanitize_line(line) =~ /^#{World::STEP_KEYWORD_PATTERN}\/[^\/]*\//)
+    end
+
+    # Returns the regular expression portion of a step pattern line.
+    def self.extract_regular_expression(line)
+      desanitize_line(sanitize_line(line).match(/^#{World::STEP_KEYWORD_PATTERN}\/([^\/]*)\//)[1])
+    end
+
 #    # Recursively gathers all tags found in the passed container.
 #    def self.collect_tags(accumulated_tags, container)
 #      accumulated_tags.concat container.tags if container.respond_to?(:tags)
@@ -185,18 +185,18 @@ module CucumberAnalytics
 #        end
 #      end
 #    end
-#
-#    # Recursively gathers all steps found in the passed container.
-#    def self.collect_steps(accumulated_steps, container)
-#      accumulated_steps.concat container.steps if container.respond_to?(:steps)
-#
-#      if container.respond_to?(:contains)
-#        container.contains.each do |child_container|
-#          collect_steps(accumulated_steps, child_container)
-#        end
-#      end
-#    end
-#
+
+    # Recursively gathers all steps found in the passed container.
+    def self.collect_steps(accumulated_steps, container)
+      accumulated_steps.concat container.steps if container.respond_to?(:steps)
+
+      if container.respond_to?(:contains)
+        container.contains.each do |child_container|
+          collect_steps(accumulated_steps, child_container)
+        end
+      end
+    end
+
 #    # Returns true if the line is ignored when reading source code, false
 #    # otherwise.
 #    def self.ignored_line?(line)

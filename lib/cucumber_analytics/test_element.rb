@@ -41,7 +41,9 @@ module CucumberAnalytics
 
       if parsed_test_element['steps']
         parsed_test_element['steps'].each do |step|
-          @steps << Step.new(step)
+          element = Step.new(step)
+          element.parent_element = self
+          @steps << element
         end
       end
 #      CucumberAnalytics::Logging.logger.info('TestElement#parse_test_element_steps')

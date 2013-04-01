@@ -24,12 +24,12 @@ module CucumberAnalytics
       parse_outline(parsed_outline) if parsed_outline
     end
 
-#    # Returns the immediate child elements of the outline (i.e. its example
-#    # blocks).
-#    def contains
-#      @examples
-#    end
-#
+    # Returns the immediate child elements of the outline (i.e. its example
+    # blocks).
+    def contains
+      @examples
+    end
+
     # Returns tags which are applicable to the outline which have been
     # inherited from the feature level.
     def applied_tags

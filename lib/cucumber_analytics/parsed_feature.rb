@@ -59,11 +59,11 @@ module CucumberAnalytics
       }
     end
 
-#    # Returns the immediate child elements of the feature (i.e. its background
-#    # and tests).
-#    def contains
-#      [@background] + @tests
-#    end
+    # Returns the immediate child elements of the feature (i.e. its background
+    # and tests).
+    def contains
+      [@background] + @tests
+    end
 
 
     private
