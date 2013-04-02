@@ -23,7 +23,10 @@ describe "OutlineExample" do
     File.open(file_path, "w") { |file|
       file.puts('Feature: Test feature')
       file.puts('  Scenario Outline: Test outline')
+      file.puts('    Given some step')
       file.puts('  Examples: test examples')
+      file.puts('    | param |')
+      file.puts('    | value |')
     }
 
     file = CucumberAnalytics::ParsedFile.new(file_path)

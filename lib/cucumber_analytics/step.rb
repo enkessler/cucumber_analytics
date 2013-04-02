@@ -11,13 +11,15 @@ module CucumberAnalytics
 
     # Creates a new Step object based on the passed string. If the optional
     # string array is provided, it becomes the block for the step.
-    def initialize(step, block = nil)
+    def initialize(step)
       CucumberAnalytics::Logging.logger.info('Step#initialize')
-      CucumberAnalytics::Logging.logger.debug("step: #{step}")
+      CucumberAnalytics::Logging.logger.debug('Step:')
+      CucumberAnalytics::Logging.logger.debug(step.to_yaml)
 
-      @base = step.sub(/#{World::STEP_KEYWORD_PATTERN}/, '')
-      @block = parse_block(block) if block
-      @keyword = step.slice(/#{World::STEP_KEYWORD_PATTERN}/).strip
+
+      @base = step['name']
+      @block = parse_block(step)
+      @keyword = step['keyword'].strip
       scan_arguments if World.left_delimiter || World.right_delimiter
     end
 
@@ -100,23 +102,24 @@ module CucumberAnalytics
       step.gsub(Regexp.new("#{left_delimiter}.*?#{right_delimiter}"), original_left + original_right)
     end
 
-    def parse_block(block)
+    def parse_block(step)
+      CucumberAnalytics::Logging.logger.info('Step#parse_block')
+      CucumberAnalytics::Logging.logger.debug('Step:')
+      CucumberAnalytics::Logging.logger.debug(step.to_yaml)
 
-      return block if block.first =~ /\s*"""/
 
-      Array.new.tap do |table|
-        block.each do |line|
-          final_line = sanitize_line(line).split('|')
-          final_line.shift
-          final_line.collect! { |cell_value| cell_value.strip }
-
-          table << final_line
-        end
+      #todo - Make these their own objects
+      case
+        when step['rows']
+          @block = step['rows'].collect{|row| row['cells']}
+        when step['doc_string']
+          @block = []
+          @block << "\"\"\" #{step['doc_string']['content_type']}"
+          @block.concat(step['doc_string']['value'].split($/))
+          @block << "\"\"\""
+        else
+          @block = nil
       end
-    end
-
-    def sanitize_line(line)
-      line.gsub('\|', World::SANITARY_STRING)
     end
 
   end

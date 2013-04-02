@@ -45,7 +45,6 @@ Feature: Example elements can be modeled.
 
         #
         | a      |
-      Examples:
     """
     And parameter delimiters of "*" and "*"
     When the file is read
@@ -56,9 +55,6 @@ Feature: Example elements can be modeled.
       | name | text describing the significance of the examples |
     And the test example block "2" is found to have the following properties:
       | name | some examples with different significance and a tag |
-    And the test example block "3" is found to have the following properties:
-      | name |  |
-
 
   Scenario: The examples' description is modeled.
     Then the test example block "1" descriptive lines are as follows:
@@ -67,14 +63,12 @@ Feature: Example elements can be modeled.
     And the test example block "2" descriptive lines are as follows:
       | Words, words, words, words, |
       | why so many words?          |
-    And the test example block "3" has no descriptive lines
 
   Scenario: The examples' tags are modeled.
     Then the test example block "1" has no tags
     And the test example block "2" is found to have the following tags:
       | @example_tag |
       | @another_one |
-    And the test example block "3" has no tags
 
   Scenario: The examples' applied tags are modeled.
     Then the test example block "2" is found to have the following applied tags:
@@ -88,7 +82,6 @@ Feature: Example elements can be modeled.
       | extra param |
     And the test example block "2" parameters are as follows:
       | param1 |
-    And the test example block "3" has no parameters
 
   Scenario: The examples' rows are modeled.
     Then the test example block "1" rows are as follows:
@@ -96,7 +89,6 @@ Feature: Example elements can be modeled.
       | 1,2,3 |
     And the test example block "2" rows are as follows:
       | a |
-    And the test example block "3" has no rows
 
   Scenario Outline: Example models pass all other specifications
   Exact specifications detailing the API for Examples models.

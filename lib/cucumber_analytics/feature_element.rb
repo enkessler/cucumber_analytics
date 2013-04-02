@@ -8,55 +8,55 @@ module CucumberAnalytics
 
 
     # Creates a new FeatureElement object.
-    def initialize(source_lines = nil)
+    def initialize(parsed_element = nil)
       CucumberAnalytics::Logging.logger.info('FeatureElement#initialize')
 
       @name = ''
       @description =[]
+      parse_feature_element(parsed_element) if parsed_element
     end
 
 
     private
 
 
-    def parse_feature_element(source_lines)
+    def parse_feature_element(parsed_element)
       CucumberAnalytics::Logging.logger.info('FeatureElement#parse_feature_element')
+      CucumberAnalytics::Logging.logger.debug('Parsed element:')
+      CucumberAnalytics::Logging.logger.debug(parsed_element.to_yaml)
 
-      parse_feature_element_name(source_lines)
-      parse_feature_element_description(source_lines)
+      parse_feature_element_name(parsed_element)
+      parse_feature_element_description(parsed_element)
     end
 
     #todo - move this elsewhere
-    def parse_feature_element_tags(source_lines)
+    def parse_feature_element_tags(parsed_element)
       CucumberAnalytics::Logging.logger.info('FeatureElement#parse_feature_element_tags')
-      CucumberAnalytics::Logging.logger.debug('source lines')
-      source_lines.each do |line|
-        CucumberAnalytics::Logging.logger.debug(line.chomp)
-      end
+      CucumberAnalytics::Logging.logger.debug('Parsed element:')
+      CucumberAnalytics::Logging.logger.debug(parsed_element.to_yaml)
 
-      source_lines.take_while { |line| line !~ /^\s*(?:[A-Z a-z])+:/ }.tap do |tag_lines|
-        tag_lines.delete_if { |line| World.ignored_line?(line)}
-
-        tag_lines.join(' ').delete(' ').split('@').each do |tag|
-          @tags << "@#{tag.strip}"
+      if parsed_element['tags']
+        parsed_element['tags'].each do |tag|
+          @tags << tag['name']
         end
-      end
-      @tags.shift
-
-      while source_lines.first !~  /^\s*(?:[A-Z a-z])+:/
-        source_lines.shift
       end
     end
 
-    def parse_feature_element_name(source_lines)
+    def parse_feature_element_name(parsed_element)
       CucumberAnalytics::Logging.logger.info('FeatureElement#parse_feature_element_name')
-      CucumberAnalytics::Logging.logger.debug('source lines')
-      source_lines.each do |line|
-        CucumberAnalytics::Logging.logger.debug(line.chomp)
-      end
+      CucumberAnalytics::Logging.logger.debug('Parsed element:')
+      CucumberAnalytics::Logging.logger.debug(parsed_element.to_yaml)
 
-      @name.replace source_lines.first.match(/^\s*(?:[A-Z a-z])+:(.*)/)[1].strip
-      source_lines.shift
+      @name = parsed_element['name']
+    end
+
+    def parse_feature_element_description(parsed_element)
+      CucumberAnalytics::Logging.logger.info('FeatureElement#parse_feature_element_description')
+      CucumberAnalytics::Logging.logger.debug('Parsed element:')
+      CucumberAnalytics::Logging.logger.debug(parsed_element.to_yaml)
+
+      @description = parsed_element['description'].split("\n").collect { |line| line.strip }
+      @description.delete('')
     end
 
   end

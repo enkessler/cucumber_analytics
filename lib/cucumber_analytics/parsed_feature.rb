@@ -9,7 +9,7 @@ module CucumberAnalytics
 
     # Creates a new ParsedFeature object and, if *source_lines* is provided,
     # populates the object.
-    def initialize(source_lines = nil)
+    def initialize(parsed_feature = nil)
       CucumberAnalytics::Logging.logger.info('ParsedFeature#initialize')
 
       super
@@ -17,7 +17,7 @@ module CucumberAnalytics
       @tags = []
       @tests = []
 
-      parse_feature(source_lines) if source_lines
+      parse_feature(parsed_feature) if parsed_feature
     end
 
     # Returns true if the feature contains a background, false otherwise.
@@ -69,27 +69,55 @@ module CucumberAnalytics
     private
 
 
-    def parse_feature(source_lines)
+    def parse_feature(parsed_feature)
       CucumberAnalytics::Logging.logger.info('ParsedFeature#parse_feature')
+      CucumberAnalytics::Logging.logger.debug('Parsed feature:')
+      CucumberAnalytics::Logging.logger.debug(parsed_feature.to_yaml)
 
-      parse_feature_element_tags(source_lines)
-      parse_feature_element(source_lines)
+      parse_feature_element_tags(parsed_feature) if parsed_feature['tags']
+      parse_feature_elements(parsed_feature) if parsed_feature['elements']
     end
 
-    def parse_feature_element_description(source_lines)
-      CucumberAnalytics::Logging.logger.info('ParsedFeature#parse_feature_element_description')
-      CucumberAnalytics::Logging.logger.debug('source lines')
-      source_lines.each do |line|
-        CucumberAnalytics::Logging.logger.debug(line.chomp)
+    def parse_feature_elements(parsed_feature)
+      CucumberAnalytics::Logging.logger.info('ParsedFeature#parse_feature_elements')
+      CucumberAnalytics::Logging.logger.debug('Parsed feature:')
+      CucumberAnalytics::Logging.logger.debug(parsed_feature.to_yaml)
+
+      parse_background(parsed_feature)
+      parse_tests(parsed_feature)
+    end
+
+    def parse_background(parsed_feature)
+      CucumberAnalytics::Logging.logger.info('ParsedFeature#parse_feature')
+      CucumberAnalytics::Logging.logger.debug('Parsed feature:')
+      CucumberAnalytics::Logging.logger.debug(parsed_feature.to_yaml)
+
+      background_element = parsed_feature['elements'].select { |element| element['keyword'] == 'Background' }.first
+
+      if background_element
+        element = ParsedBackground.new(background_element)
+        element.parent_element = self
+        @background = element
       end
+    end
 
-      source_lines.delete_if { |line| World.ignored_line?(line) }
+    def parse_tests(parsed_feature)
+      CucumberAnalytics::Logging.logger.info('ParsedFeature#parse_tests')
+      CucumberAnalytics::Logging.logger.debug('Parsed feature:')
+      CucumberAnalytics::Logging.logger.debug(parsed_feature.to_yaml)
 
-      until source_lines.first =~ /#{World::TEST_ELEMENT_START_PATTERN}/ or
-          source_lines.empty?
-
-        @description << source_lines.first.strip
-        source_lines.shift
+      test_elements = parsed_feature['elements'].select { |element| element['keyword'] == 'Scenario' || element['keyword'] == 'Scenario Outline' }
+      test_elements.each do |parsed_test|
+        case parsed_test['keyword']
+          when 'Scenario'
+            element = ParsedScenario.new(parsed_test)
+            element.parent_element = self
+            @tests << element
+          when 'Scenario Outline'
+            element = ParsedScenarioOutline.new(parsed_test)
+            element.parent_element = self
+            @tests << element
+        end
       end
     end
 

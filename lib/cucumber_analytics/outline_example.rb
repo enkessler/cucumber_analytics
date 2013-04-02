@@ -9,10 +9,11 @@ module CucumberAnalytics
 
     # Creates a new OutlineExample object and, if *source_lines* is provided,
     # populates the object.
-    def initialize(source_lines = nil)
+    def initialize(parsed_example = nil)
       CucumberAnalytics::Logging.logger.info('OutlineExample#initialize')
-      CucumberAnalytics::Logging.logger.debug('source lines')
-      source_lines.each { |line| CucumberAnalytics::Logging.logger.debug(line.chomp) } if source_lines
+      CucumberAnalytics::Logging.logger.debug('OutlineExample:')
+      CucumberAnalytics::Logging.logger.debug(parsed_example.to_yaml)
+
 
       super
 
@@ -20,7 +21,7 @@ module CucumberAnalytics
       @rows = []
       @parameters = []
 
-      parse_example(source_lines) if source_lines
+      parse_example(parsed_example) if parsed_example
     end
 
     # Adds a row to the example block. The row can be given as a Hash of column
@@ -46,7 +47,8 @@ module CucumberAnalytics
       @rows.delete_at(location) if location
     end
 
-    # Returns tags which have been inherited from the outline level.
+    # Returns tags which are applicable to the example block which have been
+    # inherited from the outline level.
     def applied_tags
       additional_tags = @parent_element.tags
       additional_tags.concat(@parent_element.applied_tags) if @parent_element.respond_to?(:applied_tags)
@@ -54,55 +56,27 @@ module CucumberAnalytics
       additional_tags
     end
 
-    # Returns all tags which are applicable to the scenario.
+    # Returns all tags which are applicable to the example block.
     def all_tags
       applied_tags + @tags
     end
 
+
     private
 
 
-    def parse_example(source_lines)
+    def parse_example(parsed_example)
       CucumberAnalytics::Logging.logger.info('OutlineExample#parse_example')
+      CucumberAnalytics::Logging.logger.debug('Parsed example:')
+      CucumberAnalytics::Logging.logger.debug(parsed_example.to_yaml)
 
-      parse_feature_element_tags(source_lines)
-      parse_feature_element(source_lines)
+      parse_feature_element_tags(parsed_example)
 
-      source_lines.delete_if { |line| World.ignored_line?(line) }
+      @parameters = parsed_example['rows'].first['cells']
 
-      unless source_lines.empty?
-        @parameters = source_lines.shift.split('|')
-        @parameters.shift
-        @parameters.pop
-
-        @parameters.collect! { |param| param.strip }
-      end
-
-      unless source_lines.empty?
-        @rows = source_lines.collect { |row| row.split('|') }.collect do |row|
-          row.shift
-          row.collect { |value| value.strip }
-        end
-
-        @rows.collect! { |row| Hash[@parameters.zip(row)] }
-      end
-    end
-
-    def parse_feature_element_description(source_lines)
-      CucumberAnalytics::Logging.logger.info('OutlineExample#parse_feature_element_description')
-      CucumberAnalytics::Logging.logger.debug('source lines')
-      source_lines.each do |line|
-        CucumberAnalytics::Logging.logger.debug(line.chomp)
-      end
-
-      until source_lines.first =~ /^\s*\|/ or
-          source_lines.empty?
-
-        unless World.ignored_line?(source_lines.first)
-          @description << source_lines.first.strip
-        end
-
-        source_lines.shift
+      parsed_example['rows'].shift
+      parsed_example['rows'].each do |row|
+        @rows << Hash[@parameters.zip(row['cells'])]
       end
     end
 
