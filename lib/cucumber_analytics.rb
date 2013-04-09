@@ -1,4 +1,5 @@
 require 'gherkin/formatter/json_formatter'
+require 'gherkin'
 
 require 'cucumber_analytics/version'
 require 'cucumber_analytics/logging'
