@@ -55,3 +55,4 @@ Feature: Feature files can be modeled.
   Examples:
     | additional specifications |
     | file_spec.rb              |
+    | file_integration_spec.rb  |

@@ -129,20 +129,20 @@ Feature: Features can be modeled.
 
   Scenario: The feature's description is modeled.
     Then the descriptive lines of feature "1" are as follows:
-      | Some more feature description.                                      |
-      | And some more.                                                      |
-      | Scenario but not really because I left out the magic ':'            |
-      | Given some description that uses keywords                           |
-      | And more of it                                                      |
-      | When I chuck the kitchen sink at it:                                |
-      | But                                                                 |
-      | *                                                                   |
-      | \|                                                                  |
-      | Scenario Outline                                                    |
-      | Examples                                                            |
-      | """                                                                 |
-      | Background                                                          |
-      | Then this is still one big valid description                        |
+      | Some more feature description.                           |
+      | And some more.                                           |
+      | Scenario but not really because I left out the magic ':' |
+      | Given some description that uses keywords                |
+      | And more of it                                           |
+      | When I chuck the kitchen sink at it:                     |
+      | But                                                      |
+      | *                                                        |
+      | \|                                                       |
+      | Scenario Outline                                         |
+      | Examples                                                 |
+      | """                                                      |
+      | Background                                               |
+      | Then this is still one big valid description             |
     And feature "2" has no descriptive lines
     And feature "3" has no descriptive lines
 
@@ -200,5 +200,6 @@ Feature: Features can be modeled.
     When the corresponding unit tests are run
     Then all of those specifications are met
   Examples:
-    | additional specifications |
-    | feature_spec.rb           |
+    | additional specifications   |
+    | feature_spec.rb             |
+    | feature_integration_spec.rb |

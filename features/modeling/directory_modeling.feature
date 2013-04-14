@@ -109,5 +109,6 @@ Feature: Directories can be modeled.
     When the corresponding unit tests are run
     Then all of those specifications are met
   Examples:
-    | additional specifications |
-    | directory_spec.rb         |
+    | additional specifications     |
+    | directory_spec.rb             |
+    | directory_integration_spec.rb |

@@ -11,5 +11,5 @@ When /^the corresponding unit tests are run$/ do
 end
 
 Then /^all of those specifications are met$/ do
-  fail "There were unmet specifications." unless @specs_passed
+  fail "There were unmet specifications in '#{@spec_file}'." unless @specs_passed
 end

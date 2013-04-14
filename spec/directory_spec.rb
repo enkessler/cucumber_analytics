@@ -4,15 +4,10 @@ SimpleCov.command_name('ParsedDirectory') unless RUBY_VERSION.to_s < '1.9.0'
 
 describe "ParsedDirectory" do
 
-  it 'knows its parent element' do
-    directory = @default_file_directory
-    nested_directory = "#{directory}/nested_directory"
-    FileUtils.mkdir(nested_directory)
+  clazz = CucumberAnalytics::ParsedDirectory
 
-    directory = CucumberAnalytics::ParsedDirectory.new(@default_file_directory)
-    nested_directory = directory.feature_directories.first
-
-    nested_directory.parent_element.should equal directory
-  end
+  it_should_behave_like 'a nested element', clazz
+  it_should_behave_like 'a containing element', clazz
+  it_should_behave_like 'a bare bones element', clazz
 
 end

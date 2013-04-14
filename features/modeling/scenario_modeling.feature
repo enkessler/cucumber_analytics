@@ -106,5 +106,6 @@ Feature: Scenario elements can be modeled.
     When the corresponding unit tests are run
     Then all of those specifications are met
   Examples:
-    | additional specifications |
-    | scenario_spec.rb          |
+    | additional specifications    |
+    | scenario_spec.rb             |
+    | scenario_integration_spec.rb |

@@ -4,29 +4,14 @@ SimpleCov.command_name('ParsedOutline') unless RUBY_VERSION.to_s < '1.9.0'
 
 describe "ParsedOutline" do
 
-  it "knows all of its tags" do
-    feature = CucumberAnalytics::ParsedFeature.new
-    feature.tags = ['@feature_tag']
-    outline = CucumberAnalytics::ParsedScenarioOutline.new
-    outline.tags = ['@outline_tag']
+  clazz = CucumberAnalytics::ParsedScenarioOutline
 
-    outline.parent_element = feature
-    outline.all_tags.sort.should == ['@feature_tag', '@outline_tag'].sort
-  end
+  it_should_behave_like 'a feature element', clazz
+  it_should_behave_like 'a nested element', clazz
+  it_should_behave_like 'an inheriting element', clazz
+  it_should_behave_like 'a containing element', clazz
+  it_should_behave_like 'a tagged element', clazz
+  it_should_behave_like 'a bare bones element', clazz
+  it_should_behave_like 'a test element', clazz
 
-  it 'knows its parent element' do
-    file_path = "#{@default_file_directory}/#{@default_feature_file_name}"
-
-    File.open(file_path, "w") { |file|
-      file.puts('Feature: Test feature')
-      file.puts('  Scenario Outline: Test outline')
-    }
-
-    file = CucumberAnalytics::ParsedFile.new(file_path)
-
-    feature = file.feature
-    outline = feature.tests.first
-
-    outline.parent_element.should equal feature
-  end
 end

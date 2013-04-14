@@ -4,22 +4,10 @@ SimpleCov.command_name('Step') unless RUBY_VERSION.to_s < '1.9.0'
 
 describe 'Step' do
 
-  it 'knows its parent element' do
-    file_path = "#{@default_file_directory}/#{@default_feature_file_name}"
+  clazz = CucumberAnalytics::Step
 
-    File.open(file_path, "w") { |file|
-      file.puts('Feature: Test feature')
-      file.puts('  Scenario: Test scenario')
-      file.puts('    Given a test step')
-    }
-
-    file = CucumberAnalytics::ParsedFile.new(file_path)
-
-    scenario = file.feature.tests.first
-    step = scenario.steps.first
-
-    step.parent_element.should equal scenario
-  end
+  it_should_behave_like 'a nested element', clazz
+  it_should_behave_like 'a bare bones element', clazz
 
   it 'can determine its arguments based on delimiters' do
     file_path = "#{@default_file_directory}/#{@default_feature_file_name}"
@@ -43,23 +31,23 @@ describe 'Step' do
   end
 
   it 'defaults to the World delimiters when scanning' do
-      file_path = "#{@default_file_directory}/#{@default_feature_file_name}"
+    file_path = "#{@default_file_directory}/#{@default_feature_file_name}"
 
-      File.open(file_path, "w") { |file|
-        file.puts('Feature: Test feature')
-        file.puts('  Scenario: Test scenario')
-        file.puts('    Given a test step with *parameter 1* and "parameter 2" and *parameter 3*')
-      }
+    File.open(file_path, "w") { |file|
+      file.puts('Feature: Test feature')
+      file.puts('  Scenario: Test scenario')
+      file.puts('    Given a test step with *parameter 1* and "parameter 2" and *parameter 3*')
+    }
 
-      world = CucumberAnalytics::World
-      world.left_delimiter = '"'
-      world.right_delimiter = '"'
+    world = CucumberAnalytics::World
+    world.left_delimiter = '"'
+    world.right_delimiter = '"'
 
-      file = CucumberAnalytics::ParsedFile.new(file_path)
-      step = file.feature.tests.first.steps.first
+    file = CucumberAnalytics::ParsedFile.new(file_path)
+    step = file.feature.tests.first.steps.first
 
-      step.scan_arguments
-      step.arguments.should == ['parameter 2']
+    step.scan_arguments
+    step.arguments.should == ['parameter 2']
   end
 
   it 'attempts to determine its arguments during creation' do
