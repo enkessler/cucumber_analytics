@@ -50,10 +50,7 @@ module CucumberAnalytics
     # Returns tags which are applicable to the example block which have been
     # inherited from the outline level.
     def applied_tags
-      additional_tags = @parent_element.tags
-      additional_tags.concat(@parent_element.applied_tags) if @parent_element.respond_to?(:applied_tags)
-
-      additional_tags
+      @parent_element.all_tags
     end
 
     # Returns all tags which are applicable to the example block.

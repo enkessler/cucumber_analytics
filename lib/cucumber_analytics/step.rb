@@ -11,16 +11,12 @@ module CucumberAnalytics
 
     # Creates a new Step object based on the passed string. If the optional
     # string array is provided, it becomes the block for the step.
-    def initialize(step)
+    def initialize(step = nil)
       CucumberAnalytics::Logging.logger.info('Step#initialize')
       CucumberAnalytics::Logging.logger.debug('Step:')
       CucumberAnalytics::Logging.logger.debug(step.to_yaml)
 
-
-      @base = step['name']
-      @block = parse_block(step)
-      @keyword = step['keyword'].strip
-      scan_arguments if World.left_delimiter || World.right_delimiter
+      parse_step(step) if step
     end
 
     # Returns true if the two steps have the same text, minus any keywords
@@ -72,7 +68,7 @@ module CucumberAnalytics
       final_step
     end
 
-    def scan_arguments(left_delimiter = World.left_delimiter, right_delimiter  = World.right_delimiter)
+    def scan_arguments(left_delimiter = World.left_delimiter, right_delimiter = World.right_delimiter)
       pattern = Regexp.new(Regexp.escape(left_delimiter) + '(.*?)' + Regexp.escape(right_delimiter))
 
       @arguments = @base.scan(pattern).flatten
@@ -81,6 +77,17 @@ module CucumberAnalytics
 
     private
 
+
+    def parse_step(step)
+      CucumberAnalytics::Logging.logger.info('Step#parse_step')
+      CucumberAnalytics::Logging.logger.debug('Step:')
+      CucumberAnalytics::Logging.logger.debug(step.to_yaml)
+
+      @base = step['name']
+      @block = parse_block(step)
+      @keyword = step['keyword'].strip
+      scan_arguments if World.left_delimiter || World.right_delimiter
+    end
 
     # Returns the step string minus any arguments based on the given delimiters.
     def stripped_step(step, left_delimiter, right_delimiter)
@@ -111,7 +118,7 @@ module CucumberAnalytics
       #todo - Make these their own objects
       case
         when step['rows']
-          @block = step['rows'].collect{|row| row['cells']}
+          @block = step['rows'].collect { |row| row['cells'] }
         when step['doc_string']
           @block = []
           @block << "\"\"\" #{step['doc_string']['content_type']}"

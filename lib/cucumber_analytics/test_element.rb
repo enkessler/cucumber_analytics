@@ -2,7 +2,7 @@ module CucumberAnalytics
   class TestElement < FeatureElement
 
 
-    attr_reader :steps
+    attr_accessor :steps
 
 
     # Creates a new TestElement object.
@@ -20,6 +20,11 @@ module CucumberAnalytics
     # and arguments, and false otherwise.
     def ==(other_element)
       steps == other_element.steps
+    end
+
+    # Returns the immediate child elements of the test.
+    def contains
+      @steps
     end
 
 

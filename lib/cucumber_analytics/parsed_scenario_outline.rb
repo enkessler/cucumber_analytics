@@ -25,16 +25,13 @@ module CucumberAnalytics
     # Returns the immediate child elements of the outline (i.e. its example
     # blocks).
     def contains
-      @examples
+      @examples + @steps
     end
 
     # Returns tags which are applicable to the outline which have been
     # inherited from the feature level.
     def applied_tags
-      additional_tags = @parent_element.tags
-      additional_tags.concat(@parent_element.applied_tags) if @parent_element.respond_to?(:applied_tags)
-
-      additional_tags
+      @parent_element.all_tags
     end
 
     # Returns all tags which are applicable to the scenario outline.

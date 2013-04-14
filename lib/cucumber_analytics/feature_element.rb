@@ -2,7 +2,7 @@ module CucumberAnalytics
   class FeatureElement
 
 
-    attr_reader :name
+    attr_accessor :name
     attr_reader :description
     attr_accessor :parent_element
 

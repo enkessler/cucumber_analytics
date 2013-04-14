@@ -65,6 +65,11 @@ module CucumberAnalytics
       [@background] + @tests
     end
 
+    # Returns all tags which are applicable to the feature.
+    def all_tags
+      @tags
+    end
+
 
     private
 
