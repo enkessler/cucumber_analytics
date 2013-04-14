@@ -2,13 +2,13 @@ require 'simplecov' unless RUBY_VERSION.to_s < '1.9.0'
 
 require "#{File.dirname(__FILE__)}/../lib/cucumber_analytics"
 
-require "#{File.dirname(__FILE__)}/feature_element_specs"
-require "#{File.dirname(__FILE__)}/inheriting_element_specs"
-require "#{File.dirname(__FILE__)}/nested_element_specs"
-require "#{File.dirname(__FILE__)}/tagged_element_specs"
-require "#{File.dirname(__FILE__)}/containing_element_specs"
-require "#{File.dirname(__FILE__)}/bare_bones_specs"
-require "#{File.dirname(__FILE__)}/test_element_specs"
+require "#{File.dirname(__FILE__)}/unit/feature_element_specs"
+require "#{File.dirname(__FILE__)}/unit/inheriting_element_specs"
+require "#{File.dirname(__FILE__)}/unit/nested_element_specs"
+require "#{File.dirname(__FILE__)}/unit/tagged_element_specs"
+require "#{File.dirname(__FILE__)}/unit/containing_element_specs"
+require "#{File.dirname(__FILE__)}/unit/bare_bones_specs"
+require "#{File.dirname(__FILE__)}/unit/test_element_specs"
 
 CucumberAnalytics::Logging.set_log_level(Logger::FATAL)
 
