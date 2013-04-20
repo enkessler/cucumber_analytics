@@ -69,4 +69,10 @@ describe 'Step' do
     step.arguments.should == ['parameter 2']
   end
 
+  it 'can be parsed from stand alone text' do
+    source = '* some step'
+
+    expect { clazz.new(source) }.to_not raise_error
+  end
+
 end
