@@ -54,7 +54,7 @@ end
 When /^(?:the )?feature(?: "([^"]*)")? background is as follows:$/ do |file, background|
   file ||= 1
 
-  assert @parsed_files[file - 1].feature.background.name == background.raw.flatten.first
+  @parsed_files[file - 1].feature.background.name.should  == background.raw.flatten.first
 end
 
 When /^feature "([^"]*)" has no scenarios$/ do |file|

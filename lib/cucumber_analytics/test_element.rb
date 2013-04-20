@@ -8,6 +8,8 @@ module CucumberAnalytics
     # Creates a new TestElement object.
     def initialize(parsed_test_element = nil)
       CucumberAnalytics::Logging.logger.info('TestElement#initialize')
+      CucumberAnalytics::Logging.logger.debug('parsed_test_element:')
+      CucumberAnalytics::Logging.logger.debug(parsed_test_element.to_yaml)
 
       super
 

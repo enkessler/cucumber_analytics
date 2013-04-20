@@ -6,7 +6,7 @@ Then /^the(?: feature "([^"]*)")? background is found to have the following prop
     expected = expected_value
     actual = @parsed_files[file - 1].feature.background.send(property.to_sym).to_s
 
-    assert(actual == expected, "Expected: #{expected}\n but was: #{actual}")
+    actual.should == expected
   end
 end
 
