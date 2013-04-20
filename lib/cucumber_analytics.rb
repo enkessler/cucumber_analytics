@@ -3,6 +3,7 @@ require 'gherkin'
 
 require 'cucumber_analytics/version'
 require 'cucumber_analytics/logging'
+require 'cucumber_analytics/parsing'
 require 'cucumber_analytics/parsed_file'
 require 'cucumber_analytics/parsed_directory'
 require 'cucumber_analytics/feature_element.rb'
