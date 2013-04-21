@@ -10,17 +10,9 @@ describe 'Step' do
   it_should_behave_like 'a bare bones element', clazz
 
   it 'can determine its arguments based on delimiters' do
-    file_path = "#{@default_file_directory}/#{@default_feature_file_name}"
+    source = 'Given a test step with *parameter 1* and !parameter 2- and *parameter 3*'
 
-    File.open(file_path, "w") { |file|
-      file.puts('Feature: Test feature')
-      file.puts('  Scenario: Test scenario')
-      file.puts('    Given a test step with *parameter 1* and !parameter 2- and *parameter 3*')
-    }
-
-    file = CucumberAnalytics::ParsedFile.new(file_path)
-
-    step = file.feature.tests.first.steps.first
+    step = CucumberAnalytics::Step.new(source)
 
     step.scan_arguments('*', '*')
     step.arguments.should == ['parameter 1', 'parameter 3']
@@ -31,40 +23,26 @@ describe 'Step' do
   end
 
   it 'defaults to the World delimiters when scanning' do
-    file_path = "#{@default_file_directory}/#{@default_feature_file_name}"
-
-    File.open(file_path, "w") { |file|
-      file.puts('Feature: Test feature')
-      file.puts('  Scenario: Test scenario')
-      file.puts('    Given a test step with *parameter 1* and "parameter 2" and *parameter 3*')
-    }
+    source = 'Given a test step with *parameter 1* and "parameter 2" and *parameter 3*'
 
     world = CucumberAnalytics::World
     world.left_delimiter = '"'
     world.right_delimiter = '"'
 
-    file = CucumberAnalytics::ParsedFile.new(file_path)
-    step = file.feature.tests.first.steps.first
+    step = CucumberAnalytics::Step.new(source)
 
     step.scan_arguments
     step.arguments.should == ['parameter 2']
   end
 
   it 'attempts to determine its arguments during creation' do
-    file_path = "#{@default_file_directory}/#{@default_feature_file_name}"
-
-    File.open(file_path, "w") { |file|
-      file.puts('Feature: Test feature')
-      file.puts('  Scenario: Test scenario')
-      file.puts('    Given a test step with *parameter 1* and "parameter 2" and *parameter 3*')
-    }
+    source = 'Given a test step with *parameter 1* and "parameter 2" and *parameter 3*'
 
     world = CucumberAnalytics::World
     world.left_delimiter = '"'
     world.right_delimiter = '"'
 
-    file = CucumberAnalytics::ParsedFile.new(file_path)
-    step = file.feature.tests.first.steps.first
+    step = CucumberAnalytics::Step.new(source)
 
     step.arguments.should == ['parameter 2']
   end

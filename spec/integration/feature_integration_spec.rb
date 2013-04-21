@@ -5,18 +5,14 @@ SimpleCov.command_name('ParsedFeature') unless RUBY_VERSION.to_s < '1.9.0'
 describe "ParsedFeature" do
 
   it 'properly sets its child elements' do
-    file_path = "#{@default_file_directory}/#{@default_feature_file_name}"
-
-    File.open(file_path, "w") { |file|
-      file.puts('Feature: Test feature')
-      file.puts('  Background: Test background')
-      file.puts('  Scenario: Test scenario')
-      file.puts('  Scenario Outline: Test outline')
-    }
+    source = ['Feature: Test feature',
+              '  Background: Test background',
+              '  Scenario: Test scenario',
+              '  Scenario Outline: Test outline']
+    source = source.join("\n")
 
 
-    file = CucumberAnalytics::ParsedFile.new(file_path)
-    feature = file.feature
+    feature = CucumberAnalytics::ParsedFeature.new(source)
     background = feature.background
     scenario = feature.tests.first
     outline = feature.tests.last
