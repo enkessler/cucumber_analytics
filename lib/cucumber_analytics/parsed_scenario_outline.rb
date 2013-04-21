@@ -6,15 +6,16 @@ module CucumberAnalytics
     attr_accessor :examples
 
 
-    # Creates a new ParsedScenarioOutline object and, if *source_lines* is
+    # Creates a new ParsedScenarioOutline object and, if *source* is
     # provided, populates the object.
-    def initialize(parsed_outline = nil)
+    def initialize(source = nil)
       CucumberAnalytics::Logging.logger.info('ParsedScenarioOutline#initialize')
-      CucumberAnalytics::Logging.logger.debug('ParsedScenarioOutline:')
-      CucumberAnalytics::Logging.logger.debug(parsed_outline.to_yaml)
+      CucumberAnalytics::Logging.logger.debug('source:')
+      CucumberAnalytics::Logging.logger.debug(source.to_yaml)
 
+      parsed_outline = process_source(source)
 
-      super
+      super(parsed_outline)
 
       @tags = []
       @examples = []

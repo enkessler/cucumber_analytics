@@ -7,17 +7,19 @@ module CucumberAnalytics
     attr_accessor :tests
 
 
-    # Creates a new ParsedFeature object and, if *source_lines* is provided,
+    # Creates a new ParsedFeature object and, if *source* is provided,
     # populates the object.
-    def initialize(parsed_feature = nil)
+    def initialize(source = nil)
       CucumberAnalytics::Logging.logger.info('ParsedFeature#initialize')
 
-      super
+      parsed_feature = process_source(source)
+
+      super(parsed_feature)
 
       @tags = []
       @tests = []
 
-      parse_feature(parsed_feature) if parsed_feature
+      build_feature(parsed_feature) if parsed_feature
     end
 
     # Returns true if the feature contains a background, false otherwise.
@@ -74,7 +76,22 @@ module CucumberAnalytics
     private
 
 
-    def parse_feature(parsed_feature)
+    def process_source(source)
+      case
+        when source.is_a?(String)
+          parse_feature(source)
+        else
+          source
+      end
+    end
+
+    def parse_feature(source_text)
+      parsed_file = Parsing::parse_text(source_text)
+
+      parsed_file.first
+    end
+
+    def build_feature(parsed_feature)
       CucumberAnalytics::Logging.logger.info('ParsedFeature#parse_feature')
       CucumberAnalytics::Logging.logger.debug('Parsed feature:')
       CucumberAnalytics::Logging.logger.debug(parsed_feature.to_yaml)

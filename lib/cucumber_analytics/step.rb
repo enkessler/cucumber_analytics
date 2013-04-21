@@ -11,12 +11,14 @@ module CucumberAnalytics
 
     # Creates a new Step object based on the passed string. If the optional
     # string array is provided, it becomes the block for the step.
-    def initialize(step = nil)
+    def initialize(source = nil)
       CucumberAnalytics::Logging.logger.info('Step#initialize')
-      CucumberAnalytics::Logging.logger.debug('Step:')
-      CucumberAnalytics::Logging.logger.debug(step.to_yaml)
+      CucumberAnalytics::Logging.logger.debug('source:')
+      CucumberAnalytics::Logging.logger.debug(source)
 
-      parse_step(step) if step
+      parsed_step = process_source(source)
+
+      build_step(parsed_step) if parsed_step
     end
 
     # Returns true if the two steps have the same text, minus any keywords
@@ -78,7 +80,25 @@ module CucumberAnalytics
     private
 
 
-    def parse_step(step)
+    def process_source(source)
+      case
+        when source.is_a?(String)
+          parse_step(source)
+        else
+          source
+      end
+    end
+
+    def parse_step(source_text)
+      base_file_string = "Feature: Fake feature to parse\nScenario:\n"
+      source_text = base_file_string + source_text
+
+      parsed_file = Parsing::parse_text(source_text)
+
+      parsed_file.first['elements'].first['steps'].first
+    end
+
+    def build_step(step)
       CucumberAnalytics::Logging.logger.info('Step#parse_step')
       CucumberAnalytics::Logging.logger.debug('Step:')
       CucumberAnalytics::Logging.logger.debug(step.to_yaml)

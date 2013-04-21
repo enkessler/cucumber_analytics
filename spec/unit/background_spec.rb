@@ -12,4 +12,10 @@ describe "ParsedBackground" do
   it_should_behave_like 'a bare bones element', clazz
   it_should_behave_like 'a test element', clazz
 
+  it 'can be parsed from stand alone text' do
+    source = 'Background: '
+
+    expect { clazz.new(source) }.to_not raise_error
+  end
+
 end

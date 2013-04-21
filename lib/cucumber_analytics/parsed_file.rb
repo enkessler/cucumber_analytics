@@ -43,12 +43,8 @@ module CucumberAnalytics
       CucumberAnalytics::Logging.logger.info('ParsedFile#parse_file')
       CucumberAnalytics::Logging.logger.debug("Parsing file: #{file_to_parse}")
 
-      io = StringIO.new
-      formatter = Gherkin::Formatter::JSONFormatter.new(io)
-      parser = Gherkin::Parser::Parser.new(formatter)
-      parser.parse(IO.read(file_to_parse), file_to_parse, 0)
-      formatter.done
-      parsed_file = JSON.parse(io.string)
+      source_text = IO.read(file_to_parse)
+      parsed_file = Parsing::parse_text(source_text)
 
       CucumberAnalytics::Logging.logger.debug('Parsed file:')
       CucumberAnalytics::Logging.logger.debug(parsed_file.to_yaml)

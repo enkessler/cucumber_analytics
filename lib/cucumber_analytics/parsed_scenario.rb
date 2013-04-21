@@ -5,18 +5,21 @@ module CucumberAnalytics
     attr_accessor :tags
 
 
-    # Creates a new ParsedScenario object and, if *source_lines* is provided,
+    # Creates a new ParsedScenario object and, if *source* is provided,
     # populates the object.
-    def initialize(scenario = nil)
+    def initialize(source = nil)
       CucumberAnalytics::Logging.logger.info('ParsedScenario#initialize')
-      CucumberAnalytics::Logging.logger.debug('Scenario:')
-      CucumberAnalytics::Logging.logger.debug(scenario.to_yaml)
+      CucumberAnalytics::Logging.logger.debug('source:')
+      CucumberAnalytics::Logging.logger.debug(source)
 
-      super
+      parsed_scenario = process_source(source)
+
+      super(parsed_scenario)
+
 
       @tags = []
 
-      parse_scenario(scenario) if scenario
+      build_scenario(parsed_scenario) if parsed_scenario
     end
 
     # Returns tags which are applicable to the scenario which have been
@@ -34,7 +37,7 @@ module CucumberAnalytics
     private
 
 
-    def parse_scenario(scenario)
+    def build_scenario(scenario)
       CucumberAnalytics::Logging.logger.info('ParsedScenario#parse_scenario')
 
       parse_feature_element_tags(scenario)

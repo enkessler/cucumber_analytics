@@ -7,21 +7,22 @@ module CucumberAnalytics
     attr_accessor :parameters
 
 
-    # Creates a new OutlineExample object and, if *source_lines* is provided,
+    # Creates a new OutlineExample object and, if *source* is provided,
     # populates the object.
-    def initialize(parsed_example = nil)
+    def initialize(source = nil)
       CucumberAnalytics::Logging.logger.info('OutlineExample#initialize')
-      CucumberAnalytics::Logging.logger.debug('OutlineExample:')
-      CucumberAnalytics::Logging.logger.debug(parsed_example.to_yaml)
+      CucumberAnalytics::Logging.logger.debug('source:')
+      CucumberAnalytics::Logging.logger.debug(source)
 
+      parsed_example = process_source(source)
 
-      super
+      super(parsed_example)
 
       @tags = []
       @rows = []
       @parameters = []
 
-      parse_example(parsed_example) if parsed_example
+      build_example(parsed_example) if parsed_example
     end
 
     # Adds a row to the example block. The row can be given as a Hash of column
@@ -62,7 +63,25 @@ module CucumberAnalytics
     private
 
 
-    def parse_example(parsed_example)
+    def process_source(source)
+      case
+        when source.is_a?(String)
+          parse_example(source)
+        else
+          source
+      end
+    end
+
+    def parse_example(source_text)
+      base_file_string = "Feature: Fake feature to parse\nScenario Outline:\n* fake step\n"
+      source_text = base_file_string + source_text
+
+      parsed_file = Parsing::parse_text(source_text)
+
+      parsed_file.first['elements'].first['examples'].first
+    end
+
+    def build_example(parsed_example)
       CucumberAnalytics::Logging.logger.info('OutlineExample#parse_example')
       CucumberAnalytics::Logging.logger.debug('Parsed example:')
       CucumberAnalytics::Logging.logger.debug(parsed_example.to_yaml)
