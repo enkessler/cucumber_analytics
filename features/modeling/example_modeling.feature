@@ -16,34 +16,22 @@ Feature: Example elements can be modeled.
     Given the following feature file:
     """
     @a_feature_level_tag
-    Feature: The test feature name.
+    Feature:
 
       @outline_tag
-      Scenario Outline: The scenario outline's name.
-        Given this *parameterized* step takes a table:
-          | <param1> |
-          | <param2> |
-        Then I don't really need another step
+      Scenario Outline:
+        * a step
 
-      Examples:text describing the significance of the examples
-          Anything besides the | that starts a row should be valid
-          description at this point in the test. YMMV
+      Examples: text describing the significance of the examples
+          Example description
+          more description
         |param1| param2 | extra param |
-        #A more random comment
         |x     | y      |      ?      |
         |1     | 2      |      3      |
-        @example_tag @another_one
-      Examples:some examples with different significance and a tag
-
-        Words, words, words, words,
-
-         why so many words?
-         #
-
+      @example_tag @another_one
+      Examples: some examples with different significance and a tag
+          Description
         | param1 |
-        #
-
-        #
         | a      |
     """
     And parameter delimiters of "*" and "*"
@@ -58,11 +46,10 @@ Feature: Example elements can be modeled.
 
   Scenario: The examples' description is modeled.
     Then the test example block "1" descriptive lines are as follows:
-      | Anything besides the \| that starts a row should be valid |
-      | description at this point in the test. YMMV               |
+      | Example description |
+      | more description    |
     And the test example block "2" descriptive lines are as follows:
-      | Words, words, words, words, |
-      | why so many words?          |
+      | Description |
 
   Scenario: The examples' tags are modeled.
     Then the test example block "1" has no tags
@@ -96,5 +83,5 @@ Feature: Example elements can be modeled.
     When the corresponding unit tests are run
     Then all of those specifications are met
   Examples:
-    | additional specifications   |
-    | example_spec.rb             |
+    | additional specifications |
+    | example_spec.rb           |

@@ -13,8 +13,9 @@ end
 Then /^the(?: feature "([^"]*)")? background's descriptive lines are as follows:$/ do |file, lines|
   file ||= 1
   expected_description = lines.raw.flatten
+  actual_description = @parsed_files[file - 1].feature.background.description
 
-  assert @parsed_files[file - 1].feature.background.description == expected_description
+  actual_description.should == expected_description
 end
 
 Then /^the(?: feature "([^"]*)")? background's steps are as follows:$/ do |file, steps|

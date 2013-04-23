@@ -17,80 +17,30 @@ Feature: Features can be modeled.
   Background: Test file setup.
     Given the following feature file "much_stuff.feature":
     """
-    #Don't mind me.
-    #Or any line that is a comment, really.
-    @a_feature_level_tag @and_another@and_another
+    @a_feature_level_tag @and_another
 
      Feature:The test feature name.
-      Some more feature description.
-
+      Some feature description.
       And some more.
 
-      Scenario but not really because I left out the magic ':'
-        Given some description that uses keywords
-        And more of it
-        When I chuck the kitchen sink at it:
-        But
-        *
-        |
-
-        Scenario Outline
-        Examples
-        \"\"\"
-        Background
-        Then this is still one big valid description
-        # Oddly enough, if this comment had come earlier in the description
-        # it would have broken Cucumber. Comments can't be mixed into the
-        # freeform text for some reason.
-        #@commented_tag
-
-
       Background:Some general test setup stuff.
-        A little more information.
         * some setup step
 
-      @a_tag
-
-      @another_tag@yet_another_tag
       Scenario: The first scenario's name.
-        Some text describing the scenario.
-        More text.
-        Given the first step
-        And this step takes a table:
-          | data      |
-          | more data |
-        When the second step
-        Then the third step
-    #Random comment
-      @outline_tag
+      * a step
+
       Scenario Outline: The scenario outline's name.
-        Some text describing the scenario.
-        More text.
-        Given the first "<param1>"
-        And this step takes a table:
-          | data      |
-          | more data |
-        When the second "<param2>"
-        Then the third step
-      Examples: text describing the significance of the examples
-        | param1 | param2 |
-        | x      | y      |
-
-        @example_tag
-
-      Examples: some examples with different significance and a tag
-        | param1 | param2 |
-        | a      | b      |
-        | c      | d      |
-
+        * a step
+      Examples:
+        | param |
+        | x     |
+        | y     |
+      Examples:
+        | param |
+        | z     |
 
       Scenario: The second scenario's name.
-        Some text describing the scenario.
-        More text.
-        Given the first step
-        When the second step
-        Then the third step
-
+        * a step
     """
     And the following feature file "barely_any_stuff.feature":
     """
@@ -129,27 +79,14 @@ Feature: Features can be modeled.
 
   Scenario: The feature's description is modeled.
     Then the descriptive lines of feature "1" are as follows:
-      | Some more feature description.                           |
-      | And some more.                                           |
-      | Scenario but not really because I left out the magic ':' |
-      | Given some description that uses keywords                |
-      | And more of it                                           |
-      | When I chuck the kitchen sink at it:                     |
-      | But                                                      |
-      | *                                                        |
-      | \|                                                       |
-      | Scenario Outline                                         |
-      | Examples                                                 |
-      | """                                                      |
-      | Background                                               |
-      | Then this is still one big valid description             |
+      | Some feature description. |
+      | And some more.            |
     And feature "2" has no descriptive lines
     And feature "3" has no descriptive lines
 
   Scenario: The feature's tags are modeled.
     Then feature "1" is found to have the following tags:
       | @a_feature_level_tag |
-      | @and_another         |
       | @and_another         |
     And feature "2" has no tags
     And feature "3" has no tags

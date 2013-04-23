@@ -27,6 +27,17 @@ Then /^(?:the )?(?:feature "([^"]*)" )?(?:test(?: "([^"]*)")? )?step(?: "([^"]*)
   assert(actual == expected, "Expected: #{expected}\n but was: #{actual}")
 end
 
+Then /^(?:the )?(?:feature "([^"]*)" )?(?:test(?: "([^"]*)")? )?step(?: "([^"]*)")? has no block$/ do |file, test, step|
+  file ||= 1
+  test ||= 1
+  step ||= 1
+
+  expected = nil
+  actual = @parsed_files[file - 1].feature.tests[test - 1].steps[step - 1].block
+
+  actual.should == expected
+end
+
 Then /^(?:the )?(?:feature "([^"]*)" )?test(?: "([^"]*)")? step(?: "([^"]*)")? text is "([^"]*)"$/ do |file, test, step, text|
   file ||= 1
   test ||= 1
