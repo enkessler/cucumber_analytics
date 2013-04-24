@@ -49,7 +49,7 @@ module CucumberAnalytics
     end
 
     # Returns tags which are applicable to the example block which have been
-    # inherited from the outline level.
+    # inherited from the outline and feature levels.
     def applied_tags
       @parent_element.all_tags
     end
