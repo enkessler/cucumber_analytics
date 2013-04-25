@@ -11,7 +11,7 @@ module CucumberAnalytics
 
       def logger
         unless @logger
-          @logger = Logger.new('logfile.log')
+          @logger = Logger.new("#{File.dirname(__FILE__)}/../../logfile.log")
           set_log_level(Logger::FATAL)
         end
 
