@@ -1,4 +1,5 @@
 require 'logger'
+require 'yaml'
 
 module CucumberAnalytics
   module Logging

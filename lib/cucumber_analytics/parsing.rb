@@ -1,3 +1,7 @@
+require 'stringio'
+require 'gherkin/formatter/json_formatter'
+require 'gherkin'
+
 module CucumberAnalytics
   module Parsing
 
