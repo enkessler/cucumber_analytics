@@ -71,7 +71,11 @@ module CucumberAnalytics
     end
 
     def scan_arguments(left_delimiter = World.left_delimiter, right_delimiter = World.right_delimiter)
-      pattern = Regexp.new(Regexp.escape(left_delimiter) + '(.*?)' + Regexp.escape(right_delimiter))
+      if left_delimiter.is_a?(Regexp)
+        pattern = left_delimiter
+      else
+        pattern = Regexp.new(Regexp.escape(left_delimiter) + '(.*?)' + Regexp.escape(right_delimiter))
+      end
 
       @arguments = @base.scan(pattern).flatten
     end
@@ -111,22 +115,9 @@ module CucumberAnalytics
 
     # Returns the step string minus any arguments based on the given delimiters.
     def stripped_step(step, left_delimiter, right_delimiter)
-      original_left = left_delimiter
-      original_right = right_delimiter
+      pattern = Regexp.new(Regexp.escape(left_delimiter) + '.*?' + Regexp.escape(right_delimiter))
 
-      begin
-        Regexp.new(left_delimiter)
-      rescue RegexpError
-        left_delimiter = '\\' + left_delimiter
-      end
-
-      begin
-        Regexp.new(right_delimiter)
-      rescue RegexpError
-        right_delimiter = '\\' + right_delimiter
-      end
-
-      step.gsub(Regexp.new("#{left_delimiter}.*?#{right_delimiter}"), original_left + original_right)
+      step.gsub(pattern, left_delimiter + right_delimiter)
     end
 
     def parse_block(step)
