@@ -1,10 +1,10 @@
 require 'spec_helper'
 
-SimpleCov.command_name('ParsedOutline') unless RUBY_VERSION.to_s < '1.9.0'
+SimpleCov.command_name('Outline') unless RUBY_VERSION.to_s < '1.9.0'
 
-describe "ParsedOutline" do
+describe "Outline" do
 
-  clazz = CucumberAnalytics::ParsedScenarioOutline
+  clazz = CucumberAnalytics::Outline
 
   it_should_behave_like 'a feature element', clazz
   it_should_behave_like 'a nested element', clazz

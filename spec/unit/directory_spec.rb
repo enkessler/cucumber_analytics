@@ -1,10 +1,10 @@
 require 'spec_helper'
 
-SimpleCov.command_name('ParsedDirectory') unless RUBY_VERSION.to_s < '1.9.0'
+SimpleCov.command_name('Directory') unless RUBY_VERSION.to_s < '1.9.0'
 
-describe "ParsedDirectory" do
+describe "Directory" do
 
-  clazz = CucumberAnalytics::ParsedDirectory
+  clazz = CucumberAnalytics::Directory
 
   it_should_behave_like 'a nested element', clazz
   it_should_behave_like 'a containing element', clazz

@@ -1,10 +1,10 @@
 require 'spec_helper'
 
-SimpleCov.command_name('ParsedScenario') unless RUBY_VERSION.to_s < '1.9.0'
+SimpleCov.command_name('Scenario') unless RUBY_VERSION.to_s < '1.9.0'
 
-describe 'ParsedScenario' do
+describe 'Scenario' do
 
-  clazz = CucumberAnalytics::ParsedScenario
+  clazz = CucumberAnalytics::Scenario
 
   it_should_behave_like 'a feature element', clazz
   it_should_behave_like 'a nested element', clazz

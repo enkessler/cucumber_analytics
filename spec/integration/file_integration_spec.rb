@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-SimpleCov.command_name('ParsedFile') unless RUBY_VERSION.to_s < '1.9.0'
+SimpleCov.command_name('FeatureFile') unless RUBY_VERSION.to_s < '1.9.0'
 
-describe "ParsedFile Integration" do
+describe "FeatureFile Integration" do
 
   it 'properly sets its child elements' do
     file_path = "#{@default_file_directory}/#{@default_feature_file_name}"
@@ -11,7 +11,7 @@ describe "ParsedFile Integration" do
       file.puts('Feature: Test feature')
     }
 
-    file = CucumberAnalytics::ParsedFile.new(file_path)
+    file = CucumberAnalytics::FeatureFile.new(file_path)
     feature = file.feature
 
     feature.parent_element.should equal file

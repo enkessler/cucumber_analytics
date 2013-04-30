@@ -1,5 +1,5 @@
 module CucumberAnalytics
-  class ParsedDirectory
+  class Directory
 
 
     attr_reader :feature_files
@@ -7,10 +7,10 @@ module CucumberAnalytics
     attr_accessor :parent_element
 
 
-    # Creates a new ParsedDirectory object and, if *directory_parsed* is
+    # Creates a new Directory object and, if *directory_parsed* is
     # provided, populates the object.
     def initialize(directory_parsed = nil)
-      CucumberAnalytics::Logging.logger.info('ParsedDirectory#initialize')
+      CucumberAnalytics::Logging.logger.info('Directory#initialize')
 
       @directory = directory_parsed
 
@@ -59,14 +59,14 @@ module CucumberAnalytics
         entry = @directory + '/' + entry
 
         if File.directory?(entry)
-          found_directory = ParsedDirectory.new(entry)
+          found_directory = Directory.new(entry)
           found_directory.parent_element = self
 
           @feature_directories << found_directory
         end
 
         if entry =~ /\.feature$/
-          found_feature_file = ParsedFile.new(entry)
+          found_feature_file = FeatureFile.new(entry)
           found_feature_file.parent_element = self
 
           @feature_files << found_feature_file

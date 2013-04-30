@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-SimpleCov.command_name('ParsedDirectory') unless RUBY_VERSION.to_s < '1.9.0'
+SimpleCov.command_name('Directory') unless RUBY_VERSION.to_s < '1.9.0'
 
-describe "ParsedDirectory Integration" do
+describe "Directory Integration" do
 
   it 'properly sets its child elements' do
     nested_directory = "#{@default_file_directory}/nested_directory"
@@ -13,7 +13,7 @@ describe "ParsedDirectory Integration" do
       file.puts('Feature: Test feature')
     }
 
-    directory = CucumberAnalytics::ParsedDirectory.new(@default_file_directory)
+    directory = CucumberAnalytics::Directory.new(@default_file_directory)
     nested_directory = directory.feature_directories.first
     file = directory.feature_files.first
 

@@ -39,7 +39,7 @@ First things first. Load up the gem code.
 
 Next, let's generate a model for our Cucumber suite.
 
-  directory = CucumberAnalytics::ParsedDirectory.new('path/to/the/code_directory')
+  directory = CucumberAnalytics::Directory.new('path/to/the/code_directory')
   world = CucumberAnalytics::World
 
 Now it's time to take a look around and see what we can see.

@@ -1,15 +1,15 @@
 module CucumberAnalytics
-  class ParsedFile
+  class FeatureFile
 
 
     attr_reader :feature
     attr_accessor :parent_element
 
 
-    # Creates a new ParsedFile object and, if *file_parsed* is provided,
+    # Creates a new FeatureFile object and, if *file_parsed* is provided,
     # populates the object.
     def initialize(file_parsed = nil)
-      CucumberAnalytics::Logging.logger.info('ParsedFile#initialize')
+      CucumberAnalytics::Logging.logger.info('FeatureFile#initialize')
 
       parse_file(file_parsed) if file_parsed
     end
@@ -40,7 +40,7 @@ module CucumberAnalytics
 
 
     def parse_file(file_to_parse)
-      CucumberAnalytics::Logging.logger.info('ParsedFile#parse_file')
+      CucumberAnalytics::Logging.logger.info('FeatureFile#parse_file')
       CucumberAnalytics::Logging.logger.debug("Parsing file: #{file_to_parse}")
 
       source_text = IO.read(file_to_parse)
@@ -53,7 +53,7 @@ module CucumberAnalytics
       @feature = nil
 
       unless parsed_file.empty?
-        feature_found = ParsedFeature.new(parsed_file.first)
+        feature_found = Feature.new(parsed_file.first)
         feature_found.parent_element = self
         @feature = feature_found
       end

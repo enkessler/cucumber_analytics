@@ -1,11 +1,11 @@
 module CucumberAnalytics
-  class ParsedBackground < TestElement
+  class Background < TestElement
 
 
-    # Creates a new ParsedBackground object and, if *source* is provided,
+    # Creates a new Background object and, if *source* is provided,
     # populates the object.
     def initialize(source = nil)
-      CucumberAnalytics::Logging.logger.info('ParsedBackground#initialize')
+      CucumberAnalytics::Logging.logger.info('Background#initialize')
       CucumberAnalytics::Logging.logger.debug('source:')
       CucumberAnalytics::Logging.logger.debug(source)
 

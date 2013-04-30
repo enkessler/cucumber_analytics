@@ -1,5 +1,5 @@
 module CucumberAnalytics
-  class OutlineExample < FeatureElement
+  class Example < FeatureElement
 
 
     attr_accessor :tags
@@ -7,10 +7,10 @@ module CucumberAnalytics
     attr_accessor :parameters
 
 
-    # Creates a new OutlineExample object and, if *source* is provided,
+    # Creates a new Example object and, if *source* is provided,
     # populates the object.
     def initialize(source = nil)
-      CucumberAnalytics::Logging.logger.info('OutlineExample#initialize')
+      CucumberAnalytics::Logging.logger.info('Example#initialize')
       CucumberAnalytics::Logging.logger.debug('source:')
       CucumberAnalytics::Logging.logger.debug(source)
 
@@ -82,7 +82,7 @@ module CucumberAnalytics
     end
 
     def build_example(parsed_example)
-      CucumberAnalytics::Logging.logger.info('OutlineExample#parse_example')
+      CucumberAnalytics::Logging.logger.info('Example#parse_example')
       CucumberAnalytics::Logging.logger.debug('Parsed example:')
       CucumberAnalytics::Logging.logger.debug(parsed_example.to_yaml)
 

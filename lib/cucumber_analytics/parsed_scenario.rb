@@ -1,14 +1,14 @@
 module CucumberAnalytics
-  class ParsedScenario < TestElement
+  class Scenario < TestElement
 
 
     attr_accessor :tags
 
 
-    # Creates a new ParsedScenario object and, if *source* is provided,
+    # Creates a new Scenario object and, if *source* is provided,
     # populates the object.
     def initialize(source = nil)
-      CucumberAnalytics::Logging.logger.info('ParsedScenario#initialize')
+      CucumberAnalytics::Logging.logger.info('Scenario#initialize')
       CucumberAnalytics::Logging.logger.debug('source:')
       CucumberAnalytics::Logging.logger.debug(source)
 
@@ -38,7 +38,7 @@ module CucumberAnalytics
 
 
     def build_scenario(scenario)
-      CucumberAnalytics::Logging.logger.info('ParsedScenario#parse_scenario')
+      CucumberAnalytics::Logging.logger.info('Scenario#parse_scenario')
 
       parse_feature_element_tags(scenario)
     end

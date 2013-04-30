@@ -12,7 +12,7 @@ When /^the file(?: "([^"]*)")? is read$/ do |file_name|
   @test_directory ||= @default_file_directory
   file_name ||= @default_feature_file_name
 
-  @parsed_files << CucumberAnalytics::ParsedFile.new("#{@test_directory}/#{file_name}")
+  @parsed_files << CucumberAnalytics::FeatureFile.new("#{@test_directory}/#{file_name}")
 end
 
 When /^the step definition file "([^"]*)" is read$/ do |file_name|
@@ -37,7 +37,7 @@ When /^the directory(?: "([^"]*)")? is read$/ do |directory_name|
   @parsed_directories ||= []
   @test_directory = "#{@default_file_directory}/#{directory_name}" if directory_name
 
-  @parsed_directories << CucumberAnalytics::ParsedDirectory.new(@test_directory)
+  @parsed_directories << CucumberAnalytics::Directory.new(@test_directory)
 end
 
 When /^the following step definition file(?: "([^"]*)")?:$/ do |file_name, file_text|

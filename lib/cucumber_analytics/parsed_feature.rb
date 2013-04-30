@@ -1,5 +1,5 @@
 module CucumberAnalytics
-  class ParsedFeature < FeatureElement
+  class Feature < FeatureElement
 
 
     attr_accessor :tags
@@ -7,10 +7,10 @@ module CucumberAnalytics
     attr_accessor :tests
 
 
-    # Creates a new ParsedFeature object and, if *source* is provided,
+    # Creates a new Feature object and, if *source* is provided,
     # populates the object.
     def initialize(source = nil)
-      CucumberAnalytics::Logging.logger.info('ParsedFeature#initialize')
+      CucumberAnalytics::Logging.logger.info('Feature#initialize')
 
       parsed_feature = process_source(source)
 
@@ -29,12 +29,12 @@ module CucumberAnalytics
 
     # Returns the scenarios contained in the feature.
     def scenarios
-      @tests.select { |test| test.is_a? ParsedScenario }
+      @tests.select { |test| test.is_a? Scenario }
     end
 
     # Returns the outlines contained in the feature.
     def outlines
-      @tests.select { |test| test.is_a? ParsedScenarioOutline }
+      @tests.select { |test| test.is_a? Outline }
     end
 
     # Returns the number scenarios contained in the feature.
@@ -92,7 +92,7 @@ module CucumberAnalytics
     end
 
     def build_feature(parsed_feature)
-      CucumberAnalytics::Logging.logger.info('ParsedFeature#parse_feature')
+      CucumberAnalytics::Logging.logger.info('Feature#parse_feature')
       CucumberAnalytics::Logging.logger.debug('Parsed feature:')
       CucumberAnalytics::Logging.logger.debug(parsed_feature.to_yaml)
 
@@ -101,7 +101,7 @@ module CucumberAnalytics
     end
 
     def parse_feature_elements(parsed_feature)
-      CucumberAnalytics::Logging.logger.info('ParsedFeature#parse_feature_elements')
+      CucumberAnalytics::Logging.logger.info('Feature#parse_feature_elements')
       CucumberAnalytics::Logging.logger.debug('Parsed feature:')
       CucumberAnalytics::Logging.logger.debug(parsed_feature.to_yaml)
 
@@ -110,21 +110,21 @@ module CucumberAnalytics
     end
 
     def parse_background(parsed_feature)
-      CucumberAnalytics::Logging.logger.info('ParsedFeature#parse_feature')
+      CucumberAnalytics::Logging.logger.info('Feature#parse_feature')
       CucumberAnalytics::Logging.logger.debug('Parsed feature:')
       CucumberAnalytics::Logging.logger.debug(parsed_feature.to_yaml)
 
       background_element = parsed_feature['elements'].select { |element| element['keyword'] == 'Background' }.first
 
       if background_element
-        element = ParsedBackground.new(background_element)
+        element = Background.new(background_element)
         element.parent_element = self
         @background = element
       end
     end
 
     def parse_tests(parsed_feature)
-      CucumberAnalytics::Logging.logger.info('ParsedFeature#parse_tests')
+      CucumberAnalytics::Logging.logger.info('Feature#parse_tests')
       CucumberAnalytics::Logging.logger.debug('Parsed feature:')
       CucumberAnalytics::Logging.logger.debug(parsed_feature.to_yaml)
 
@@ -132,11 +132,11 @@ module CucumberAnalytics
       test_elements.each do |parsed_test|
         case parsed_test['keyword']
           when 'Scenario'
-            element = ParsedScenario.new(parsed_test)
+            element = Scenario.new(parsed_test)
             element.parent_element = self
             @tests << element
           when 'Scenario Outline'
-            element = ParsedScenarioOutline.new(parsed_test)
+            element = Outline.new(parsed_test)
             element.parent_element = self
             @tests << element
         end

@@ -1,15 +1,15 @@
 module CucumberAnalytics
-  class ParsedScenarioOutline < TestElement
+  class Outline < TestElement
 
 
     attr_accessor :tags
     attr_accessor :examples
 
 
-    # Creates a new ParsedScenarioOutline object and, if *source* is
+    # Creates a new Outline object and, if *source* is
     # provided, populates the object.
     def initialize(source = nil)
-      CucumberAnalytics::Logging.logger.info('ParsedScenarioOutline#initialize')
+      CucumberAnalytics::Logging.logger.info('Outline#initialize')
       CucumberAnalytics::Logging.logger.debug('source:')
       CucumberAnalytics::Logging.logger.debug(source.to_yaml)
 
@@ -45,7 +45,7 @@ module CucumberAnalytics
 
 
     def parse_outline(parsed_outline)
-      CucumberAnalytics::Logging.logger.info('ParsedScenarioOutline#parse_outline')
+      CucumberAnalytics::Logging.logger.info('Outline#parse_outline')
       CucumberAnalytics::Logging.logger.debug('Parsed outline:')
       CucumberAnalytics::Logging.logger.debug(parsed_outline.to_yaml)
 
@@ -55,13 +55,13 @@ module CucumberAnalytics
     end
 
     def parse_outline_examples(parsed_examples)
-      CucumberAnalytics::Logging.logger.info('ParsedScenarioOutline#parse_outline_examples')
+      CucumberAnalytics::Logging.logger.info('Outline#parse_outline_examples')
       CucumberAnalytics::Logging.logger.debug('Parsed examples:')
       CucumberAnalytics::Logging.logger.debug(parsed_examples.to_yaml)
 
 
       parsed_examples.each do |example|
-        element = OutlineExample.new(example)
+        element = Example.new(example)
         element.parent_element = self
         @examples << element
       end

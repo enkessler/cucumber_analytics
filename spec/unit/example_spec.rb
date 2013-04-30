@@ -1,10 +1,10 @@
 require 'spec_helper'
 
-SimpleCov.command_name('OutlineExample') unless RUBY_VERSION.to_s < '1.9.0'
+SimpleCov.command_name('Example') unless RUBY_VERSION.to_s < '1.9.0'
 
-describe "OutlineExample" do
+describe "Example" do
 
-  clazz = CucumberAnalytics::OutlineExample
+  clazz = CucumberAnalytics::Example
 
   it_should_behave_like 'a feature element', clazz
   it_should_behave_like 'a nested element', clazz

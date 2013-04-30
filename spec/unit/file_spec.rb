@@ -1,10 +1,10 @@
 require 'spec_helper'
 
-SimpleCov.command_name('ParsedFile') unless RUBY_VERSION.to_s < '1.9.0'
+SimpleCov.command_name('FeatureFile') unless RUBY_VERSION.to_s < '1.9.0'
 
-describe "ParsedFile" do
+describe "FeatureFile" do
 
-  clazz = CucumberAnalytics::ParsedFile
+  clazz = CucumberAnalytics::FeatureFile
 
   it_should_behave_like 'a nested element', clazz
   it_should_behave_like 'a containing element', clazz

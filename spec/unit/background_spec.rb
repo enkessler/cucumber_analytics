@@ -1,10 +1,10 @@
 require 'spec_helper'
 
-SimpleCov.command_name('ParsedBackground') unless RUBY_VERSION.to_s < '1.9.0'
+SimpleCov.command_name('Background') unless RUBY_VERSION.to_s < '1.9.0'
 
-describe "ParsedBackground" do
+describe "Background" do
 
-  clazz = CucumberAnalytics::ParsedBackground
+  clazz = CucumberAnalytics::Background
 
   it_should_behave_like 'a feature element', clazz
   it_should_behave_like 'a nested element', clazz

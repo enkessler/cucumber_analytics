@@ -1,15 +1,15 @@
 require 'spec_helper'
 
-SimpleCov.command_name('ParsedScenario') unless RUBY_VERSION.to_s < '1.9.0'
+SimpleCov.command_name('Scenario') unless RUBY_VERSION.to_s < '1.9.0'
 
-describe "ParsedScenario" do
+describe "Scenario" do
 
   it 'properly sets its child elements' do
     source = ['Scenario: Test scenario',
               '  * a step']
     source = source.join("\n")
 
-    scenario = CucumberAnalytics::ParsedScenario.new(source)
+    scenario = CucumberAnalytics::Scenario.new(source)
     step = scenario.steps.first
 
     step.parent_element.should equal scenario
