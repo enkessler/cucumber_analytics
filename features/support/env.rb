@@ -7,7 +7,7 @@ include Test::Unit::Assertions
 
 require File.dirname(__FILE__) + '/../../lib/cucumber_analytics'
 
-CucumberAnalytics::Logging.set_log_level(Logger::FATAL)
+CucumberAnalytics::Logging.log_level = Logger::FATAL
 
 
 DEFAULT_FEATURE_FILE_NAME = 'test_feature.feature'

@@ -10,8 +10,13 @@ module CucumberAnalytics
     class << self
 
       # Sets the log level of the gem's logger.
-      def set_log_level(log_level)
+      def log_level=(log_level)
         logger.level = log_level
+      end
+
+      # Gets the log level of the gem's logger.
+      def log_level
+        logger.level
       end
 
       # Returns the gem's logging object. Will generate an object if one has
@@ -19,7 +24,7 @@ module CucumberAnalytics
       def logger
         unless @logger
           @logger = Logger.new("#{File.dirname(__FILE__)}/../../logfile.log")
-          set_log_level(Logger::FATAL)
+          self.log_level = Logger::FATAL
         end
 
         @logger

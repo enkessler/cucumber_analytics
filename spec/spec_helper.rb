@@ -10,7 +10,7 @@ require "#{File.dirname(__FILE__)}/unit/containing_element_specs"
 require "#{File.dirname(__FILE__)}/unit/bare_bones_specs"
 require "#{File.dirname(__FILE__)}/unit/test_element_specs"
 
-CucumberAnalytics::Logging.set_log_level(Logger::FATAL)
+CucumberAnalytics::Logging.log_level = Logger::FATAL
 
 
 DEFAULT_FEATURE_FILE_NAME = 'test_feature.feature'
