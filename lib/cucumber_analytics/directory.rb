@@ -1,14 +1,21 @@
 module CucumberAnalytics
+
+  # A class modeling a directory containing .feature files.
+
   class Directory
 
-
+    # The FeatureFile objects contained by the Directory
     attr_reader :feature_files
+
+    # The Directory objects contained by the Directory
     attr_reader :feature_directories
+
+    # The parent object that contains *self*
     attr_accessor :parent_element
 
 
-    # Creates a new Directory object and, if *directory_parsed* is
-    # provided, populates the object.
+    # Creates a new Directory object and, if *directory_parsed* is provided,
+    # populates the object.
     def initialize(directory_parsed = nil)
       CucumberAnalytics::Logging.logger.info('Directory#initialize')
 
@@ -40,8 +47,8 @@ module CucumberAnalytics
       @feature_files.count
     end
 
-    # Returns the immediate child elements of the directory (i.e. its .feature
-    # files and .feature file containing sub-directories).
+    # Returns the immediate child elements of the directory (i.e. its Directory
+    # and FeatureFile objects).
     def contains
       @feature_files + @feature_directories
     end

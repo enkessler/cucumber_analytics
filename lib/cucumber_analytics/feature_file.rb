@@ -1,8 +1,13 @@
 module CucumberAnalytics
+
+  # A class modeling a .feature file.
+
   class FeatureFile
 
-
+    # The Feature object contained by the FeatureFile
     attr_reader :feature
+
+    # The parent object that contains *self*
     attr_accessor :parent_element
 
 
@@ -24,8 +29,7 @@ module CucumberAnalytics
       @file
     end
 
-    # Returns the immediate child elements of the feature file(i.e. its
-    # feature).
+    # Returns the immediate child elements of the file(i.e. its Feature object).
     def contains
       @feature ? [@feature] : []
     end

@@ -1,14 +1,21 @@
 module CucumberAnalytics
+
+  # A class modeling a cucumber Feature.
+
   class Feature < FeatureElement
 
-
+    # The tags directly assigned to the feature
     attr_accessor :tags
+
+    # The Background object contained by the Feature
     attr_accessor :background
+
+    # The TestElement objects contained by the Feature
     attr_accessor :tests
 
 
-    # Creates a new Feature object and, if *source* is provided,
-    # populates the object.
+    # Creates a new Feature object and, if *source* is provided, populates the
+    # object.
     def initialize(source = nil)
       CucumberAnalytics::Logging.logger.info('Feature#initialize')
 
@@ -37,12 +44,12 @@ module CucumberAnalytics
       @tests.select { |test| test.is_a? Outline }
     end
 
-    # Returns the number scenarios contained in the feature.
+    # Returns the number of scenarios contained in the feature.
     def scenario_count
       scenarios.count
     end
 
-    # Returns the number outlines contained in the feature.
+    # Returns the number of outlines contained in the feature.
     def outline_count
       outlines.count
     end

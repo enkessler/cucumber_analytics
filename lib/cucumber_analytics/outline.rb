@@ -1,13 +1,18 @@
 module CucumberAnalytics
+
+  # A class modeling a cucumber Scenario Outline.
+
   class Outline < TestElement
 
-
+    # The tags directly assigned to the outline
     attr_accessor :tags
+
+        # The Example objects contained by the Outline
     attr_accessor :examples
 
 
-    # Creates a new Outline object and, if *source* is
-    # provided, populates the object.
+    # Creates a new Outline object and, if *source* is provided, populates the
+    # object.
     def initialize(source = nil)
       CucumberAnalytics::Logging.logger.info('Outline#initialize')
       CucumberAnalytics::Logging.logger.debug('source:')

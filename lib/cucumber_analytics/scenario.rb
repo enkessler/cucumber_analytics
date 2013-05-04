@@ -1,12 +1,15 @@
 module CucumberAnalytics
+
+  # A class modeling a cucumber Scenario.
+
   class Scenario < TestElement
 
-
+    # The tags directly assigned to the scenario
     attr_accessor :tags
 
 
-    # Creates a new Scenario object and, if *source* is provided,
-    # populates the object.
+    # Creates a new Scenario object and, if *source* is provided, populates the
+    # object.
     def initialize(source = nil)
       CucumberAnalytics::Logging.logger.info('Scenario#initialize')
       CucumberAnalytics::Logging.logger.debug('source:')
