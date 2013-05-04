@@ -3,7 +3,7 @@ module CucumberAnalytics
 
 
     attr_accessor :name
-    attr_reader :description
+    attr_accessor :description
     attr_accessor :parent_element
 
 
