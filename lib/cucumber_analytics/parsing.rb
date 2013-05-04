@@ -8,6 +8,8 @@ module CucumberAnalytics
     class << self
 
       def parse_text(source_text)
+        raise(ArgumentError, "Cannot parse #{source_text.class} objects. Strings only.") unless source_text.is_a?(String)
+
         io = StringIO.new
         formatter = Gherkin::Formatter::JSONFormatter.new(io)
         parser = Gherkin::Parser::Parser.new(formatter)
