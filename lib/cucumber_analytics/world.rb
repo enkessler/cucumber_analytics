@@ -143,7 +143,7 @@ module CucumberAnalytics
 
     # Recursively gathers all directories found in the passed container.
     def self.collect_directories(accumulated_directories, container)
-      accumulated_directories.concat container.feature_directories if container.respond_to?(:feature_directories)
+      accumulated_directories.concat container.directories if container.respond_to?(:directories)
 
       if container.respond_to?(:contains)
         container.contains.each do |child_container|

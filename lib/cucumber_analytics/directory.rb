@@ -5,10 +5,10 @@ module CucumberAnalytics
   class Directory
 
     # The FeatureFile objects contained by the Directory
-    attr_reader :feature_files
+    attr_accessor :feature_files
 
     # The Directory objects contained by the Directory
-    attr_reader :feature_directories
+    attr_accessor :directories
 
     # The parent object that contains *self*
     attr_accessor :parent_element
@@ -22,9 +22,12 @@ module CucumberAnalytics
       @directory = directory_parsed
 
       @feature_files = []
-      @feature_directories = []
+      @directories = []
 
-      scan_directory if directory_parsed
+      if directory_parsed
+        raise(ArgumentError, "Unknown directory: #{directory_parsed.inspect}") unless File.exists?(directory_parsed)
+      scan_directory
+        end
     end
 
     # Returns the name of the directory.
@@ -39,7 +42,7 @@ module CucumberAnalytics
 
     # Returns the number of sub-directories contained in the directory.
     def directory_count
-      @feature_directories.count
+      @directories.count
     end
 
     # Returns the number of features files contained in the directory.
@@ -50,7 +53,7 @@ module CucumberAnalytics
     # Returns the immediate child elements of the directory (i.e. its Directory
     # and FeatureFile objects).
     def contains
-      @feature_files + @feature_directories
+      @feature_files + @directories
     end
 
 
@@ -69,7 +72,7 @@ module CucumberAnalytics
           found_directory = Directory.new(entry)
           found_directory.parent_element = self
 
-          @feature_directories << found_directory
+          @directories << found_directory
         end
 
         if entry =~ /\.feature$/

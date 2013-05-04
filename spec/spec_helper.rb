@@ -9,6 +9,7 @@ require "#{File.dirname(__FILE__)}/unit/tagged_element_specs"
 require "#{File.dirname(__FILE__)}/unit/containing_element_specs"
 require "#{File.dirname(__FILE__)}/unit/bare_bones_specs"
 require "#{File.dirname(__FILE__)}/unit/test_element_specs"
+require "#{File.dirname(__FILE__)}/unit/prepopulated_specs"
 
 CucumberAnalytics::Logging.log_level = Logger::FATAL
 

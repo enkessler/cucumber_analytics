@@ -14,7 +14,7 @@ describe "Directory Integration" do
     }
 
     directory = CucumberAnalytics::Directory.new(@default_file_directory)
-    nested_directory = directory.feature_directories.first
+    nested_directory = directory.directories.first
     file = directory.feature_files.first
 
     nested_directory.parent_element.should equal directory

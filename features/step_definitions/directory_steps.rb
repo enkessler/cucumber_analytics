@@ -26,7 +26,7 @@ When /^(?:the )?directory(?: "([^"]*)")? directories are as follows:$/ do |direc
   directory ||= 1
 
   expected = directories.raw.flatten.sort
-  actual = @parsed_directories[directory - 1].feature_directories.collect { |sub_directory| sub_directory.name }
+  actual = @parsed_directories[directory - 1].directories.collect { |sub_directory| sub_directory.name }
 
   assert(actual == expected, "Expected: #{expected}\n but was: #{actual}")
 end
@@ -35,7 +35,7 @@ When /^(?:the )?directory(?: "([^"]*)")? has no directories$/ do |directory|
   directory ||= 1
 
   expected = []
-  actual = @parsed_directories[directory - 1].feature_directories
+  actual = @parsed_directories[directory - 1].directories
 
   assert(actual == expected, "Expected: #{expected}\n but was: #{actual}")
 end
