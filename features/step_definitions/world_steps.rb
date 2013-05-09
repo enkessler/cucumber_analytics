@@ -159,7 +159,7 @@ end
 Then /^the files collected from directory "([^"]*)" are as follows:$/ do |directory, files|
   directory ||= 1
 
-  actual_files = CucumberAnalytics::World.files_in(@parsed_directories[directory - 1]).collect { |file| file.name }
+  actual_files = CucumberAnalytics::World.feature_files_in(@parsed_directories[directory - 1]).collect { |file| file.name }
 
   expected = files.raw.flatten.sort
   actual = actual_files.flatten.sort

@@ -44,9 +44,15 @@ module CucumberAnalytics
       end
     end
 
+    # Loads the step pattern into the World.
+    def self.load_step_pattern(pattern)
+      @@defined_expressions ||= []
+      @@defined_expressions << pattern
+    end
+
     # Returns the step patterns that have been loaded into the World.
-    def self.defined_step_patterns
-      @@defined_expressions
+    def self.loaded_step_patterns
+      @@defined_expressions ||= []
     end
 
     # Returns all tags found in the passed container.
@@ -64,9 +70,9 @@ module CucumberAnalytics
     end
 
     # Returns all feature files found in the passed container.
-    def self.files_in(container)
+    def self.feature_files_in(container)
       Array.new.tap do |accumulated_files|
-        collect_files(accumulated_files, container)
+        collect_feature_files(accumulated_files, container)
       end
     end
 
@@ -95,14 +101,14 @@ module CucumberAnalytics
     def self.undefined_steps_in(container)
       all_steps = steps_in(container)
 
-      all_steps.select { |step| !World.defined_step_patterns.any? { |pattern| step.base =~ Regexp.new(pattern) } }
+      all_steps.select { |step| !World.loaded_step_patterns.any? { |pattern| step.base =~ Regexp.new(pattern) } }
     end
 
     # Returns all defined steps found in the passed container.
     def self.defined_steps_in(container)
       all_steps = steps_in(container)
 
-      all_steps.select { |step| World.defined_step_patterns.any? { |pattern| step.base =~ Regexp.new(pattern) } }
+      all_steps.select { |step| World.loaded_step_patterns.any? { |pattern| step.base =~ Regexp.new(pattern) } }
     end
 
 
@@ -127,7 +133,8 @@ module CucumberAnalytics
 
     # Returns the regular expression portion of a step pattern line.
     def self.extract_regular_expression(line)
-      desanitize_line(sanitize_line(line).match(/^#{World::STEP_KEYWORD_PATTERN}\/([^\/]*)\//)[1])
+      line = desanitize_line(sanitize_line(line).match(/^#{World::STEP_KEYWORD_PATTERN}\/([^\/]*)\//)[1])
+      Regexp.new(line)
     end
 
     # Recursively gathers all tags found in the passed container.
@@ -153,12 +160,12 @@ module CucumberAnalytics
     end
 
     # Recursively gathers all feature files found in the passed container.
-    def self.collect_files(accumulated_files, container)
+    def self.collect_feature_files(accumulated_files, container)
       accumulated_files.concat container.feature_files if container.respond_to?(:feature_files)
 
       if container.respond_to?(:contains)
         container.contains.each do |child_container|
-          collect_files(accumulated_files, child_container)
+          collect_feature_files(accumulated_files, child_container)
         end
       end
     end
