@@ -84,7 +84,7 @@ describe "Directory" do
     @directory.directories = directories
     @directory.feature_files = files
 
-    everything.all? { |thing| @directory.contains.include?(thing) }.should be_true
+    @directory.contains.should =~ everything
   end
 
 end

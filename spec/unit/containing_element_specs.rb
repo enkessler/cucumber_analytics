@@ -10,4 +10,8 @@ shared_examples_for 'a containing element' do |clazz|
     @element.should respond_to(:contains)
   end
 
+  it 'returns a collection of children - #contains' do
+    @element.contains.is_a?(Array).should be_true
+  end
+
 end
