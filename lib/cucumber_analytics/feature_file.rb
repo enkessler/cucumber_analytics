@@ -5,7 +5,7 @@ module CucumberAnalytics
   class FeatureFile
 
     # The Feature object contained by the FeatureFile
-    attr_reader :feature
+    attr_accessor :feature
 
     # The parent object that contains *self*
     attr_accessor :parent_element
@@ -16,7 +16,10 @@ module CucumberAnalytics
     def initialize(file_parsed = nil)
       CucumberAnalytics::Logging.logger.info('FeatureFile#initialize')
 
-      parse_file(file_parsed) if file_parsed
+      if file_parsed
+        raise(ArgumentError, "Unknown file: #{file_parsed.inspect}") unless File.exists?(file_parsed)
+        parse_file(file_parsed)
+      end
     end
 
     # Returns the name of the file.
