@@ -4,45 +4,68 @@ SimpleCov.command_name('Logging') unless RUBY_VERSION.to_s < '1.9.0'
 
 describe "Logging" do
 
+  before(:each) do
+    @logging = CucumberAnalytics::Logging
+  end
+
+  after(:each) do
+    @logging.logger.close unless @logging.logger.is_a?(Symbol)
+  end
+
   it 'has a logging object' do
-    CucumberAnalytics::Logging.should respond_to(:logger)
+    @logging.should respond_to(:logger)
   end
 
   it 'has a default logging object' do
-    CucumberAnalytics::Logging.logger = nil
+    @logging.logger = nil
 
-    CucumberAnalytics::Logging.logger.nil?.should be_false
+    @logging.logger.nil?.should be_false
   end
 
   it 'can get and set the logging object' do
-    CucumberAnalytics::Logging.logger = :a_logger
-    CucumberAnalytics::Logging.logger.should == :a_logger
-    CucumberAnalytics::Logging.logger = :another_logger
-    CucumberAnalytics::Logging.logger.should == :another_logger
-  end
-
-  before(:each) do
-    CucumberAnalytics::Logging.logger = nil
+    @logging.logger = :a_logger
+    @logging.logger.should == :a_logger
+    @logging.logger = :another_logger
+    @logging.logger.should == :another_logger
   end
 
   it 'can get and set the current logging level' do
-    CucumberAnalytics::Logging.log_level = Logger::INFO
-    CucumberAnalytics::Logging.log_level.should == Logger::INFO
-    CucumberAnalytics::Logging.log_level = Logger::FATAL
-    CucumberAnalytics::Logging.log_level.should == Logger::FATAL
+    @logging.logger = nil
+
+    @logging.log_level = Logger::INFO
+    @logging.log_level.should == Logger::INFO
+    @logging.log_level = Logger::FATAL
+    @logging.log_level.should == Logger::FATAL
   end
 
-  it 'keeps an internal logfile' do
+  it 'can get and set its default logfile' do
+    @logging.default_logfile = 'file_1.txt'
+    @logging.default_logfile.should == 'file_1.txt'
+    @logging.default_logfile = 'file_2.txt'
+    @logging.default_logfile.should == 'file_2.txt'
+  end
+
+  it 'has a default logfile' do
     gem_root = "#{File.dirname(__FILE__)}/../.."
 
-    CucumberAnalytics::Logging.logger
+    @logging.default_logfile = nil
+    File.absolute_path(@logging.default_logfile).should == File.absolute_path("#{gem_root}/ca_logfile.log")
+  end
 
-    entries = Dir.glob(gem_root + '**/logfile.log')
-    entries.empty?.should be_false
+  it 'logs to its default logfile by default' do
+    @logging.logger = nil
+    logfile = "#{@default_file_directory}/new_logfile.txt"
+
+    File.exists?(logfile).should be_false
+
+    @logging.default_logfile = logfile
+    @logging.logger
+
+    File.exists?(logfile).should be_true
   end
 
   it 'has a default logging level' do
-    CucumberAnalytics::Logging.log_level.should == Logger::FATAL
+    @logging.log_level.should == Logger::FATAL
   end
 
 end

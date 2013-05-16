@@ -23,7 +23,7 @@ module CucumberAnalytics
       # not already been set.
       def logger
         unless @logger
-          @logger = Logger.new("#{File.dirname(__FILE__)}/../../logfile.log")
+          @logger = Logger.new(default_logfile)
           self.log_level = Logger::FATAL
         end
 
@@ -33,6 +33,14 @@ module CucumberAnalytics
       # Sets the gem's logging object.
       def logger=(new_logger)
         @logger = new_logger
+      end
+
+      def default_logfile=(file_path)
+        @default_logfile = file_path
+      end
+
+      def default_logfile
+        @default_logfile ||= "#{File.dirname(__FILE__)}/../../ca_logfile.log"
       end
 
     end
