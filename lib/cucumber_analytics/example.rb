@@ -1,8 +1,8 @@
 module CucumberAnalytics
   class Example < FeatureElement
 
+    include Taggable
 
-    attr_accessor :tags
     attr_accessor :rows
     attr_accessor :parameters
 
@@ -48,17 +48,6 @@ module CucumberAnalytics
       @rows.delete_at(location) if location
     end
 
-    # Returns tags which are applicable to the example block which have been
-    # inherited from the outline and feature levels.
-    def applied_tags
-      @parent_element.all_tags
-    end
-
-    # Returns all tags which are applicable to the example block.
-    def all_tags
-      applied_tags + @tags
-    end
-
 
     private
 
@@ -86,7 +75,7 @@ module CucumberAnalytics
       CucumberAnalytics::Logging.logger.debug('Parsed example:')
       CucumberAnalytics::Logging.logger.debug(parsed_example.to_yaml)
 
-      parse_feature_element_tags(parsed_example)
+      parse_element_tags(parsed_example)
 
       @parameters = parsed_example['rows'].first['cells']
 

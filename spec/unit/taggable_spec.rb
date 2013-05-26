@@ -1,10 +1,23 @@
 require 'spec_helper'
 
-shared_examples_for 'a tagged element' do |clazz|
+SimpleCov.command_name('Taggable') unless RUBY_VERSION.to_s < '1.9.0'
+
+describe "Taggable, Unit" do
+
+  nodule = CucumberAnalytics::Taggable
 
   before(:each) do
-    @element = clazz.new
+    @element = Object.new.extend(nodule)
+
+    def @element.parent_element
+      @parent_element
+    end
+
+    def @element.parent_element=(parent)
+      @parent_element = parent
+    end
   end
+
 
   it 'has tags - #tags' do
     @element.should respond_to(:tags)
@@ -15,10 +28,6 @@ shared_examples_for 'a tagged element' do |clazz|
     @element.tags.should == :some_tags
     @element.tags = :some_other_tags
     @element.tags.should == :some_other_tags
-  end
-
-  it 'starts with no tags' do
-    @element.tags.should == []
   end
 
   it 'has applied tags - #applied_tags' do
@@ -43,6 +52,12 @@ shared_examples_for 'a tagged element' do |clazz|
     @element.tags = own_tags
 
     @element.all_tags.should == all_parent_tags + own_tags
+  end
+
+  it 'may have no applied tags' do
+    @element.parent_element = :not_a_tagged_object
+
+    @element.applied_tags.should == []
   end
 
 end

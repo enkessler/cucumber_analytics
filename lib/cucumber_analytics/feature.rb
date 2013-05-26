@@ -4,8 +4,8 @@ module CucumberAnalytics
 
   class Feature < FeatureElement
 
-    # The tags directly assigned to the feature
-    attr_accessor :tags
+    include Taggable
+
 
     # The Background object contained by the Feature
     attr_accessor :background
@@ -74,11 +74,6 @@ module CucumberAnalytics
       [@background] + @tests
     end
 
-    # Returns all tags which are applicable to the feature.
-    def all_tags
-      @tags
-    end
-
 
     private
 
@@ -103,7 +98,7 @@ module CucumberAnalytics
       CucumberAnalytics::Logging.logger.debug('Parsed feature:')
       CucumberAnalytics::Logging.logger.debug(parsed_feature.to_yaml)
 
-      parse_feature_element_tags(parsed_feature) if parsed_feature['tags']
+      parse_element_tags(parsed_feature) if parsed_feature['tags']
       parse_feature_elements(parsed_feature) if parsed_feature['elements']
     end
 

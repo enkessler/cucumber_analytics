@@ -29,19 +29,6 @@ module CucumberAnalytics
       parse_feature_element_description(parsed_element)
     end
 
-    #todo - move this elsewhere
-    def parse_feature_element_tags(parsed_element)
-      CucumberAnalytics::Logging.logger.info('FeatureElement#parse_feature_element_tags')
-      CucumberAnalytics::Logging.logger.debug('Parsed element:')
-      CucumberAnalytics::Logging.logger.debug(parsed_element.to_yaml)
-
-      if parsed_element['tags']
-        parsed_element['tags'].each do |tag|
-          @tags << tag['name']
-        end
-      end
-    end
-
     def parse_feature_element_name(parsed_element)
       CucumberAnalytics::Logging.logger.info('FeatureElement#parse_feature_element_name')
       CucumberAnalytics::Logging.logger.debug('Parsed element:')

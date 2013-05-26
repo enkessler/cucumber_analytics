@@ -4,10 +4,10 @@ module CucumberAnalytics
 
   class Outline < TestElement
 
-    # The tags directly assigned to the outline
-    attr_accessor :tags
+    include Taggable
 
-        # The Example objects contained by the Outline
+
+    # The Example objects contained by the Outline
     attr_accessor :examples
 
 
@@ -34,17 +34,6 @@ module CucumberAnalytics
       @examples + @steps
     end
 
-    # Returns tags which are applicable to the outline which have been
-    # inherited from the feature level.
-    def applied_tags
-      @parent_element.all_tags
-    end
-
-    # Returns all tags which are applicable to the scenario outline.
-    def all_tags
-      applied_tags + @tags
-    end
-
 
     private
 
@@ -55,7 +44,7 @@ module CucumberAnalytics
       CucumberAnalytics::Logging.logger.debug(parsed_outline.to_yaml)
 
 
-      parse_feature_element_tags(parsed_outline)
+      parse_element_tags(parsed_outline)
       parse_outline_examples(parsed_outline['examples']) if parsed_outline['examples']
     end
 
