@@ -2,9 +2,9 @@ module CucumberAnalytics
   class Step
 
 
-    attr_reader :keyword
-    attr_reader :base
-    attr_reader :block
+    attr_accessor :keyword
+    attr_accessor :base
+    attr_accessor :block
     attr_accessor :parent_element
     attr_accessor :arguments
 
@@ -16,9 +16,40 @@ module CucumberAnalytics
       CucumberAnalytics::Logging.logger.debug('source:')
       CucumberAnalytics::Logging.logger.debug(source)
 
+      @arguments = []
+
       parsed_step = process_source(source)
 
       build_step(parsed_step) if parsed_step
+    end
+
+    def delimiter=(new_delimiter)
+      self.left_delimiter = new_delimiter
+      self.right_delimiter = new_delimiter
+    end
+
+    # Returns the left delimiter, which is used to mark the beginning of a step
+    # argument.
+    def left_delimiter
+      @left_delimiter || World.left_delimiter
+    end
+
+    # Sets the left delimiter that will be used by default when determining
+    # step arguments.
+    def left_delimiter=(new_delimiter)
+      @left_delimiter = new_delimiter
+    end
+
+    # Returns the right delimiter, which is used to mark the end of a step
+    # argument.
+    def right_delimiter
+      @right_delimiter || World.right_delimiter
+    end
+
+    # Sets the right delimiter that will be used by default when determining
+    # step arguments.
+    def right_delimiter=(new_delimiter)
+      @right_delimiter = new_delimiter
     end
 
     # Returns true if the two steps have the same text, minus any keywords
@@ -50,8 +81,8 @@ module CucumberAnalytics
     def step_text(options = {})
       options = {:with_keywords => true,
                  :with_arguments => true,
-                 :left_delimiter => World.left_delimiter,
-                 :right_delimiter => World.right_delimiter}.merge(options)
+                 :left_delimiter => self.left_delimiter,
+                 :right_delimiter => self.right_delimiter}.merge(options)
 
       final_step = []
       step_text = ''
@@ -61,7 +92,7 @@ module CucumberAnalytics
       if options[:with_arguments]
         step_text += @base
         final_step << step_text
-        final_step.concat @block if @block
+        final_step.concat(rebuild_block_text(@block)) if @block
       else
         step_text += stripped_step(@base, options[:left_delimiter], options[:right_delimiter])
         final_step << step_text
@@ -70,10 +101,15 @@ module CucumberAnalytics
       final_step
     end
 
-    def scan_arguments(left_delimiter = World.left_delimiter, right_delimiter = World.right_delimiter)
-      if left_delimiter.is_a?(Regexp)
-        pattern = left_delimiter
+    def scan_arguments(*how)
+      if how.count == 1
+        pattern = how.first
       else
+        left_delimiter = how[0] || self.left_delimiter
+        right_delimiter = how[1] || self.right_delimiter
+
+        return [] unless left_delimiter && right_delimiter
+
         pattern = Regexp.new(Regexp.escape(left_delimiter) + '(.*?)' + Regexp.escape(right_delimiter))
       end
 
@@ -110,14 +146,18 @@ module CucumberAnalytics
       @base = step['name']
       @block = parse_block(step)
       @keyword = step['keyword'].strip
-      scan_arguments if World.left_delimiter || World.right_delimiter
+      scan_arguments
     end
 
     # Returns the step string minus any arguments based on the given delimiters.
     def stripped_step(step, left_delimiter, right_delimiter)
-      pattern = Regexp.new(Regexp.escape(left_delimiter) + '.*?' + Regexp.escape(right_delimiter))
+      unless left_delimiter.nil? || right_delimiter.nil?
+        pattern = Regexp.new(Regexp.escape(left_delimiter) + '.*?' + Regexp.escape(right_delimiter))
 
-      step.gsub(pattern, left_delimiter + right_delimiter)
+        step = step.gsub(pattern, left_delimiter + right_delimiter)
+      end
+
+      step
     end
 
     def parse_block(step)
@@ -138,6 +178,12 @@ module CucumberAnalytics
         else
           @block = nil
       end
+
+      @block
+    end
+
+    def rebuild_block_text(blok)
+      blok.collect { |row| "|#{row.join('|')}|" }
     end
 
   end
