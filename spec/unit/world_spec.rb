@@ -7,6 +7,7 @@ describe 'World' do
   before(:each) do
     @world = CucumberAnalytics::World
     @world.loaded_step_patterns.clear
+    @world.delimiter = nil
   end
 
   it 'has left and right delimiters used for step argument parsing - #left_delimiter, #right_delimiter' do
@@ -33,17 +34,16 @@ describe 'World' do
     (@world.left_delimiter != @world.right_delimiter).should be_true
   end
 
-  it 'should match left and right delimiters when only one is set' do
-    @world.left_delimiter = nil
-    @world.right_delimiter = nil
+  it 'can set both of its delimiters at once - #delimiter=' do
+    @world.delimiter = '*'
 
-    @world.left_delimiter = '"'
-    @world.right_delimiter.should == '"'
-
-    @world.left_delimiter = nil
-
-    @world.right_delimiter = '*'
     @world.left_delimiter.should == '*'
+    @world.right_delimiter.should == '*'
+  end
+
+  it 'starts with no delimiters' do
+    @world.left_delimiter.should == nil
+    @world.right_delimiter.should == nil
   end
 
   it 'can load step patterns - #load_step_pattern' do
