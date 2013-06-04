@@ -29,10 +29,13 @@ module CucumberAnalytics
     # headers and their corresponding values or as an Array of values which
     # will be assigned in order.
     def add_row(row)
-      if row.is_a?(Array)
-        @rows << Hash[@parameters.zip(row.collect { |value| value.strip })]
-      else
-        @rows << row
+      case
+        when row.is_a?(Array)
+          @rows << Hash[@parameters.zip(row.collect { |value| value.strip })]
+        when row.is_a?(Hash)
+          @rows << row.each_value { |value| value.strip! }
+        else
+          raise(ArgumentError, "Can only add row from a Hash or an Array but received #{row.class}")
       end
     end
 
@@ -40,11 +43,15 @@ module CucumberAnalytics
     # column headers and their corresponding values or as an Array of values
     # which will be assigned in order.
     def remove_row(row)
-      if row.is_a?(Array)
-        location = @rows.index { |row_hash| row_hash.values_at(*@parameters) == row }
-      else
-        location = @rows.index { |row_hash| row_hash == row }
+      case
+        when row.is_a?(Array)
+          location = @rows.index { |row_hash| row_hash.values_at(*@parameters) == row.collect { |value| value.strip } }
+        when row.is_a?(Hash)
+          location = @rows.index { |row_hash| row_hash == row.each_value { |value| value.strip! } }
+        else
+          raise(ArgumentError, "Can only remove row from a Hash or an Array but received #{row.class}")
       end
+
       @rows.delete_at(location) if location
     end
 
