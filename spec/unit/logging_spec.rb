@@ -2,7 +2,7 @@ require 'spec_helper'
 
 SimpleCov.command_name('Logging') unless RUBY_VERSION.to_s < '1.9.0'
 
-describe "Logging" do
+describe 'Logging, Unit' do
 
   before(:each) do
     @logging = CucumberAnalytics::Logging

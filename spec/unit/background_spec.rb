@@ -2,7 +2,7 @@ require 'spec_helper'
 
 SimpleCov.command_name('Background') unless RUBY_VERSION.to_s < '1.9.0'
 
-describe "Background" do
+describe 'Background, Unit' do
 
   clazz = CucumberAnalytics::Background
 

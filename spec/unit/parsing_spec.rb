@@ -2,7 +2,7 @@ require 'spec_helper'
 
 SimpleCov.command_name('Parsing') unless RUBY_VERSION.to_s < '1.9.0'
 
-describe "Parsing" do
+describe 'Parsing, Unit' do
 
   it 'can parse text - #parse_text' do
     CucumberAnalytics::Parsing.should respond_to(:parse_text)

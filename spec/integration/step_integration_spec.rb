@@ -2,7 +2,7 @@ require 'spec_helper'
 
 SimpleCov.command_name('Step') unless RUBY_VERSION.to_s < '1.9.0'
 
-describe "Step Integration" do
+describe 'Step, Integration' do
 
   it 'defaults to the World delimiters if its own are not set' do
     world = CucumberAnalytics::World

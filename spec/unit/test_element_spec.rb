@@ -2,7 +2,7 @@ require 'spec_helper'
 
 SimpleCov.command_name('TestElement') unless RUBY_VERSION.to_s < '1.9.0'
 
-describe "TestElement, Unit" do
+describe 'TestElement, Unit' do
 
   clazz = CucumberAnalytics::TestElement
 

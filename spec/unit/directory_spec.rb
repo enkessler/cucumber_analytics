@@ -2,7 +2,7 @@ require 'spec_helper'
 
 SimpleCov.command_name('Directory') unless RUBY_VERSION.to_s < '1.9.0'
 
-describe "Directory" do
+describe 'Directory, Unit' do
 
   clazz = CucumberAnalytics::Directory
 
