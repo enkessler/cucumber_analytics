@@ -16,7 +16,7 @@ module CucumberAnalytics
     def initialize(source = nil)
       CucumberAnalytics::Logging.logger.info('Outline#initialize')
       CucumberAnalytics::Logging.logger.debug('source:')
-      CucumberAnalytics::Logging.logger.debug(source.to_yaml)
+      CucumberAnalytics::Logging.logger.debug(source)
 
       parsed_outline = process_source(source)
 
@@ -31,6 +31,8 @@ module CucumberAnalytics
     # Returns the immediate child elements of the outline (i.e. its example
     # blocks).
     def contains
+      CucumberAnalytics::Logging.logger.info('Outline#contains')
+
       @examples + @steps
     end
 
@@ -40,7 +42,7 @@ module CucumberAnalytics
 
     def parse_outline(parsed_outline)
       CucumberAnalytics::Logging.logger.info('Outline#parse_outline')
-      CucumberAnalytics::Logging.logger.debug('Parsed outline:')
+      CucumberAnalytics::Logging.logger.debug('parsed_outline:')
       CucumberAnalytics::Logging.logger.debug(parsed_outline.to_yaml)
 
 
@@ -50,7 +52,7 @@ module CucumberAnalytics
 
     def parse_outline_examples(parsed_examples)
       CucumberAnalytics::Logging.logger.info('Outline#parse_outline_examples')
-      CucumberAnalytics::Logging.logger.debug('Parsed examples:')
+      CucumberAnalytics::Logging.logger.debug('parsed_examples:')
       CucumberAnalytics::Logging.logger.debug(parsed_examples.to_yaml)
 
 

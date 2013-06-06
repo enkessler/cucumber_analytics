@@ -9,7 +9,7 @@ module CucumberAnalytics
     def initialize(parsed_test_element = nil)
       CucumberAnalytics::Logging.logger.info('TestElement#initialize')
       CucumberAnalytics::Logging.logger.debug('parsed_test_element:')
-      CucumberAnalytics::Logging.logger.debug(parsed_test_element.to_yaml)
+      CucumberAnalytics::Logging.logger.debug(parsed_test_element)
 
       super
 
@@ -21,11 +21,17 @@ module CucumberAnalytics
     # Returns true if the two elements have the same steps, minus any keywords
     # and arguments, and false otherwise.
     def ==(other_element)
+      CucumberAnalytics::Logging.logger.info('TestElement#==')
+      CucumberAnalytics::Logging.logger.debug('other_element:')
+      CucumberAnalytics::Logging.logger.debug(other_element)
+
       steps == other_element.steps
     end
 
     # Returns the immediate child elements of the test.
     def contains
+      CucumberAnalytics::Logging.logger.info('TestElement#contains')
+
       @steps
     end
 
@@ -34,6 +40,10 @@ module CucumberAnalytics
 
 
     def process_source(source)
+      CucumberAnalytics::Logging.logger.info('TestElement#process_source')
+      CucumberAnalytics::Logging.logger.debug('source:')
+      CucumberAnalytics::Logging.logger.debug(source)
+
       case
         when source.is_a?(String)
           parse_test_element(source)
@@ -43,6 +53,10 @@ module CucumberAnalytics
     end
 
     def parse_test_element(source_text)
+      CucumberAnalytics::Logging.logger.info('TestElement#parse_test_element')
+      CucumberAnalytics::Logging.logger.debug('source_text:')
+      CucumberAnalytics::Logging.logger.debug(source_text)
+
       base_file_string = "Feature: Fake feature to parse\n"
       source_text = base_file_string + source_text
 
@@ -52,16 +66,16 @@ module CucumberAnalytics
     end
 
     def build_test_element(parsed_test_element)
-      CucumberAnalytics::Logging.logger.info('TestElement#parse_test_element')
-      CucumberAnalytics::Logging.logger.debug('Parsed test element:')
-      CucumberAnalytics::Logging.logger.debug(parsed_test_element.to_yaml)
+      CucumberAnalytics::Logging.logger.info('TestElement#build_test_element')
+      CucumberAnalytics::Logging.logger.debug('parsed_test_element:')
+      CucumberAnalytics::Logging.logger.debug(parsed_test_element)
 
       parse_test_element_steps(parsed_test_element)
     end
 
     def parse_test_element_steps(parsed_test_element)
       CucumberAnalytics::Logging.logger.info('TestElement#parse_test_element_steps')
-      CucumberAnalytics::Logging.logger.debug('Parsed test element:')
+      CucumberAnalytics::Logging.logger.debug('parsed_test_element:')
       CucumberAnalytics::Logging.logger.debug(parsed_test_element.to_yaml)
 
       if parsed_test_element['steps']

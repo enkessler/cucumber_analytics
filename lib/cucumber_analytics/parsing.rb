@@ -8,6 +8,10 @@ module CucumberAnalytics
     class << self
 
       def parse_text(source_text)
+        CucumberAnalytics::Logging.logger.info('Parsing#parse_text')
+        CucumberAnalytics::Logging.logger.debug('source_text:')
+        CucumberAnalytics::Logging.logger.debug(source_text)
+
         raise(ArgumentError, "Cannot parse #{source_text.class} objects. Strings only.") unless source_text.is_a?(String)
 
         io = StringIO.new

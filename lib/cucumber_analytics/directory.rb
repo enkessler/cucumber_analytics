@@ -18,6 +18,8 @@ module CucumberAnalytics
     # populates the object.
     def initialize(directory_parsed = nil)
       CucumberAnalytics::Logging.logger.info('Directory#initialize')
+      CucumberAnalytics::Logging.logger.debug('directory_parsed:')
+      CucumberAnalytics::Logging.logger.debug(directory_parsed)
 
       @directory = directory_parsed
 
@@ -26,33 +28,43 @@ module CucumberAnalytics
 
       if directory_parsed
         raise(ArgumentError, "Unknown directory: #{directory_parsed.inspect}") unless File.exists?(directory_parsed)
-      scan_directory
-        end
+        scan_directory
+      end
     end
 
     # Returns the name of the directory.
     def name
+      CucumberAnalytics::Logging.logger.info('Directory#name')
+
       File.basename(@directory.gsub('\\', '/'))
     end
 
     # Returns the path of the directory.
     def path
+      CucumberAnalytics::Logging.logger.info('Directory#path')
+
       @directory
     end
 
     # Returns the number of sub-directories contained in the directory.
     def directory_count
+      CucumberAnalytics::Logging.logger.info('Directory#directory_count')
+
       @directories.count
     end
 
     # Returns the number of features files contained in the directory.
     def feature_file_count
+      CucumberAnalytics::Logging.logger.info('Directory#feature_file_count')
+
       @feature_files.count
     end
 
     # Returns the immediate child elements of the directory (i.e. its Directory
     # and FeatureFile objects).
     def contains
+      CucumberAnalytics::Logging.logger.info('Directory#contains')
+
       @feature_files + @directories
     end
 
@@ -61,6 +73,8 @@ module CucumberAnalytics
 
 
     def scan_directory
+      CucumberAnalytics::Logging.logger.info('Directory#scan_directory')
+
       entries = Dir.entries(@directory)
       entries.delete '.'
       entries.delete '..'

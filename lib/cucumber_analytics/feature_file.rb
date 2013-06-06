@@ -15,6 +15,8 @@ module CucumberAnalytics
     # populates the object.
     def initialize(file_parsed = nil)
       CucumberAnalytics::Logging.logger.info('FeatureFile#initialize')
+      CucumberAnalytics::Logging.logger.debug('file_parsed:')
+      CucumberAnalytics::Logging.logger.debug(file_parsed)
 
       if file_parsed
         raise(ArgumentError, "Unknown file: #{file_parsed.inspect}") unless File.exists?(file_parsed)
@@ -24,21 +26,29 @@ module CucumberAnalytics
 
     # Returns the name of the file.
     def name
+      CucumberAnalytics::Logging.logger.info('FeatureFile#name')
+
       File.basename(@file.gsub('\\', '/'))
     end
 
     # Returns the path of the file.
     def path
+      CucumberAnalytics::Logging.logger.info('FeatureFile#path')
+
       @file
     end
 
     # Returns the immediate child elements of the file(i.e. its Feature object).
     def contains
+      CucumberAnalytics::Logging.logger.info('FeatureFile#contains')
+
       @feature ? [@feature] : []
     end
 
     # Returns the number of features contained in the file.
     def feature_count
+      CucumberAnalytics::Logging.logger.info('FeatureFile#feature_count')
+
       @feature.nil? ? 0 : 1
     end
 
@@ -48,12 +58,14 @@ module CucumberAnalytics
 
     def parse_file(file_to_parse)
       CucumberAnalytics::Logging.logger.info('FeatureFile#parse_file')
-      CucumberAnalytics::Logging.logger.debug("Parsing file: #{file_to_parse}")
+      CucumberAnalytics::Logging.logger.debug('file_to_parse:')
+      CucumberAnalytics::Logging.logger.debug(file_to_parse)
+
 
       source_text = IO.read(file_to_parse)
       parsed_file = Parsing::parse_text(source_text)
 
-      CucumberAnalytics::Logging.logger.debug('Parsed file:')
+      CucumberAnalytics::Logging.logger.debug('parsed_file:')
       CucumberAnalytics::Logging.logger.debug(parsed_file.to_yaml)
 
       @file = file_to_parse

@@ -18,7 +18,6 @@ module CucumberAnalytics
 
       super(parsed_scenario)
 
-
       @tags = []
 
       build_scenario(parsed_scenario) if parsed_scenario
@@ -29,7 +28,9 @@ module CucumberAnalytics
 
 
     def build_scenario(scenario)
-      CucumberAnalytics::Logging.logger.info('Scenario#parse_scenario')
+      CucumberAnalytics::Logging.logger.info('Scenario#build_scenario')
+      CucumberAnalytics::Logging.logger.debug('scenario:')
+      CucumberAnalytics::Logging.logger.debug(scenario.to_yaml)
 
       parse_element_tags(scenario)
     end

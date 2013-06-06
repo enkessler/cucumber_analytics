@@ -24,6 +24,10 @@ module CucumberAnalytics
     end
 
     def delimiter=(new_delimiter)
+      CucumberAnalytics::Logging.logger.info('Step#delimiter=')
+      CucumberAnalytics::Logging.logger.debug('new_delimiter:')
+      CucumberAnalytics::Logging.logger.debug(new_delimiter)
+
       self.left_delimiter = new_delimiter
       self.right_delimiter = new_delimiter
     end
@@ -31,30 +35,46 @@ module CucumberAnalytics
     # Returns the left delimiter, which is used to mark the beginning of a step
     # argument.
     def left_delimiter
+      CucumberAnalytics::Logging.logger.info('Step#left_delimiter')
+
       @left_delimiter || World.left_delimiter
     end
 
     # Sets the left delimiter that will be used by default when determining
     # step arguments.
     def left_delimiter=(new_delimiter)
+      CucumberAnalytics::Logging.logger.info('Step#left_delimiter=')
+      CucumberAnalytics::Logging.logger.debug('new_delimiter:')
+      CucumberAnalytics::Logging.logger.debug(new_delimiter)
+
       @left_delimiter = new_delimiter
     end
 
     # Returns the right delimiter, which is used to mark the end of a step
     # argument.
     def right_delimiter
+      CucumberAnalytics::Logging.logger.info('Step#right_delimiter')
+
       @right_delimiter || World.right_delimiter
     end
 
     # Sets the right delimiter that will be used by default when determining
     # step arguments.
     def right_delimiter=(new_delimiter)
+      CucumberAnalytics::Logging.logger.info('Step#right_delimiter=')
+      CucumberAnalytics::Logging.logger.debug('new_delimiter:')
+      CucumberAnalytics::Logging.logger.debug(new_delimiter)
+
       @right_delimiter = new_delimiter
     end
 
     # Returns true if the two steps have the same text, minus any keywords
     # and arguments, and false otherwise.
     def ==(other_step)
+      CucumberAnalytics::Logging.logger.info('Step#==')
+      CucumberAnalytics::Logging.logger.debug('other_step:')
+      CucumberAnalytics::Logging.logger.debug(other_step)
+
       left_step = step_text(:with_keywords => false, :with_arguments => false)
       right_step = other_step.step_text(:with_keywords => false, :with_arguments => false)
 
@@ -79,6 +99,10 @@ module CucumberAnalytics
     #  #=> ['*some* step with a block:']
     #
     def step_text(options = {})
+      CucumberAnalytics::Logging.logger.info('Step#step_text')
+      CucumberAnalytics::Logging.logger.debug('options:')
+      CucumberAnalytics::Logging.logger.debug(options)
+
       options = {:with_keywords => true,
                  :with_arguments => true,
                  :left_delimiter => self.left_delimiter,
@@ -102,6 +126,10 @@ module CucumberAnalytics
     end
 
     def scan_arguments(*how)
+      CucumberAnalytics::Logging.logger.info('Step#scan_arguments')
+      CucumberAnalytics::Logging.logger.debug('how:')
+      CucumberAnalytics::Logging.logger.debug(how)
+
       if how.count == 1
         pattern = how.first
       else
@@ -121,6 +149,10 @@ module CucumberAnalytics
 
 
     def process_source(source)
+      CucumberAnalytics::Logging.logger.info('Step#process_source')
+      CucumberAnalytics::Logging.logger.debug('source:')
+      CucumberAnalytics::Logging.logger.debug(source)
+
       case
         when source.is_a?(String)
           parse_step(source)
@@ -130,6 +162,10 @@ module CucumberAnalytics
     end
 
     def parse_step(source_text)
+      CucumberAnalytics::Logging.logger.info('Step#parse_step')
+      CucumberAnalytics::Logging.logger.debug('source_text:')
+      CucumberAnalytics::Logging.logger.debug(source_text)
+
       base_file_string = "Feature: Fake feature to parse\nScenario:\n"
       source_text = base_file_string + source_text
 
@@ -139,8 +175,8 @@ module CucumberAnalytics
     end
 
     def build_step(step)
-      CucumberAnalytics::Logging.logger.info('Step#parse_step')
-      CucumberAnalytics::Logging.logger.debug('Step:')
+      CucumberAnalytics::Logging.logger.info('Step#build_step')
+      CucumberAnalytics::Logging.logger.debug('step:')
       CucumberAnalytics::Logging.logger.debug(step.to_yaml)
 
       @base = step['name']
@@ -151,6 +187,14 @@ module CucumberAnalytics
 
     # Returns the step string minus any arguments based on the given delimiters.
     def stripped_step(step, left_delimiter, right_delimiter)
+      CucumberAnalytics::Logging.logger.info('Step#stripped_step')
+      CucumberAnalytics::Logging.logger.debug('step:')
+      CucumberAnalytics::Logging.logger.debug(step)
+      CucumberAnalytics::Logging.logger.debug('left_delimiter:')
+      CucumberAnalytics::Logging.logger.debug(left_delimiter)
+      CucumberAnalytics::Logging.logger.debug('right_delimiter:')
+      CucumberAnalytics::Logging.logger.debug(right_delimiter)
+
       unless left_delimiter.nil? || right_delimiter.nil?
         pattern = Regexp.new(Regexp.escape(left_delimiter) + '.*?' + Regexp.escape(right_delimiter))
 
@@ -162,7 +206,7 @@ module CucumberAnalytics
 
     def parse_block(step)
       CucumberAnalytics::Logging.logger.info('Step#parse_block')
-      CucumberAnalytics::Logging.logger.debug('Step:')
+      CucumberAnalytics::Logging.logger.debug('step:')
       CucumberAnalytics::Logging.logger.debug(step.to_yaml)
 
 
@@ -183,6 +227,10 @@ module CucumberAnalytics
     end
 
     def rebuild_block_text(blok)
+      CucumberAnalytics::Logging.logger.info('Step#rebuild_block_text')
+      CucumberAnalytics::Logging.logger.debug('blok:')
+      CucumberAnalytics::Logging.logger.debug(blok)
+
       blok.collect { |row| "|#{row.join('|')}|" }
     end
 
