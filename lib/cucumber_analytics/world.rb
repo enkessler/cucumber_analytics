@@ -1,8 +1,13 @@
 module CucumberAnalytics
+
+# A module providing suite level analysis functionality.
+
   module World
 
-
+    # A placeholder string used to mark 'dirty' portions of input strings
     SANITARY_STRING = '___SANITIZED_BY_CUCUMBER_ANALYTICS___'
+
+    # A pattern that matches a Cucumber step keyword
     STEP_KEYWORD_PATTERN = '\s*(?:Given|When|Then|And|But|\*)\s*'
 
 
@@ -42,6 +47,8 @@ module CucumberAnalytics
       @right_delimiter = new_delimiter
     end
 
+    # Sets the delimiter that will be used by default when determining the
+    # boundaries of step arguments.
     def self.delimiter=(new_delimiter)
       CucumberAnalytics::Logging.logger.info('World#delimiter=')
       CucumberAnalytics::Logging.logger.debug('new_delimiter:')

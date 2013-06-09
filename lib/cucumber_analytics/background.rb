@@ -1,6 +1,6 @@
 module CucumberAnalytics
 
-  # A class modeling a cucumber feature's Background.
+  # A class modeling a Cucumber feature's Background.
 
   class Background < TestElement
 

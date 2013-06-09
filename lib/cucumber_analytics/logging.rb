@@ -35,10 +35,12 @@ module CucumberAnalytics
         @logger = new_logger
       end
 
+      # Sets the file that the default logging object will write to.
       def default_logfile=(file_path)
         @default_logfile = file_path
       end
 
+      # Gets the file that the default logging object will write to.
       def default_logfile
         @default_logfile ||= "#{File.dirname(__FILE__)}/../../ca_logfile.log"
       end

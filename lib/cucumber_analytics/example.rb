@@ -1,9 +1,15 @@
 module CucumberAnalytics
+
+  # A class modeling a Cucumber Examples table.
+
   class Example < FeatureElement
 
     include Taggable
 
+    # The argument rows in the example table
     attr_accessor :rows
+
+    # The parameters for the example table
     attr_accessor :parameters
 
 
@@ -25,8 +31,8 @@ module CucumberAnalytics
       build_example(parsed_example) if parsed_example
     end
 
-    # Adds a row to the example block. The row can be given as a Hash of column
-    # headers and their corresponding values or as an Array of values which
+    # Adds a row to the example table. The row can be given as a Hash of
+    # parameters and their corresponding values or as an Array of values which
     # will be assigned in order.
     def add_row(row)
       CucumberAnalytics::Logging.logger.info('Example#add_row')
@@ -43,8 +49,8 @@ module CucumberAnalytics
       end
     end
 
-    # Removes a row from the example block. The row can be given as a Hash of
-    # column headers and their corresponding values or as an Array of values
+    # Removes a row from the example table. The row can be given as a Hash of
+    # parameters and their corresponding values or as an Array of values
     # which will be assigned in order.
     def remove_row(row)
       CucumberAnalytics::Logging.logger.info('Example#remove_row')

@@ -58,7 +58,7 @@ Now it's time to take a look around and see what we can see.
 
 
   all_steps = world.steps_in(directory)
-  puts all_steps.collect{ |step| step.step_text(:with_keywords => false)}
+  puts all_steps.collect{ |step| step.base}
   #=> ["some step", "the user logs in", "the user will log in", "another step", "the user "Bob" logs in"]
 
 So with a few simple commands we have discovered that there are five different

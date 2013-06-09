@@ -1,11 +1,15 @@
 module CucumberAnalytics
+
+  # A class modeling an element that contains steps.
+
   class TestElement < FeatureElement
 
-
+    # The steps contained by the TestElement
     attr_accessor :steps
 
 
-    # Creates a new TestElement object.
+    # Creates a new TestElement object and, if *parsed_test_element* is provided,
+    # populates the object.
     def initialize(parsed_test_element = nil)
       CucumberAnalytics::Logging.logger.info('TestElement#initialize')
       CucumberAnalytics::Logging.logger.debug('parsed_test_element:')
@@ -18,8 +22,7 @@ module CucumberAnalytics
       build_test_element(parsed_test_element) if parsed_test_element
     end
 
-    # Returns true if the two elements have the same steps, minus any keywords
-    # and arguments, and false otherwise.
+    # Returns true if the two elements have equivalent steps and false otherwise.
     def ==(other_element)
       CucumberAnalytics::Logging.logger.info('TestElement#==')
       CucumberAnalytics::Logging.logger.debug('other_element:')
@@ -28,7 +31,7 @@ module CucumberAnalytics
       steps == other_element.steps
     end
 
-    # Returns the immediate child elements of the test.
+    # Returns the immediate child elements of the element.
     def contains
       CucumberAnalytics::Logging.logger.info('TestElement#contains')
 

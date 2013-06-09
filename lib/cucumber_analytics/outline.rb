@@ -1,6 +1,6 @@
 module CucumberAnalytics
 
-  # A class modeling a cucumber Scenario Outline.
+  # A class modeling a Cucumber Scenario Outline.
 
   class Outline < TestElement
 
@@ -28,8 +28,8 @@ module CucumberAnalytics
       parse_outline(parsed_outline) if parsed_outline
     end
 
-    # Returns the immediate child elements of the outline (i.e. its example
-    # blocks).
+    # Returns the immediate child elements of the outline (i.e. its Example
+    # objects.
     def contains
       CucumberAnalytics::Logging.logger.info('Outline#contains')
 

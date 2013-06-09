@@ -1,6 +1,6 @@
 module CucumberAnalytics
 
-  # A class modeling a cucumber Feature.
+  # A class modeling a Cucumber Feature.
 
   class Feature < FeatureElement
 
@@ -84,8 +84,8 @@ module CucumberAnalytics
       }
     end
 
-    # Returns the immediate child elements of the feature (i.e. its background
-    # and tests).
+    # Returns the immediate child elements of the feature (i.e. its Background,
+    # Scenario, and Outline objects.
     def contains
       CucumberAnalytics::Logging.logger.info('Feature#contains')
 

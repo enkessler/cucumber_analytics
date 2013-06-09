@@ -3,10 +3,15 @@ require 'gherkin/formatter/json_formatter'
 require 'gherkin'
 
 module CucumberAnalytics
+
+  # A module providing source text parsing functionality.
+
   module Parsing
 
     class << self
 
+      # Parses the Cucumber feature given in *source_text* and returns an array
+      # containing the hash representation of its logical structure.
       def parse_text(source_text)
         CucumberAnalytics::Logging.logger.info('Parsing#parse_text')
         CucumberAnalytics::Logging.logger.debug('source_text:')

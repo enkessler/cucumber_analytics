@@ -1,6 +1,6 @@
 module CucumberAnalytics
 
-  # A class modeling a cucumber Scenario.
+  # A class modeling a Cucumber Scenario.
 
   class Scenario < TestElement
 

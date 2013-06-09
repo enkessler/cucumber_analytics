@@ -1,6 +1,6 @@
 module CucumberAnalytics
 
-  # A class modeling a .feature file.
+  # A class modeling a Cucumber .feature file.
 
   class FeatureFile
 

@@ -1,16 +1,27 @@
 module CucumberAnalytics
+
+  # A class modeling a Cucumber Feature.
+
   class Step
 
-
+    # The step's keyword
     attr_accessor :keyword
+
+    # The base text of the step
     attr_accessor :base
+
+    # The step's passed block
     attr_accessor :block
+
+    # The parent object that contains *self*
     attr_accessor :parent_element
+
+    # The step's arguments
     attr_accessor :arguments
 
 
-    # Creates a new Step object based on the passed string. If the optional
-    # string array is provided, it becomes the block for the step.
+    # Creates a new Step object and, if *source* is provided, populates the
+    # object.
     def initialize(source = nil)
       CucumberAnalytics::Logging.logger.info('Step#initialize')
       CucumberAnalytics::Logging.logger.debug('source:')
@@ -23,6 +34,8 @@ module CucumberAnalytics
       build_step(parsed_step) if parsed_step
     end
 
+    # Sets the delimiter that will be used by default when determining the
+    # boundaries of step arguments.
     def delimiter=(new_delimiter)
       CucumberAnalytics::Logging.logger.info('Step#delimiter=')
       CucumberAnalytics::Logging.logger.debug('new_delimiter:')
@@ -32,7 +45,7 @@ module CucumberAnalytics
       self.right_delimiter = new_delimiter
     end
 
-    # Returns the left delimiter, which is used to mark the beginning of a step
+    # Returns the delimiter that is used to mark the beginning of a step
     # argument.
     def left_delimiter
       CucumberAnalytics::Logging.logger.info('Step#left_delimiter')
@@ -50,7 +63,7 @@ module CucumberAnalytics
       @left_delimiter = new_delimiter
     end
 
-    # Returns the right delimiter, which is used to mark the end of a step
+    # Returns the delimiter that is used to mark the end of a step
     # argument.
     def right_delimiter
       CucumberAnalytics::Logging.logger.info('Step#right_delimiter')
@@ -83,16 +96,16 @@ module CucumberAnalytics
 
     # Deprecated
     #
-    # Returns the text of the step. Options can be set to selectively exclude
-    # certain portions of the text. *left_delimiter* and *right_delimiter* are
-    # used to determine which parts of the step are arguments.
+    # Returns the entire text of the step. Options can be set to selectively
+    # exclude certain portions of the text. *left_delimiter* and *right_delimiter*
+    # are used to determine which parts of the step are arguments.
     #
-    #  a_step = CucumberAnalytics.new('Given *some* step with a block:', ['block line 1', 'block line 2'])
+    #  a_step = CucumberAnalytics.new("Given *some* step with a block:\n|block line 1|\n|block line 2|")
     #
     #  a_step.step_text
-    #  #=> ['Given *some* step with a block:', 'block line 1', 'block line 2']
+    #  #=> ['Given *some* step with a block:', '|block line 1|', '|block line 2|']
     #  a_step.step_text(:with_keywords => false)
-    #  #=> ['*some* step with a block:', 'block line 1', 'block line 2']
+    #  #=> ['*some* step with a block:', '|block line 1|', '|block line 2|']
     #  a_step.step_text(:with_arguments => false, :left_delimiter => '*', :right_delimiter => '*')
     #  #=> ['Given ** step with a block:']
     #  a_step.step_text(:with_keywords => false, :with_arguments => false, :left_delimiter => '-', :right_delimiter => '-'))
@@ -125,6 +138,9 @@ module CucumberAnalytics
       final_step
     end
 
+    # Populates the step's arguments based on the step's text and some method of
+    # determining which parts of the text are arguments. Methods include using
+    # a regular expression and using the step's delimiters.
     def scan_arguments(*how)
       CucumberAnalytics::Logging.logger.info('Step#scan_arguments')
       CucumberAnalytics::Logging.logger.debug('how:')
