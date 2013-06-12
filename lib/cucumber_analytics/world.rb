@@ -8,8 +8,16 @@ module CucumberAnalytics
     SANITARY_STRING = '___SANITIZED_BY_CUCUMBER_ANALYTICS___'
 
     # A pattern that matches a Cucumber step keyword
-    STEP_KEYWORD_PATTERN = '\s*(?:Given|When|Then|And|But|\*)\s*'
+    STEP_DEF_KEYWORD_PATTERN = '(?:Given|When|Then|And|But)'
 
+    # A pattern that matches a 'clean' regular expression
+    REGEX_PATTERN_STRING = '\/[^\/]*\/'
+
+    # A pattern that matches a step definition declaration line
+    STEP_DEF_LINE_PATTERN = /^\s*#{World::STEP_DEF_KEYWORD_PATTERN}\s*\(?\s*#{REGEX_PATTERN_STRING}\s*\)?/
+
+    # A pattern that captures the regular expression portion of a step definition declaration line
+    STEP_DEF_PATTERN_CAPTURE_PATTERN = /^\s*#{World::STEP_DEF_KEYWORD_PATTERN}\s*\(?\s*(#{REGEX_PATTERN_STRING})\s*\)?/
 
     # Returns the left delimiter, which is used to mark the beginning of a step
     # argument.
@@ -210,7 +218,7 @@ module CucumberAnalytics
       CucumberAnalytics::Logging.logger.debug('line:')
       CucumberAnalytics::Logging.logger.debug(line)
 
-      !!(sanitize_line(line) =~ /^#{World::STEP_KEYWORD_PATTERN}\/[^\/]*\//)
+      !!(sanitize_line(line) =~ STEP_DEF_LINE_PATTERN)
     end
 
     # Returns the regular expression portion of a step pattern line.
@@ -219,7 +227,9 @@ module CucumberAnalytics
       CucumberAnalytics::Logging.logger.debug('line:')
       CucumberAnalytics::Logging.logger.debug(line)
 
-      line = desanitize_line(sanitize_line(line).match(/^#{World::STEP_KEYWORD_PATTERN}\/([^\/]*)\//)[1])
+      line = desanitize_line(sanitize_line(line).match(STEP_DEF_PATTERN_CAPTURE_PATTERN)[1])
+      line = line.slice(1..(line.length - 2))
+
       Regexp.new(line)
     end
 
