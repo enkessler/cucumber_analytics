@@ -14,9 +14,7 @@ module CucumberAnalytics
     # Creates a new FeatureFile object and, if *file_parsed* is provided,
     # populates the object.
     def initialize(file_parsed = nil)
-      CucumberAnalytics::Logging.logger.info('FeatureFile#initialize')
-      CucumberAnalytics::Logging.logger.debug('file_parsed:')
-      CucumberAnalytics::Logging.logger.debug(file_parsed)
+      CucumberAnalytics::Logging.log_method("FeatureFile##{__method__}", method(__method__).parameters.map { |arg| "#{arg[1].to_s} = #{eval arg[1].to_s}" })
 
       if file_parsed
         raise(ArgumentError, "Unknown file: #{file_parsed.inspect}") unless File.exists?(file_parsed)
@@ -26,28 +24,28 @@ module CucumberAnalytics
 
     # Returns the name of the file.
     def name
-      CucumberAnalytics::Logging.logger.info('FeatureFile#name')
+      CucumberAnalytics::Logging.log_method("FeatureFile##{__method__}", method(__method__).parameters.map { |arg| "#{arg[1].to_s} = #{eval arg[1].to_s}" })
 
       File.basename(@file.gsub('\\', '/'))
     end
 
     # Returns the path of the file.
     def path
-      CucumberAnalytics::Logging.logger.info('FeatureFile#path')
+      CucumberAnalytics::Logging.log_method("FeatureFile##{__method__}", method(__method__).parameters.map { |arg| "#{arg[1].to_s} = #{eval arg[1].to_s}" })
 
       @file
     end
 
     # Returns the immediate child elements of the file(i.e. its Feature object).
     def contains
-      CucumberAnalytics::Logging.logger.info('FeatureFile#contains')
+      CucumberAnalytics::Logging.log_method("FeatureFile##{__method__}", method(__method__).parameters.map { |arg| "#{arg[1].to_s} = #{eval arg[1].to_s}" })
 
       @feature ? [@feature] : []
     end
 
     # Returns the number of features contained in the file.
     def feature_count
-      CucumberAnalytics::Logging.logger.info('FeatureFile#feature_count')
+      CucumberAnalytics::Logging.log_method("FeatureFile##{__method__}", method(__method__).parameters.map { |arg| "#{arg[1].to_s} = #{eval arg[1].to_s}" })
 
       @feature.nil? ? 0 : 1
     end
@@ -57,10 +55,7 @@ module CucumberAnalytics
 
 
     def parse_file(file_to_parse)
-      CucumberAnalytics::Logging.logger.info('FeatureFile#parse_file')
-      CucumberAnalytics::Logging.logger.debug('file_to_parse:')
-      CucumberAnalytics::Logging.logger.debug(file_to_parse)
-
+      CucumberAnalytics::Logging.log_method("FeatureFile##{__method__}", method(__method__).parameters.map { |arg| "#{arg[1].to_s} = #{eval arg[1].to_s}" })
 
       source_text = IO.read(file_to_parse)
       parsed_file = Parsing::parse_text(source_text)

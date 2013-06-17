@@ -17,9 +17,7 @@ module CucumberAnalytics
     # Creates a new Feature object and, if *source* is provided, populates the
     # object.
     def initialize(source = nil)
-      CucumberAnalytics::Logging.logger.info('Feature#initialize')
-      CucumberAnalytics::Logging.logger.debug('source:')
-      CucumberAnalytics::Logging.logger.debug(source)
+      CucumberAnalytics::Logging.log_method("Feature##{__method__}", method(__method__).parameters.map { |arg| "#{arg[1].to_s} = #{eval arg[1].to_s}" })
 
       parsed_feature = process_source(source)
 
@@ -33,49 +31,49 @@ module CucumberAnalytics
 
     # Returns true if the feature contains a background, false otherwise.
     def has_background?
-      CucumberAnalytics::Logging.logger.info('Feature#has_background?')
+      CucumberAnalytics::Logging.log_method("Feature##{__method__}", method(__method__).parameters.map { |arg| "#{arg[1].to_s} = #{eval arg[1].to_s}" })
 
       !@background.nil?
     end
 
     # Returns the scenarios contained in the feature.
     def scenarios
-      CucumberAnalytics::Logging.logger.info('Feature#scenarios')
+      CucumberAnalytics::Logging.log_method("Feature##{__method__}", method(__method__).parameters.map { |arg| "#{arg[1].to_s} = #{eval arg[1].to_s}" })
 
       @tests.select { |test| test.is_a? Scenario }
     end
 
     # Returns the outlines contained in the feature.
     def outlines
-      CucumberAnalytics::Logging.logger.info('Feature#outlines')
+      CucumberAnalytics::Logging.log_method("Feature##{__method__}", method(__method__).parameters.map { |arg| "#{arg[1].to_s} = #{eval arg[1].to_s}" })
 
       @tests.select { |test| test.is_a? Outline }
     end
 
     # Returns the number of scenarios contained in the feature.
     def scenario_count
-      CucumberAnalytics::Logging.logger.info('Feature#scenario_count')
+      CucumberAnalytics::Logging.log_method("Feature##{__method__}", method(__method__).parameters.map { |arg| "#{arg[1].to_s} = #{eval arg[1].to_s}" })
 
       scenarios.count
     end
 
     # Returns the number of outlines contained in the feature.
     def outline_count
-      CucumberAnalytics::Logging.logger.info('Feature#outline_count')
+      CucumberAnalytics::Logging.log_method("Feature##{__method__}", method(__method__).parameters.map { |arg| "#{arg[1].to_s} = #{eval arg[1].to_s}" })
 
       outlines.count
     end
 
     # Returns the number of tests contained in the feature.
     def test_count
-      CucumberAnalytics::Logging.logger.info('Feature#test_count')
+      CucumberAnalytics::Logging.log_method("Feature##{__method__}", method(__method__).parameters.map { |arg| "#{arg[1].to_s} = #{eval arg[1].to_s}" })
 
       @tests.count
     end
 
     # Returns the number of test cases contained in the feature.
     def test_case_count
-      CucumberAnalytics::Logging.logger.info('Feature#test_case_count')
+      CucumberAnalytics::Logging.log_method("Feature##{__method__}", method(__method__).parameters.map { |arg| "#{arg[1].to_s} = #{eval arg[1].to_s}" })
 
       scenario_count + outlines.reduce(0) { |outline_sum, outline|
         outline_sum += outline.examples.reduce(0) { |example_sum, example|
@@ -87,7 +85,7 @@ module CucumberAnalytics
     # Returns the immediate child elements of the feature (i.e. its Background,
     # Scenario, and Outline objects.
     def contains
-      CucumberAnalytics::Logging.logger.info('Feature#contains')
+      CucumberAnalytics::Logging.log_method("Feature##{__method__}", method(__method__).parameters.map { |arg| "#{arg[1].to_s} = #{eval arg[1].to_s}" })
 
       [@background] + @tests
     end
@@ -97,9 +95,7 @@ module CucumberAnalytics
 
 
     def process_source(source)
-      CucumberAnalytics::Logging.logger.info('Feature#process_source')
-      CucumberAnalytics::Logging.logger.debug('source:')
-      CucumberAnalytics::Logging.logger.debug(source)
+      CucumberAnalytics::Logging.log_method("Feature##{__method__}", method(__method__).parameters.map { |arg| "#{arg[1].to_s} = #{eval arg[1].to_s}" })
 
       case
         when source.is_a?(String)
@@ -110,9 +106,7 @@ module CucumberAnalytics
     end
 
     def parse_feature(source_text)
-      CucumberAnalytics::Logging.logger.info('Feature#parse_feature')
-      CucumberAnalytics::Logging.logger.debug('source_text:')
-      CucumberAnalytics::Logging.logger.debug(source_text)
+      CucumberAnalytics::Logging.log_method("Feature##{__method__}", method(__method__).parameters.map { |arg| "#{arg[1].to_s} = #{eval arg[1].to_s}" })
 
       parsed_file = Parsing::parse_text(source_text)
 
@@ -120,27 +114,21 @@ module CucumberAnalytics
     end
 
     def build_feature(parsed_feature)
-      CucumberAnalytics::Logging.logger.info('Feature#build_feature')
-      CucumberAnalytics::Logging.logger.debug('parsed_feature:')
-      CucumberAnalytics::Logging.logger.debug(parsed_feature.to_yaml)
+      CucumberAnalytics::Logging.log_method("Feature##{__method__}", method(__method__).parameters.map { |arg| "#{arg[1].to_s} = #{eval arg[1].to_s}" })
 
       parse_element_tags(parsed_feature) if parsed_feature['tags']
       parse_feature_elements(parsed_feature) if parsed_feature['elements']
     end
 
     def parse_feature_elements(parsed_feature)
-      CucumberAnalytics::Logging.logger.info('Feature#parse_feature_elements')
-      CucumberAnalytics::Logging.logger.debug('parsed_feature:')
-      CucumberAnalytics::Logging.logger.debug(parsed_feature.to_yaml)
+      CucumberAnalytics::Logging.log_method("Feature##{__method__}", method(__method__).parameters.map { |arg| "#{arg[1].to_s} = #{eval arg[1].to_s}" })
 
       parse_background(parsed_feature)
       parse_tests(parsed_feature)
     end
 
     def parse_background(parsed_feature)
-      CucumberAnalytics::Logging.logger.info('Feature#parse_background')
-      CucumberAnalytics::Logging.logger.debug('parsed_feature:')
-      CucumberAnalytics::Logging.logger.debug(parsed_feature.to_yaml)
+      CucumberAnalytics::Logging.log_method("Feature##{__method__}", method(__method__).parameters.map { |arg| "#{arg[1].to_s} = #{eval arg[1].to_s}" })
 
       background_element = parsed_feature['elements'].select { |element| element['keyword'] == 'Background' }.first
 
@@ -152,9 +140,7 @@ module CucumberAnalytics
     end
 
     def parse_tests(parsed_feature)
-      CucumberAnalytics::Logging.logger.info('Feature#parse_tests')
-      CucumberAnalytics::Logging.logger.debug('parsed_feature:')
-      CucumberAnalytics::Logging.logger.debug(parsed_feature.to_yaml)
+      CucumberAnalytics::Logging.log_method("Feature##{__method__}", method(__method__).parameters.map { |arg| "#{arg[1].to_s} = #{eval arg[1].to_s}" })
 
       test_elements = parsed_feature['elements'].select { |element| element['keyword'] == 'Scenario' || element['keyword'] == 'Scenario Outline' }
       test_elements.each do |parsed_test|

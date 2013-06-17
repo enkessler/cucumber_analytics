@@ -23,9 +23,7 @@ module CucumberAnalytics
     # Creates a new Step object and, if *source* is provided, populates the
     # object.
     def initialize(source = nil)
-      CucumberAnalytics::Logging.logger.info('Step#initialize')
-      CucumberAnalytics::Logging.logger.debug('source:')
-      CucumberAnalytics::Logging.logger.debug(source)
+      CucumberAnalytics::Logging.log_method("Step##{__method__}", method(__method__).parameters.map { |arg| "#{arg[1].to_s} = #{eval arg[1].to_s}" })
 
       @arguments = []
 
@@ -37,9 +35,7 @@ module CucumberAnalytics
     # Sets the delimiter that will be used by default when determining the
     # boundaries of step arguments.
     def delimiter=(new_delimiter)
-      CucumberAnalytics::Logging.logger.info('Step#delimiter=')
-      CucumberAnalytics::Logging.logger.debug('new_delimiter:')
-      CucumberAnalytics::Logging.logger.debug(new_delimiter)
+      CucumberAnalytics::Logging.log_method("Step##{__method__}", method(__method__).parameters.map { |arg| "#{arg[1].to_s} = #{eval arg[1].to_s}" })
 
       self.left_delimiter = new_delimiter
       self.right_delimiter = new_delimiter
@@ -48,7 +44,7 @@ module CucumberAnalytics
     # Returns the delimiter that is used to mark the beginning of a step
     # argument.
     def left_delimiter
-      CucumberAnalytics::Logging.logger.info('Step#left_delimiter')
+      CucumberAnalytics::Logging.log_method("Step##{__method__}", method(__method__).parameters.map { |arg| "#{arg[1].to_s} = #{eval arg[1].to_s}" })
 
       @left_delimiter || World.left_delimiter
     end
@@ -56,9 +52,7 @@ module CucumberAnalytics
     # Sets the left delimiter that will be used by default when determining
     # step arguments.
     def left_delimiter=(new_delimiter)
-      CucumberAnalytics::Logging.logger.info('Step#left_delimiter=')
-      CucumberAnalytics::Logging.logger.debug('new_delimiter:')
-      CucumberAnalytics::Logging.logger.debug(new_delimiter)
+      CucumberAnalytics::Logging.log_method("Step##{__method__}", method(__method__).parameters.map { |arg| "#{arg[1].to_s} = #{eval arg[1].to_s}" })
 
       @left_delimiter = new_delimiter
     end
@@ -66,7 +60,7 @@ module CucumberAnalytics
     # Returns the delimiter that is used to mark the end of a step
     # argument.
     def right_delimiter
-      CucumberAnalytics::Logging.logger.info('Step#right_delimiter')
+      CucumberAnalytics::Logging.log_method("Step##{__method__}", method(__method__).parameters.map { |arg| "#{arg[1].to_s} = #{eval arg[1].to_s}" })
 
       @right_delimiter || World.right_delimiter
     end
@@ -74,9 +68,7 @@ module CucumberAnalytics
     # Sets the right delimiter that will be used by default when determining
     # step arguments.
     def right_delimiter=(new_delimiter)
-      CucumberAnalytics::Logging.logger.info('Step#right_delimiter=')
-      CucumberAnalytics::Logging.logger.debug('new_delimiter:')
-      CucumberAnalytics::Logging.logger.debug(new_delimiter)
+      CucumberAnalytics::Logging.log_method("Step##{__method__}", method(__method__).parameters.map { |arg| "#{arg[1].to_s} = #{eval arg[1].to_s}" })
 
       @right_delimiter = new_delimiter
     end
@@ -84,9 +76,7 @@ module CucumberAnalytics
     # Returns true if the two steps have the same text, minus any keywords
     # and arguments, and false otherwise.
     def ==(other_step)
-      CucumberAnalytics::Logging.logger.info('Step#==')
-      CucumberAnalytics::Logging.logger.debug('other_step:')
-      CucumberAnalytics::Logging.logger.debug(other_step)
+      CucumberAnalytics::Logging.log_method("Step##{__method__}", method(__method__).parameters.map { |arg| "#{arg[1].to_s} = #{eval arg[1].to_s}" })
 
       left_step = step_text(:with_keywords => false, :with_arguments => false)
       right_step = other_step.step_text(:with_keywords => false, :with_arguments => false)
@@ -112,9 +102,7 @@ module CucumberAnalytics
     #  #=> ['*some* step with a block:']
     #
     def step_text(options = {})
-      CucumberAnalytics::Logging.logger.info('Step#step_text')
-      CucumberAnalytics::Logging.logger.debug('options:')
-      CucumberAnalytics::Logging.logger.debug(options)
+      CucumberAnalytics::Logging.log_method("Step##{__method__}", method(__method__).parameters.map { |arg| "#{arg[1].to_s} = #{eval arg[1].to_s}" })
 
       options = {:with_keywords => true,
                  :with_arguments => true,
@@ -142,9 +130,7 @@ module CucumberAnalytics
     # determining which parts of the text are arguments. Methods include using
     # a regular expression and using the step's delimiters.
     def scan_arguments(*how)
-      CucumberAnalytics::Logging.logger.info('Step#scan_arguments')
-      CucumberAnalytics::Logging.logger.debug('how:')
-      CucumberAnalytics::Logging.logger.debug(how)
+      CucumberAnalytics::Logging.log_method("Step##{__method__}", method(__method__).parameters.map { |arg| "#{arg[1].to_s} = #{eval arg[1].to_s}" })
 
       if how.count == 1
         pattern = how.first
@@ -165,9 +151,7 @@ module CucumberAnalytics
 
 
     def process_source(source)
-      CucumberAnalytics::Logging.logger.info('Step#process_source')
-      CucumberAnalytics::Logging.logger.debug('source:')
-      CucumberAnalytics::Logging.logger.debug(source)
+      CucumberAnalytics::Logging.log_method("Step##{__method__}", method(__method__).parameters.map { |arg| "#{arg[1].to_s} = #{eval arg[1].to_s}" })
 
       case
         when source.is_a?(String)
@@ -178,9 +162,7 @@ module CucumberAnalytics
     end
 
     def parse_step(source_text)
-      CucumberAnalytics::Logging.logger.info('Step#parse_step')
-      CucumberAnalytics::Logging.logger.debug('source_text:')
-      CucumberAnalytics::Logging.logger.debug(source_text)
+      CucumberAnalytics::Logging.log_method("Step##{__method__}", method(__method__).parameters.map { |arg| "#{arg[1].to_s} = #{eval arg[1].to_s}" })
 
       base_file_string = "Feature: Fake feature to parse\nScenario:\n"
       source_text = base_file_string + source_text
@@ -191,9 +173,7 @@ module CucumberAnalytics
     end
 
     def build_step(step)
-      CucumberAnalytics::Logging.logger.info('Step#build_step')
-      CucumberAnalytics::Logging.logger.debug('step:')
-      CucumberAnalytics::Logging.logger.debug(step.to_yaml)
+      CucumberAnalytics::Logging.log_method("Step##{__method__}", method(__method__).parameters.map { |arg| "#{arg[1].to_s} = #{eval arg[1].to_s}" })
 
       @base = step['name']
       @block = parse_block(step)
@@ -203,13 +183,7 @@ module CucumberAnalytics
 
     # Returns the step string minus any arguments based on the given delimiters.
     def stripped_step(step, left_delimiter, right_delimiter)
-      CucumberAnalytics::Logging.logger.info('Step#stripped_step')
-      CucumberAnalytics::Logging.logger.debug('step:')
-      CucumberAnalytics::Logging.logger.debug(step)
-      CucumberAnalytics::Logging.logger.debug('left_delimiter:')
-      CucumberAnalytics::Logging.logger.debug(left_delimiter)
-      CucumberAnalytics::Logging.logger.debug('right_delimiter:')
-      CucumberAnalytics::Logging.logger.debug(right_delimiter)
+      CucumberAnalytics::Logging.log_method("Step##{__method__}", method(__method__).parameters.map { |arg| "#{arg[1].to_s} = #{eval arg[1].to_s}" })
 
       unless left_delimiter.nil? || right_delimiter.nil?
         pattern = Regexp.new(Regexp.escape(left_delimiter) + '.*?' + Regexp.escape(right_delimiter))
@@ -221,10 +195,7 @@ module CucumberAnalytics
     end
 
     def parse_block(step)
-      CucumberAnalytics::Logging.logger.info('Step#parse_block')
-      CucumberAnalytics::Logging.logger.debug('step:')
-      CucumberAnalytics::Logging.logger.debug(step.to_yaml)
-
+      CucumberAnalytics::Logging.log_method("Step##{__method__}", method(__method__).parameters.map { |arg| "#{arg[1].to_s} = #{eval arg[1].to_s}" })
 
       #todo - Make these their own objects
       case
@@ -243,9 +214,7 @@ module CucumberAnalytics
     end
 
     def rebuild_block_text(blok)
-      CucumberAnalytics::Logging.logger.info('Step#rebuild_block_text')
-      CucumberAnalytics::Logging.logger.debug('blok:')
-      CucumberAnalytics::Logging.logger.debug(blok)
+      CucumberAnalytics::Logging.log_method("Step##{__method__}", method(__method__).parameters.map { |arg| "#{arg[1].to_s} = #{eval arg[1].to_s}" })
 
       blok.collect { |row| "|#{row.join('|')}|" }
     end

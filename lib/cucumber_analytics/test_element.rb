@@ -11,9 +11,7 @@ module CucumberAnalytics
     # Creates a new TestElement object and, if *parsed_test_element* is provided,
     # populates the object.
     def initialize(parsed_test_element = nil)
-      CucumberAnalytics::Logging.logger.info('TestElement#initialize')
-      CucumberAnalytics::Logging.logger.debug('parsed_test_element:')
-      CucumberAnalytics::Logging.logger.debug(parsed_test_element)
+      CucumberAnalytics::Logging.log_method("TestElement##{__method__}", "parsed_test_element = #{parsed_test_element}")
 
       super
 
@@ -24,16 +22,14 @@ module CucumberAnalytics
 
     # Returns true if the two elements have equivalent steps and false otherwise.
     def ==(other_element)
-      CucumberAnalytics::Logging.logger.info('TestElement#==')
-      CucumberAnalytics::Logging.logger.debug('other_element:')
-      CucumberAnalytics::Logging.logger.debug(other_element)
+      CucumberAnalytics::Logging.log_method("TestElement##{__method__}", method(__method__).parameters.map { |arg| "#{arg[1].to_s} = #{eval arg[1].to_s}" })
 
       steps == other_element.steps
     end
 
     # Returns the immediate child elements of the element.
     def contains
-      CucumberAnalytics::Logging.logger.info('TestElement#contains')
+      CucumberAnalytics::Logging.log_method("TestElement##{__method__}", method(__method__).parameters.map { |arg| "#{arg[1].to_s} = #{eval arg[1].to_s}" })
 
       @steps
     end
@@ -43,9 +39,7 @@ module CucumberAnalytics
 
 
     def process_source(source)
-      CucumberAnalytics::Logging.logger.info('TestElement#process_source')
-      CucumberAnalytics::Logging.logger.debug('source:')
-      CucumberAnalytics::Logging.logger.debug(source)
+      CucumberAnalytics::Logging.log_method("TestElement##{__method__}", method(__method__).parameters.map { |arg| "#{arg[1].to_s} = #{eval arg[1].to_s}" })
 
       case
         when source.is_a?(String)
@@ -56,9 +50,7 @@ module CucumberAnalytics
     end
 
     def parse_test_element(source_text)
-      CucumberAnalytics::Logging.logger.info('TestElement#parse_test_element')
-      CucumberAnalytics::Logging.logger.debug('source_text:')
-      CucumberAnalytics::Logging.logger.debug(source_text)
+      CucumberAnalytics::Logging.log_method("TestElement##{__method__}", method(__method__).parameters.map { |arg| "#{arg[1].to_s} = #{eval arg[1].to_s}" })
 
       base_file_string = "Feature: Fake feature to parse\n"
       source_text = base_file_string + source_text
@@ -69,17 +61,13 @@ module CucumberAnalytics
     end
 
     def build_test_element(parsed_test_element)
-      CucumberAnalytics::Logging.logger.info('TestElement#build_test_element')
-      CucumberAnalytics::Logging.logger.debug('parsed_test_element:')
-      CucumberAnalytics::Logging.logger.debug(parsed_test_element)
+      CucumberAnalytics::Logging.log_method("TestElement##{__method__}", method(__method__).parameters.map { |arg| "#{arg[1].to_s} = #{eval arg[1].to_s}" })
 
       parse_test_element_steps(parsed_test_element)
     end
 
     def parse_test_element_steps(parsed_test_element)
-      CucumberAnalytics::Logging.logger.info('TestElement#parse_test_element_steps')
-      CucumberAnalytics::Logging.logger.debug('parsed_test_element:')
-      CucumberAnalytics::Logging.logger.debug(parsed_test_element.to_yaml)
+      CucumberAnalytics::Logging.log_method("TestElement##{__method__}", method(__method__).parameters.map { |arg| "#{arg[1].to_s} = #{eval arg[1].to_s}" })
 
       if parsed_test_element['steps']
         parsed_test_element['steps'].each do |step|

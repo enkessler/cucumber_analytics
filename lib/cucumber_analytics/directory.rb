@@ -17,9 +17,7 @@ module CucumberAnalytics
     # Creates a new Directory object and, if *directory_parsed* is provided,
     # populates the object.
     def initialize(directory_parsed = nil)
-      CucumberAnalytics::Logging.logger.info('Directory#initialize')
-      CucumberAnalytics::Logging.logger.debug('directory_parsed:')
-      CucumberAnalytics::Logging.logger.debug(directory_parsed)
+      CucumberAnalytics::Logging.log_method("Directory##{__method__}", method(__method__).parameters.map { |arg| "#{arg[1].to_s} = #{eval arg[1].to_s}" })
 
       @directory = directory_parsed
 
@@ -34,28 +32,28 @@ module CucumberAnalytics
 
     # Returns the name of the directory.
     def name
-      CucumberAnalytics::Logging.logger.info('Directory#name')
+      CucumberAnalytics::Logging.log_method("Directory##{__method__}", method(__method__).parameters.map { |arg| "#{arg[1].to_s} = #{eval arg[1].to_s}" })
 
       File.basename(@directory.gsub('\\', '/'))
     end
 
     # Returns the path of the directory.
     def path
-      CucumberAnalytics::Logging.logger.info('Directory#path')
+      CucumberAnalytics::Logging.log_method("Directory##{__method__}", method(__method__).parameters.map { |arg| "#{arg[1].to_s} = #{eval arg[1].to_s}" })
 
       @directory
     end
 
     # Returns the number of sub-directories contained in the directory.
     def directory_count
-      CucumberAnalytics::Logging.logger.info('Directory#directory_count')
+      CucumberAnalytics::Logging.log_method("Directory##{__method__}", method(__method__).parameters.map { |arg| "#{arg[1].to_s} = #{eval arg[1].to_s}" })
 
       @directories.count
     end
 
     # Returns the number of features files contained in the directory.
     def feature_file_count
-      CucumberAnalytics::Logging.logger.info('Directory#feature_file_count')
+      CucumberAnalytics::Logging.log_method("Directory##{__method__}", method(__method__).parameters.map { |arg| "#{arg[1].to_s} = #{eval arg[1].to_s}" })
 
       @feature_files.count
     end
@@ -63,7 +61,7 @@ module CucumberAnalytics
     # Returns the immediate child elements of the directory (i.e. its Directory
     # and FeatureFile objects).
     def contains
-      CucumberAnalytics::Logging.logger.info('Directory#contains')
+      CucumberAnalytics::Logging.log_method("Directory##{__method__}", method(__method__).parameters.map { |arg| "#{arg[1].to_s} = #{eval arg[1].to_s}" })
 
       @feature_files + @directories
     end
@@ -73,7 +71,7 @@ module CucumberAnalytics
 
 
     def scan_directory
-      CucumberAnalytics::Logging.logger.info('Directory#scan_directory')
+      CucumberAnalytics::Logging.log_method("Directory##{__method__}", method(__method__).parameters.map { |arg| "#{arg[1].to_s} = #{eval arg[1].to_s}" })
 
       entries = Dir.entries(@directory)
       entries.delete '.'

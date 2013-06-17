@@ -45,7 +45,13 @@ module CucumberAnalytics
         @default_logfile ||= "#{File.dirname(__FILE__)}/../../ca_logfile.log"
       end
 
-    end
+      # A central method for tracking method calls.
+      def log_method(name, *args)
+        logger.info("Method #{name} called")
+        logger.debug("Arguments: #{args}")
+      end
+
+   end
 
   end
 end
