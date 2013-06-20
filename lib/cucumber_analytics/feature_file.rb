@@ -4,6 +4,9 @@ module CucumberAnalytics
 
   class FeatureFile
 
+    include Containing
+
+
     # The Feature object contained by the FeatureFile
     attr_accessor :feature
 
@@ -13,12 +16,18 @@ module CucumberAnalytics
 
     # Creates a new FeatureFile object and, if *file_parsed* is provided,
     # populates the object.
-    def initialize(file_parsed = nil)
+    def initialize(file = nil)
       CucumberAnalytics::Logging.log_method("FeatureFile##{__method__}", method(__method__).parameters.map { |arg| "#{arg[1].to_s} = #{eval arg[1].to_s}" })
 
-      if file_parsed
-        raise(ArgumentError, "Unknown file: #{file_parsed.inspect}") unless File.exists?(file_parsed)
-        parse_file(file_parsed)
+      @file = file
+      @feature = nil
+
+      if file
+        raise(ArgumentError, "Unknown file: #{file.inspect}") unless File.exists?(file)
+
+        parsed_file = parse_file(file)
+
+        build_file(parsed_file)
       end
     end
 
@@ -58,18 +67,15 @@ module CucumberAnalytics
       CucumberAnalytics::Logging.log_method("FeatureFile##{__method__}", method(__method__).parameters.map { |arg| "#{arg[1].to_s} = #{eval arg[1].to_s}" })
 
       source_text = IO.read(file_to_parse)
-      parsed_file = Parsing::parse_text(source_text)
 
-      CucumberAnalytics::Logging.logger.debug('parsed_file:')
-      CucumberAnalytics::Logging.logger.debug(parsed_file.to_yaml)
+      Parsing::parse_text(source_text)
+    end
 
-      @file = file_to_parse
-      @feature = nil
+    def build_file(parsed_file)
+      CucumberAnalytics::Logging.log_method("FeatureFile##{__method__}", method(__method__).parameters.map { |arg| "#{arg[1].to_s} = #{eval arg[1].to_s}" })
 
       unless parsed_file.empty?
-        feature_found = Feature.new(parsed_file.first)
-        feature_found.parent_element = self
-        @feature = feature_found
+        @feature = build_child_element(Feature, parsed_file.first)
       end
     end
 

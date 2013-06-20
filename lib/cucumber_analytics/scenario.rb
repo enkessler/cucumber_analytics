@@ -28,7 +28,7 @@ module CucumberAnalytics
     def build_scenario(scenario)
       CucumberAnalytics::Logging.log_method("Scenario##{__method__}", method(__method__).parameters.map { |arg| "#{arg[1].to_s} = #{eval arg[1].to_s}" })
 
-      parse_element_tags(scenario)
+      populate_element_tags(scenario)
     end
 
   end

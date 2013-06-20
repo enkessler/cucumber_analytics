@@ -92,9 +92,19 @@ module CucumberAnalytics
     def build_example(parsed_example)
       CucumberAnalytics::Logging.log_method("Example##{__method__}", method(__method__).parameters.map { |arg| "#{arg[1].to_s} = #{eval arg[1].to_s}" })
 
-      parse_element_tags(parsed_example)
+      populate_element_tags(parsed_example)
+      populate_example_parameters(parsed_example)
+      populate_example_rows(parsed_example)
+    end
+
+    def populate_example_parameters(parsed_example)
+      CucumberAnalytics::Logging.log_method("Example##{__method__}", method(__method__).parameters.map { |arg| "#{arg[1].to_s} = #{eval arg[1].to_s}" })
 
       @parameters = parsed_example['rows'].first['cells']
+    end
+
+    def populate_example_rows(parsed_example)
+      CucumberAnalytics::Logging.log_method("Example##{__method__}", method(__method__).parameters.map { |arg| "#{arg[1].to_s} = #{eval arg[1].to_s}" })
 
       parsed_example['rows'].shift
       parsed_example['rows'].each do |row|

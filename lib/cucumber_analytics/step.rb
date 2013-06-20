@@ -175,10 +175,29 @@ module CucumberAnalytics
     def build_step(step)
       CucumberAnalytics::Logging.log_method("Step##{__method__}", method(__method__).parameters.map { |arg| "#{arg[1].to_s} = #{eval arg[1].to_s}" })
 
-      @base = step['name']
-      @block = parse_block(step)
-      @keyword = step['keyword'].strip
+      populate_base(step)
+      populate_block(step)
+      populate_keyword(step)
+
       scan_arguments
+    end
+
+    def populate_base(step)
+      CucumberAnalytics::Logging.log_method("Step##{__method__}", method(__method__).parameters.map { |arg| "#{arg[1].to_s} = #{eval arg[1].to_s}" })
+
+      @base = step['name']
+    end
+
+    def populate_block(step)
+      CucumberAnalytics::Logging.log_method("Step##{__method__}", method(__method__).parameters.map { |arg| "#{arg[1].to_s} = #{eval arg[1].to_s}" })
+
+      @block = build_block(step)
+    end
+
+    def populate_keyword(step)
+      CucumberAnalytics::Logging.log_method("Step##{__method__}", method(__method__).parameters.map { |arg| "#{arg[1].to_s} = #{eval arg[1].to_s}" })
+
+      @keyword = step['keyword'].strip
     end
 
     # Returns the step string minus any arguments based on the given delimiters.
@@ -194,7 +213,7 @@ module CucumberAnalytics
       step
     end
 
-    def parse_block(step)
+    def build_block(step)
       CucumberAnalytics::Logging.log_method("Step##{__method__}", method(__method__).parameters.map { |arg| "#{arg[1].to_s} = #{eval arg[1].to_s}" })
 
       #todo - Make these their own objects

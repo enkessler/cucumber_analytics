@@ -4,6 +4,9 @@ module CucumberAnalytics
 
   class Directory
 
+    include Containing
+
+
     # The FeatureFile objects contained by the Directory
     attr_accessor :feature_files
 
@@ -26,7 +29,7 @@ module CucumberAnalytics
 
       if directory_parsed
         raise(ArgumentError, "Unknown directory: #{directory_parsed.inspect}") unless File.exists?(directory_parsed)
-        scan_directory
+        build_directory
       end
     end
 
@@ -70,7 +73,7 @@ module CucumberAnalytics
     private
 
 
-    def scan_directory
+    def build_directory
       CucumberAnalytics::Logging.log_method("Directory##{__method__}", method(__method__).parameters.map { |arg| "#{arg[1].to_s} = #{eval arg[1].to_s}" })
 
       entries = Dir.entries(@directory)
@@ -78,22 +81,16 @@ module CucumberAnalytics
       entries.delete '..'
 
       entries.each do |entry|
-        entry = @directory + '/' + entry
+        entry = "#{@directory}/#{entry}"
 
-        if File.directory?(entry)
-          found_directory = Directory.new(entry)
-          found_directory.parent_element = self
-
-          @directories << found_directory
-        end
-
-        if entry =~ /\.feature$/
-          found_feature_file = FeatureFile.new(entry)
-          found_feature_file.parent_element = self
-
-          @feature_files << found_feature_file
+        case
+          when File.directory?(entry)
+            @directories << build_child_element(Directory, entry)
+          when entry =~ /\.feature$/
+            @feature_files << build_child_element(FeatureFile, entry)
         end
       end
+
     end
 
   end

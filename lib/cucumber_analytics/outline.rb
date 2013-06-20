@@ -5,6 +5,7 @@ module CucumberAnalytics
   class Outline < TestElement
 
     include Taggable
+    include Containing
 
 
     # The Example objects contained by the Outline
@@ -23,7 +24,7 @@ module CucumberAnalytics
       @tags = []
       @examples = []
 
-      parse_outline(parsed_outline) if parsed_outline
+      build_outline(parsed_outline) if parsed_outline
     end
 
     # Returns the immediate child elements of the outline (i.e. its Example
@@ -38,20 +39,18 @@ module CucumberAnalytics
     private
 
 
-    def parse_outline(parsed_outline)
+    def build_outline(parsed_outline)
       CucumberAnalytics::Logging.log_method("Outline##{__method__}", method(__method__).parameters.map { |arg| "#{arg[1].to_s} = #{eval arg[1].to_s}" })
 
-      parse_element_tags(parsed_outline)
-      parse_outline_examples(parsed_outline['examples']) if parsed_outline['examples']
+      populate_element_tags(parsed_outline)
+      populate_outline_examples(parsed_outline['examples']) if parsed_outline['examples']
     end
 
-    def parse_outline_examples(parsed_examples)
+    def populate_outline_examples(parsed_examples)
       CucumberAnalytics::Logging.log_method("Outline##{__method__}", method(__method__).parameters.map { |arg| "#{arg[1].to_s} = #{eval arg[1].to_s}" })
 
       parsed_examples.each do |example|
-        element = Example.new(example)
-        element.parent_element = self
-        @examples << element
+        @examples << build_child_element(Example, example)
       end
     end
 

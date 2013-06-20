@@ -5,6 +5,7 @@ module CucumberAnalytics
   class Feature < FeatureElement
 
     include Taggable
+    include Containing
 
 
     # The Background object contained by the Feature
@@ -116,45 +117,28 @@ module CucumberAnalytics
     def build_feature(parsed_feature)
       CucumberAnalytics::Logging.log_method("Feature##{__method__}", method(__method__).parameters.map { |arg| "#{arg[1].to_s} = #{eval arg[1].to_s}" })
 
-      parse_element_tags(parsed_feature) if parsed_feature['tags']
-      parse_feature_elements(parsed_feature) if parsed_feature['elements']
+      populate_element_tags(parsed_feature)
+      populate_feature_elements(parsed_feature)
     end
 
-    def parse_feature_elements(parsed_feature)
+    def populate_feature_elements(parsed_feature)
       CucumberAnalytics::Logging.log_method("Feature##{__method__}", method(__method__).parameters.map { |arg| "#{arg[1].to_s} = #{eval arg[1].to_s}" })
 
-      parse_background(parsed_feature)
-      parse_tests(parsed_feature)
-    end
+      elements = parsed_feature['elements']
 
-    def parse_background(parsed_feature)
-      CucumberAnalytics::Logging.log_method("Feature##{__method__}", method(__method__).parameters.map { |arg| "#{arg[1].to_s} = #{eval arg[1].to_s}" })
-
-      background_element = parsed_feature['elements'].select { |element| element['keyword'] == 'Background' }.first
-
-      if background_element
-        element = Background.new(background_element)
-        element.parent_element = self
-        @background = element
-      end
-    end
-
-    def parse_tests(parsed_feature)
-      CucumberAnalytics::Logging.log_method("Feature##{__method__}", method(__method__).parameters.map { |arg| "#{arg[1].to_s} = #{eval arg[1].to_s}" })
-
-      test_elements = parsed_feature['elements'].select { |element| element['keyword'] == 'Scenario' || element['keyword'] == 'Scenario Outline' }
-      test_elements.each do |parsed_test|
-        case parsed_test['keyword']
-          when 'Scenario'
-            element = Scenario.new(parsed_test)
-            element.parent_element = self
-            @tests << element
-          when 'Scenario Outline'
-            element = Outline.new(parsed_test)
-            element.parent_element = self
-            @tests << element
+      if elements
+        elements.each do |element|
+          case element['keyword']
+            when 'Scenario'
+              @tests << build_child_element(Scenario, element)
+            when 'Scenario Outline'
+              @tests << build_child_element(Outline, element)
+            when 'Background'
+              @background = build_child_element(Background, element)
+          end
         end
       end
+
     end
 
   end

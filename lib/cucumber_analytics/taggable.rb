@@ -26,7 +26,7 @@ module CucumberAnalytics
     private
 
 
-    def parse_element_tags(parsed_element)
+    def populate_element_tags(parsed_element)
       CucumberAnalytics::Logging.log_method("Taggable##{__method__}", method(__method__).parameters.map { |arg| "#{arg[1].to_s} = #{eval arg[1].to_s}" })
 
       if parsed_element['tags']

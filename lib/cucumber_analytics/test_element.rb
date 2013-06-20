@@ -4,6 +4,9 @@ module CucumberAnalytics
 
   class TestElement < FeatureElement
 
+    include Containing
+
+
     # The steps contained by the TestElement
     attr_accessor :steps
 
@@ -63,17 +66,15 @@ module CucumberAnalytics
     def build_test_element(parsed_test_element)
       CucumberAnalytics::Logging.log_method("TestElement##{__method__}", method(__method__).parameters.map { |arg| "#{arg[1].to_s} = #{eval arg[1].to_s}" })
 
-      parse_test_element_steps(parsed_test_element)
+      populate_test_element_steps(parsed_test_element)
     end
 
-    def parse_test_element_steps(parsed_test_element)
+    def populate_test_element_steps(parsed_test_element)
       CucumberAnalytics::Logging.log_method("TestElement##{__method__}", method(__method__).parameters.map { |arg| "#{arg[1].to_s} = #{eval arg[1].to_s}" })
 
       if parsed_test_element['steps']
         parsed_test_element['steps'].each do |step|
-          element = Step.new(step)
-          element.parent_element = self
-          @steps << element
+          @steps << build_child_element(Step, step)
         end
       end
     end
