@@ -4,6 +4,25 @@ SimpleCov.command_name('Step') unless RUBY_VERSION.to_s < '1.9.0'
 
 describe 'Step, Integration' do
 
+  it 'properly sets its child elements' do
+    source_1 = ['* a step',
+                '"""',
+                'a doc string',
+                '"""']
+    source_2 = ['* a step',
+                '| a block|']
+
+    step_1 = CucumberAnalytics::Step.new(source_1.join("\n"))
+    step_2 = CucumberAnalytics::Step.new(source_2.join("\n"))
+
+
+    doc_string = step_1.block
+    table = step_2.block
+
+    doc_string.parent_element.should equal step_1
+    table.parent_element.should equal step_2
+  end
+
   it 'defaults to the World delimiters if its own are not set' do
     world = CucumberAnalytics::World
     world.left_delimiter = '"'

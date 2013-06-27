@@ -70,3 +70,22 @@ Then /^(?:the )?(?:feature "([^"]*)" )?test(?: "([^"]*)")? step(?: "([^"]*)")? h
 
   assert(actual == expected, "Expected: #{expected}\n but was: #{actual}")
 end
+
+Then /^(?:the )?(?:feature "([^"]*)" )?(?:test(?: "([^"]*)")? )?step(?: "([^"]*)")? has a "([^"]*)"$/ do |file, test, step, type|
+  file ||= 1
+  test ||= 1
+  step ||= 1
+
+  case type
+    when 'doc string'
+      expected = CucumberAnalytics::DocString
+    when 'table'
+      expected = CucumberAnalytics::Table
+    else
+      raise(ArgumentError, "Unknown block type: #{type}")
+  end
+
+  actual = @parsed_files[file - 1].feature.tests[test - 1].steps[step - 1].block.class
+
+  actual.should == expected
+end

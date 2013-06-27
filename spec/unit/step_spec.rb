@@ -56,20 +56,6 @@ describe 'Step, Unit' do
     @step.block.should == :some_other_block
   end
 
-  it 'stores its block as a nested array of strings' do
-    source = "* a step\n| cell 1 | cell 2 |\n| cell 3 | cell 4 |"
-    step = CucumberAnalytics::Step.new(source)
-
-    block = step.block
-
-    block.is_a?(Array).should be_true
-
-    block.each do |row|
-      row.is_a?(Array).should be_true
-      row.each { |cell| cell.is_a?(String).should be_true }
-    end
-  end
-
   it 'starts with no block' do
     @step.block.should == nil
   end
@@ -247,15 +233,6 @@ describe 'Step, Unit' do
       expected_output = ['Given a test step with -parameter 1- ^and@ *parameter 2!!']
 
       step_without_block.step_text.should == expected_output
-    end
-
-    it 'returns the steps entire text by default' do
-      source = "Given a test step with -parameter 1- ^and@ *parameter 2!!"
-      @step = CucumberAnalytics::Step.new(source)
-
-      expected_output = ['Given a test step with -parameter 1- ^and@ *parameter 2!!']
-
-      @step.step_text.should == expected_output
     end
 
     it 'can provide the step\'s text without the keyword' do

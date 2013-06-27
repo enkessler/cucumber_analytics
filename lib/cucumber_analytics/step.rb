@@ -4,6 +4,9 @@ module CucumberAnalytics
 
   class Step
 
+    include Containing
+
+
     # The step's keyword
     attr_accessor :keyword
 
@@ -216,15 +219,11 @@ module CucumberAnalytics
     def build_block(step)
       CucumberAnalytics::Logging.log_method("Step##{__method__}", method(__method__).parameters.map { |arg| "#{arg[1].to_s} = #{eval arg[1].to_s}" })
 
-      #todo - Make these their own objects
       case
         when step['rows']
-          @block = step['rows'].collect { |row| row['cells'] }
+          @block = build_child_element(Table, step['rows'])
         when step['doc_string']
-          @block = []
-          @block << "\"\"\" #{step['doc_string']['content_type']}"
-          @block.concat(step['doc_string']['value'].split($/))
-          @block << "\"\"\""
+          @block = build_child_element(DocString, step['doc_string'])
         else
           @block = nil
       end
@@ -235,7 +234,7 @@ module CucumberAnalytics
     def rebuild_block_text(blok)
       CucumberAnalytics::Logging.log_method("Step##{__method__}", method(__method__).parameters.map { |arg| "#{arg[1].to_s} = #{eval arg[1].to_s}" })
 
-      blok.collect { |row| "|#{row.join('|')}|" }
+      blok.contents.collect { |row| "|#{row.join('|')}|" }
     end
 
   end

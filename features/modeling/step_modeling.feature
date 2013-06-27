@@ -4,10 +4,11 @@ Feature: Step elements can be modeled.
   Acceptance criteria
 
   All conceptual pieces of a Step can be modeled:
-  1. the step's keyword
-  2. the text of the step
-  3. the step's arguments, if any
-  4. the step's associated block, if any
+    1. the step's keyword
+    2. the text of the step
+    3. the step's arguments, if any
+    4. the step's associated block, if any
+
 
   Background: Test file setup.
     Given the following feature file:
@@ -52,14 +53,8 @@ Feature: Step elements can be modeled.
 
   Scenario: The steps's block is modeled.
     Then step "1" has no block
-    Then step "2" has the following block:
-      | """ content_type     |
-      | 'some text'          |
-      | '    some more text' |
-      | """                  |
-    And step "3" has the following block:
-      | data      | a header |
-      | more data | a value  |
+    Then step "2" has a "doc string"
+    And step "3" has a "table"
     And step "4" has no block
 
   Scenario Outline: Step models pass all other specifications
