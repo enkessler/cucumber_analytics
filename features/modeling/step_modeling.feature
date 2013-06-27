@@ -65,3 +65,4 @@ Feature: Step elements can be modeled.
   Examples:
     | additional specifications |
     | step_spec.rb              |
+    | step_integration_spec.rb  |
