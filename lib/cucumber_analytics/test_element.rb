@@ -32,7 +32,7 @@ module CucumberAnalytics
 
     # Returns the immediate child elements of the element.
     def contains
-      CucumberAnalytics::Logging.log_method("TestElement##{__method__}", method(__method__).parameters.map { |arg| "#{arg[1].to_s} = #{eval arg[1].to_s}" })
+      CucumberAnalytics::Logging.log_method("TestElement##{__method__}")
 
       @steps
     end

@@ -13,7 +13,7 @@ module CucumberAnalytics
       # Parses the Cucumber feature given in *source_text* and returns an array
       # containing the hash representation of its logical structure.
       def parse_text(source_text)
-        CucumberAnalytics::Logging.log_method("Parsing##{__method__}", method(__method__).parameters.map { |arg| "#{arg[1].to_s} = #{eval arg[1].to_s}" })
+        CucumberAnalytics::Logging.log_method("#{self.class}##{__method__}", method(__method__).parameters.map { |arg| "#{arg[1].to_s} = #{eval arg[1].to_s}" })
 
         raise(ArgumentError, "Cannot parse #{source_text.class} objects. Strings only.") unless source_text.is_a?(String)
 

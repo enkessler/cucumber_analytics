@@ -10,7 +10,7 @@ module CucumberAnalytics
     # Creates a new Scenario object and, if *source* is provided, populates the
     # object.
     def initialize(source = nil)
-      CucumberAnalytics::Logging.log_method("Scenario##{__method__}", method(__method__).parameters.map { |arg| "#{arg[1].to_s} = #{eval arg[1].to_s}" })
+      CucumberAnalytics::Logging.log_method("#{self.class}##{__method__}", method(__method__).parameters.map { |arg| "#{arg[1].to_s} = #{eval arg[1].to_s}" })
 
       parsed_scenario = process_source(source)
 
@@ -26,7 +26,7 @@ module CucumberAnalytics
 
 
     def build_scenario(scenario)
-      CucumberAnalytics::Logging.log_method("Scenario##{__method__}", method(__method__).parameters.map { |arg| "#{arg[1].to_s} = #{eval arg[1].to_s}" })
+      CucumberAnalytics::Logging.log_method("#{self.class}##{__method__}", method(__method__).parameters.map { |arg| "#{arg[1].to_s} = #{eval arg[1].to_s}" })
 
       populate_element_tags(scenario)
     end
