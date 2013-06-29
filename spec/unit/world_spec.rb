@@ -142,10 +142,10 @@ describe 'World, Unit' do
     end
 
     it 'can collect features from containers' do
-      nested_container = double(:feature => :thing_1)
-      container = double(:feature => :thing_2, :contains => [nested_container])
+      nested_container = double(:features => @set_2)
+      container = double(:features => @set_1, :contains => [nested_container])
 
-      @world.features_in(container).should =~ [:thing_1, :thing_2]
+      @world.features_in(container).should =~ (@set_1 + @set_2)
     end
 
     it 'can collect tests from containers' do

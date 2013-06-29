@@ -7,8 +7,8 @@ module CucumberAnalytics
     include Containing
 
 
-    # The Feature object contained by the FeatureFile
-    attr_accessor :feature
+    # The Feature objects contained by the FeatureFile
+    attr_accessor :features
 
     # The parent object that contains *self*
     attr_accessor :parent_element
@@ -20,7 +20,7 @@ module CucumberAnalytics
       CucumberAnalytics::Logging.log_method("FeatureFile##{__method__}", method(__method__).parameters.map { |arg| "#{arg[1].to_s} = #{eval arg[1].to_s}" })
 
       @file = file
-      @feature = nil
+      @features = []
 
       if file
         raise(ArgumentError, "Unknown file: #{file.inspect}") unless File.exists?(file)
@@ -49,16 +49,20 @@ module CucumberAnalytics
     def contains
       CucumberAnalytics::Logging.log_method("FeatureFile##{__method__}", method(__method__).parameters.map { |arg| "#{arg[1].to_s} = #{eval arg[1].to_s}" })
 
-      @feature ? [@feature] : []
+      @features
     end
 
     # Returns the number of features contained in the file.
     def feature_count
       CucumberAnalytics::Logging.log_method("FeatureFile##{__method__}", method(__method__).parameters.map { |arg| "#{arg[1].to_s} = #{eval arg[1].to_s}" })
 
-      @feature.nil? ? 0 : 1
+      @features.count
     end
 
+    # Returns the Feature object contained by the FeatureFile.
+    def feature
+      @features.first
+    end
 
     private
 
@@ -75,7 +79,7 @@ module CucumberAnalytics
       CucumberAnalytics::Logging.log_method("FeatureFile##{__method__}", method(__method__).parameters.map { |arg| "#{arg[1].to_s} = #{eval arg[1].to_s}" })
 
       unless parsed_file.empty?
-        @feature = build_child_element(Feature, parsed_file.first)
+        @features << build_child_element(Feature, parsed_file.first)
       end
     end
 

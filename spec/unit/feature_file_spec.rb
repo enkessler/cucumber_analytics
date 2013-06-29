@@ -40,35 +40,43 @@ describe 'FeatureFile, Unit' do
     directory.path.should == path
   end
 
-  it 'has a feature - #feature' do
-    @feature_file.should respond_to(:feature)
+  it 'has features - #features' do
+    @feature_file.should respond_to(:features)
   end
 
-  it 'can get and set its feature - #feature, #feature=' do
-    @feature_file.feature = :some_feature
-    @feature_file.feature.should == :some_feature
-    @feature_file.feature = :some_other_feature
-    @feature_file.feature.should == :some_other_feature
+  it 'can get and set its features - #features, #features=' do
+    @feature_file.features = :some_features
+    @feature_file.features.should == :some_features
+    @feature_file.features = :some_other_features
+    @feature_file.features.should == :some_other_features
   end
 
   it 'knows how many features it has - #feature_count' do
-    @feature_file.feature = :a_feature
+    @feature_file.features = [:a_feature]
     @feature_file.feature_count.should == 1
-    @feature_file.feature = nil
+    @feature_file.features = []
     @feature_file.feature_count.should == 0
   end
 
-  it 'starts with no feature' do
-    @feature_file.feature.should be_nil
+  it 'starts with no features' do
+    @feature_file.features.should == []
   end
 
-  it 'contains a feature' do
-    feature = :a_feature
-    everything = [feature]
+  it 'contains features' do
+    features = [:a_feature]
+    everything = features
 
-    @feature_file.feature = feature
+    @feature_file.features = features
 
     @feature_file.contains.should =~ everything
+  end
+
+  it 'can easily access its sole feature' do
+    @feature_file.features = []
+    @feature_file.feature.should be_nil
+
+    @feature_file.features = [:a_feature]
+    @feature_file.feature.should == :a_feature
   end
 
 end

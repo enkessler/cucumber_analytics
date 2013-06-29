@@ -96,54 +96,42 @@ module CucumberAnalytics
       def tags_in(container)
         CucumberAnalytics::Logging.log_method("World##{__method__}", method(__method__).parameters.map { |arg| "#{arg[1].to_s} = #{eval arg[1].to_s}" })
 
-        Array.new.tap do |accumulated_tags|
-          collect_tags(accumulated_tags, container)
-        end
+        Array.new.tap { |accumulated_tags| collect_all_in(:tags, container, accumulated_tags) }
       end
 
       # Returns all directories found in the passed container.
       def directories_in(container)
         CucumberAnalytics::Logging.log_method("World##{__method__}", method(__method__).parameters.map { |arg| "#{arg[1].to_s} = #{eval arg[1].to_s}" })
 
-        Array.new.tap do |accumulated_directories|
-          collect_directories(accumulated_directories, container)
-        end
+        Array.new.tap { |accumulated_directories| collect_all_in(:directories, container, accumulated_directories) }
       end
 
       # Returns all feature files found in the passed container.
       def feature_files_in(container)
         CucumberAnalytics::Logging.log_method("World##{__method__}", method(__method__).parameters.map { |arg| "#{arg[1].to_s} = #{eval arg[1].to_s}" })
 
-        Array.new.tap do |accumulated_files|
-          collect_feature_files(accumulated_files, container)
-        end
+        Array.new.tap { |accumulated_files| collect_all_in(:feature_files, container, accumulated_files) }
       end
 
       # Returns all features found in the passed container.
       def features_in(container)
         CucumberAnalytics::Logging.log_method("World##{__method__}", method(__method__).parameters.map { |arg| "#{arg[1].to_s} = #{eval arg[1].to_s}" })
 
-        Array.new.tap do |accumulated_features|
-          collect_features(accumulated_features, container)
-        end
+        Array.new.tap { |accumulated_features| collect_all_in(:features, container, accumulated_features) }
       end
 
       # Returns all tests found in the passed container.
       def tests_in(container)
         CucumberAnalytics::Logging.log_method("World##{__method__}", method(__method__).parameters.map { |arg| "#{arg[1].to_s} = #{eval arg[1].to_s}" })
 
-        Array.new.tap do |accumulated_tests|
-          collect_tests(accumulated_tests, container)
-        end
+        Array.new.tap { |accumulated_tests| collect_all_in(:tests, container, accumulated_tests) }
       end
 
       # Returns all steps found in the passed container.
       def steps_in(container)
         CucumberAnalytics::Logging.log_method("World##{__method__}", method(__method__).parameters.map { |arg| "#{arg[1].to_s} = #{eval arg[1].to_s}" })
 
-        Array.new.tap do |accumulated_steps|
-          collect_steps(accumulated_steps, container)
-        end
+        Array.new.tap { |accumulated_steps| collect_all_in(:steps, container, accumulated_steps) }
       end
 
       # Returns all undefined steps found in the passed container.
@@ -200,80 +188,15 @@ module CucumberAnalytics
         Regexp.new(line)
       end
 
-      # Recursively gathers all tags found in the passed container.
-      def collect_tags(accumulated_tags, container)
-        CucumberAnalytics::Logging.log_method("World##{__method__}", method(__method__).parameters.map { |arg| "#{arg[1].to_s} = #{eval arg[1].to_s}" })
+      # Recursively gathers all things of the given type found in the passed container.
+      def collect_all_in(type_of_thing, container, accumulated_things)
+        CucumberAnalytics::Logging.log_method("#{self.class}##{__method__}", method(__method__).parameters.map { |arg| "#{arg[1].to_s} = #{eval arg[1].to_s}" })
 
-        accumulated_tags.concat container.tags if container.respond_to?(:tags)
-
-        if container.respond_to?(:contains)
-          container.contains.each do |child_container|
-            collect_tags(accumulated_tags, child_container)
-          end
-        end
-      end
-
-      # Recursively gathers all directories found in the passed container.
-      def collect_directories(accumulated_directories, container)
-        CucumberAnalytics::Logging.log_method("World##{__method__}", method(__method__).parameters.map { |arg| "#{arg[1].to_s} = #{eval arg[1].to_s}" })
-
-        accumulated_directories.concat container.directories if container.respond_to?(:directories)
+        accumulated_things.concat container.send(type_of_thing) if container.respond_to?(type_of_thing)
 
         if container.respond_to?(:contains)
           container.contains.each do |child_container|
-            collect_directories(accumulated_directories, child_container)
-          end
-        end
-      end
-
-      # Recursively gathers all feature files found in the passed container.
-      def collect_feature_files(accumulated_files, container)
-        CucumberAnalytics::Logging.log_method("World##{__method__}", method(__method__).parameters.map { |arg| "#{arg[1].to_s} = #{eval arg[1].to_s}" })
-
-        accumulated_files.concat container.feature_files if container.respond_to?(:feature_files)
-
-        if container.respond_to?(:contains)
-          container.contains.each do |child_container|
-            collect_feature_files(accumulated_files, child_container)
-          end
-        end
-      end
-
-      # Recursively gathers all features found in the passed container.
-      def collect_features(accumulated_features, container)
-        CucumberAnalytics::Logging.log_method("World##{__method__}", method(__method__).parameters.map { |arg| "#{arg[1].to_s} = #{eval arg[1].to_s}" })
-
-        accumulated_features << container.feature if container.respond_to?(:feature) && container.feature
-
-        if container.respond_to?(:contains)
-          container.contains.each do |child_container|
-            collect_features(accumulated_features, child_container)
-          end
-        end
-      end
-
-      # Recursively gathers all tests found in the passed container.
-      def collect_tests(accumulated_tests, container)
-        CucumberAnalytics::Logging.log_method("World##{__method__}", method(__method__).parameters.map { |arg| "#{arg[1].to_s} = #{eval arg[1].to_s}" })
-
-        accumulated_tests.concat container.tests if container.respond_to?(:tests)
-
-        if container.respond_to?(:contains)
-          container.contains.each do |child_container|
-            collect_tests(accumulated_tests, child_container)
-          end
-        end
-      end
-
-      # Recursively gathers all steps found in the passed container.
-      def collect_steps(accumulated_steps, container)
-        CucumberAnalytics::Logging.log_method("World##{__method__}", method(__method__).parameters.map { |arg| "#{arg[1].to_s} = #{eval arg[1].to_s}" })
-
-        accumulated_steps.concat container.steps if container.respond_to?(:steps)
-
-        if container.respond_to?(:contains)
-          container.contains.each do |child_container|
-            collect_steps(accumulated_steps, child_container)
+            collect_all_in(type_of_thing, child_container, accumulated_things)
           end
         end
       end
