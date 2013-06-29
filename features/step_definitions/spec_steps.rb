@@ -1,9 +1,6 @@
 Given /^that there are "([^"]*)" detailing models$/ do |spec_file|
-  if spec_file =~ /integration/
-    spec_file = File.join(SPEC_DIRECTORY, 'integration', spec_file)
-  else
-    spec_file = File.join(SPEC_DIRECTORY, 'unit', spec_file)
-  end
+  sub_directory = spec_file =~ /integration/ ? 'integration' : 'unit'
+  spec_file = "#{SPEC_DIRECTORY}/#{sub_directory}/#{spec_file}"
 
   fail "The spec file does not exist: #{spec_file}" unless File.exists?(spec_file)
 

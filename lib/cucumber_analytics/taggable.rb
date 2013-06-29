@@ -7,6 +7,7 @@ module CucumberAnalytics
     # The tags which are directly assigned to the element
     attr_accessor :tags
 
+
     # Returns the tags which are indirectly assigned to the element (i.e. they
     # have been inherited from a parent element).
     def applied_tags

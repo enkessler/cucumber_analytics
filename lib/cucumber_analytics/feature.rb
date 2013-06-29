@@ -135,10 +135,11 @@ module CucumberAnalytics
               @tests << build_child_element(Outline, element)
             when 'Background'
               @background = build_child_element(Background, element)
+            else
+              raise(ArgumentError, "Unknown keyword: #{element['keyword']}")
           end
         end
       end
-
     end
 
   end

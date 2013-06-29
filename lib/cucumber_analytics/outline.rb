@@ -5,7 +5,6 @@ module CucumberAnalytics
   class Outline < TestElement
 
     include Taggable
-    include Containing
 
 
     # The Example objects contained by the Outline

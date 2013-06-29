@@ -20,8 +20,8 @@ describe 'Feature, Integration' do
 
     feature = CucumberAnalytics::Feature.new(source)
     background = feature.background
-    scenario = feature.tests.first
-    outline = feature.tests.last
+    scenario = feature.tests[0]
+    outline = feature.tests[1]
 
 
     outline.parent_element.should equal feature

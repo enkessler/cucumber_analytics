@@ -1,5 +1,4 @@
 require 'logger'
-require 'yaml'
 
 module CucumberAnalytics
 
@@ -51,7 +50,7 @@ module CucumberAnalytics
         logger.debug("Arguments: #{args}")
       end
 
-   end
+    end
 
   end
 end

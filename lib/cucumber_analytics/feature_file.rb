@@ -66,6 +66,7 @@ module CucumberAnalytics
       @features.first
     end
 
+
     private
 
 

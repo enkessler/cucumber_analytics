@@ -105,73 +105,76 @@ describe 'Step, Unit' do
     @step.right_delimiter.should == nil
   end
 
-  it 'can determine its arguments based on a regular expression' do
-    source = 'Given a test step with a parameter'
-    step = CucumberAnalytics::Step.new(source)
-
-    step.scan_arguments(/parameter/)
-    step.arguments.should == ['parameter']
-    step.scan_arguments(/t s/)
-    step.arguments.should == ['t s']
-  end
-
-  it 'can determine its arguments based on delimiters' do
-    source = 'Given a test step with -parameter 1- and -parameter 2-'
-
-    step = CucumberAnalytics::Step.new(source)
-
-    step.scan_arguments('-', '-')
-    step.arguments.should == ['parameter 1', 'parameter 2']
-    step.scan_arguments('!', '!')
-    step.arguments.should == []
-  end
-
-  it 'can explicitly scan for arguments' do
-    @step.should respond_to(:scan_arguments)
-  end
-
-  it 'can use different left and right delimiters when scanning' do
-    source = 'Given a test step with !a parameter-'
-
-    step = CucumberAnalytics::Step.new(source)
-
-    step.scan_arguments('!', '-')
-    step.arguments.should == ['a parameter']
-  end
-
   it 'can set both of its delimiters at once - #delimiter=' do
     @step.delimiter = :new_delimiter
     @step.left_delimiter.should == :new_delimiter
     @step.right_delimiter.should == :new_delimiter
   end
 
-  it 'can use delimiters of varying lengths' do
-    source = 'Given a test step with -start-a parameter-end-'
+  context '#scan_arguments' do
 
-    step = CucumberAnalytics::Step.new(source)
+    it 'can explicitly scan for arguments' do
+      @step.should respond_to(:scan_arguments)
+    end
 
-    step.scan_arguments('-start-', '-end-')
-    step.arguments.should == ['a parameter']
-  end
+    it 'can determine its arguments based on a regular expression' do
+      source = 'Given a test step with a parameter'
+      step = CucumberAnalytics::Step.new(source)
 
-  it 'can handle delimiters with special regular expression characters' do
-    source = 'Given a test step with \d+a parameter.?'
+      step.scan_arguments(/parameter/)
+      step.arguments.should == ['parameter']
+      step.scan_arguments(/t s/)
+      step.arguments.should == ['t s']
+    end
 
-    step = CucumberAnalytics::Step.new(source)
+    it 'can determine its arguments based on delimiters' do
+      source = 'Given a test step with -parameter 1- and -parameter 2-'
 
-    step.scan_arguments('\d+', '.?')
-    step.arguments.should == ['a parameter']
-  end
+      step = CucumberAnalytics::Step.new(source)
 
-  it 'defaults to its set delimiters when scanning' do
-    source = 'Given a test step with *parameter 1* and "parameter 2" and *parameter 3*'
-    step = CucumberAnalytics::Step.new(source)
+      step.scan_arguments('-', '-')
+      step.arguments.should == ['parameter 1', 'parameter 2']
+      step.scan_arguments('!', '!')
+      step.arguments.should == []
+    end
 
-    step.left_delimiter = '"'
-    step.right_delimiter = '"'
-    step.scan_arguments
+    it 'can use different left and right delimiters when scanning' do
+      source = 'Given a test step with !a parameter-'
 
-    step.arguments.should == ['parameter 2']
+      step = CucumberAnalytics::Step.new(source)
+
+      step.scan_arguments('!', '-')
+      step.arguments.should == ['a parameter']
+    end
+
+    it 'can use delimiters of varying lengths' do
+      source = 'Given a test step with -start-a parameter-end-'
+
+      step = CucumberAnalytics::Step.new(source)
+
+      step.scan_arguments('-start-', '-end-')
+      step.arguments.should == ['a parameter']
+    end
+
+    it 'can handle delimiters with special regular expression characters' do
+      source = 'Given a test step with \d+a parameter.?'
+
+      step = CucumberAnalytics::Step.new(source)
+
+      step.scan_arguments('\d+', '.?')
+      step.arguments.should == ['a parameter']
+    end
+
+    it 'defaults to its set delimiters when scanning' do
+      source = 'Given a test step with *parameter 1* and "parameter 2" and *parameter 3*'
+      step = CucumberAnalytics::Step.new(source)
+
+      step.left_delimiter = '"'
+      step.right_delimiter = '"'
+      step.scan_arguments
+
+      step.arguments.should == ['parameter 2']
+    end
   end
 
   it 'can be parsed from stand alone text' do
@@ -218,7 +221,7 @@ describe 'Step, Unit' do
       @step.step_text.is_a?(Array).should be_true
     end
 
-    it 'returns the steps entire text by default' do
+    it 'returns the step\'s entire text by default' do
       source = "Given a test step with -parameter 1- ^and@ *parameter 2!!\n|a block|"
       step_with_block = CucumberAnalytics::Step.new(source)
 
