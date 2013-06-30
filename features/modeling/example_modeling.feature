@@ -84,4 +84,4 @@ Feature: Example elements can be modeled.
     Then all of those specifications are met
   Examples:
     | additional specifications |
-    | example_spec.rb           |
+    | example_unit_spec.rb      |

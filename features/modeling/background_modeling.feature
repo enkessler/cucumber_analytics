@@ -47,5 +47,5 @@ Feature: Background elements can be modeled.
     Then all of those specifications are met
   Examples:
     | additional specifications      |
-    | background_spec.rb             |
+    | background_unit_spec.rb        |
     | background_integration_spec.rb |

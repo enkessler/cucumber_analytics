@@ -62,5 +62,5 @@ Feature: Scenario elements can be modeled.
     Then all of those specifications are met
   Examples:
     | additional specifications    |
-    | scenario_spec.rb             |
+    | scenario_unit_spec.rb        |
     | scenario_integration_spec.rb |

@@ -73,5 +73,5 @@ Feature: Scenario Outline elements can be modeled.
     Then all of those specifications are met
   Examples:
     | additional specifications   |
-    | outline_spec.rb             |
+    | outline_unit_spec.rb        |
     | outline_integration_spec.rb |

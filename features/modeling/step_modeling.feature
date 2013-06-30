@@ -64,5 +64,5 @@ Feature: Step elements can be modeled.
     Then all of those specifications are met
   Examples:
     | additional specifications |
-    | step_spec.rb              |
+    | step_unit_spec.rb         |
     | step_integration_spec.rb  |

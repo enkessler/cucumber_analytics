@@ -138,5 +138,5 @@ Feature: Features can be modeled.
     Then all of those specifications are met
   Examples:
     | additional specifications   |
-    | feature_spec.rb             |
+    | feature_unit_spec.rb        |
     | feature_integration_spec.rb |

@@ -110,5 +110,5 @@ Feature: Directories can be modeled.
     Then all of those specifications are met
   Examples:
     | additional specifications     |
-    | directory_spec.rb             |
+    | directory_unit_spec.rb        |
     | directory_integration_spec.rb |

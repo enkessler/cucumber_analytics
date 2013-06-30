@@ -54,5 +54,5 @@ Feature: Feature files can be modeled.
     Then all of those specifications are met
   Examples:
     | additional specifications        |
-    | feature_file_spec.rb             |
+    | feature_file_unit_spec.rb        |
     | feature_file_integration_spec.rb |
