@@ -1,3 +1,19 @@
+=== Version 1.0.0 / 2013-06-30
+
+* Bug fix: Step definitions are now detected whether or not parenthesis are
+  used in the declararion.
+* Now using the gherkin gem to parse feature files. This should eliminate most
+  parsing related bugs.
+* Empty outline example blocks can non longer be handeled (since the gherkin gem
+  can likewise not handle them).
+* Source code snippets can now be analyzed (rather than needing an entire feature
+  file to parse).
+* The gem's logfile is now internal to the gem instead of being created where
+  gem functionality is invoked.
+* Many class and method names have changed.
+* Significant API overhaul, including several new classes for modeling.
+
+
 === Version 0.0.9 / 2013-02-25
 
 * Bug fix: Fixed an un-anchored regular expression that was causing
