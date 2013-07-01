@@ -1,5 +1,4 @@
 require 'cucumber_analytics/version'
-require 'cucumber_analytics/logging'
 require 'cucumber_analytics/parsing'
 require 'cucumber_analytics/containing'
 require 'cucumber_analytics/taggable'

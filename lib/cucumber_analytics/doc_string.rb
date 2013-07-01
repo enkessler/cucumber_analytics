@@ -17,8 +17,6 @@ module CucumberAnalytics
     # Creates a new DocString object and, if *source* is provided, populates
     # the object.
     def initialize(source = nil)
-      CucumberAnalytics::Logging.log_method("#{self.class}##{__method__}", method(__method__).parameters.map { |arg| "#{arg[1].to_s} = #{eval arg[1].to_s}" })
-
       @contents = []
 
       parsed_doc_string = process_source(source)
@@ -31,8 +29,6 @@ module CucumberAnalytics
 
 
     def process_source(source)
-      CucumberAnalytics::Logging.log_method("#{self.class}##{__method__}", method(__method__).parameters.map { |arg| "#{arg[1].to_s} = #{eval arg[1].to_s}" })
-
       case
         when source.is_a?(String)
           parse_doc_string(source)
@@ -42,8 +38,6 @@ module CucumberAnalytics
     end
 
     def parse_doc_string(source_text)
-      CucumberAnalytics::Logging.log_method("#{self.class}##{__method__}", method(__method__).parameters.map { |arg| "#{arg[1].to_s} = #{eval arg[1].to_s}" })
-
       base_file_string = "Feature:\nScenario:\n* step\n"
       source_text = base_file_string + source_text
 
@@ -53,8 +47,6 @@ module CucumberAnalytics
     end
 
     def build_doc_string(doc_string)
-      CucumberAnalytics::Logging.log_method("#{self.class}##{__method__}", method(__method__).parameters.map { |arg| "#{arg[1].to_s} = #{eval arg[1].to_s}" })
-
       @content_type = doc_string['content_type'] == "" ? nil : doc_string['content_type']
       @contents = doc_string['value'].split($/)
     end

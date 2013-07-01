@@ -10,8 +10,6 @@ require "#{File.dirname(__FILE__)}/unit/bare_bones_unit_specs"
 require "#{File.dirname(__FILE__)}/unit/test_element_unit_specs"
 require "#{File.dirname(__FILE__)}/unit/prepopulated_unit_specs"
 
-CucumberAnalytics::Logging.log_level = Logger::FATAL
-
 
 DEFAULT_FEATURE_FILE_NAME = 'test_feature.feature'
 DEFAULT_FILE_DIRECTORY = "#{File.dirname(__FILE__)}/temp_files"

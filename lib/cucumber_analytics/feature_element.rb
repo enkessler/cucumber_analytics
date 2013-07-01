@@ -17,8 +17,6 @@ module CucumberAnalytics
     # Creates a new FeatureElement object and, if *parsed_element* is provided,
     # populates the object.
     def initialize(parsed_element = nil)
-      CucumberAnalytics::Logging.log_method("FeatureElement##{__method__}", "parsed_element = #{parsed_element}")
-
       @name = ''
       @description =[]
 
@@ -30,21 +28,15 @@ module CucumberAnalytics
 
 
     def build_feature_element(parsed_element)
-      CucumberAnalytics::Logging.log_method("FeatureElement##{__method__}", method(__method__).parameters.map { |arg| "#{arg[1].to_s} = #{eval arg[1].to_s}" })
-
       populate_feature_element_name(parsed_element)
       populate_feature_element_description(parsed_element)
     end
 
     def populate_feature_element_name(parsed_element)
-      CucumberAnalytics::Logging.log_method("FeatureElement##{__method__}", method(__method__).parameters.map { |arg| "#{arg[1].to_s} = #{eval arg[1].to_s}" })
-
       @name = parsed_element['name']
     end
 
     def populate_feature_element_description(parsed_element)
-      CucumberAnalytics::Logging.log_method("FeatureElement##{__method__}", method(__method__).parameters.map { |arg| "#{arg[1].to_s} = #{eval arg[1].to_s}" })
-
       @description = parsed_element['description'].split("\n").collect { |line| line.strip }
       @description.delete('')
     end
