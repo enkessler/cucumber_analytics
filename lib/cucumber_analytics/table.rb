@@ -14,8 +14,6 @@ module CucumberAnalytics
     # Creates a new Table object and, if *source* is provided, populates
     # the object.
     def initialize(source = nil)
-      CucumberAnalytics::Logging.log_method("#{self.class}##{__method__}", method(__method__).parameters.map { |arg| "#{arg[1].to_s} = #{eval arg[1].to_s}" })
-
       @contents = []
 
       parsed_table = process_source(source)
@@ -28,8 +26,6 @@ module CucumberAnalytics
 
 
     def process_source(source)
-      CucumberAnalytics::Logging.log_method("#{self.class}##{__method__}", method(__method__).parameters.map { |arg| "#{arg[1].to_s} = #{eval arg[1].to_s}" })
-
       case
         when source.is_a?(String)
           parse_table(source)
@@ -39,8 +35,6 @@ module CucumberAnalytics
     end
 
     def parse_table(source_text)
-      CucumberAnalytics::Logging.log_method("#{self.class}##{__method__}", method(__method__).parameters.map { |arg| "#{arg[1].to_s} = #{eval arg[1].to_s}" })
-
       base_file_string = "Feature:\nScenario:\n* step\n"
       source_text = base_file_string + source_text
 
@@ -50,8 +44,6 @@ module CucumberAnalytics
     end
 
     def build_table(table)
-      CucumberAnalytics::Logging.log_method("#{self.class}##{__method__}", method(__method__).parameters.map { |arg| "#{arg[1].to_s} = #{eval arg[1].to_s}" })
-
       @contents = table.collect { |row| row['cells'] }
     end
 
