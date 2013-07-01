@@ -53,5 +53,6 @@ Feature: Feature files can be modeled.
     When the corresponding unit tests are run
     Then all of those specifications are met
   Examples:
-    | additional specifications |
-    | file_spec.rb              |
+    | additional specifications        |
+    | feature_file_unit_spec.rb        |
+    | feature_file_integration_spec.rb |

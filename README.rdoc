@@ -39,7 +39,7 @@ First things first. Load up the gem code.
 
 Next, let's generate a model for our Cucumber suite.
 
-  directory = CucumberAnalytics::ParsedDirectory.new('path/to/the/code_directory')
+  directory = CucumberAnalytics::Directory.new('path/to/the/code_directory')
   world = CucumberAnalytics::World
 
 Now it's time to take a look around and see what we can see.
@@ -58,8 +58,8 @@ Now it's time to take a look around and see what we can see.
 
 
   all_steps = world.steps_in(directory)
-  puts all_steps.collect{ |step| step.step_text(:with_keywords => false)}
-  #=> ["some step", "the user logs in", "the user will log in", "another step", "the user "Bob" logs in"]
+  puts all_steps.collect{ |step| step.base}
+  #=> ["some step", "the user logs in", "the user will log in", "another step", "the user \"Bob\" logs in"]
 
 So with a few simple commands we have discovered that there are five different
 tags in our codebase and that @wip tags account for half of all usages. We have
@@ -74,3 +74,5 @@ rewritten into a single, reusable step.
 3. Commit your changes (`git commit -am 'Added some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new Pull Request
+
+I'm always looking for new ways to poke at a testbase. Feature requests are welcome.

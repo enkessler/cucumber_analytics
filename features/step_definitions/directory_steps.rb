@@ -7,7 +7,10 @@ Then /^(?:the )?directory(?: "([^"]*)")? is found to have the following properti
       expected_value.sub!('path_to', @default_file_directory)
     end
 
-    assert expected_value == @parsed_directories[directory - 1].send(property.to_sym).to_s
+    expected = expected_value
+    actual = @parsed_directories[directory - 1].send(property.to_sym).to_s
+
+    assert(actual == expected, "Expected: #{expected}\n but was: #{actual}")
   end
 end
 
@@ -23,7 +26,7 @@ When /^(?:the )?directory(?: "([^"]*)")? directories are as follows:$/ do |direc
   directory ||= 1
 
   expected = directories.raw.flatten.sort
-  actual = @parsed_directories[directory - 1].feature_directories.collect { |sub_directory| sub_directory.name }
+  actual = @parsed_directories[directory - 1].directories.collect { |sub_directory| sub_directory.name }
 
   assert(actual == expected, "Expected: #{expected}\n but was: #{actual}")
 end
@@ -32,7 +35,7 @@ When /^(?:the )?directory(?: "([^"]*)")? has no directories$/ do |directory|
   directory ||= 1
 
   expected = []
-  actual = @parsed_directories[directory - 1].feature_directories
+  actual = @parsed_directories[directory - 1].directories
 
   assert(actual == expected, "Expected: #{expected}\n but was: #{actual}")
 end

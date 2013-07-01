@@ -17,16 +17,9 @@ Then /^(?:the )?(?:feature "([^"]*)" )?test(?: "([^"]*)")? descriptive lines are
   assert @parsed_files[file - 1].feature.tests[test - 1].description == lines
 end
 
-Then /^(?:the )?(?:feature "([^"]*)" )?test(?: "([^"]*)")? steps(?: "([^"]*)" arguments)?(?: "([^"]*)" keywords)? are as follows:$/ do |file, test, arguments, keywords, steps|
+Then /^(?:the )?(?:feature "([^"]*)" )?test(?: "([^"]*)")? steps are as follows:$/ do |file, test, steps|
   file ||= 1
   test ||= 1
-  arguments ||= 'with'
-  keywords ||= 'with'
-  translate = {'with' => true,
-               'without' => false}
-
-  options = {:with_keywords => translate[keywords], :with_arguments => translate[arguments]}
-
 
   steps = steps.raw.flatten.collect do |step|
     if step.start_with? "'"
@@ -38,7 +31,7 @@ Then /^(?:the )?(?:feature "([^"]*)" )?test(?: "([^"]*)")? steps(?: "([^"]*)" ar
 
   actual_steps = Array.new.tap do |steps|
     @parsed_files[file - 1].feature.tests[test - 1].steps.each do |step|
-      steps << step.step_text(options)
+      steps << step.base
     end
   end
 
@@ -84,7 +77,10 @@ Then /^(?:the )?(?:feature "([^"]*)" )?test(?: "([^"]*)")? is equal to test "([^
   file ||= 1
   first_test ||= 1
 
-  assert @parsed_files[file - 1].feature.tests[first_test - 1] == @parsed_files[file - 1].feature.tests[second_test - 1]
+  expected = true
+  actual = @parsed_files[file - 1].feature.tests[first_test - 1] == @parsed_files[file - 1].feature.tests[second_test - 1]
+
+  assert(actual == expected, "Expected: #{expected}\n but was: #{actual}")
 end
 
 Then /^(?:the )?(?:feature "([^"]*)" )?test(?: "([^"]*)")? is not equal to test "([^"]*)"$/ do |file, first_test, second_test|

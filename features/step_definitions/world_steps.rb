@@ -39,7 +39,7 @@ Then /^the(?: "([^"]*)")? steps collected from feature "([^"]*)" background are 
       expected_steps = CucumberAnalytics::World.steps_in(container)
   end
 
-  assert expected_steps.collect { |step| step.step_text }.flatten.sort == steps.sort
+  assert expected_steps.collect { |step| step.base }.flatten.sort == steps.sort
 end
 
 Then /^the(?: "([^"]*)")? steps collected from feature "([^"]*)" test "([^"]*)" are as follows:$/ do |defined, file, test, steps|
@@ -56,57 +56,63 @@ Then /^the(?: "([^"]*)")? steps collected from feature "([^"]*)" test "([^"]*)" 
       expected_steps = CucumberAnalytics::World.steps_in(container)
   end
 
-  assert expected_steps.collect { |step| step.step_text }.flatten.sort == steps.sort
+  assert expected_steps.collect { |step| step.base }.flatten.sort == steps.sort
 end
 
 When /^the(?: "([^"]*)")? steps collected from (?:the )?feature(?: "([^"]*)")? are as follows:$/ do |defined, file, steps|
   file ||= 1
-  steps = steps.raw.flatten
   container = @parsed_files[file - 1].feature
 
   case defined
     when 'defined'
-      expected_steps = CucumberAnalytics::World.defined_steps_in(container)
+      actual_steps = CucumberAnalytics::World.defined_steps_in(container)
     when 'undefined'
-      expected_steps = CucumberAnalytics::World.undefined_steps_in(container)
+      actual_steps = CucumberAnalytics::World.undefined_steps_in(container)
     else
-      expected_steps = CucumberAnalytics::World.steps_in(container)
+      actual_steps = CucumberAnalytics::World.steps_in(container)
   end
 
-  assert expected_steps.collect { |step| step.step_text }.flatten.sort == steps.sort
+  expected = steps.raw.flatten.sort
+  actual = actual_steps.collect { |step| step.base }.flatten.sort
+
+  assert(actual == expected, "Expected: #{expected}\n but was: #{actual}")
 end
 
 When /^the(?: "([^"]*)")? steps collected from (?:the )?file(?: "([^"]*)")? are as follows:$/ do |defined, file, steps|
   file ||= 1
-  steps = steps.raw.flatten
   container = @parsed_files[file - 1]
 
   case defined
     when 'defined'
-      expected_steps = CucumberAnalytics::World.defined_steps_in(container)
+      actual_steps = CucumberAnalytics::World.defined_steps_in(container)
     when 'undefined'
-      expected_steps = CucumberAnalytics::World.undefined_steps_in(container)
+      actual_steps = CucumberAnalytics::World.undefined_steps_in(container)
     else
-      expected_steps = CucumberAnalytics::World.steps_in(container)
+      actual_steps = CucumberAnalytics::World.steps_in(container)
   end
 
-  assert expected_steps.collect { |step| step.step_text }.flatten.sort == steps.sort
+  expected = steps.raw.flatten.sort
+  actual = actual_steps.collect { |step| step.base }.flatten.sort
+
+  assert(actual == expected, "Expected: #{expected}\n but was: #{actual}")
 end
 
 When /^the(?: "([^"]*)")? steps collected from the directory are as follows:$/ do |defined, steps|
-  steps = steps.raw.flatten
   container = @parsed_directories.last
 
   case defined
     when 'defined'
-      expected_steps = CucumberAnalytics::World.defined_steps_in(container)
+      actual_steps = CucumberAnalytics::World.defined_steps_in(container)
     when 'undefined'
-      expected_steps = CucumberAnalytics::World.undefined_steps_in(container)
+      actual_steps = CucumberAnalytics::World.undefined_steps_in(container)
     else
-      expected_steps = CucumberAnalytics::World.steps_in(container)
+      actual_steps = CucumberAnalytics::World.steps_in(container)
   end
 
-  assert expected_steps.collect { |step| step.step_text }.flatten.sort == steps.sort
+  expected = steps.raw.flatten.sort
+  actual = actual_steps.collect { |step| step.base }.flatten.sort
+
+  assert(actual == expected, "Expected: #{expected}\n but was: #{actual}")
 end
 
 Then /^the tests collected from feature "([^"]*)" are as follows:$/ do |file, tests|
@@ -153,9 +159,12 @@ end
 Then /^the files collected from directory "([^"]*)" are as follows:$/ do |directory, files|
   directory ||= 1
 
-  actual_files = CucumberAnalytics::World.files_in(@parsed_directories[directory - 1]).collect { |file| file.name }
+  actual_files = CucumberAnalytics::World.feature_files_in(@parsed_directories[directory - 1]).collect { |file| file.name }
 
-  assert actual_files.flatten.sort == files.raw.flatten.sort
+  expected = files.raw.flatten.sort
+  actual = actual_files.flatten.sort
+
+  assert(actual == expected, "Expected: #{expected}\n but was: #{actual}")
 end
 
 Then /^the directories collected from directory "([^"]*)" are as follows:$/ do |directory, directories|

@@ -3,25 +3,23 @@ Then /^the(?: feature "([^"]*)")? background is found to have the following prop
   properties = properties.rows_hash
 
   properties.each do |property, expected_value|
-    assert expected_value == @parsed_files[file - 1].feature.background.send(property.to_sym).to_s
+    expected = expected_value
+    actual = @parsed_files[file - 1].feature.background.send(property.to_sym).to_s
+
+    actual.should == expected
   end
 end
 
 Then /^the(?: feature "([^"]*)")? background's descriptive lines are as follows:$/ do |file, lines|
   file ||= 1
   expected_description = lines.raw.flatten
+  actual_description = @parsed_files[file - 1].feature.background.description
 
-  assert @parsed_files[file - 1].feature.background.description == expected_description
+  actual_description.should == expected_description
 end
 
-Then /^the(?: feature "([^"]*)")? background's steps(?: "([^"]*)" arguments)?(?: "([^"]*)" keywords)? are as follows:$/ do |file, arguments, keywords, steps|
+Then /^the(?: feature "([^"]*)")? background's steps are as follows:$/ do |file, steps|
   file ||= 1
-  arguments ||= 'with'
-  keywords ||= 'with'
-  translate = {'with' => true,
-               'without' => false}
-
-  options = {:with_keywords => translate[keywords], :with_arguments => translate[arguments]}
 
   steps = steps.raw.flatten.collect do |step|
     if step.start_with? "'"
@@ -33,11 +31,14 @@ Then /^the(?: feature "([^"]*)")? background's steps(?: "([^"]*)" arguments)?(?:
 
   actual_steps = Array.new.tap do |steps|
     @parsed_files[file - 1].feature.background.steps.each do |step|
-      steps << step.step_text(options)
+      steps << step.base
     end
   end
 
-  assert actual_steps.flatten == steps
+  expected = steps
+  actual = actual_steps.flatten
+
+  assert(actual == expected, "Expected: #{expected}\n but was: #{actual}")
 end
 
 When /^step "([^"]*)" of the background (?:of feature "([^"]*)" )?has the following block:$/ do |step, file, block|

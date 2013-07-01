@@ -1,123 +1,68 @@
 module CucumberAnalytics
+
+  # A class modeling an element that contains steps.
+
   class TestElement < FeatureElement
 
+    include Containing
 
-    attr_reader :steps
+
+    # The steps contained by the TestElement
+    attr_accessor :steps
 
 
-    # Creates a new TestElement object.
-    def initialize(source_lines = nil)
-      CucumberAnalytics::Logging.logger.info('TestElement#initialize')
-
+    # Creates a new TestElement object and, if *parsed_test_element* is provided,
+    # populates the object.
+    def initialize(parsed_test_element = nil)
       super
 
       @steps = []
+
+      build_test_element(parsed_test_element) if parsed_test_element
     end
 
-    # Returns true if the two elements have the same steps, minus any keywords
-    # and arguments, and false otherwise.
+    # Returns true if the two elements have equivalent steps and false otherwise.
     def ==(other_element)
       steps == other_element.steps
+    end
+
+    # Returns the immediate child elements of the element.
+    def contains
+      @steps
     end
 
 
     private
 
 
-    def parse_test_element_steps(source_lines)
-      CucumberAnalytics::Logging.logger.info('TestElement#parse_test_element_steps')
-      CucumberAnalytics::Logging.logger.debug('source lines')
-      source_lines.each do |line|
-        CucumberAnalytics::Logging.logger.debug(line.chomp)
-      end
-
-      until source_lines.empty? or source_lines.first =~ /^\s*(?:@|Examples:)/
-        line = source_lines.first
-        block = nil
-
-        case
-          when line =~ /^\s*"""/
-            block = extract_doc_block(source_lines)
-
-            found_step = Step.new(@steps.last.keyword + ' ' + @steps.last.base, block)
-            found_step.parent_element = self
-
-            @steps[@steps.size - 1] = found_step
-          when line =~ /^\s*\|/
-            block = extract_table_block(source_lines)
-
-            found_step = Step.new(@steps.last.keyword + ' ' + @steps.last.base, block)
-            found_step.parent_element = self
-
-            @steps[@steps.size - 1] = found_step
-          else
-            unless World.ignored_line?(line)
-              found_step = Step.new(line.strip)
-              found_step.parent_element = self
-
-              @steps << found_step
-            end
-
-            source_lines.shift
-        end
+    def process_source(source)
+      case
+        when source.is_a?(String)
+          parse_test_element(source)
+        else
+          source
       end
     end
 
-    def extract_doc_block(source_lines)
-      CucumberAnalytics::Logging.logger.info('TestElement#extract_doc_block')
-      CucumberAnalytics::Logging.logger.debug('source lines')
-      source_lines.each do |line|
-        CucumberAnalytics::Logging.logger.debug(line.chomp)
-      end
+    def parse_test_element(source_text)
+      base_file_string = "Feature: Fake feature to parse\n"
+      source_text = base_file_string + source_text
 
-      step_block = []
+      parsed_file = Parsing::parse_text(source_text)
 
-      line = source_lines.first
-      leading_whitespace = line[/^\s*/]
-
-      step_block << line.strip
-      source_lines.shift
-
-      line = source_lines.first
-      until line =~ /^\s*"""/
-
-        leading_whitespace.length.times do
-          line.slice!(0, 1) if line[0] =~ /\s/
-        end
-
-        step_block << line.chomp
-        source_lines.shift
-        line = source_lines.first
-      end
-
-      step_block << line.strip
-      source_lines.shift
-
-      step_block
+      parsed_file.first['elements'].first
     end
 
-    def extract_table_block(source_lines)
-      CucumberAnalytics::Logging.logger.info('TestElement#extract_table_block')
-      CucumberAnalytics::Logging.logger.debug('source lines')
-      source_lines.each do |line|
-        CucumberAnalytics::Logging.logger.debug(line.chomp)
+    def build_test_element(parsed_test_element)
+      populate_test_element_steps(parsed_test_element)
+    end
+
+    def populate_test_element_steps(parsed_test_element)
+      if parsed_test_element['steps']
+        parsed_test_element['steps'].each do |step|
+          @steps << build_child_element(Step, step)
+        end
       end
-
-      step_block = []
-
-      line = source_lines.first
-
-      step_block << line.strip
-      source_lines.shift
-
-      line = source_lines.first
-      while line =~ /^\s*\|/
-        step_block << line.strip
-        source_lines.shift
-        line = source_lines.first
-      end
-
-      step_block
     end
 
   end

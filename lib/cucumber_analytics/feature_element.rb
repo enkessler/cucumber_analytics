@@ -1,62 +1,44 @@
 module CucumberAnalytics
+
+  # A class modeling an basic element of a feature.
+
   class FeatureElement
 
+    # The name of the FeatureElement
+    attr_accessor :name
 
-    attr_reader :name
-    attr_reader :description
+    # The description of the FeatureElement
+    attr_accessor :description
+
+    # The parent object that contains *self*
     attr_accessor :parent_element
 
 
-    # Creates a new FeatureElement object.
-    def initialize(source_lines = nil)
-      CucumberAnalytics::Logging.logger.info('FeatureElement#initialize')
-
+    # Creates a new FeatureElement object and, if *parsed_element* is provided,
+    # populates the object.
+    def initialize(parsed_element = nil)
       @name = ''
       @description =[]
+
+      build_feature_element(parsed_element) if parsed_element
     end
 
 
     private
 
 
-    def parse_feature_element(source_lines)
-      CucumberAnalytics::Logging.logger.info('FeatureElement#parse_feature_element')
-
-      parse_feature_element_name(source_lines)
-      parse_feature_element_description(source_lines)
+    def build_feature_element(parsed_element)
+      populate_feature_element_name(parsed_element)
+      populate_feature_element_description(parsed_element)
     end
 
-    #todo - move this elsewhere
-    def parse_feature_element_tags(source_lines)
-      CucumberAnalytics::Logging.logger.info('FeatureElement#parse_feature_element_tags')
-      CucumberAnalytics::Logging.logger.debug('source lines')
-      source_lines.each do |line|
-        CucumberAnalytics::Logging.logger.debug(line.chomp)
-      end
-
-      source_lines.take_while { |line| line !~ /^\s*(?:[A-Z a-z])+:/ }.tap do |tag_lines|
-        tag_lines.delete_if { |line| World.ignored_line?(line)}
-
-        tag_lines.join(' ').delete(' ').split('@').each do |tag|
-          @tags << "@#{tag.strip}"
-        end
-      end
-      @tags.shift
-
-      while source_lines.first !~  /^\s*(?:[A-Z a-z])+:/
-        source_lines.shift
-      end
+    def populate_feature_element_name(parsed_element)
+      @name = parsed_element['name']
     end
 
-    def parse_feature_element_name(source_lines)
-      CucumberAnalytics::Logging.logger.info('FeatureElement#parse_feature_element_name')
-      CucumberAnalytics::Logging.logger.debug('source lines')
-      source_lines.each do |line|
-        CucumberAnalytics::Logging.logger.debug(line.chomp)
-      end
-
-      @name.replace source_lines.first.match(/^\s*(?:[A-Z a-z])+:(.*)/)[1].strip
-      source_lines.shift
+    def populate_feature_element_description(parsed_element)
+      @description = parsed_element['description'].split("\n").collect { |line| line.strip }
+      @description.delete('')
     end
 
   end

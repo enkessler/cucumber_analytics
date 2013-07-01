@@ -1,207 +1,163 @@
 module CucumberAnalytics
+
+# A module providing suite level analysis functionality.
+
   module World
 
+    # A placeholder string used to mark 'dirty' portions of input strings
+    SANITARY_STRING = '___SANITIZED_BY_CUCUMBER_ANALYTICS___'
 
-    SANITARY_STRING = '___!!!___'
-    STEP_KEYWORD_PATTERN = '\s*(?:Given|When|Then|And|But|\*)\s*'
-    TEST_ELEMENT_START_PATTERN = '^\s*(?:@|Background:|Scenario:|(?:Scenario Outline:))'
+    # A pattern that matches a Cucumber step keyword
+    STEP_DEF_KEYWORD_PATTERN = '(?:Given|When|Then|And|But)'
+
+    # A pattern that matches a 'clean' regular expression
+    REGEX_PATTERN_STRING = '\/[^\/]*\/'
+
+    # A pattern that matches a step definition declaration line
+    STEP_DEF_LINE_PATTERN = /^\s*#{World::STEP_DEF_KEYWORD_PATTERN}\s*\(?\s*#{REGEX_PATTERN_STRING}\s*\)?/
+
+    # A pattern that captures the regular expression portion of a step definition declaration line
+    STEP_DEF_PATTERN_CAPTURE_PATTERN = /^\s*#{World::STEP_DEF_KEYWORD_PATTERN}\s*\(?\s*(#{REGEX_PATTERN_STRING})\s*\)?/
 
 
-    # Returns the left delimiter, which is used to mark the beginning of a step
-    # argument.
-    def self.left_delimiter
-      @left_delimiter || @right_delimiter
-    end
+    class << self
 
-    # Sets the left delimiter that will be used by default when determining
-    # step arguments.
-    def self.left_delimiter=(new_delimiter)
-      @left_delimiter = new_delimiter
-    end
+      # Returns the left delimiter, which is used to mark the beginning of a step
+      # argument.
+      def left_delimiter
+        @left_delimiter
+      end
 
-    # Returns the right delimiter, which is used to mark the end of a step
-    # argument.
-    def self.right_delimiter
-      @right_delimiter || @left_delimiter
-    end
+      # Sets the left delimiter that will be used by default when determining
+      # step arguments.
+      def left_delimiter=(new_delimiter)
+        @left_delimiter = new_delimiter
+      end
 
-    # Sets the right delimiter that will be used by default when determining
-    # step arguments.
-    def self.right_delimiter=(new_delimiter)
-      @right_delimiter = new_delimiter
-    end
+      # Returns the right delimiter, which is used to mark the end of a step
+      # argument.
+      def right_delimiter
+        @right_delimiter
+      end
 
-    # Loads the step patterns contained in the given file into the World.
-    def self.load_step_file(file_path)
-      @@defined_expressions ||= []
+      # Sets the right delimiter that will be used by default when determining
+      # step arguments.
+      def right_delimiter=(new_delimiter)
+        @right_delimiter = new_delimiter
+      end
 
-      File.open(file_path, 'r') do |file|
-        file.readlines.each do |line|
-          if step_def_line?(line)
-            the_reg_ex = extract_regular_expression(line)
-            @@defined_expressions << the_reg_ex
+      # Sets the delimiter that will be used by default when determining the
+      # boundaries of step arguments.
+      def delimiter=(new_delimiter)
+        self.left_delimiter = new_delimiter
+        self.right_delimiter = new_delimiter
+      end
+
+      # Loads the step patterns contained in the given file into the World.
+      def load_step_file(file_path)
+        File.open(file_path, 'r') do |file|
+          file.readlines.each do |line|
+            if step_def_line?(line)
+              the_reg_ex = extract_regular_expression(line)
+              loaded_step_patterns << the_reg_ex
+            end
           end
         end
       end
-    end
 
-    # Returns the step patterns that have been loaded into the World.
-    def self.defined_step_patterns
-      @@defined_expressions
-    end
-
-    # Returns all tags found in the passed container.
-    def self.tags_in(container)
-      Array.new.tap do |accumulated_tags|
-        collect_tags(accumulated_tags, container)
+      # Loads the step pattern into the World.
+      def load_step_pattern(pattern)
+        loaded_step_patterns << pattern
       end
-    end
 
-    # Returns all directories found in the passed container.
-    def self.directories_in(container)
-      Array.new.tap do |accumulated_directories|
-        collect_directories(accumulated_directories, container)
+      # Returns the step patterns that have been loaded into the World.
+      def loaded_step_patterns
+        @defined_expressions ||= []
       end
-    end
 
-    # Returns all feature files found in the passed container.
-    def self.files_in(container)
-      Array.new.tap do |accumulated_files|
-        collect_files(accumulated_files, container)
+      # Returns all tags found in the passed container.
+      def tags_in(container)
+        Array.new.tap { |accumulated_tags| collect_all_in(:tags, container, accumulated_tags) }
       end
-    end
 
-    # Returns all features found in the passed container.
-    def self.features_in(container)
-      Array.new.tap do |accumulated_features|
-        collect_features(accumulated_features, container)
+      # Returns all directories found in the passed container.
+      def directories_in(container)
+        Array.new.tap { |accumulated_directories| collect_all_in(:directories, container, accumulated_directories) }
       end
-    end
 
-    # Returns all tests found in the passed container.
-    def self.tests_in(container)
-      Array.new.tap do |accumulated_tests|
-        collect_tests(accumulated_tests, container)
+      # Returns all feature files found in the passed container.
+      def feature_files_in(container)
+        Array.new.tap { |accumulated_files| collect_all_in(:feature_files, container, accumulated_files) }
       end
-    end
 
-    # Returns all steps found in the passed container.
-    def self.steps_in(container)
-      Array.new.tap do |accumulated_steps|
-        collect_steps(accumulated_steps, container)
+      # Returns all features found in the passed container.
+      def features_in(container)
+        Array.new.tap { |accumulated_features| collect_all_in(:features, container, accumulated_features) }
       end
-    end
 
-    # Returns all undefined steps found in the passed container.
-    def self.undefined_steps_in(container)
-      all_steps = steps_in(container)
+      # Returns all tests found in the passed container.
+      def tests_in(container)
+        Array.new.tap { |accumulated_tests| collect_all_in(:tests, container, accumulated_tests) }
+      end
 
-      all_steps.select { |step| !World.defined_step_patterns.any? { |pattern| step.base =~ Regexp.new(pattern) } }
-    end
+      # Returns all steps found in the passed container.
+      def steps_in(container)
+        Array.new.tap { |accumulated_steps| collect_all_in(:steps, container, accumulated_steps) }
+      end
 
-    # Returns all defined steps found in the passed container.
-    def self.defined_steps_in(container)
-      all_steps = steps_in(container)
+      # Returns all undefined steps found in the passed container.
+      def undefined_steps_in(container)
+        all_steps = steps_in(container)
 
-      all_steps.select { |step| World.defined_step_patterns.any? { |pattern| step.base =~ Regexp.new(pattern) } }
-    end
+        all_steps.select { |step| !World.loaded_step_patterns.any? { |pattern| step.base =~ Regexp.new(pattern) } }
+      end
+
+      # Returns all defined steps found in the passed container.
+      def defined_steps_in(container)
+        all_steps = steps_in(container)
+
+        all_steps.select { |step| World.loaded_step_patterns.any? { |pattern| step.base =~ Regexp.new(pattern) } }
+      end
 
 
-    private
+      private
 
 
-    # Make life easier by ensuring that the only forward slashes in the
-    # regular expression are the important ones.
-    def self.sanitize_line(line)
-      line.gsub('\/', SANITARY_STRING)
-    end
+      # Make life easier by ensuring that the only forward slashes in the
+      # regular expression are the important ones.
+      def sanitize_line(line)
+        line.gsub('\/', SANITARY_STRING)
+      end
 
-    # And be sure to restore the line to its original state.
-    def self.desanitize_line(line)
-      line.gsub(SANITARY_STRING, '\/')
-    end
+      # And be sure to restore the line to its original state.
+      def desanitize_line(line)
+        line.gsub(SANITARY_STRING, '\/')
+      end
 
-    # Returns whether or not the passed line is a step pattern.
-    def self.step_def_line?(line)
-      !!(sanitize_line(line) =~ /^#{World::STEP_KEYWORD_PATTERN}\/[^\/]*\//)
-    end
+      # Returns whether or not the passed line is a step pattern.
+      def step_def_line?(line)
+        !!(sanitize_line(line) =~ STEP_DEF_LINE_PATTERN)
+      end
 
-    # Returns the regular expression portion of a step pattern line.
-    def self.extract_regular_expression(line)
-      desanitize_line(sanitize_line(line).match(/^#{World::STEP_KEYWORD_PATTERN}\/([^\/]*)\//)[1])
-    end
+      # Returns the regular expression portion of a step pattern line.
+      def extract_regular_expression(line)
+        line = desanitize_line(sanitize_line(line).match(STEP_DEF_PATTERN_CAPTURE_PATTERN)[1])
+        line = line.slice(1..(line.length - 2))
 
-    # Recursively gathers all tags found in the passed container.
-    def self.collect_tags(accumulated_tags, container)
-      accumulated_tags.concat container.tags if container.respond_to?(:tags)
+        Regexp.new(line)
+      end
 
-      if container.respond_to?(:contains)
-        container.contains.each do |child_container|
-          collect_tags(accumulated_tags, child_container)
+      # Recursively gathers all things of the given type found in the passed container.
+      def collect_all_in(type_of_thing, container, accumulated_things)
+        accumulated_things.concat container.send(type_of_thing) if container.respond_to?(type_of_thing)
+
+        if container.respond_to?(:contains)
+          container.contains.each do |child_container|
+            collect_all_in(type_of_thing, child_container, accumulated_things)
+          end
         end
       end
+
     end
-
-    # Recursively gathers all directories found in the passed container.
-    def self.collect_directories(accumulated_directories, container)
-      accumulated_directories.concat container.feature_directories if container.respond_to?(:feature_directories)
-
-      if container.respond_to?(:contains)
-        container.contains.each do |child_container|
-          collect_directories(accumulated_directories, child_container)
-        end
-      end
-    end
-
-    # Recursively gathers all feature files found in the passed container.
-    def self.collect_files(accumulated_files, container)
-      accumulated_files.concat container.feature_files if container.respond_to?(:feature_files)
-
-      if container.respond_to?(:contains)
-        container.contains.each do |child_container|
-          collect_files(accumulated_files, child_container)
-        end
-      end
-    end
-
-    # Recursively gathers all features found in the passed container.
-    def self.collect_features(accumulated_features, container)
-      accumulated_features << container.feature if container.respond_to?(:feature) && container.feature
-
-      if container.respond_to?(:contains)
-        container.contains.each do |child_container|
-          collect_features(accumulated_features, child_container)
-        end
-      end
-    end
-
-    # Recursively gathers all tests found in the passed container.
-    def self.collect_tests(accumulated_tests, container)
-      accumulated_tests.concat container.tests if container.respond_to?(:tests)
-
-      if container.respond_to?(:contains)
-        container.contains.each do |child_container|
-          collect_tests(accumulated_tests, child_container)
-        end
-      end
-    end
-
-    # Recursively gathers all steps found in the passed container.
-    def self.collect_steps(accumulated_steps, container)
-      accumulated_steps.concat container.steps if container.respond_to?(:steps)
-
-      if container.respond_to?(:contains)
-        container.contains.each do |child_container|
-          collect_steps(accumulated_steps, child_container)
-        end
-      end
-    end
-
-    # Returns true if the line is ignored when reading source code, false
-    # otherwise.
-    def self.ignored_line?(line)
-      line =~ /^\s*#/ or !(line =~ /\S/)
-    end
-
   end
 end
