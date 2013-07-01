@@ -8,8 +8,8 @@
   can likewise not handle them).
 * Source code snippets can now be analyzed (rather than needing an entire feature
   file to parse).
-* The gem's logfile is now internal to the gem instead of being created where
-  gem functionality is invoked.
+* Logging has been removed from the gem due to its significant negative impact
+  on performance.
 * Many class and method names have changed.
 * Significant API overhaul, including several new classes for modeling.
 
