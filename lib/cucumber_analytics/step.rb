@@ -5,7 +5,7 @@ module CucumberAnalytics
   class Step
 
     include Containing
-
+    include Sourceable
 
     # The step's keyword
     attr_accessor :keyword
@@ -157,6 +157,7 @@ module CucumberAnalytics
       populate_base(step)
       populate_block(step)
       populate_keyword(step)
+      populate_element_source_line(step)
 
       scan_arguments
     end

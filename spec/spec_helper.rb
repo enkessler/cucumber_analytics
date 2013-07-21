@@ -9,6 +9,7 @@ require "#{File.dirname(__FILE__)}/unit/containing_element_unit_specs"
 require "#{File.dirname(__FILE__)}/unit/bare_bones_unit_specs"
 require "#{File.dirname(__FILE__)}/unit/test_element_unit_specs"
 require "#{File.dirname(__FILE__)}/unit/prepopulated_unit_specs"
+require "#{File.dirname(__FILE__)}/unit/sourced_element_unit_specs"
 
 
 DEFAULT_FEATURE_FILE_NAME = 'test_feature.feature'

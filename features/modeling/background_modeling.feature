@@ -7,6 +7,7 @@ Feature: Background elements can be modeled.
     1. the background's name
     2. the background's description
     3. the background's steps
+    4. the background's source line
 
   Background: Test file setup.
     Given the following feature file:
@@ -24,6 +25,10 @@ Feature: Background elements can be modeled.
     And parameter delimiters of "*" and "*"
     When the file is read
 
+
+  Scenario: The background source line is modeled.
+    Then the background is found to have the following properties:
+      | source_line | 3 |
 
   Scenario: The background name is modeled.
     Then the background is found to have the following properties:

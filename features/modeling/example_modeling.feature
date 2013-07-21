@@ -4,12 +4,13 @@ Feature: Example elements can be modeled.
   Acceptance criteria
 
   All conceptual pieces of an Examples block can be modeled:
-    1. the examples' name
-    2. the examples' description
-    3. the examples' parameters
-    4. the examples' rows
-    5. the examples' tags
-    6. the examples's applied tags
+    1. the example's name
+    2. the example's description
+    3. the example's parameters
+    4. the example's rows
+    5. the example's tags
+    6. the example's applied tags
+    7. the example's source line
 
 
   Background: Test file setup.
@@ -37,6 +38,12 @@ Feature: Example elements can be modeled.
     And parameter delimiters of "*" and "*"
     When the file is read
 
+
+  Scenario: The example's source line is modeled.
+    Then the test example block "1" is found to have the following properties:
+      | source_line | 8 |
+    And the test example block "2" is found to have the following properties:
+      | source_line | 15 |
 
   Scenario: The examples' name is modeled.
     Then the test example block "1" is found to have the following properties:

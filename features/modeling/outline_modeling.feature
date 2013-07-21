@@ -10,6 +10,7 @@ Feature: Scenario Outline elements can be modeled.
     4. the outline's tags
     5. the outline's applied tags
     6. the outline's example blocks
+    7. the outline's source line
 
 
   Background: Test file setup.
@@ -37,6 +38,9 @@ Feature: Scenario Outline elements can be modeled.
     And parameter delimiters of "*" and "*"
     When the file is read
 
+  Scenario: The outline source line is modeled.
+    Then the test is found to have the following properties:
+      | source_line | 5 |
 
   Scenario: The outline name is modeled.
     Then the test is found to have the following properties:

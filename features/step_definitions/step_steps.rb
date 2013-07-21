@@ -89,3 +89,14 @@ Then /^(?:the )?(?:feature "([^"]*)" )?(?:test(?: "([^"]*)")? )?step(?: "([^"]*)
 
   actual.should == expected
 end
+
+Then /^(?:the )?(?:feature "([^"]*)" )?(?:test(?: "([^"]*)")? )?step(?: "([^"]*)")? source line is "([^"]*)"$/ do |file, test, step, line_number|
+  file ||= 1
+  test ||= 1
+  step ||= 1
+
+  expected = line_number.to_i
+  actual = @parsed_files[file - 1].feature.tests[test - 1].steps[step - 1].source_line
+
+  actual.should == expected
+end

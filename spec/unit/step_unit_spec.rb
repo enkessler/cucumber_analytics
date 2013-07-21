@@ -9,7 +9,7 @@ describe 'Step, Unit' do
   it_should_behave_like 'a nested element', clazz
   it_should_behave_like 'a bare bones element', clazz
   it_should_behave_like 'a prepopulated element', clazz
-
+  it_should_behave_like 'a sourced element', clazz
 
   before(:each) do
     @step = clazz.new
