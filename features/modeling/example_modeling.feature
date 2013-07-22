@@ -90,5 +90,6 @@ Feature: Example elements can be modeled.
     When the corresponding unit tests are run
     Then all of those specifications are met
   Examples:
-    | additional specifications |
-    | example_unit_spec.rb      |
+    | additional specifications   |
+    | example_unit_spec.rb        |
+    | example_integration_spec.rb |

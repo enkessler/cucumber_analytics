@@ -5,12 +5,20 @@ module CucumberAnalytics
   class Example < FeatureElement
 
     include Taggable
+    include Containing
+
 
     # The argument rows in the example table
     attr_accessor :rows
 
     # The parameters for the example table
+    #
+    # todo - Make this a read only method that derives the parameters from
+    # the row elements
     attr_accessor :parameters
+
+    # The row elements in the example table
+    attr_accessor :row_elements
 
 
     # Creates a new Example object and, if *source* is provided,
@@ -23,6 +31,7 @@ module CucumberAnalytics
       @tags = []
       @rows = []
       @parameters = []
+      @row_elements = []
 
       build_example(parsed_example) if parsed_example
     end
@@ -34,8 +43,10 @@ module CucumberAnalytics
       case
         when row.is_a?(Array)
           @rows << Hash[@parameters.zip(row.collect { |value| value.strip })]
+          @row_elements << Row.new("|#{row.join('|')}|")
         when row.is_a?(Hash)
           @rows << row.each_value { |value| value.strip! }
+          @row_elements << Row.new("|#{row.values.join('|')}|")
         else
           raise(ArgumentError, "Can only add row from a Hash or an Array but received #{row.class}")
       end
@@ -55,6 +66,12 @@ module CucumberAnalytics
       end
 
       @rows.delete_at(location) if location
+      @row_elements.delete_at(location + 1) if location
+    end
+
+    # Returns the immediate child elements of the element.
+    def contains
+      @row_elements
     end
 
 
@@ -81,18 +98,26 @@ module CucumberAnalytics
 
     def build_example(parsed_example)
       populate_element_tags(parsed_example)
-      populate_example_parameters(parsed_example)
-      populate_example_rows(parsed_example)
+      populate_example_row_elements(parsed_example)
+      populate_example_parameters
+      populate_example_rows
     end
 
-    def populate_example_parameters(parsed_example)
-      @parameters = parsed_example['rows'].first['cells']
+    def populate_example_parameters
+      @parameters = @row_elements.first.cells
     end
 
-    def populate_example_rows(parsed_example)
-      parsed_example['rows'].shift
+    def populate_example_rows
+      @row_elements.each do |row|
+        @rows << Hash[@parameters.zip(row.cells)]
+      end
+
+      @rows.shift
+    end
+
+    def populate_example_row_elements(parsed_example)
       parsed_example['rows'].each do |row|
-        @rows << Hash[@parameters.zip(row['cells'])]
+        @row_elements << build_child_element(Row, row)
       end
     end
 
