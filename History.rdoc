@@ -1,11 +1,18 @@
+=== Version 1.1.0 / 2013-08-01
+
+* Outline example rows are now modeled.
+* Some elements now keep track of which source code line number they started on.
+* Step definition patterns that have been loaded in the World can now be cleared.
+
+
 === Version 1.0.0 / 2013-06-30
 
 * Bug fix: Step definitions are now detected whether or not parenthesis are
   used in the declararion.
 * Now using the gherkin gem to parse feature files. This should eliminate most
   parsing related bugs.
-* Empty outline example blocks can non longer be handeled (since the gherkin gem
-  can likewise not handle them).
+* Empty outline example blocks can no longer be handeled (since the gherkin gem
+  can, likewise, not handle them).
 * Source code snippets can now be analyzed (rather than needing an entire feature
   file to parse).
 * Logging has been removed from the gem due to its significant negative impact
