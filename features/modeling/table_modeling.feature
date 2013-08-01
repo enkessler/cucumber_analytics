@@ -23,7 +23,7 @@ Feature: Table elements can be modeled.
     When the file is read
 
 
-  Scenario: The table's contents are modeled.d
+  Scenario: The table's contents are modeled.
     Then the step "1" table has the following contents:
       | value 1 | value 2 |
       | value 3 | value 4 |
