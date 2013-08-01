@@ -111,6 +111,19 @@ describe 'World, Unit' do
 
       @world.loaded_step_patterns.should =~ patterns
     end
+
+    it 'can clear its loaded step patterns - #clear_step_patterns' do
+      patterns = [/a pattern/, /another pattern/]
+
+      patterns.each do |pattern|
+        @world.load_step_pattern(pattern)
+      end
+
+      @world.loaded_step_patterns.should =~ patterns
+      @world.clear_step_patterns
+      @world.loaded_step_patterns.should == []
+    end
+
   end
 
   context 'collecting stuff' do

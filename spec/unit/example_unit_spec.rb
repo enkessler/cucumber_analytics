@@ -11,6 +11,8 @@ describe 'Example, Unit' do
   it_should_behave_like 'a tagged element', clazz
   it_should_behave_like 'a bare bones element', clazz
   it_should_behave_like 'a prepopulated element', clazz
+  it_should_behave_like 'a sourced element', clazz
+  it_should_behave_like 'a containing element', clazz
 
 
   it 'can be parsed from stand alone text' do
@@ -78,6 +80,21 @@ describe 'Example, Unit' do
     rows.collect { |row| row.values }.should == [['value1', 'value2'], ['value3', 'value4']]
   end
 
+  it 'has row elements - #row_elements' do
+    @example.should respond_to(:row_elements)
+  end
+
+  it 'can get and set its row elements - #row_elements, #row_elements=' do
+    @example.row_elements = :some_row_elements
+    @example.row_elements.should == :some_row_elements
+    @example.row_elements = :some_other_row_elements
+    @example.row_elements.should == :some_other_row_elements
+  end
+
+  it 'starts with no row elements' do
+    @example.row_elements.should == []
+  end
+
   context '#add_row' do
 
     it 'can add a new example row' do
@@ -92,6 +109,7 @@ describe 'Example, Unit' do
       example.add_row(new_row)
 
       example.rows.collect { |row| row.values }.should == [['value1', 'value2'], ['value3', 'value4']]
+      example.row_elements.collect { |row| row.cells }[1..example.row_elements.count].should == [['value1', 'value2'], ['value3', 'value4']]
     end
 
     it 'can add a new row as an array' do
@@ -102,6 +120,7 @@ describe 'Example, Unit' do
       example.add_row(new_row)
 
       example.rows.collect { |row| row.values }.should == [['value1', 'value2'], ['value3', 'value4']]
+      example.row_elements.collect { |row| row.cells }[1..example.row_elements.count].should == [['value1', 'value2'], ['value3', 'value4']]
     end
 
     it 'can only use a Hash or an Array to add a new row' do
@@ -120,6 +139,7 @@ describe 'Example, Unit' do
       example.add_row(array_row)
 
       example.rows.collect { |row| row.values }.should == [['value1', 'value2'], ['value3', 'value4'], ['value5', 'value6']]
+      example.row_elements.collect { |row| row.cells }[1..example.row_elements.count].should == [['value1', 'value2'], ['value3', 'value4'], ['value5', 'value6']]
     end
   end
 
@@ -137,6 +157,7 @@ describe 'Example, Unit' do
       example.remove_row(old_row)
 
       example.rows.collect { |row| row.values }.should == [['value1', 'value2']]
+      example.row_elements.collect { |row| row.cells }[1..example.row_elements.count].should == [['value1', 'value2']]
     end
 
     it 'can remove an existing row as an array' do
@@ -147,6 +168,7 @@ describe 'Example, Unit' do
       example.remove_row(old_row)
 
       example.rows.collect { |row| row.values }.should == [['value1', 'value2']]
+      example.row_elements.collect { |row| row.cells }[1..example.row_elements.count].should == [['value1', 'value2']]
     end
 
     it 'can only use a Hash or an Array to remove an existing row' do
@@ -165,6 +187,7 @@ describe 'Example, Unit' do
       example.remove_row(array_row)
 
       example.rows.collect { |row| row.values }.should == [['value1', 'value2']]
+      example.row_elements.collect { |row| row.cells }[1..example.row_elements.count].should == [['value1', 'value2']]
     end
   end
 

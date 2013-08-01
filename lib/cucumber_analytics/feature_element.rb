@@ -4,6 +4,9 @@ module CucumberAnalytics
 
   class FeatureElement
 
+    include Sourceable
+
+
     # The name of the FeatureElement
     attr_accessor :name
 
@@ -30,6 +33,7 @@ module CucumberAnalytics
     def build_feature_element(parsed_element)
       populate_feature_element_name(parsed_element)
       populate_feature_element_description(parsed_element)
+      populate_element_source_line(parsed_element)
     end
 
     def populate_feature_element_name(parsed_element)

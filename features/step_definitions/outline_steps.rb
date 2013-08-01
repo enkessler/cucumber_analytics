@@ -20,6 +20,22 @@ Then /^(?:the )?(?:feature "([^"]*)" )?test(?: "([^"]*)")? example block(?: "([^
   end
 end
 
+Then /^(?:the )?(?:feature "([^"]*)" )?test(?: "([^"]*)")? example block(?: "([^"]*)")? row(?: "([^"]*)")? is found to have the following properties:$/ do |file, test, example, row, properties|
+  file ||= 1
+  test ||= 1
+  example ||= 1
+  row ||= 1
+
+  properties = properties.rows_hash
+
+  properties.each do |property, value|
+    expected = value
+    actual = @parsed_files[file - 1].feature.tests[test - 1].examples[example - 1].row_elements[row - 1].send(property.to_sym).to_s
+
+    assert(actual == expected, "Expected: #{expected}\n but was: #{actual}")
+  end
+end
+
 Then /^(?:the )?(?:feature "([^"]*)" )?test(?: "([^"]*)")? example block(?: "([^"]*)")? descriptive lines are as follows:$/ do |file, test, example, lines|
   file ||= 1
   test ||= 1
@@ -72,10 +88,10 @@ Then /^(?:the )?(?:feature "([^"]*)" )?test(?: "([^"]*)")? example block(?: "([^
   example ||= 1
 
   rows = rows.raw.flatten
-  examples = @parsed_files[file - 1].feature.tests[test - 1].examples[example - 1]
+  example = @parsed_files[file - 1].feature.tests[test - 1].examples[example - 1]
 
-  expected = rows.collect { |row| row.split(',') }.collect { |row| Hash[examples.parameters.zip(row)] }
-  actual = examples.rows
+  expected = rows.collect { |row| row.split(',') }
+  actual = example.row_elements[1..example.row_elements.count].collect { |row| row.cells }
 
   assert(actual == expected, "Expected: #{expected}\n but was: #{actual}")
 end
@@ -111,10 +127,20 @@ Then /^(?:the )?(?:feature "([^"]*)" )?test(?: "([^"]*)")? example block(?: "([^
   test ||= 1
   example ||= 1
 
-  parameters = parameters.raw.flatten
-
-  expected = parameters
+  expected = parameters.raw.flatten
   actual = @parsed_files[file - 1].feature.tests[test - 1].examples[example - 1].parameters
+
+  assert(actual == expected, "Expected: #{expected}\n but was: #{actual}")
+end
+
+Then /^(?:the )?(?:feature "([^"]*)" )?test(?: "([^"]*)")? example block(?: "([^"]*)")? row(?: "([^"]*)")? cells are as follows:$/ do |file, test, example, row, cells|
+  file ||= 1
+  test ||= 1
+  example ||= 1
+  row ||= 1
+
+  expected = cells.raw.flatten
+  actual = @parsed_files[file - 1].feature.tests[test - 1].examples[example - 1].row_elements[row - 1].cells
 
   assert(actual == expected, "Expected: #{expected}\n but was: #{actual}")
 end
@@ -140,8 +166,10 @@ Then /^(?:the )?(?:feature "([^"]*)" )?test(?: "([^"]*)")? example block(?: "([^
   test ||= 1
   example ||= 1
 
+  example = @parsed_files[file - 1].feature.tests[test - 1].examples[example - 1]
+
   expected = []
-  actual = @parsed_files[file - 1].feature.tests[test - 1].examples[example - 1].rows
+  actual = example.row_elements[1..example.row_elements.count]
 
   assert(actual == expected, "Expected: #{expected}\n but was: #{actual}")
 end

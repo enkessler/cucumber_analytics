@@ -75,6 +75,11 @@ module CucumberAnalytics
         @defined_expressions ||= []
       end
 
+      # Clears the step patterns that have been loaded into the World.
+      def clear_step_patterns
+        @defined_expressions = []
+      end
+
       # Returns all tags found in the passed container.
       def tags_in(container)
         Array.new.tap { |accumulated_tags| collect_all_in(:tags, container, accumulated_tags) }
