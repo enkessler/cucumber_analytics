@@ -1,3 +1,7 @@
+=== Version 1.1.0 / 2013-08-03
+
+* Version bumped due to publishing wrong code for version 1.1.0.
+
 === Version 1.1.0 / 2013-08-01
 
 * Outline example rows are now modeled.
