@@ -6,6 +6,7 @@ Feature: Doc String elements can be modeled.
   All conceptual pieces of a Doc String can be modeled:
     1. the doc string's content type
     2. the doc string's contents
+    3. the doc string's raw element
 
 
   Background: Test file setup.
@@ -25,6 +26,9 @@ Feature: Doc String elements can be modeled.
     """
     When the file is read
 
+
+  Scenario: The raw doc string element is modeled.
+    Then the doc string correctly stores its underlying implementation
 
   Scenario: The doc string's content type is modeled.
     Then the step "1" doc string content type is "content type"

@@ -4,6 +4,9 @@ module CucumberAnalytics
 
   class DocString
 
+    include Raw
+
+
     # The parent object that contains *self*
     attr_accessor :parent_element
 
@@ -49,6 +52,7 @@ module CucumberAnalytics
     def build_doc_string(doc_string)
       @content_type = doc_string['content_type'] == "" ? nil : doc_string['content_type']
       @contents = doc_string['value'].split($/)
+      populate_raw_element(doc_string)
     end
 
   end

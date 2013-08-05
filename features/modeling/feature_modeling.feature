@@ -4,15 +4,17 @@ Feature: Features can be modeled.
   Acceptance criteria
 
   All conceptual pieces of a Feature can be modeled:
-    1. the feature's name
-    2. the feature's description
-    3. the feature's tags
-    4. the feature's scenarios
-    5. the feature's outlines
-    6. the feature's background
-    7. the feature's total number of tests
-    8. the feature's total number of test cases
-    9. the feature's source line
+    1.  the feature's name
+    2.  the feature's description
+    3.  the feature's tags
+    4.  the feature's scenarios
+    5.  the feature's outlines
+    6.  the feature's background
+    7.  the feature's total number of tests
+    8.  the feature's total number of test cases
+    9.  the feature's source line
+    10. the feature's raw element
+
 
   Background: Test file setup.
     Given the following feature file "much_stuff.feature":
@@ -61,6 +63,9 @@ Feature: Features can be modeled.
     And the file "barely_any_stuff.feature" is read
     And the file "as_empty_as_it_gets.feature" is read
 
+
+  Scenario: The raw feature element is modeled.
+    Then the feature correctly stores its underlying implementation
 
   Scenario: The feature's properties are modeled.
     Then feature "1" is found to have the following properties:

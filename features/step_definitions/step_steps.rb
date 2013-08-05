@@ -100,3 +100,13 @@ Then /^(?:the )?(?:feature "([^"]*)" )?(?:test(?: "([^"]*)")? )?step(?: "([^"]*)
 
   actual.should == expected
 end
+
+Then /^(?:the )?(?:feature "([^"]*)" )?test(?: "([^"]*)")? step(?: "([^"]*)")? correctly stores its underlying implementation$/ do |file, test, step|
+  file ||= 1
+  test ||= 1
+  step ||= 1
+
+  raw_element = @parsed_files[file - 1].feature.tests[test - 1].steps[step - 1].raw_element
+
+  raw_element.has_key?('keyword').should be_true
+end

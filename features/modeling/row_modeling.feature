@@ -6,6 +6,7 @@ Feature: Row elements can be modeled.
   All conceptual pieces of a Row can be modeled:
   1. the row's source line
   2. the row's cells
+  3. the row's raw element
 
 
   Background: Test file setup.
@@ -26,6 +27,9 @@ Feature: Row elements can be modeled.
     And parameter delimiters of "*" and "*"
     When the file is read
 
+
+  Scenario: The raw row element is modeled.
+    Then the test example block row correctly stores its underlying implementation
 
   Scenario: The row's source line is modeled.
     Then the test example block "1" row "1" is found to have the following properties:

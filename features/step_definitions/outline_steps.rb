@@ -173,3 +173,24 @@ Then /^(?:the )?(?:feature "([^"]*)" )?test(?: "([^"]*)")? example block(?: "([^
 
   assert(actual == expected, "Expected: #{expected}\n but was: #{actual}")
 end
+
+Then /^(?:the )?(?:feature "([^"]*)" )?test(?: "([^"]*)")? example block(?: "([^"]*)")? row(?: "([^"]*)")? correctly stores its underlying implementation$/ do |file, test, example, row|
+  file ||= 1
+  test ||= 1
+  example ||= 1
+  row ||= 1
+
+  raw_element = @parsed_files[file - 1].feature.tests[test - 1].examples[example - 1].row_elements[row - 1].raw_element
+
+  raw_element.has_key?('cells').should be_true
+end
+
+Then /^(?:the )?(?:feature "([^"]*)" )?test(?: "([^"]*)")? example block(?: "([^"]*)")? correctly stores its underlying implementation$/ do |file, test, example|
+  file ||= 1
+  test ||= 1
+  example ||= 1
+
+  raw_element = @parsed_files[file - 1].feature.tests[test - 1].examples[example - 1].raw_element
+
+  raw_element.has_key?('rows').should be_true
+end

@@ -10,6 +10,7 @@ Feature: Scenario elements can be modeled.
     4. the scenario's tags
     5. the scenario's applied tags
     6. the scenario's source line
+    7. the scenario's raw element
 
 
   Background: Test file setup.
@@ -30,6 +31,10 @@ Feature: Scenario elements can be modeled.
     """
     And parameter delimiters of "*" and "*"
     When the file is read
+
+
+  Scenario: The raw scenario element is modeled.
+    Then the test correctly stores its underlying implementation
 
   Scenario: The scenario source line is modeled.
     Then the test is found to have the following properties:

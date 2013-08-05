@@ -13,6 +13,7 @@ describe 'Feature, Unit' do
   it_should_behave_like 'a bare bones element', clazz
   it_should_behave_like 'a prepopulated element', clazz
   it_should_behave_like 'a sourced element', clazz
+  it_should_behave_like 'a raw element', clazz
 
   before(:each) do
     @feature = clazz.new

@@ -11,6 +11,7 @@ Feature: Example elements can be modeled.
     5. the example's tags
     6. the example's applied tags
     7. the example's source line
+    8. the example's raw element
 
 
   Background: Test file setup.
@@ -38,6 +39,9 @@ Feature: Example elements can be modeled.
     And parameter delimiters of "*" and "*"
     When the file is read
 
+
+  Scenario: The raw example element is modeled.
+    Then the test example block correctly stores its underlying implementation
 
   Scenario: The example's source line is modeled.
     Then the test example block "1" is found to have the following properties:

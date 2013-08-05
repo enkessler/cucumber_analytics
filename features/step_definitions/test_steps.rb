@@ -89,3 +89,15 @@ Then /^(?:the )?(?:feature "([^"]*)" )?test(?: "([^"]*)")? is not equal to test 
 
   assert @parsed_files[file - 1].feature.tests[first_test - 1] != @parsed_files[file - 1].feature.tests[second_test - 1]
 end
+
+Then /^(?:the )?(?:feature "([^"]*)" )?test(?: "([^"]*)")? correctly stores its underlying implementation$/ do |file, test|
+  file ||= 1
+  test ||= 1
+
+  raw_element = @parsed_files[file - 1].feature.tests[test - 1].raw_element
+
+  expected = ['Scenario', 'Scenario Outline']
+  actual = raw_element['keyword']
+
+  expected.include?(actual).should be_true
+end

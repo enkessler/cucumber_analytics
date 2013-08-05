@@ -54,7 +54,7 @@ end
 When /^(?:the )?feature(?: "([^"]*)")? background is as follows:$/ do |file, background|
   file ||= 1
 
-  @parsed_files[file - 1].feature.background.name.should  == background.raw.flatten.first
+  @parsed_files[file - 1].feature.background.name.should == background.raw.flatten.first
 end
 
 When /^feature "([^"]*)" has no scenarios$/ do |file|
@@ -67,4 +67,12 @@ end
 
 When /^feature "([^"]*)" has no background/ do |file|
   assert @parsed_files[file - 1].feature.has_background? == false
+end
+
+Then /^(?:the )?feature(?: "([^"]*)")? correctly stores its underlying implementation$/ do |file|
+  file ||= 1
+
+  raw_element = @parsed_files[file - 1].feature.raw_element
+
+  raw_element.has_key?('elements').should be_true
 end

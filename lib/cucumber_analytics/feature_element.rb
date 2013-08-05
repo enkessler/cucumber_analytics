@@ -5,6 +5,7 @@ module CucumberAnalytics
   class FeatureElement
 
     include Sourceable
+    include Raw
 
 
     # The name of the FeatureElement
@@ -34,6 +35,7 @@ module CucumberAnalytics
       populate_feature_element_name(parsed_element)
       populate_feature_element_description(parsed_element)
       populate_element_source_line(parsed_element)
+      populate_raw_element(parsed_element)
     end
 
     def populate_feature_element_name(parsed_element)

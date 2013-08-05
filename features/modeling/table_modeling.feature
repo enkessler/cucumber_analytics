@@ -5,6 +5,7 @@ Feature: Table elements can be modeled.
 
   All conceptual pieces of a Table can be modeled:
     1. the table's contents
+    2. the table's raw element
 
 
   Background: Test file setup.
@@ -30,6 +31,9 @@ Feature: Table elements can be modeled.
     And the step "2" table has the following contents:
       | value 1 |
       | value 2 |
+
+  Scenario: The raw table element is modeled.
+    Then the table correctly stores its underlying implementation
 
   Scenario Outline: Table models pass all other specifications
   Exact specifications detailing the API for Table String models.

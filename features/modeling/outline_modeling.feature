@@ -11,6 +11,7 @@ Feature: Scenario Outline elements can be modeled.
     5. the outline's applied tags
     6. the outline's example blocks
     7. the outline's source line
+    8. the outline's raw element
 
 
   Background: Test file setup.
@@ -37,6 +38,10 @@ Feature: Scenario Outline elements can be modeled.
     """
     And parameter delimiters of "*" and "*"
     When the file is read
+
+
+  Scenario: The raw outline element is modeled.
+    Then the test correctly stores its underlying implementation
 
   Scenario: The outline source line is modeled.
     Then the test is found to have the following properties:

@@ -9,6 +9,7 @@ describe 'DocString, Unit' do
   it_should_behave_like 'a nested element', clazz
   it_should_behave_like 'a bare bones element', clazz
   it_should_behave_like 'a prepopulated element', clazz
+  it_should_behave_like 'a raw element', clazz
 
   it 'can be parsed from stand alone text' do
     source = "\"\"\"\nsome doc string\n\"\"\""
