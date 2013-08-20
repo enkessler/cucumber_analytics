@@ -72,6 +72,17 @@ describe 'Feature, Unit' do
     @feature.contains.should =~ everything
   end
 
+  it 'contains a background only if one is present' do
+    tests = [:test_1, :test_2]
+    background = nil
+    everything = tests
+
+    @feature.background = background
+    @feature.tests = tests
+
+    @feature.contains.should =~ everything
+  end
+
   it 'starts with no background' do
     @feature.background.should == nil
   end

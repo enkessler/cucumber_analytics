@@ -70,7 +70,7 @@ module CucumberAnalytics
     # Returns the immediate child elements of the feature (i.e. its Background,
     # Scenario, and Outline objects.
     def contains
-      [@background] + @tests
+      @background ? [@background] + @tests : @tests
     end
 
 
