@@ -11,7 +11,8 @@ describe 'Feature, Integration' do
   end
 
   it 'properly sets its child elements' do
-    source = ['Feature: Test feature',
+    source = ['@a_tag',
+              'Feature: Test feature',
               '  Background: Test background',
               '  Scenario: Test scenario',
               '  Scenario Outline: Test outline']
@@ -22,11 +23,13 @@ describe 'Feature, Integration' do
     background = feature.background
     scenario = feature.tests[0]
     outline = feature.tests[1]
+    tag = feature.tag_elements[0]
 
 
     outline.parent_element.should equal feature
     scenario.parent_element.should equal feature
     background.parent_element.should equal feature
+    tag.parent_element.should equal feature
   end
 
   it 'can distinguish scenarios from outlines - #scenarios, #outlines' do
@@ -66,13 +69,13 @@ describe 'Feature, Integration' do
     source_1 = source_1.join("\n")
 
     source_2 = ['Feature: Test feature',
-              '  Scenario: Test scenario',
-              '  Scenario Outline: Test outline',
-              '    * a step',
-              '  Examples: Test examples',
-              '    |param|',
-              '    |value_1|',
-              '    |value_2|']
+                '  Scenario: Test scenario',
+                '  Scenario Outline: Test outline',
+                '    * a step',
+                '  Examples: Test examples',
+                '    |param|',
+                '    |value_1|',
+                '    |value_2|']
     source_2 = source_2.join("\n")
 
     feature_1 = CucumberAnalytics::Feature.new(source_1)

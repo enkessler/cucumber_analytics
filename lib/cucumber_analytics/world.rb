@@ -85,6 +85,11 @@ module CucumberAnalytics
         Array.new.tap { |accumulated_tags| collect_all_in(:tags, container, accumulated_tags) }
       end
 
+      # Returns all tag elements found in the passed container.
+      def tag_elements_in(container)
+        Array.new.tap { |accumulated_tag_elements| collect_all_in(:tag_elements, container, accumulated_tag_elements) }
+      end
+
       # Returns all directories found in the passed container.
       def directories_in(container)
         Array.new.tap { |accumulated_directories| collect_all_in(:directories, container, accumulated_directories) }

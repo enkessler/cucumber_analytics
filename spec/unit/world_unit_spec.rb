@@ -134,10 +134,11 @@ describe 'World, Unit' do
     end
 
     it 'can collect tags from containers' do
-      nested_container = double(:tags => @set_2)
-      container = double(:tags => @set_1, :contains => [nested_container])
+      nested_container = double(:tags => @set_2, :tag_elements => @set_2)
+      container = double(:tags => @set_1, :tag_elements => @set_1, :contains => [nested_container])
 
       @world.tags_in(container).should =~ (@set_1 + @set_2)
+      @world.tag_elements_in(container).should =~ (@set_1 + @set_2)
     end
 
     it 'can collect directories from containers' do

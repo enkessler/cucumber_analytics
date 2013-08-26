@@ -29,6 +29,7 @@ module CucumberAnalytics
       super(parsed_example)
 
       @tags = []
+      @tag_elements = []
       @rows = []
       @parameters = []
       @row_elements = []

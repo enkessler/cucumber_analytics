@@ -23,6 +23,7 @@ module CucumberAnalytics
       super(parsed_feature)
 
       @tags = []
+      @tag_elements = []
       @tests = []
 
       build_feature(parsed_feature) if parsed_feature

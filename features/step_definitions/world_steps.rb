@@ -1,28 +1,32 @@
-Then /^the tags collected from (?:feature "([^"]*)" )?test "([^"]*)" are as follows:$/ do |file, test, tags|
+Then /^the tags collected from (?:feature "([^"]*)" )?test "([^"]*)" are as follows:$/ do |file, test, expected_tags|
   file ||= 1
-  tags = tags.raw.flatten
+  expected_tags = expected_tags.raw.flatten
 
-  assert CucumberAnalytics::World.tags_in(@parsed_files[file - 1].feature.tests[test - 1]).sort == tags.sort
+  CucumberAnalytics::World.tags_in(@parsed_files[file - 1].feature.tests[test - 1]).sort.should == expected_tags.sort
+  CucumberAnalytics::World.tag_elements_in(@parsed_files[file - 1].feature.tests[test - 1]).collect { |tag| tag.name }.sort.should == expected_tags.sort
 end
 
-Then /^the tags collected from feature "([^"]*)" are as follows:$/ do |file, tags|
+Then /^the tags collected from feature "([^"]*)" are as follows:$/ do |file, expected_tags|
   file ||= 1
-  tags = tags.raw.flatten
+  expected_tags = expected_tags.raw.flatten
 
-  assert CucumberAnalytics::World.tags_in(@parsed_files[file - 1].feature).sort == tags.sort
+  CucumberAnalytics::World.tags_in(@parsed_files[file - 1].feature).sort == expected_tags.sort.should
+  CucumberAnalytics::World.tag_elements_in(@parsed_files[file - 1].feature).collect { |tag| tag.name }.sort.should == expected_tags.sort
 end
 
-Then /^the tags collected from file "([^"]*)" are as follows:$/ do |file, tags|
+Then /^the tags collected from file "([^"]*)" are as follows:$/ do |file, expected_tags|
   file ||= 1
-  tags = tags.raw.flatten
+  expected_tags = expected_tags.raw.flatten
 
-  assert CucumberAnalytics::World.tags_in(@parsed_files[file - 1]).sort == tags.sort
+  CucumberAnalytics::World.tags_in(@parsed_files[file - 1]).sort.should == expected_tags.sort
+  CucumberAnalytics::World.tag_elements_in(@parsed_files[file - 1]).collect { |tag| tag.name }.sort.should == expected_tags.sort
 end
 
-Then /^the tags collected from directory are as follows:$/ do |tags|
-  tags = tags.raw.flatten
+Then /^the tags collected from directory are as follows:$/ do |expected_tags|
+  expected_tags = expected_tags.raw.flatten
 
-  assert CucumberAnalytics::World.tags_in(@parsed_directories.last).sort == tags.sort
+  CucumberAnalytics::World.tags_in(@parsed_directories.last).sort.should == expected_tags.sort
+  CucumberAnalytics::World.tag_elements_in(@parsed_directories.last).collect { |tag| tag.name }.sort.should == expected_tags.sort
 end
 
 Then /^the(?: "([^"]*)")? steps collected from feature "([^"]*)" background are as follows:$/ do |defined, file, steps|
