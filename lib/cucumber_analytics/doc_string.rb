@@ -50,9 +50,17 @@ module CucumberAnalytics
     end
 
     def build_doc_string(doc_string)
-      @content_type = doc_string['content_type'] == "" ? nil : doc_string['content_type']
-      @contents = doc_string['value'].split($/)
+      populate_content_type(doc_string)
+      populate_contents(doc_string)
       populate_raw_element(doc_string)
+    end
+
+    def populate_content_type(doc_string)
+      @content_type = doc_string['content_type'] == "" ? nil : doc_string['content_type']
+    end
+
+    def populate_contents(doc_string)
+      @contents = doc_string['value'].split($/)
     end
 
   end

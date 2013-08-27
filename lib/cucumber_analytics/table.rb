@@ -47,8 +47,12 @@ module CucumberAnalytics
     end
 
     def build_table(table)
-      @contents = table.collect { |row| row['cells'] }
+      populate_contents(table)
       populate_raw_element(table)
+    end
+
+    def populate_contents(table)
+      @contents = table.collect { |row| row['cells'] }
     end
 
   end
