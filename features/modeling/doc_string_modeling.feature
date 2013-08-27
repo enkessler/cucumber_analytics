@@ -43,7 +43,7 @@ Feature: Doc String elements can be modeled.
   Scenario Outline: Doc String models pass all other specifications
   Exact specifications detailing the API for Doc String models.
     Given that there are "<additional specifications>" detailing models
-    When the corresponding unit tests are run
+    When the corresponding specifications are run
     Then all of those specifications are met
   Examples:
     | additional specifications |
