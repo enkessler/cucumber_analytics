@@ -13,6 +13,7 @@ describe 'Feature, Unit' do
   it_should_behave_like 'a bare bones element', clazz
   it_should_behave_like 'a prepopulated element', clazz
   it_should_behave_like 'a sourced element', clazz
+  it_should_behave_like 'a raw element', clazz
 
   before(:each) do
     @feature = clazz.new
@@ -64,6 +65,17 @@ describe 'Feature, Unit' do
     tests = [:test_1, :test_2]
     background = :a_background
     everything = [background] + tests
+
+    @feature.background = background
+    @feature.tests = tests
+
+    @feature.contains.should =~ everything
+  end
+
+  it 'contains a background only if one is present' do
+    tests = [:test_1, :test_2]
+    background = nil
+    everything = tests
 
     @feature.background = background
     @feature.tests = tests

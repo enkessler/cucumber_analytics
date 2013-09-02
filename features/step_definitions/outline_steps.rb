@@ -46,29 +46,26 @@ Then /^(?:the )?(?:feature "([^"]*)" )?test(?: "([^"]*)")? example block(?: "([^
   assert @parsed_files[file - 1].feature.tests[test - 1].examples[example - 1].description == lines
 end
 
-Then /^(?:the )?(?:feature "([^"]*)" )?test(?: "([^"]*)")? example block(?: "([^"]*)")? is found to have the following tags:$/ do |file, test, example, tags|
+Then /^(?:the )?(?:feature "([^"]*)" )?test(?: "([^"]*)")? example block(?: "([^"]*)")? is found to have the following tags:$/ do |file, test, example, expected_tags|
   file ||= 1
   test ||= 1
   example ||= 1
 
+  expected_tags = expected_tags.raw.flatten
 
-  expected = tags.raw.flatten
-  actual = @parsed_files[file - 1].feature.tests[test - 1].examples[example - 1].tags
-
-  assert(actual == expected, "Expected: #{expected}\n but was: #{actual}")
+  @parsed_files[file - 1].feature.tests[test - 1].examples[example - 1].tags.should == expected_tags
+  @parsed_files[file - 1].feature.tests[test - 1].examples[example - 1].tag_elements.collect { |tag| tag.name }.should == expected_tags
 end
 
-Then /^(?:the )?(?:feature "([^"]*)" )?test(?: "([^"]*)")? example block(?: "([^"]*)")? is found to have the following applied tags:$/ do |file, test, example, tags|
+Then /^(?:the )?(?:feature "([^"]*)" )?test(?: "([^"]*)")? example block(?: "([^"]*)")? is found to have the following applied tags:$/ do |file, test, example, expected_tags|
   file ||= 1
   test ||= 1
   example ||= 1
 
-  tags = tags.raw.flatten
+  expected_tags = expected_tags.raw.flatten.sort
 
-  expected = tags.sort
-  actual = @parsed_files[file - 1].feature.tests[test - 1].examples[example - 1].applied_tags.sort
-
-  assert(actual == expected, "Expected: #{expected}\n but was: #{actual}")
+  @parsed_files[file - 1].feature.tests[test - 1].examples[example - 1].applied_tags.sort.should == expected_tags
+  @parsed_files[file - 1].feature.tests[test - 1].examples[example - 1].applied_tag_elements.collect { |tag| tag.name }.sort.should == expected_tags
 end
 
 Then /^(?:the )?(?:feature "([^"]*)" )?test(?: "([^"]*)")? example block(?: "([^"]*)")? has no tags$/ do |file, test, example|
@@ -76,10 +73,8 @@ Then /^(?:the )?(?:feature "([^"]*)" )?test(?: "([^"]*)")? example block(?: "([^
   test ||= 1
   example ||= 1
 
-  expected = []
-  actual = @parsed_files[file - 1].feature.tests[test - 1].examples[example - 1].tags
-
-  assert(actual == expected, "Expected: #{expected}\n but was: #{actual}")
+  @parsed_files[file - 1].feature.tests[test - 1].examples[example - 1].tags.should == []
+  @parsed_files[file - 1].feature.tests[test - 1].examples[example - 1].tag_elements.collect { |tag| tag.name }.should == []
 end
 
 Then /^(?:the )?(?:feature "([^"]*)" )?test(?: "([^"]*)")? example block(?: "([^"]*)")? rows are as follows:$/ do |file, test, example, rows|
@@ -172,4 +167,25 @@ Then /^(?:the )?(?:feature "([^"]*)" )?test(?: "([^"]*)")? example block(?: "([^
   actual = example.row_elements[1..example.row_elements.count]
 
   assert(actual == expected, "Expected: #{expected}\n but was: #{actual}")
+end
+
+Then /^(?:the )?(?:feature "([^"]*)" )?test(?: "([^"]*)")? example block(?: "([^"]*)")? row(?: "([^"]*)")? correctly stores its underlying implementation$/ do |file, test, example, row|
+  file ||= 1
+  test ||= 1
+  example ||= 1
+  row ||= 1
+
+  raw_element = @parsed_files[file - 1].feature.tests[test - 1].examples[example - 1].row_elements[row - 1].raw_element
+
+  raw_element.has_key?('cells').should be_true
+end
+
+Then /^(?:the )?(?:feature "([^"]*)" )?test(?: "([^"]*)")? example block(?: "([^"]*)")? correctly stores its underlying implementation$/ do |file, test, example|
+  file ||= 1
+  test ||= 1
+  example ||= 1
+
+  raw_element = @parsed_files[file - 1].feature.tests[test - 1].examples[example - 1].raw_element
+
+  raw_element.has_key?('rows').should be_true
 end

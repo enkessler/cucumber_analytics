@@ -5,6 +5,8 @@ module CucumberAnalytics
   class Row
 
     include Sourceable
+    include Raw
+
 
     # The parent object that contains *self*
     attr_accessor :parent_element
@@ -48,6 +50,7 @@ module CucumberAnalytics
     def build_row(parsed_row)
       populate_element_source_line(parsed_row)
       populate_row_cells(parsed_row)
+      populate_raw_element(parsed_row)
     end
 
     def populate_row_cells(parsed_row)

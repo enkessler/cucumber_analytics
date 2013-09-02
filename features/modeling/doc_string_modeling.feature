@@ -6,6 +6,7 @@ Feature: Doc String elements can be modeled.
   All conceptual pieces of a Doc String can be modeled:
     1. the doc string's content type
     2. the doc string's contents
+    3. the doc string's raw element
 
 
   Background: Test file setup.
@@ -26,6 +27,9 @@ Feature: Doc String elements can be modeled.
     When the file is read
 
 
+  Scenario: The raw doc string element is modeled.
+    Then the doc string correctly stores its underlying implementation
+
   Scenario: The doc string's content type is modeled.
     Then the step "1" doc string content type is "content type"
     And the step "2" doc string has no content type
@@ -39,7 +43,7 @@ Feature: Doc String elements can be modeled.
   Scenario Outline: Doc String models pass all other specifications
   Exact specifications detailing the API for Doc String models.
     Given that there are "<additional specifications>" detailing models
-    When the corresponding unit tests are run
+    When the corresponding specifications are run
     Then all of those specifications are met
   Examples:
     | additional specifications |

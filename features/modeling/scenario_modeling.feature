@@ -10,6 +10,7 @@ Feature: Scenario elements can be modeled.
     4. the scenario's tags
     5. the scenario's applied tags
     6. the scenario's source line
+    7. the scenario's raw element
 
 
   Background: Test file setup.
@@ -30,6 +31,10 @@ Feature: Scenario elements can be modeled.
     """
     And parameter delimiters of "*" and "*"
     When the file is read
+
+
+  Scenario: The raw scenario element is modeled.
+    Then the test correctly stores its underlying implementation
 
   Scenario: The scenario source line is modeled.
     Then the test is found to have the following properties:
@@ -62,7 +67,7 @@ Feature: Scenario elements can be modeled.
   Scenario Outline: Scenario models pass all other specifications
   Exact specifications detailing the API for Scenario models.
     Given that there are "<additional specifications>" detailing models
-    When the corresponding unit tests are run
+    When the corresponding specifications are run
     Then all of those specifications are met
   Examples:
     | additional specifications    |

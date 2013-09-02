@@ -7,7 +7,7 @@ Given /^that there are "([^"]*)" detailing models$/ do |spec_file|
   @spec_file = spec_file
 end
 
-When /^the corresponding unit tests are run$/ do
+When /^the corresponding specifications are run$/ do
   command = "rspec #{@spec_file}"
 
   @specs_passed = system(command)

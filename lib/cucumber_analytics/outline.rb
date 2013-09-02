@@ -19,6 +19,7 @@ module CucumberAnalytics
       super(parsed_outline)
 
       @tags = []
+      @tag_elements = []
       @examples = []
 
       build_outline(parsed_outline) if parsed_outline

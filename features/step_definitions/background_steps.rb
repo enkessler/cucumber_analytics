@@ -54,3 +54,15 @@ When /^step "([^"]*)" of the background (?:of feature "([^"]*)" )?has the follow
 
   assert @parsed_files[file - 1].feature.background.steps[step - 1].block == block
 end
+
+
+Then(/^the(?: feature "([^"]*)")? background correctly stores its underlying implementation$/) do |file|
+  file ||= 1
+
+  raw_element = @parsed_files[file - 1].feature.background.raw_element
+
+  expected = 'Background'
+  actual = raw_element['keyword']
+
+  assert(actual == expected, "Expected: #{expected}\n but was: #{actual}")
+end

@@ -9,6 +9,7 @@ Feature: Step elements can be modeled.
     3. the step's arguments, if any
     4. the step's associated block, if any
     5. the step's source line
+    6. the step's raw element
 
 
   Background: Test file setup.
@@ -30,6 +31,10 @@ Feature: Step elements can be modeled.
     """
     And parameter delimiters of "*" and "*"
     When the file is read
+
+
+  Scenario: The raw step element is modeled.
+    Then the test step correctly stores its underlying implementation
 
   Scenario: The step's source line is modeled.
     Then the test step "1" source line is "4"
@@ -66,7 +71,7 @@ Feature: Step elements can be modeled.
   Scenario Outline: Step models pass all other specifications
   Exact specifications detailing the API for Step models.
     Given that there are "<additional specifications>" detailing models
-    When the corresponding unit tests are run
+    When the corresponding specifications are run
     Then all of those specifications are met
   Examples:
     | additional specifications |

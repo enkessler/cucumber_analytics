@@ -17,11 +17,11 @@ Then /^the descriptive lines of feature "([^"]*)" are as follows:$/ do |file, li
   assert(actual == expected, "Expected: #{expected}\n but was: #{actual}")
 end
 
-Then /^feature "([^"]*)" is found to have the following tags:$/ do |file, tags|
-  expected = tags.raw.flatten
-  actual = @parsed_files[file - 1].feature.tags
+Then /^feature "([^"]*)" is found to have the following tags:$/ do |file, expected_tags|
+  expected_tags = expected_tags.raw.flatten
 
-  assert(actual == expected, "Expected: #{expected}\n but was: #{actual}")
+  @parsed_files[file - 1].feature.tags.should == expected_tags
+  @parsed_files[file - 1].feature.tag_elements.collect { |tag| tag.name }.should == expected_tags
 end
 
 Then /^feature "([^"]*)" has no descriptive lines$/ do |file|
@@ -30,6 +30,7 @@ end
 
 Then /^feature "([^"]*)" has no tags$/ do |file|
   assert @parsed_files[file - 1].feature.tags == []
+  assert @parsed_files[file - 1].feature.tag_elements.collect { |tag| tag.name } == []
 end
 
 When /^(?:the )?feature(?: "([^"]*)")? scenarios are as follows:$/ do |file, scenarios|
@@ -54,7 +55,7 @@ end
 When /^(?:the )?feature(?: "([^"]*)")? background is as follows:$/ do |file, background|
   file ||= 1
 
-  @parsed_files[file - 1].feature.background.name.should  == background.raw.flatten.first
+  @parsed_files[file - 1].feature.background.name.should == background.raw.flatten.first
 end
 
 When /^feature "([^"]*)" has no scenarios$/ do |file|
@@ -67,4 +68,12 @@ end
 
 When /^feature "([^"]*)" has no background/ do |file|
   assert @parsed_files[file - 1].feature.has_background? == false
+end
+
+Then /^(?:the )?feature(?: "([^"]*)")? correctly stores its underlying implementation$/ do |file|
+  file ||= 1
+
+  raw_element = @parsed_files[file - 1].feature.raw_element
+
+  raw_element.has_key?('elements').should be_true
 end

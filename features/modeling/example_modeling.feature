@@ -11,6 +11,7 @@ Feature: Example elements can be modeled.
     5. the example's tags
     6. the example's applied tags
     7. the example's source line
+    8. the example's raw element
 
 
   Background: Test file setup.
@@ -38,6 +39,9 @@ Feature: Example elements can be modeled.
     And parameter delimiters of "*" and "*"
     When the file is read
 
+
+  Scenario: The raw example element is modeled.
+    Then the test example block correctly stores its underlying implementation
 
   Scenario: The example's source line is modeled.
     Then the test example block "1" is found to have the following properties:
@@ -87,7 +91,7 @@ Feature: Example elements can be modeled.
   Scenario Outline: Example models pass all other specifications
   Exact specifications detailing the API for Examples models.
     Given that there are "<additional specifications>" detailing models
-    When the corresponding unit tests are run
+    When the corresponding specifications are run
     Then all of those specifications are met
   Examples:
     | additional specifications   |

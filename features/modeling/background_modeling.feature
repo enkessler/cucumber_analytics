@@ -8,6 +8,7 @@ Feature: Background elements can be modeled.
     2. the background's description
     3. the background's steps
     4. the background's source line
+    5. the background's raw element
 
   Background: Test file setup.
     Given the following feature file:
@@ -25,6 +26,9 @@ Feature: Background elements can be modeled.
     And parameter delimiters of "*" and "*"
     When the file is read
 
+
+  Scenario: The raw background element is modeled.
+    Then the background correctly stores its underlying implementation
 
   Scenario: The background source line is modeled.
     Then the background is found to have the following properties:
@@ -48,7 +52,7 @@ Feature: Background elements can be modeled.
   Scenario Outline: Background models pass all other specifications
   Exact specifications detailing the API for Background models.
     Given that there are "<additional specifications>" detailing models
-    When the corresponding unit tests are run
+    When the corresponding specifications are run
     Then all of those specifications are met
   Examples:
     | additional specifications      |

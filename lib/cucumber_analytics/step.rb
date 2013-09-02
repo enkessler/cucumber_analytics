@@ -6,6 +6,8 @@ module CucumberAnalytics
 
     include Containing
     include Sourceable
+    include Raw
+
 
     # The step's keyword
     attr_accessor :keyword
@@ -158,6 +160,7 @@ module CucumberAnalytics
       populate_block(step)
       populate_keyword(step)
       populate_element_source_line(step)
+      populate_raw_element(step)
 
       scan_arguments
     end

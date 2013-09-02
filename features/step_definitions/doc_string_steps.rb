@@ -48,3 +48,13 @@ Then /^(?:the )?(?:feature "([^"]*)" )?(?:test(?: "([^"]*)")? )?(?:step(?: "([^"
 
   assert(actual == expected, "Expected: #{expected}\n but was: #{actual}")
 end
+
+Then(/^(?:the )?(?:feature "([^"]*)" )?(?:test(?: "([^"]*)")? )?(?:step(?: "([^"]*)") )?doc string correctly stores its underlying implementation$/) do |file, test, step|
+  file ||= 1
+  test ||= 1
+  step ||= 1
+
+  raw_element = @parsed_files[file - 1].feature.tests[test - 1].steps[step - 1].block.raw_element
+
+  raw_element.has_key?('content_type').should be_true
+end

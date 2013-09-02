@@ -15,6 +15,7 @@ module CucumberAnalytics
       super(parsed_scenario)
 
       @tags = []
+      @tag_elements = []
 
       build_scenario(parsed_scenario) if parsed_scenario
     end

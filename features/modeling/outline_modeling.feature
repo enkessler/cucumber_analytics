@@ -11,6 +11,7 @@ Feature: Scenario Outline elements can be modeled.
     5. the outline's applied tags
     6. the outline's example blocks
     7. the outline's source line
+    8. the outline's raw element
 
 
   Background: Test file setup.
@@ -37,6 +38,10 @@ Feature: Scenario Outline elements can be modeled.
     """
     And parameter delimiters of "*" and "*"
     When the file is read
+
+
+  Scenario: The raw outline element is modeled.
+    Then the test correctly stores its underlying implementation
 
   Scenario: The outline source line is modeled.
     Then the test is found to have the following properties:
@@ -73,7 +78,7 @@ Feature: Scenario Outline elements can be modeled.
   Scenario Outline: Outline models pass all other specifications
   Exact specifications detailing the API for Scenario Outline models.
     Given that there are "<additional specifications>" detailing models
-    When the corresponding unit tests are run
+    When the corresponding specifications are run
     Then all of those specifications are met
   Examples:
     | additional specifications   |

@@ -106,7 +106,7 @@ Feature: Directories can be modeled.
   Scenario Outline: Directory models pass all other specifications
   Exact specifications detailing the API for directory models.
     Given that there are "<additional specifications>" detailing models
-    When the corresponding unit tests are run
+    When the corresponding specifications are run
     Then all of those specifications are met
   Examples:
     | additional specifications     |

@@ -38,24 +38,24 @@ Then /^(?:the )?(?:feature "([^"]*)" )?test(?: "([^"]*)")? steps are as follows:
   assert actual_steps.flatten == steps
 end
 
-Then /^(?:the )?(?:feature "([^"]*)" )?test(?: "([^"]*)")? is found to have the following tags:$/ do |file, test, tags|
+Then /^(?:the )?(?:feature "([^"]*)" )?test(?: "([^"]*)")? is found to have the following tags:$/ do |file, test, expected_tags|
   file ||= 1
   test ||= 1
 
-  expected = tags.raw.flatten
-  actual = @parsed_files[file - 1].feature.tests[test - 1].tags
+  expected_tags = expected_tags.raw.flatten
 
-  assert(actual == expected, "Expected: #{expected}\n but was: #{actual}")
+  @parsed_files[file - 1].feature.tests[test - 1].tags.should == expected_tags
+  @parsed_files[file - 1].feature.tests[test - 1].tag_elements.collect { |tag| tag.name }.should == expected_tags
 end
 
-Then /^(?:the )?(?:feature "([^"]*)" )?test(?: "([^"]*)")? is found to have the following applied tags:$/ do |file, test, tags|
+Then /^(?:the )?(?:feature "([^"]*)" )?test(?: "([^"]*)")? is found to have the following applied tags:$/ do |file, test, expected_tags|
   file ||= 1
   test ||= 1
 
-  expected = tags.raw.flatten
-  actual = @parsed_files[file - 1].feature.tests[test - 1].applied_tags
+  expected_tags = expected_tags.raw.flatten
 
-  assert(actual == expected, "Expected: #{expected}\n but was: #{actual}")
+  @parsed_files[file - 1].feature.tests[test - 1].applied_tags.should == expected_tags
+  @parsed_files[file - 1].feature.tests[test - 1].applied_tag_elements.collect { |tag| tag.name }.should == expected_tags
 end
 
 Then /^(?:the )?(?:feature "([^"]*)" )?test(?: "([^"]*)")? step "([^"]*)" has the following block:$/ do |file, test, step, block|
@@ -88,4 +88,16 @@ Then /^(?:the )?(?:feature "([^"]*)" )?test(?: "([^"]*)")? is not equal to test 
   first_test ||= 1
 
   assert @parsed_files[file - 1].feature.tests[first_test - 1] != @parsed_files[file - 1].feature.tests[second_test - 1]
+end
+
+Then /^(?:the )?(?:feature "([^"]*)" )?test(?: "([^"]*)")? correctly stores its underlying implementation$/ do |file, test|
+  file ||= 1
+  test ||= 1
+
+  raw_element = @parsed_files[file - 1].feature.tests[test - 1].raw_element
+
+  expected = ['Scenario', 'Scenario Outline']
+  actual = raw_element['keyword']
+
+  expected.include?(actual).should be_true
 end

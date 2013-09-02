@@ -4,6 +4,9 @@ module CucumberAnalytics
 
   class Table
 
+    include Raw
+
+
     # The parent object that contains *self*
     attr_accessor :parent_element
 
@@ -44,6 +47,11 @@ module CucumberAnalytics
     end
 
     def build_table(table)
+      populate_contents(table)
+      populate_raw_element(table)
+    end
+
+    def populate_contents(table)
       @contents = table.collect { |row| row['cells'] }
     end
 
