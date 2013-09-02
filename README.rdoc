@@ -67,6 +67,11 @@ also discovered that our team is creating several redundant steps that could be
 rewritten into a single, reusable step.
 
 
+===Other usages
+
+https://gist.github.com/enkessler/6408879 - Creating a step lexicon
+
+
 == Contributing
 
 1. Fork it
