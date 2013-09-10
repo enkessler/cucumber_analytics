@@ -16,9 +16,12 @@ describe 'Background, Unit' do
   it_should_behave_like 'a raw element', clazz
 
   it 'can be parsed from stand alone text' do
-    source = 'Background: '
+    source = 'Background: test background'
 
-    expect { clazz.new(source) }.to_not raise_error
+    expect { @element = clazz.new(source) }.to_not raise_error
+
+    # Sanity check in case instantiation failed in a non-explosive manner
+    @element.name.should == 'test background'
   end
 
 end

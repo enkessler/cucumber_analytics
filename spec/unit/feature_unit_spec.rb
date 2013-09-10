@@ -20,9 +20,12 @@ describe 'Feature, Unit' do
   end
 
   it 'can be parsed from stand alone text' do
-    source = 'Feature: '
+    source = 'Feature: test feature'
 
-    expect { clazz.new(source) }.to_not raise_error
+    expect { @element = clazz.new(source) }.to_not raise_error
+
+    # Sanity check in case instantiation failed in a non-explosive manner
+    @element.name.should == 'test feature'
   end
 
   it 'has a background - #background' do

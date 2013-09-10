@@ -17,12 +17,15 @@ describe 'Example, Unit' do
 
 
   it 'can be parsed from stand alone text' do
-    source = ['Examples: ',
+    source = ['Examples: test example',
               '|param| ']
 
     source = source.join("\n")
 
-    expect { clazz.new(source) }.to_not raise_error
+    expect { @element = clazz.new(source) }.to_not raise_error
+
+    # Sanity check in case instantiation failed in a non-explosive manner
+    @element.name.should == 'test example'
   end
 
 
