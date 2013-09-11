@@ -70,7 +70,7 @@ rewritten into a single, reusable step.
 ===Other usages
 
 https://gist.github.com/enkessler/6408879 - Creating a step lexicon
-
+https://gist.github.com/enkessler/6519022 - Creating unique identifiers for all test cases
 
 == Contributing
 
