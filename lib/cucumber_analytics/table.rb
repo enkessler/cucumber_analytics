@@ -5,10 +5,8 @@ module CucumberAnalytics
   class Table
 
     include Raw
+    include Nested
 
-
-    # The parent object that contains *self*
-    attr_accessor :parent_element
 
     # The contents of the table
     attr_accessor :contents

@@ -21,4 +21,28 @@ describe 'Directory, Integration' do
     file.parent_element.should equal directory
   end
 
+  context 'getting stuff' do
+
+    before(:each) do
+      nested_directory = "#{@default_file_directory}/nested_directory"
+      FileUtils.mkdir(nested_directory)
+
+      @directory = CucumberAnalytics::Directory.new(@default_file_directory)
+      @nested_directory = @directory.directories.first
+    end
+
+
+    it 'can get its directory' do
+      directory = @nested_directory.get_ancestor(:directory)
+
+      directory.path.should == @directory.path
+    end
+
+    it 'returns nil if it does not have the requested type of ancestor' do
+      example = @nested_directory.get_ancestor(:example)
+
+      example.should be_nil
+    end
+
+  end
 end

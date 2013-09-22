@@ -6,6 +6,7 @@ module CucumberAnalytics
 
     include Sourceable
     include Raw
+    include Nested
 
 
     # The name of the FeatureElement
@@ -13,9 +14,6 @@ module CucumberAnalytics
 
     # The description of the FeatureElement
     attr_accessor :description
-
-    # The parent object that contains *self*
-    attr_accessor :parent_element
 
 
     # Creates a new FeatureElement object and, if *parsed_element* is provided,

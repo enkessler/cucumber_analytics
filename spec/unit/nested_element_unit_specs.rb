@@ -21,4 +21,16 @@ shared_examples_for 'a nested element' do |clazz|
     @nested_element.parent_element.should == nil
   end
 
+  it 'has access to its ancestors' do
+    @nested_element.should respond_to(:get_ancestor)
+  end
+
+  it 'gets an ancestor based on type' do
+    (clazz.instance_method(:get_ancestor).arity == 1).should be_true
+  end
+
+  it 'raises and exception if an unknown ancestor type is requested' do
+    expect { @nested_element.get_ancestor(:bad_ancestor_type) }.to raise_exception(ArgumentError)
+  end
+
 end

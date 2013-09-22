@@ -5,10 +5,8 @@ module CucumberAnalytics
   class DocString
 
     include Raw
+    include Nested
 
-
-    # The parent object that contains *self*
-    attr_accessor :parent_element
 
     # The content type associated with the doc string
     attr_accessor :content_type

@@ -46,5 +46,6 @@ Feature: Doc String elements can be modeled.
     When the corresponding specifications are run
     Then all of those specifications are met
   Examples:
-    | additional specifications |
-    | doc_string_unit_spec.rb   |
+    | additional specifications      |
+    | doc_string_unit_spec.rb        |
+    | doc_string_integration_spec.rb |

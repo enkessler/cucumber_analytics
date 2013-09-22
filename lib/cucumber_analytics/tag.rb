@@ -6,10 +6,8 @@ module CucumberAnalytics
 
     include Raw
     include Sourceable
+    include Nested
 
-
-    # The parent object that contains *self*
-    attr_accessor :parent_element
 
     # The name of the Tag
     attr_accessor :name

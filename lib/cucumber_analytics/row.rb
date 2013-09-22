@@ -6,10 +6,8 @@ module CucumberAnalytics
 
     include Sourceable
     include Raw
+    include Nested
 
-
-    # The parent object that contains *self*
-    attr_accessor :parent_element
 
     # The cells that make up the row
     attr_accessor :cells

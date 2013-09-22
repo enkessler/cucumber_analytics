@@ -113,4 +113,52 @@ describe 'Step, Integration' do
 
   end
 
+  context 'getting stuff' do
+
+    before(:each) do
+      source = ['Feature: Test feature',
+                '',
+                '  Scenario: Test test',
+                '    * a step:']
+      source = source.join("\n")
+
+      file_path = "#{@default_file_directory}/step_test_file.feature"
+      File.open(file_path, 'w') { |file| file.write(source) }
+
+      @directory = CucumberAnalytics::Directory.new(@default_file_directory)
+      @step = @directory.feature_files.first.features.first.tests.first.steps.first
+    end
+
+
+    it 'can get its directory' do
+      directory = @step.get_ancestor(:directory)
+
+      directory.path.should == @directory.path
+    end
+
+    it 'can get its feature file' do
+      feature_file = @step.get_ancestor(:feature_file)
+
+      feature_file.path.should == @directory.feature_files.first.path
+    end
+
+    it 'can get its feature' do
+      feature = @step.get_ancestor(:feature)
+
+      feature.name.should == @directory.feature_files.first.features.first.name
+    end
+
+    it 'can get its test' do
+      test = @step.get_ancestor(:test)
+
+      test.name.should == @directory.feature_files.first.features.first.tests.first.name
+    end
+
+    it 'returns nil if it does not have the requested type of ancestor' do
+      example = @step.get_ancestor(:example)
+
+      example.should be_nil
+    end
+
+  end
 end

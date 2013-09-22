@@ -15,4 +15,46 @@ describe 'Background, Integration' do
     step.parent_element.should equal background
   end
 
+  context 'getting stuff' do
+
+    before(:each) do
+      source = ['Feature: Test feature',
+                '',
+                '  Background: Test background',
+                '    * a step:']
+      source = source.join("\n")
+
+      file_path = "#{@default_file_directory}/background_test_file.feature"
+      File.open(file_path, 'w') { |file| file.write(source) }
+
+      @directory = CucumberAnalytics::Directory.new(@default_file_directory)
+      @background = @directory.feature_files.first.features.first.background
+    end
+
+
+    it 'can get its directory' do
+      directory = @background.get_ancestor(:directory)
+
+      directory.path.should == @directory.path
+    end
+
+    it 'can get its feature file' do
+      feature_file = @background.get_ancestor(:feature_file)
+
+      feature_file.path.should == @directory.feature_files.first.path
+    end
+
+    it 'can get its feature' do
+      feature = @background.get_ancestor(:feature)
+
+      feature.name.should == @directory.feature_files.first.features.first.name
+    end
+
+    it 'returns nil if it does not have the requested type of ancestor' do
+      example = @background.get_ancestor(:example)
+
+      example.should be_nil
+    end
+
+  end
 end

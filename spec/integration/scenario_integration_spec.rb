@@ -18,4 +18,47 @@ describe 'Scenario, Integration' do
     tag.parent_element.should equal scenario
   end
 
+
+  context 'getting stuff' do
+
+    before(:each) do
+      source = ['Feature: Test feature',
+                '',
+                '  Scenario: Test test',
+                '    * a step']
+      source = source.join("\n")
+
+      file_path = "#{@default_file_directory}/scenario_test_file.feature"
+      File.open(file_path, 'w') { |file| file.write(source) }
+
+      @directory = CucumberAnalytics::Directory.new(@default_file_directory)
+      @scenario = @directory.feature_files.first.features.first.tests.first
+    end
+
+
+    it 'can get its directory' do
+      directory = @scenario.get_ancestor(:directory)
+
+      directory.path.should == @directory.path
+    end
+
+    it 'can get its feature file' do
+      feature_file = @scenario.get_ancestor(:feature_file)
+
+      feature_file.path.should == @directory.feature_files.first.path
+    end
+
+    it 'can get its feature' do
+      feature = @scenario.get_ancestor(:feature)
+
+      feature.name.should == @directory.feature_files.first.features.first.name
+    end
+
+    it 'returns nil if it does not have the requested type of ancestor' do
+      test = @scenario.get_ancestor(:test)
+
+      test.should be_nil
+    end
+
+  end
 end
