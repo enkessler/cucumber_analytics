@@ -1,3 +1,8 @@
+=== Version 1.3.0 / 2013-10-02
+
+* Elements now have a convenience method for accessing their ancestor elements.
+
+
 === Version 1.2.0 / 2013-09-01
 
 * Bug fix: nil no longer shows up as a child element of a Feature if the Feature
@@ -81,9 +86,9 @@
 === Version 0.0.3 / 2012-11-10
 
 * 'But' has been added to the list of recognized step keywords (formerly Given,
-When,Then, And, and *).
+  When,Then, And, and *).
 * Bug fix: the number of test cases a feature is considered to contain now
-properly takes into account an outline's example rows.
+  properly takes into account an outline's example rows.
 
 
 === Version 0.0.2 / 2012-11-01
