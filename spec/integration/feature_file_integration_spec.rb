@@ -17,4 +17,28 @@ describe 'FeatureFile, Integration' do
     feature.parent_element.should equal file
   end
 
+  context 'getting stuff' do
+
+    before(:each) do
+      file_path = "#{@default_file_directory}/feature_file_test_file.feature"
+      File.open(file_path, 'w') { |file| file.write('Feature: Test feature') }
+
+      @directory = CucumberAnalytics::Directory.new(@default_file_directory)
+      @feature_file = @directory.feature_files.first
+    end
+
+
+    it 'can get its directory' do
+      directory = @feature_file.get_ancestor(:directory)
+
+      directory.path.should == @directory.path
+    end
+
+    it 'returns nil if it does not have the requested type of ancestor' do
+      example = @feature_file.get_ancestor(:example)
+
+      example.should be_nil
+    end
+
+  end
 end

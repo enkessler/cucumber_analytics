@@ -1,70 +1,64 @@
 require 'spec_helper'
 
-SimpleCov.command_name('Example') unless RUBY_VERSION.to_s < '1.9.0'
+SimpleCov.command_name('Tag') unless RUBY_VERSION.to_s < '1.9.0'
 
-describe 'Example, Integration' do
-
-  it 'properly sets its child elements' do
-    source = ['@a_tag',
-              'Examples:',
-              '  | param   |',
-              '  | value 1 |']
-    source = source.join("\n")
-
-    example = CucumberAnalytics::Example.new(source)
-    rows = example.row_elements
-    tag = example.tag_elements.first
-
-    rows[0].parent_element.should equal example
-    rows[1].parent_element.should equal example
-    tag.parent_element.should equal example
-  end
+describe 'Tag, Integration' do
 
   context 'getting stuff' do
 
     before(:each) do
-      source = ['Feature: Test feature',
+      source = ['@feature_tag',
+                'Feature: Test feature',
                 '',
                 '  Scenario Outline: Test test',
                 '    * a step',
+                '',
+                '  @example_tag',
                 '  Examples: Test example',
                 '    | a param |']
       source = source.join("\n")
 
-      file_path = "#{@default_file_directory}/example_test_file.feature"
+      file_path = "#{@default_file_directory}/tag_test_file.feature"
       File.open(file_path, 'w') { |file| file.write(source) }
 
       @directory = CucumberAnalytics::Directory.new(@default_file_directory)
-      @example = @directory.feature_files.first.features.first.tests.first.examples.first
+      @tag = @directory.feature_files.first.features.first.tests.first.examples.first.tag_elements.first
+      @high_level_tag = @directory.feature_files.first.features.first.tag_elements.first
     end
 
 
     it 'can get its directory' do
-      directory = @example.get_ancestor(:directory)
+      directory = @tag.get_ancestor(:directory)
 
       directory.path.should == @directory.path
     end
 
     it 'can get its feature file' do
-      feature_file = @example.get_ancestor(:feature_file)
+      feature_file = @tag.get_ancestor(:feature_file)
 
       feature_file.path.should == @directory.feature_files.first.path
     end
 
     it 'can get its feature' do
-      feature = @example.get_ancestor(:feature)
+      feature = @tag.get_ancestor(:feature)
 
       feature.name.should == @directory.feature_files.first.features.first.name
     end
 
     it 'can get its test' do
-      test = @example.get_ancestor(:test)
+      test = @tag.get_ancestor(:test)
 
       test.name.should == @directory.feature_files.first.features.first.tests.first.name
     end
 
+    it 'can get its example' do
+      example = @tag.get_ancestor(:example)
+
+      example.name.should == @directory.feature_files.first.features.first.tests.first.examples.first.name
+    end
+
     it 'returns nil if it does not have the requested type of ancestor' do
-      example = @example.get_ancestor(:example)
+      example = @high_level_tag.get_ancestor(:example)
 
       example.should be_nil
     end

@@ -67,7 +67,7 @@ describe 'World, Unit' do
     end
 
     it 'can load step definition files - #load_step_file' do
-      file_path = "#{DEFAULT_FILE_DIRECTORY}/step_file.rb"
+      file_path = "#{@default_file_directory}/step_file.rb"
       patterns = [/a pattern/, /another pattern/]
 
       File.open(file_path, 'w') { |file|
@@ -75,13 +75,14 @@ describe 'World, Unit' do
           file.puts "Given #{pattern.inspect} do end"
         end
       }
+
       @world.load_step_file(file_path)
 
       @world.loaded_step_patterns.should =~ patterns
     end
 
     it 'can handle different step keywords - #load_step_file' do
-      file_path = "#{DEFAULT_FILE_DIRECTORY}/step_file.rb"
+      file_path = "#{@default_file_directory}/step_file.rb"
       patterns = [/given pattern/, /when pattern/, /then pattern/, /and pattern/, /but pattern/]
 
       File.open(file_path, 'w') { |file|
@@ -98,7 +99,7 @@ describe 'World, Unit' do
     end
 
     it 'can handle a variety of declaration structures - #load_step_file' do
-      file_path = "#{DEFAULT_FILE_DIRECTORY}/step_file.rb"
+      file_path = "#{@default_file_directory}/step_file.rb"
       patterns = [/parentheses pattern/, /no parentheses pattern/, /excess whitespace pattern/]
 
       File.open(file_path, 'w') { |file|

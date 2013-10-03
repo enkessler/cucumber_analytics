@@ -5,13 +5,11 @@ module CucumberAnalytics
   class FeatureFile
 
     include Containing
+    include Nested
 
 
     # The Feature objects contained by the FeatureFile
     attr_accessor :features
-
-    # The parent object that contains *self*
-    attr_accessor :parent_element
 
 
     # Creates a new FeatureFile object and, if *file_parsed* is provided,

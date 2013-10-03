@@ -49,3 +49,4 @@ Feature: Tag elements can be modeled.
   Examples:
     | additional specifications |
     | tag_unit_spec.rb          |
+    | tag_integration_spec.rb   |

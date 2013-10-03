@@ -86,4 +86,38 @@ describe 'Feature, Integration' do
     feature_2.test_case_count.should == 3
   end
 
+
+  context 'getting stuff' do
+
+    before(:each) do
+      source = ['Feature: Test feature']
+      source = source.join("\n")
+
+      file_path = "#{@default_file_directory}/feature_test_file.feature"
+      File.open(file_path, 'w') { |file| file.write(source) }
+
+      @directory = CucumberAnalytics::Directory.new(@default_file_directory)
+      @feature = @directory.feature_files.first.features.first
+    end
+
+
+    it 'can get its directory' do
+      directory = @feature.get_ancestor(:directory)
+
+      directory.path.should == @directory.path
+    end
+
+    it 'can get its feature file' do
+      feature_file = @feature.get_ancestor(:feature_file)
+
+      feature_file.path.should == @directory.feature_files.first.path
+    end
+
+    it 'returns nil if it does not have the requested type of ancestor' do
+      test = @feature.get_ancestor(:test)
+
+      test.should be_nil
+    end
+
+  end
 end

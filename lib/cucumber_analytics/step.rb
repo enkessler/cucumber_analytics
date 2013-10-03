@@ -7,6 +7,7 @@ module CucumberAnalytics
     include Containing
     include Sourceable
     include Raw
+    include Nested
 
 
     # The step's keyword
@@ -17,9 +18,6 @@ module CucumberAnalytics
 
     # The step's passed block
     attr_accessor :block
-
-    # The parent object that contains *self*
-    attr_accessor :parent_element
 
     # The step's arguments
     attr_accessor :arguments

@@ -62,55 +62,103 @@ describe 'Step, Integration' do
   end
 
   it 'can determine its equality with another Step' do
-      source_1 = "Given a test step with *parameter 1* and *parameter 2*\n|a block|"
-      source_2 = "Given a test step with *parameter 3* and *parameter 4*\n|another block|"
-      source_3 = 'Given a different *parameterized* step'
+    source_1 = "Given a test step with *parameter 1* and *parameter 2*\n|a block|"
+    source_2 = "Given a test step with *parameter 3* and *parameter 4*\n|another block|"
+    source_3 = 'Given a different *parameterized* step'
 
-      step_1 = CucumberAnalytics::Step.new(source_1)
-      step_2 = CucumberAnalytics::Step.new(source_2)
-      step_3 = CucumberAnalytics::Step.new(source_3)
+    step_1 = CucumberAnalytics::Step.new(source_1)
+    step_2 = CucumberAnalytics::Step.new(source_2)
+    step_3 = CucumberAnalytics::Step.new(source_3)
 
-      step_1.delimiter = '*'
-      step_2.delimiter = '*'
-      step_3.delimiter = '*'
+    step_1.delimiter = '*'
+    step_2.delimiter = '*'
+    step_3.delimiter = '*'
 
 
-      (step_1 == step_2).should be_true
-      (step_1 == step_3).should be_false
+    (step_1 == step_2).should be_true
+    (step_1 == step_3).should be_false
   end
 
   context '#step_text ' do
 
-      before(:each) do
-        source = "Given a test step with -parameter 1- ^and@ *parameter 2!!\n|a block|"
-        @step = CucumberAnalytics::Step.new(source)
-      end
+    before(:each) do
+      source = "Given a test step with -parameter 1- ^and@ *parameter 2!!\n|a block|"
+      @step = CucumberAnalytics::Step.new(source)
+    end
 
 
-      it 'returns the step\'s entire text by default' do
-        source = "Given a test step with -parameter 1- ^and@ *parameter 2!!\n|a block|"
-        step_with_block = CucumberAnalytics::Step.new(source)
+    it 'returns the step\'s entire text by default' do
+      source = "Given a test step with -parameter 1- ^and@ *parameter 2!!\n|a block|"
+      step_with_block = CucumberAnalytics::Step.new(source)
 
-        expected_output = ['Given a test step with -parameter 1- ^and@ *parameter 2!!',
-                           '|a block|']
+      expected_output = ['Given a test step with -parameter 1- ^and@ *parameter 2!!',
+                         '|a block|']
 
-        step_with_block.step_text.should == expected_output
+      step_with_block.step_text.should == expected_output
 
-        source = 'Given a test step with -parameter 1- ^and@ *parameter 2!!'
-        step_without_block = CucumberAnalytics::Step.new(source)
+      source = 'Given a test step with -parameter 1- ^and@ *parameter 2!!'
+      step_without_block = CucumberAnalytics::Step.new(source)
 
-        expected_output = ['Given a test step with -parameter 1- ^and@ *parameter 2!!']
+      expected_output = ['Given a test step with -parameter 1- ^and@ *parameter 2!!']
 
-        step_without_block.step_text.should == expected_output
-      end
+      step_without_block.step_text.should == expected_output
+    end
 
-      it 'can provide the step\'s text without the keyword' do
-        expected_output = ['a test step with -parameter 1- ^and@ *parameter 2!!',
-                           '|a block|']
+    it 'can provide the step\'s text without the keyword' do
+      expected_output = ['a test step with -parameter 1- ^and@ *parameter 2!!',
+                         '|a block|']
 
-        @step.step_text(with_keywords: false).should == expected_output
-      end
+      @step.step_text(with_keywords: false).should == expected_output
+    end
 
   end
 
+  context 'getting stuff' do
+
+    before(:each) do
+      source = ['Feature: Test feature',
+                '',
+                '  Scenario: Test test',
+                '    * a step:']
+      source = source.join("\n")
+
+      file_path = "#{@default_file_directory}/step_test_file.feature"
+      File.open(file_path, 'w') { |file| file.write(source) }
+
+      @directory = CucumberAnalytics::Directory.new(@default_file_directory)
+      @step = @directory.feature_files.first.features.first.tests.first.steps.first
+    end
+
+
+    it 'can get its directory' do
+      directory = @step.get_ancestor(:directory)
+
+      directory.path.should == @directory.path
+    end
+
+    it 'can get its feature file' do
+      feature_file = @step.get_ancestor(:feature_file)
+
+      feature_file.path.should == @directory.feature_files.first.path
+    end
+
+    it 'can get its feature' do
+      feature = @step.get_ancestor(:feature)
+
+      feature.name.should == @directory.feature_files.first.features.first.name
+    end
+
+    it 'can get its test' do
+      test = @step.get_ancestor(:test)
+
+      test.name.should == @directory.feature_files.first.features.first.tests.first.name
+    end
+
+    it 'returns nil if it does not have the requested type of ancestor' do
+      example = @step.get_ancestor(:example)
+
+      example.should be_nil
+    end
+
+  end
 end

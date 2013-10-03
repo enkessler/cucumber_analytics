@@ -17,9 +17,12 @@ describe 'Scenario, Unit' do
   it_should_behave_like 'a raw element', clazz
 
   it 'can be parsed from stand alone text' do
-    source = 'Scenario: '
+    source = 'Scenario: test scenario'
 
-    expect { clazz.new(source) }.to_not raise_error
+    expect { @element = clazz.new(source) }.to_not raise_error
+
+    # Sanity check in case instantiation failed in a non-explosive manner
+    @element.name.should == 'test scenario'
   end
 
   before(:each) do

@@ -5,6 +5,7 @@ module CucumberAnalytics
   class Directory
 
     include Containing
+    include Nested
 
 
     # The FeatureFile objects contained by the Directory
@@ -12,9 +13,6 @@ module CucumberAnalytics
 
     # The Directory objects contained by the Directory
     attr_accessor :directories
-
-    # The parent object that contains *self*
-    attr_accessor :parent_element
 
 
     # Creates a new Directory object and, if *directory_parsed* is provided,
