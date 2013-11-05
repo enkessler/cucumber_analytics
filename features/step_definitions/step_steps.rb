@@ -110,3 +110,42 @@ Then /^(?:the )?(?:feature "([^"]*)" )?test(?: "([^"]*)")? step(?: "([^"]*)")? c
 
   raw_element.has_key?('keyword').should be_true
 end
+
+Then /^(?:the )?(?:feature "([^"]*)" )?(?:test(?: "([^"]*)")? )?step(?: "([^"]*)")? table row(?: "([^"]*)")? is found to have the following properties:$/ do |file, test, step, row, properties|
+  file ||= 1
+  test ||= 1
+  step ||= 1
+  row ||= 1
+
+  properties = properties.rows_hash
+
+  properties.each do |property, value|
+    expected = value
+    actual = @parsed_files[file - 1].feature.tests[test - 1].steps[step - 1].block.row_elements[row - 1].send(property.to_sym).to_s
+
+    assert(actual == expected, "Expected: #{expected}\n but was: #{actual}")
+  end
+end
+
+Then /^(?:the )?(?:feature "([^"]*)" )?(?:test(?: "([^"]*)")? )?step(?: "([^"]*)")? table row(?: "([^"]*)")? correctly stores its underlying implementation$/ do |file, test, step, row|
+  file ||= 1
+  test ||= 1
+  step ||= 1
+  row ||= 1
+
+  raw_element = @parsed_files[file - 1].feature.tests[test - 1].steps[step - 1].block.row_elements[row - 1].raw_element
+
+  raw_element.has_key?('cells').should be_true
+end
+
+Then /^(?:the )?(?:feature "([^"]*)" )?(?:test(?: "([^"]*)")? )?step(?: "([^"]*)")? table row(?: "([^"]*)")? cells are as follows:$/ do |file, test, step, row, cells|
+  file ||= 1
+  test ||= 1
+  step ||= 1
+  row ||= 1
+
+  expected = cells.raw.flatten
+  actual = @parsed_files[file - 1].feature.tests[test - 1].steps[step - 1].block.row_elements[row - 1].cells
+
+  assert(actual == expected, "Expected: #{expected}\n but was: #{actual}")
+end

@@ -4,6 +4,7 @@ module CucumberAnalytics
 
   class Table
 
+    include Containing
     include Raw
     include Nested
 
@@ -11,11 +12,15 @@ module CucumberAnalytics
     # The contents of the table
     attr_accessor :contents
 
+    # The row elements that make up the table
+    attr_accessor :row_elements
+
 
     # Creates a new Table object and, if *source* is provided, populates
     # the object.
     def initialize(source = nil)
       @contents = []
+      @row_elements = []
 
       parsed_table = process_source(source)
 
@@ -46,11 +51,18 @@ module CucumberAnalytics
 
     def build_table(table)
       populate_contents(table)
+      populate_row_elements(table)
       populate_raw_element(table)
     end
 
     def populate_contents(table)
       @contents = table.collect { |row| row['cells'] }
+    end
+
+    def populate_row_elements(table)
+      table.each do |row|
+        @row_elements << build_child_element(TableRow, row)
+      end
     end
 
   end

@@ -17,6 +17,7 @@ module CucumberAnalytics
                      :feature => Feature,
                      :test => TestElement,
                      :step => Step,
+                     :table => Table,
                      :example => Example
       }[ancestor_type]
 
