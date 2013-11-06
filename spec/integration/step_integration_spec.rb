@@ -133,25 +133,25 @@ describe 'Step, Integration' do
     it 'can get its directory' do
       directory = @step.get_ancestor(:directory)
 
-      directory.path.should == @directory.path
+      directory.should equal @directory
     end
 
     it 'can get its feature file' do
       feature_file = @step.get_ancestor(:feature_file)
 
-      feature_file.path.should == @directory.feature_files.first.path
+      feature_file.should equal @directory.feature_files.first
     end
 
     it 'can get its feature' do
       feature = @step.get_ancestor(:feature)
 
-      feature.name.should == @directory.feature_files.first.features.first.name
+      feature.should equal @directory.feature_files.first.features.first
     end
 
     it 'can get its test' do
       test = @step.get_ancestor(:test)
 
-      test.name.should == @directory.feature_files.first.features.first.tests.first.name
+      test.should equal @directory.feature_files.first.features.first.tests.first
     end
 
     it 'returns nil if it does not have the requested type of ancestor' do

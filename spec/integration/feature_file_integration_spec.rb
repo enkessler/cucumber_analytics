@@ -31,7 +31,7 @@ describe 'FeatureFile, Integration' do
     it 'can get its directory' do
       directory = @feature_file.get_ancestor(:directory)
 
-      directory.path.should == @directory.path
+      directory.should equal @directory
     end
 
     it 'returns nil if it does not have the requested type of ancestor' do

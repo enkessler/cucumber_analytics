@@ -29,31 +29,31 @@ describe 'DocString, Integration' do
     it 'can get its directory' do
       directory = @doc_string.get_ancestor(:directory)
 
-      directory.path.should == @directory.path
+      directory.should equal @directory
     end
 
     it 'can get its feature file' do
       feature_file = @doc_string.get_ancestor(:feature_file)
 
-      feature_file.path.should == @directory.feature_files.first.path
+      feature_file.should equal @directory.feature_files.first
     end
 
     it 'can get its feature' do
       feature = @doc_string.get_ancestor(:feature)
 
-      feature.name.should == @directory.feature_files.first.features.first.name
+      feature.should equal @directory.feature_files.first.features.first
     end
 
     it 'can get its test' do
       test = @doc_string.get_ancestor(:test)
 
-      test.name.should == @directory.feature_files.first.features.first.tests.first.name
+      test.should equal @directory.feature_files.first.features.first.tests.first
     end
 
     it 'can get its step' do
       step = @doc_string.get_ancestor(:step)
 
-      step.base.should == @directory.feature_files.first.features.first.tests.first.steps.first.base
+      step.should equal @directory.feature_files.first.features.first.tests.first.steps.first
     end
 
     it 'returns nil if it does not have the requested type of ancestor' do
