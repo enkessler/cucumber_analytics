@@ -43,3 +43,4 @@ Feature: Table elements can be modeled.
   Examples:
     | additional specifications |
     | table_unit_spec.rb        |
+    | table_integration_spec.rb |

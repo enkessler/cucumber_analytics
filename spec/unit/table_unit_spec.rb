@@ -39,6 +39,21 @@ describe 'Table, Unit' do
     @table.contents.should == []
   end
 
+  it 'has row elements' do
+    @table.should respond_to(:row_elements)
+  end
+
+  it 'can get and set its row elements' do
+    @table.row_elements = :some_row_elements
+    @table.row_elements.should == :some_row_elements
+    @table.row_elements = :some_other_row_elements
+    @table.row_elements.should == :some_other_row_elements
+  end
+
+  it 'starts with no row elements' do
+    @table.row_elements.should == []
+  end
+
   it 'stores its contents as a nested array of strings' do
     source = "| cell 1 | cell 2 |\n| cell 3 | cell 4 |"
     table = CucumberAnalytics::Table.new(source)

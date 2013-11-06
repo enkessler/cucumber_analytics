@@ -104,13 +104,13 @@ describe 'Feature, Integration' do
     it 'can get its directory' do
       directory = @feature.get_ancestor(:directory)
 
-      directory.path.should == @directory.path
+      directory.should equal @directory
     end
 
     it 'can get its feature file' do
       feature_file = @feature.get_ancestor(:feature_file)
 
-      feature_file.path.should == @directory.feature_files.first.path
+      feature_file.should equal @directory.feature_files.first
     end
 
     it 'returns nil if it does not have the requested type of ancestor' do
