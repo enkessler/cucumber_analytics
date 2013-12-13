@@ -55,6 +55,11 @@ module CucumberAnalytics
       @feature_files + @directories
     end
 
+    # Returns the path of the directory.
+    def to_s
+      path
+    end
+
 
     private
 
