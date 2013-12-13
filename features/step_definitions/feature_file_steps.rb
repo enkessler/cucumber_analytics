@@ -28,3 +28,14 @@ When /^(?:the )?file(?: "([^"]*)")? has no features$/ do |file|
 
   assert @parsed_files[file - 1].feature.nil?
 end
+
+Then(/^the feature file has convenient output$/) do
+  @parsed_files.first.method(:to_s).owner.should == CucumberAnalytics::FeatureFile
+end
+
+Given(/^a feature file element based on "([^"]*)"$/) do |file_name|
+  file_path = "#{@default_file_directory}/#{file_name}"
+  File.open(file_path, 'w') { |file| file.puts "Feature:" } unless File.exists?(file_path)
+
+  @element = CucumberAnalytics::FeatureFile.new(file_path)
+end
