@@ -189,3 +189,19 @@ Then /^(?:the )?(?:feature "([^"]*)" )?test(?: "([^"]*)")? example block(?: "([^
 
   raw_element.has_key?('rows').should be_true
 end
+
+Then(/^the row has convenient output$/) do
+  @parsed_files.first.feature.tests.first.examples.first.row_elements.first.method(:to_s).owner.should == CucumberAnalytics::Row
+end
+
+Given(/^a row element based on the following gherkin:$/) do |row_text|
+  @element = CucumberAnalytics::Row.new(row_text)
+end
+
+Given(/^a row element$/) do
+  @element = CucumberAnalytics::Row.new
+end
+
+When(/^the row element has no cells$/) do
+  @element.cells = []
+end

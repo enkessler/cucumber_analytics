@@ -23,6 +23,11 @@ module CucumberAnalytics
       build_row(parsed_row) if parsed_row
     end
 
+    # Returns a gherkin representation of the row.
+    def to_s
+      cells.empty? ? '' : "| #{cells.join(' | ')} |"
+    end
+
 
     private
 
