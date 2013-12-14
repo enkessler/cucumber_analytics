@@ -35,3 +35,19 @@ end
 Then(/^the table row has convenient output$/) do
   @parsed_files.first.feature.tests.first.steps.first.block.row_elements.first.method(:to_s).owner.should == CucumberAnalytics::TableRow
 end
+
+Given(/^a table element$/) do
+  @element = CucumberAnalytics::Table.new
+end
+
+When(/^the table element has no rows$/) do
+  @element.row_elements = []
+end
+
+Then(/^the table has convenient output$/) do
+  @parsed_files.first.feature.tests.first.steps.first.block.method(:to_s).owner.should == CucumberAnalytics::Table
+end
+
+Given(/^a table element based on the following gherkin:$/) do |table_text|
+  @element = CucumberAnalytics::Table.new(table_text)
+end

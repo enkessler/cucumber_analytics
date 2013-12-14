@@ -27,6 +27,25 @@ module CucumberAnalytics
       build_table(parsed_table) if parsed_table
     end
 
+    # Returns a gherkin representation of the table.
+    def to_s
+      unless row_elements.empty?
+        table_text = row_elements.collect do |row|
+          row_text = '|'
+
+          row.cells.count.times do |count|
+            row_text += " #{row.cells[count].ljust(determine_buffer_size(count))} |"
+          end
+
+          row_text
+        end
+
+        table_text = table_text.join("\n")
+      end
+
+      table_text || ''
+    end
+
 
     private
 
@@ -63,6 +82,10 @@ module CucumberAnalytics
       table.each do |row|
         @row_elements << build_child_element(TableRow, row)
       end
+    end
+
+    def determine_buffer_size(index)
+      row_elements.collect { |row| row.cells[index].length }.max || 0
     end
 
   end

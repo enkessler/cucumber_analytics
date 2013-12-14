@@ -3,9 +3,11 @@ Feature: Table elements can be modeled.
 
   Acceptance criteria
 
-  All conceptual pieces of a Table can be modeled:
-    1. the table's contents
-    2. the table's raw element
+    1. All conceptual pieces of a table can be modeled:
+      - the table's contents
+      - the table's raw element
+
+    2. Tables can be outputted in a convenient form
 
 
   Background: Test file setup.
@@ -35,8 +37,11 @@ Feature: Table elements can be modeled.
   Scenario: The raw table element is modeled.
     Then the table correctly stores its underlying implementation
 
+  Scenario: Convenient output of a table
+    Then the table has convenient output
+
   Scenario Outline: Table models pass all other specifications
-  Exact specifications detailing the API for Table String models.
+  Exact specifications detailing the API for table models.
     Given that there are "<additional specifications>" detailing models
     When the corresponding specifications are run
     Then all of those specifications are met
