@@ -205,3 +205,20 @@ end
 When(/^the row element has no cells$/) do
   @element.cells = []
 end
+
+Then(/^the example block has convenient output$/) do
+  @parsed_files.first.feature.tests.first.examples.first.method(:to_s).owner.should == CucumberAnalytics::Example
+end
+
+Given(/^an example element based on the following gherkin:$/) do |example_text|
+  @element = CucumberAnalytics::Example.new(example_text)
+end
+
+Given(/^an example element$/) do
+  @element = CucumberAnalytics::Example.new
+end
+
+When(/^the example element has no parameters or rows$/) do
+  @element.parameters = []
+  @element.rows = []
+end

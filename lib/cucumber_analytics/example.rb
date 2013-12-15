@@ -9,6 +9,9 @@ module CucumberAnalytics
 
 
     # The argument rows in the example table
+    #
+    # todo - Make this a read only method that derives the rows from
+    # the row elements
     attr_accessor :rows
 
     # The parameters for the example table
@@ -75,6 +78,50 @@ module CucumberAnalytics
       @row_elements
     end
 
+    # Returns a gherkin representation of the example.
+    def to_s
+      text = ''
+
+      unless tag_elements.empty?
+        tag_text = tag_elements.collect { |tag| tag.name }.join(' ')
+        text << tag_text + "\n"
+      end
+
+      name_text = 'Examples:'
+      name_text += " #{name}" unless name == ''
+      text << name_text
+
+      unless description.empty?
+        description_text = "\n"
+        description_text += description.collect { |line| "\n    #{line}" }.join
+        text << description_text + "\n"
+      end
+
+      unless parameters.empty?
+        parameter_text = "\n"
+        parameter_text += "  |"
+        parameters.count.times do |count|
+          parameter_text += " #{parameters[count].ljust(determine_buffer_size(count))} |"
+        end
+
+        text << parameter_text
+      end
+
+      unless rows.empty?
+        rows.each do |row|
+          row_text = "\n"
+          row_text += "  |"
+          row.values.count.times do |count|
+            row_text += " #{row.values[count].ljust(determine_buffer_size(count))} |"
+          end
+
+          text << row_text
+        end
+      end
+
+      text
+    end
+
 
     private
 
@@ -120,6 +167,13 @@ module CucumberAnalytics
       parsed_example['rows'].each do |row|
         @row_elements << build_child_element(Row, row)
       end
+    end
+
+    def determine_buffer_size(index)
+      parameter_buffer = parameters[index].length
+      row_buffer = rows.collect { |row| row.values[index].length }.max || 0
+
+      [parameter_buffer, row_buffer].max
     end
 
   end

@@ -3,15 +3,17 @@ Feature: Example elements can be modeled.
 
   Acceptance criteria
 
-  All conceptual pieces of an Examples block can be modeled:
-    1. the example's name
-    2. the example's description
-    3. the example's parameters
-    4. the example's rows
-    5. the example's tags
-    6. the example's applied tags
-    7. the example's source line
-    8. the example's raw element
+    1. All conceptual pieces of an example block can be modeled:
+      - the example's name
+      - the example's description
+      - the example's parameters
+      - the example's rows
+      - the example's tags
+      - the example's applied tags
+      - the example's source line
+      - the example's raw element
+
+    2. Example blocks can be outputted in a convenient form
 
 
   Background: Test file setup.
@@ -88,8 +90,11 @@ Feature: Example elements can be modeled.
     And the test example block "2" rows are as follows:
       | a |
 
+  Scenario: Convenient output of an example block
+    Then the example block has convenient output
+
   Scenario Outline: Example models pass all other specifications
-  Exact specifications detailing the API for Examples models.
+  Exact specifications detailing the API for example block models.
     Given that there are "<additional specifications>" detailing models
     When the corresponding specifications are run
     Then all of those specifications are met
