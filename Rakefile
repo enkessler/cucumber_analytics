@@ -10,10 +10,14 @@ task :clear_coverage do
 end
 
 desc 'Run all acceptance tests for the gem'
-Cucumber::Rake::Task.new(:tests)
+Cucumber::Rake::Task.new(:tests) do |t|
+  t.cucumber_opts = "-t ~@wip -t ~@off"
+end
 
 desc 'Run all API specifications for the gem'
-RSpec::Core::RakeTask.new(:specs)
+RSpec::Core::RakeTask.new(:specs) do |t|
+  t.rspec_opts = "-t ~wip -t ~off"
+end
 
 desc 'Run All The Things'
 task :everything => :clear_coverage do
