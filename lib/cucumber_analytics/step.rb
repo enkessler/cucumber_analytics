@@ -134,7 +134,7 @@ module CucumberAnalytics
     # Returns a gherkin representation of the step.
     def to_s
       text = "#{keyword} #{base}"
-      text << block.to_s.split("\n").collect { |line| "\n  #{line}" }.join if block
+      text << block.to_s.split("\n").collect { |line| line.empty? ? "\n" : "\n  #{line}" }.join if block
 
       text
     end

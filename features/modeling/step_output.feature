@@ -1,7 +1,7 @@
 Feature: Outputting step elements
 
 
-  Scenario: Output of an step without a block
+  Scenario: Output of a step without a block
     Given a step element based on the following gherkin:
     """
     * a step
@@ -12,19 +12,8 @@ Feature: Outputting step elements
     * a step
     """
 
-  @wip
-  Scenario: Output of an step with a doc string
+  Scenario: Output of a step with a doc string
     Given a step element based on the following gherkin:
-    """
-    * a step
-    \"\"\"
-    Some text
-
-      so much text
-    \"\"\"
-    """
-    When it is outputted
-    Then the following text is provided:
     """
     * a step
     \"\"\"
@@ -33,8 +22,18 @@ Feature: Outputting step elements
       some more text
     \"\"\"
     """
+    When it is outputted
+    Then the following text is provided:
+    """
+    * a step
+      \"\"\"
+      Some text
 
-  Scenario: Output of an step with a table
+        some more text
+      \"\"\"
+    """
+
+  Scenario: Output of a step with a table
     Given a step element based on the following gherkin:
     """
     * a step

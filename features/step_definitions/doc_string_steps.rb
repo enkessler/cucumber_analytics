@@ -58,3 +58,11 @@ Then(/^(?:the )?(?:feature "([^"]*)" )?(?:test(?: "([^"]*)")? )?(?:step(?: "([^"
 
   raw_element.has_key?('content_type').should be_true
 end
+
+Then(/^the doc string has convenient output$/) do
+  @parsed_files.first.feature.tests.first.steps.first.block.method(:to_s).owner.should == CucumberAnalytics::DocString
+end
+
+Given(/^a doc string element based on the following gherkin:$/) do |doc_string_text|
+  @element = CucumberAnalytics::DocString.new(doc_string_text)
+end

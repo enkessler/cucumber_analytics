@@ -66,4 +66,18 @@ describe 'DocString, Unit' do
     end
   end
 
+  context 'doc string output edge cases' do
+
+    it 'can output an empty doc string' do
+      expect { @doc_string.to_s }.to_not raise_error
+    end
+
+    it 'can output a doc string that has only a content type' do
+      @doc_string.content_type = 'some type'
+
+      expect { @doc_string.to_s }.to_not raise_error
+    end
+
+  end
+
 end

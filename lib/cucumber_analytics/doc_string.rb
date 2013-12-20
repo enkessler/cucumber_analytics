@@ -25,6 +25,18 @@ module CucumberAnalytics
       build_doc_string(parsed_doc_string) if parsed_doc_string
     end
 
+    # Returns a gherkin representation of the doc string.
+    def to_s
+      text = '"""'
+      text << " #{content_type}" if content_type
+      text << "\n"
+      text << contents.join("\n")
+
+      text << "\n" + '"""'
+
+      text
+    end
+
 
     private
 
