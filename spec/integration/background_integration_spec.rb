@@ -57,4 +57,16 @@ describe 'Background, Integration' do
     end
 
   end
+
+  context 'background output edge cases' do
+
+    it 'can output a background that has only steps' do
+      background = CucumberAnalytics::Background.new
+      background.steps = [CucumberAnalytics::Step.new]
+
+      expect { background.to_s }.to_not raise_error
+    end
+
+  end
+
 end

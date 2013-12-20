@@ -24,4 +24,28 @@ describe 'Background, Unit' do
     @element.name.should == 'test background'
   end
 
+  context 'background output edge cases' do
+
+    before(:each) do
+      @background = clazz.new
+    end
+
+    it 'can output an empty background' do
+      expect { @background.to_s }.to_not raise_error
+    end
+
+    it 'can output a background that has only a name' do
+      @background.name = 'a name'
+
+      expect { @background.to_s }.to_not raise_error
+    end
+
+    it 'can output a background that has only a description' do
+      @background.description = ['a description']
+
+      expect { @background.to_s }.to_not raise_error
+    end
+
+  end
+
 end

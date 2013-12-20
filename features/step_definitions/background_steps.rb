@@ -66,3 +66,12 @@ Then(/^the(?: feature "([^"]*)")? background correctly stores its underlying imp
 
   assert(actual == expected, "Expected: #{expected}\n but was: #{actual}")
 end
+
+Given(/^a background element based on the following gherkin:$/) do |background_text|
+  @element = CucumberAnalytics::Background.new(background_text)
+end
+
+Then /^the background has convenient output$/ do
+  @parsed_files.first.feature.background.method(:to_s).owner.should == CucumberAnalytics::Background
+end
+
