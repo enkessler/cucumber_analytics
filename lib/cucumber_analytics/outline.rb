@@ -31,6 +31,39 @@ module CucumberAnalytics
       @examples + @steps
     end
 
+    # Returns a gherkin representation of the outline.
+    def to_s
+      text = ''
+
+      unless tag_elements.empty?
+        tag_text = tag_elements.collect { |tag| tag.name }.join(' ')
+        text << tag_text + "\n"
+      end
+
+      name_text = 'Scenario Outline:'
+      name_text += " #{name}" unless name == ''
+      text << name_text
+
+      unless description.empty?
+        description_text = "\n"
+        description_text += description.collect { |line| "\n    #{line}" }.join
+        text << description_text
+        text << "\n" unless steps.empty? && examples.empty?
+      end
+
+      unless steps.empty?
+        step_text = steps.collect { |step| "\n  #{step.to_s}" }.join
+        text << step_text
+      end
+
+      unless examples.empty?
+        example_text = examples.collect { |example| "\n\n#{example.to_s}" }.join
+        text << example_text
+      end
+
+      text
+    end
+
 
     private
 

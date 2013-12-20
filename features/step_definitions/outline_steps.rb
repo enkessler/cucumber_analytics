@@ -222,3 +222,11 @@ When(/^the example element has no parameters or rows$/) do
   @element.parameters = []
   @element.rows = []
 end
+
+Then(/^the outline has convenient output$/) do
+  @parsed_files.first.feature.tests.first.method(:to_s).owner.should == CucumberAnalytics::Outline
+end
+
+Given(/^an outline element based on the following gherkin:$/) do |outline_text|
+  @element = CucumberAnalytics::Outline.new(outline_text)
+end
