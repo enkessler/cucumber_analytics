@@ -38,4 +38,30 @@ describe 'Scenario, Unit' do
     @scenario.contains.should =~ everything
   end
 
+  context 'scenario output edge cases' do
+
+    it 'can output an empty scenario' do
+      expect { @scenario.to_s }.to_not raise_error
+    end
+
+    it 'can output a scenario that has only a name' do
+      @scenario.name = 'a name'
+
+      expect { @scenario.to_s }.to_not raise_error
+    end
+
+    it 'can output a scenario that has only a description' do
+      @scenario.description = ['a description']
+
+      expect { @scenario.to_s }.to_not raise_error
+    end
+
+    it 'can output a scenario that has only a tags' do
+      @scenario.tags = ['a tag']
+
+      expect { @scenario.to_s }.to_not raise_error
+    end
+
+  end
+
 end

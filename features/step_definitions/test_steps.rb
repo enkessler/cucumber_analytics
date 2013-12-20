@@ -101,3 +101,11 @@ Then /^(?:the )?(?:feature "([^"]*)" )?test(?: "([^"]*)")? correctly stores its 
 
   expected.include?(actual).should be_true
 end
+
+Then(/^the scenario has convenient output$/) do
+  @parsed_files.first.feature.tests.first.method(:to_s).owner.should == CucumberAnalytics::Scenario
+end
+
+Given(/^a scenario element based on the following gherkin:$/) do |scenario_text|
+  @element = CucumberAnalytics::Scenario.new(scenario_text)
+end

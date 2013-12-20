@@ -3,14 +3,16 @@ Feature: Scenario elements can be modeled.
 
   Acceptance criteria
 
-  All conceptual pieces of a Scenario can be modeled:
-    1. the scenario's name
-    2. the scenario's description
-    3. the scenario's steps
-    4. the scenario's tags
-    5. the scenario's applied tags
-    6. the scenario's source line
-    7. the scenario's raw element
+    1. All conceptual pieces of a scenario can be modeled:
+      - the scenario's name
+      - the scenario's description
+      - the scenario's steps
+      - the scenario's tags
+      - the scenario's applied tags
+      - the scenario's source line
+      - the scenario's raw element
+
+    2. Scenarios can be outputted in a convenient form
 
 
   Background: Test file setup.
@@ -64,8 +66,11 @@ Feature: Scenario elements can be modeled.
     Then the test is found to have the following applied tags:
       | @a_feature_level_tag |
 
+  Scenario: Convenient output of a scenario
+   Then the scenario has convenient output
+
   Scenario Outline: Scenario models pass all other specifications
-  Exact specifications detailing the API for Scenario models.
+  Exact specifications detailing the API for scenario models.
     Given that there are "<additional specifications>" detailing models
     When the corresponding specifications are run
     Then all of those specifications are met
