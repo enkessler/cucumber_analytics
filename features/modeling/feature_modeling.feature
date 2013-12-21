@@ -3,17 +3,19 @@ Feature: Features can be modeled.
 
   Acceptance criteria
 
-  All conceptual pieces of a Feature can be modeled:
-    1.  the feature's name
-    2.  the feature's description
-    3.  the feature's tags
-    4.  the feature's scenarios
-    5.  the feature's outlines
-    6.  the feature's background
-    7.  the feature's total number of tests
-    8.  the feature's total number of test cases
-    9.  the feature's source line
-    10. the feature's raw element
+    1. All conceptual pieces of a feature can be modeled:
+      -  the feature's name
+      -  the feature's description
+      -  the feature's tags
+      -  the feature's scenarios
+      -  the feature's outlines
+      -  the feature's background
+      -  the feature's total number of tests
+      -  the feature's total number of test cases
+      -  the feature's source line
+      - the feature's raw element
+
+    2. Features can be outputted in a convenient form
 
 
   Background: Test file setup.
@@ -139,8 +141,11 @@ Feature: Features can be modeled.
       | has_background? | false |
     And feature "3" has no background
 
+  Scenario: Convenient output of a feature
+    Then the feature has convenient output
+
   Scenario Outline: Feature models pass all other specifications
-  Exact specifications detailing the API for Feature models.
+  Exact specifications detailing the API for feature models.
     Given that there are "<additional specifications>" detailing models
     When the corresponding specifications are run
     Then all of those specifications are met

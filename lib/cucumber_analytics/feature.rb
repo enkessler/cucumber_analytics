@@ -75,6 +75,41 @@ module CucumberAnalytics
     end
 
 
+    # Returns gherkin representation of the feature.
+    def to_s
+      text = ''
+
+      unless tag_elements.empty?
+        tag_text = tag_elements.collect { |tag| tag.name }.join(' ')
+        text << tag_text + "\n"
+      end
+
+      name_text = 'Feature:'
+      name_text += " #{name}" unless name == ''
+      text << name_text
+
+      unless description.empty?
+        description_text = "\n"
+        description_text += description.collect { |line| "\n    #{line}" }.join
+        text << description_text
+      end
+
+      if background
+        background_text = "\n"
+        background_text << background.to_s
+        text << background_text.split("\n").collect { |line| line.empty? ? "\n" : "\n  #{line}" }.join
+      end
+
+      unless tests.empty?
+        test_text = "\n"
+        test_text += tests.collect { |test| test.to_s.split("\n").collect { |line| line.empty? ? "\n" : "\n  #{line}" }.join }.join("\n")
+        text << test_text
+      end
+
+      text
+    end
+
+
     private
 
 

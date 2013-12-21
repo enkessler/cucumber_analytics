@@ -77,3 +77,11 @@ Then /^(?:the )?feature(?: "([^"]*)")? correctly stores its underlying implement
 
   raw_element.has_key?('elements').should be_true
 end
+
+Then(/^the feature has convenient output$/) do
+  @parsed_files.first.feature.method(:to_s).owner.should == CucumberAnalytics::Feature
+end
+
+Given(/^a feature element based on the following gherkin:$/) do |feature_text|
+  @element = CucumberAnalytics::Feature.new(feature_text)
+end

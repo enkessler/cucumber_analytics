@@ -94,4 +94,30 @@ describe 'Feature, Unit' do
     @feature.tests.should == []
   end
 
+  context 'feature output edge cases' do
+
+    it 'can output an empty feature' do
+      expect { @feature.to_s }.to_not raise_error
+    end
+
+    it 'can output a feature that has only a name' do
+      @feature.name = 'a name'
+
+      expect { @feature.to_s }.to_not raise_error
+    end
+
+    it 'can output a feature that has only a description' do
+      @feature.description = ['a description']
+
+      expect { @feature.to_s }.to_not raise_error
+    end
+
+    it 'can output a feature that has only a tags' do
+      @feature.tags = ['a tag']
+
+      expect { @feature.to_s }.to_not raise_error
+    end
+
+  end
+
 end
