@@ -96,6 +96,10 @@ describe 'Feature, Unit' do
 
   context 'feature output edge cases' do
 
+    it 'is a String' do
+      @feature.to_s.should be_a(String)
+    end
+
     it 'can output an empty feature' do
       expect { @feature.to_s }.to_not raise_error
     end

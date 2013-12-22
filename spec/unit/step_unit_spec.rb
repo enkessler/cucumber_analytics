@@ -235,6 +235,10 @@ describe 'Step, Unit' do
 
   context 'step output edge cases' do
 
+    it 'is a String' do
+      @step.to_s.should be_a(String)
+    end
+
     it 'can output an empty step' do
       expect { @step.to_s }.to_not raise_error
     end

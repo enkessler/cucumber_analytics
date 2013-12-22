@@ -195,4 +195,46 @@ describe 'Example, Unit' do
     end
   end
 
+  context 'example output edge cases' do
+
+    it 'is a String' do
+      @example.to_s.should be_a(String)
+    end
+
+    it 'can output an empty example' do
+      expect { @example.to_s }.to_not raise_error
+    end
+
+    it 'can output an example that has only a name' do
+      @example.name = 'a name'
+
+      expect { @example.to_s }.to_not raise_error
+    end
+
+    it 'can output an example that has only a description' do
+      @example.description = ['a description']
+
+      expect { @example.to_s }.to_not raise_error
+    end
+
+    it 'can output an example that has only a tags' do
+      @example.tags = ['a tag']
+
+      expect { @example.to_s }.to_not raise_error
+    end
+
+    it 'can output an example that only has parameters' do
+      @example.parameters = ['param1']
+
+      expect { @example.to_s }.to_not raise_error
+    end
+
+    it 'can output an example that only has rows' do
+      @example.parameters = ['row1']
+
+      expect { @example.to_s }.to_not raise_error
+    end
+
+  end
+
 end

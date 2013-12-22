@@ -1,18 +1,6 @@
 Feature: Outputting table row elements
 
 
-  Scenario: Output of a table row that does not have cells
-
-  Although it is not a case encountered in gherkin, it is possible for a table
-  row model to be in such a state.
-
-    Given a table row element
-    And the table row element has no cells
-    When it is outputted
-    Then the following text is provided:
-    """
-    """
-
   Scenario: Output of a table row that has one cell
     Given a table row element based on the following gherkin:
     """

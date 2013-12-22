@@ -60,6 +60,10 @@ describe 'Outline, Unit' do
 
   context 'outline output edge cases' do
 
+    it 'is a String' do
+      @outline.to_s.should be_a(String)
+    end
+
     it 'can output an empty outline' do
       expect { @outline.to_s }.to_not raise_error
     end

@@ -30,6 +30,10 @@ describe 'Background, Unit' do
       @background = clazz.new
     end
 
+    it 'is a String' do
+      @background.to_s.should be_a(String)
+    end
+
     it 'can output an empty background' do
       expect { @background.to_s }.to_not raise_error
     end

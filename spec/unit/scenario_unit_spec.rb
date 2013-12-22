@@ -40,6 +40,10 @@ describe 'Scenario, Unit' do
 
   context 'scenario output edge cases' do
 
+    it 'is a String' do
+      @scenario.to_s.should be_a(String)
+    end
+
     it 'can output an empty scenario' do
       expect { @scenario.to_s }.to_not raise_error
     end

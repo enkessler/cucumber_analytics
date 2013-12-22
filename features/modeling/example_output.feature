@@ -1,19 +1,6 @@
 Feature: Outputting example elements
 
 
-  Scenario: Output of an example that does not have parameters or rows
-
-  Although it is not a case encountered in gherkin, it is possible for an example
-  model to be in such a state.
-
-    Given an example element
-    And the example element has no parameters or rows
-    When it is outputted
-    Then the following text is provided:
-    """
-    Examples:
-    """
-
   Scenario: Output of an example that does not have a name
     Given an example element based on the following gherkin:
     """

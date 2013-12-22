@@ -57,7 +57,7 @@ module CucumberAnalytics
 
     # Returns the path of the directory.
     def to_s
-      path
+      path.to_s
     end
 
 

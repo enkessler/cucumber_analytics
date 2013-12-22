@@ -54,7 +54,7 @@ module CucumberAnalytics
 
     # Returns the path of the feature file.
     def to_s
-      path
+      path.to_s
     end
 
 
