@@ -1,5 +1,8 @@
 Feature: Outputting background elements
 
+  The output of an element model is a representation of the element as it would
+  appear in gherkin.
+
 
   Scenario: Output of a background that does not have a name
     Given a background element based on the following gherkin:
@@ -43,15 +46,23 @@ Feature: Outputting background elements
     Given a background element based on the following gherkin:
     """
     Background:
-    * a step
+     * a step
+    |value|
     * another step
+    \"\"\"
+      some string
+    \"\"\"
     """
     When it is outputted
     Then the following text is provided:
     """
     Background:
       * a step
+        | value |
       * another step
+        \"\"\"
+          some string
+        \"\"\"
     """
 
   Scenario: Output of a background that contains all possible parts
@@ -62,7 +73,11 @@ Feature: Outputting background elements
     and then some.
 
     * a step
+    |value|
     * another step
+    \"\"\"
+      some string
+    \"\"\"
     """
     When it is outputted
     Then the following text is provided:
@@ -73,5 +88,9 @@ Feature: Outputting background elements
         and then some.
 
       * a step
+        | value |
       * another step
+        \"\"\"
+          some string
+        \"\"\"
     """

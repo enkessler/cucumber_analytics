@@ -1,5 +1,8 @@
 Feature: Outputting step elements
 
+  The output of an element model is a representation of the element as it would
+  appear in gherkin.
+
 
   Scenario: Output of a step without a block
     Given a step element based on the following gherkin:

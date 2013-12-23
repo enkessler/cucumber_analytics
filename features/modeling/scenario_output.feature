@@ -1,5 +1,8 @@
 Feature: Outputting scenario elements
 
+  The output of an element model is a representation of the element as it would
+  appear in gherkin.
+
 
   Scenario: Output of a scenario that does not have a name
     Given a scenario element based on the following gherkin:
@@ -58,14 +61,22 @@ Feature: Outputting scenario elements
     """
     Scenario:
     * a step
+    |value|
     * another step
+    \"\"\"
+      some string
+    \"\"\"
     """
     When it is outputted
     Then the following text is provided:
     """
     Scenario:
       * a step
+        | value |
       * another step
+        \"\"\"
+          some string
+        \"\"\"
     """
 
   Scenario: Output of a scenario that contains all possible parts
@@ -78,7 +89,11 @@ Feature: Outputting scenario elements
     and then some.
 
     * a step
+    |value|
     * another step
+    \"\"\"
+      some string
+    \"\"\"
     """
     When it is outputted
     Then the following text is provided:
@@ -90,5 +105,9 @@ Feature: Outputting scenario elements
         and then some.
 
       * a step
+        | value |
       * another step
+        \"\"\"
+          some string
+        \"\"\"
     """

@@ -1,5 +1,8 @@
 Feature: Outputting row elements
 
+  The output of an element model is a representation of the element as it would
+  appear in gherkin.
+
 
   Scenario: Output of a row that has one cell
     Given a row element based on the following gherkin:

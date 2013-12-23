@@ -1,5 +1,8 @@
 Feature: Outputting table elements
 
+  The output of an element model is a representation of the element as it would
+  appear in gherkin.
+
 
   Scenario: Output of a table that has one row
     Given a table element based on the following gherkin:

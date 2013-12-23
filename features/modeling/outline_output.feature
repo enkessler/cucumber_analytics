@@ -1,5 +1,8 @@
 Feature: Outputting outline elements
 
+  The output of an element model is a representation of the element as it would
+  appear in gherkin.
+
 
   Scenario: Output of an outline that does not have a name
     Given an outline element based on the following gherkin:
@@ -58,14 +61,22 @@ Feature: Outputting outline elements
     """
     Scenario Outline:
     * a step
+    |value|
     * another step
+    \"\"\"
+      some string
+    \"\"\"
     """
     When it is outputted
     Then the following text is provided:
     """
     Scenario Outline:
       * a step
+        | value |
       * another step
+        \"\"\"
+          some string
+        \"\"\"
     """
 
   Scenario: Output of an outline that has examples
@@ -76,6 +87,7 @@ Feature: Outputting outline elements
     Examples:
     | value |
     | x     |
+    @example_tag
     Examples:
     | value |
     | y     |
@@ -90,6 +102,7 @@ Feature: Outputting outline elements
       | value |
       | x     |
 
+    @example_tag
     Examples:
       | value |
       | y     |
@@ -104,12 +117,17 @@ Feature: Outputting outline elements
     Some description.
     Some more description.
     * a step
+    |value|
     * a <value> step
+    \"\"\"
+      some string
+    \"\"\"
     Examples:
     Some description.
     Some more description.
     | value |
     | x     |
+    @example_tag
     Examples:
     | value |
     | y     |
@@ -124,7 +142,11 @@ Feature: Outputting outline elements
         Some more description.
 
       * a step
+        | value |
       * a <value> step
+        \"\"\"
+          some string
+        \"\"\"
 
     Examples:
 
@@ -134,6 +156,7 @@ Feature: Outputting outline elements
       | value |
       | x     |
 
+    @example_tag
     Examples:
       | value |
       | y     |

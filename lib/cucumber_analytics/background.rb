@@ -30,7 +30,7 @@ module CucumberAnalytics
       end
 
       unless steps.empty?
-        step_text = steps.collect { |step| "\n  #{step.to_s}" }.join
+        step_text = steps.collect { |step| step.to_s.split("\n").collect { |line| line.empty? ? "\n" : "\n  #{line}" }.join }.join
         text << step_text
       end
 

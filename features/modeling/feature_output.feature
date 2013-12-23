@@ -1,5 +1,8 @@
 Feature: Outputting feature elements
 
+  The output of an element model is a representation of the element as it would
+  appear in gherkin.
+
 
   Scenario: Output of a feature that does not have a name
     Given a feature element based on the following gherkin:
@@ -124,15 +127,34 @@ Feature: Outputting feature elements
     Including a description
     and then some.
     Background:
+    Background
+    description
     * a step
+    |value1|
     * another step
+    @scenario_tag
     Scenario:
+    Scenario
+    description
     * a step
     * another step
+    \"\"\"
+      some text
+    \"\"\"
+    @outline_tag
     Scenario Outline:
+    Outline
+    description
     * a step
+    |value2|
     * another step
+    \"\"\"
+      some text
+    \"\"\"
+    @example_tag
     Examples:
+    Example
+    description
     |param|
     """
     When it is outputted
@@ -145,17 +167,44 @@ Feature: Outputting feature elements
         and then some.
 
       Background:
+
+          Background
+          description
+
         * a step
+          | value1 |
         * another step
 
+      @scenario_tag
       Scenario:
+
+          Scenario
+          description
+
         * a step
         * another step
+          \"\"\"
+            some text
+          \"\"\"
 
+      @outline_tag
       Scenario Outline:
-        * a step
-        * another step
 
+          Outline
+          description
+
+        * a step
+          | value2 |
+        * another step
+          \"\"\"
+            some text
+          \"\"\"
+
+      @example_tag
       Examples:
+
+          Example
+          description
+
         | param |
     """

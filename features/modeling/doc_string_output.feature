@@ -1,5 +1,8 @@
 Feature: Outputting doc string elements
 
+  The output of an element model is a representation of the element as it would
+  appear in gherkin.
+
 
   Scenario: Output of a doc string without a content type
     Given a doc string element based on the following gherkin:
