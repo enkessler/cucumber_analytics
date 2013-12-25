@@ -70,7 +70,7 @@ module CucumberAnalytics
     end
 
     def populate_contents(doc_string)
-      @contents = doc_string['value'].split($/)
+      @contents = doc_string['value'].split($/, -1)
     end
 
   end

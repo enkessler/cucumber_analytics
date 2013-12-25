@@ -20,7 +20,9 @@ Feature: Doc string elements can be modeled.
         * some wordy step:
         \"\"\" content type
       some text
+          
             some more text
+        
         \"\"\"
         * some wordy step:
         \"\"\"
@@ -39,7 +41,9 @@ Feature: Doc string elements can be modeled.
   Scenario: The doc string's contents are modeled.
     Then the step "1" doc string has the following contents:
       | 'some text'          |
+      | '  '                 |
       | '    some more text' |
+      | ''                   |
     And the step "2" doc string contents are empty
 
   Scenario: Convenient output of an a doc string
