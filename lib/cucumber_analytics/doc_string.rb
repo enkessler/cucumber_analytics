@@ -36,9 +36,14 @@ module CucumberAnalytics
       text = '"""'
       text << " #{content_type}" if content_type
       text << "\n"
-      text << contents.join("\n")
 
-      text << "\n" + '"""'
+      unless contents.empty?
+        text << contents.join("\n")
+
+        text << "\n"
+      end
+
+      text << '"""'
 
       text
     end

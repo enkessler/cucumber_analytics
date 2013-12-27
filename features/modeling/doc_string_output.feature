@@ -4,13 +4,27 @@ Feature: Outputting doc string elements
   appear in gherkin.
 
 
+  Scenario: Output of an empty doc string
+    Given a doc string element based on the following gherkin:
+    """
+    \"\"\"
+    \"\"\"
+    """
+    When it is outputted
+    Then the following text is provided:
+    """
+    \"\"\"
+    \"\"\"
+    """
+
   Scenario: Output of a doc string without a content type
     Given a doc string element based on the following gherkin:
     """
     \"\"\"
     Some text
-
+      
       some more text
+    
     \"\"\"
     """
     When it is outputted
@@ -18,8 +32,9 @@ Feature: Outputting doc string elements
     """
     \"\"\"
     Some text
-
+      
       some more text
+    
     \"\"\"
     """
 
@@ -28,8 +43,9 @@ Feature: Outputting doc string elements
     """
     \"\"\" the type
     Some text
-
+      
       some more text
+    
     \"\"\"
     """
     When it is outputted
@@ -37,7 +53,8 @@ Feature: Outputting doc string elements
     """
     \"\"\" the type
     Some text
-
+      
       some more text
+    
     \"\"\"
     """
