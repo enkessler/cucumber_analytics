@@ -11,14 +11,20 @@ module CucumberAnalytics
     # The content type associated with the doc string
     attr_accessor :content_type
 
+    # Deprecated
+    #
     # The contents of the doc string
     attr_accessor :contents
+
+    # The contents of the doc string
+    attr_accessor :contents_text
 
 
     # Creates a new DocString object and, if *source* is provided, populates
     # the object.
     def initialize(source = nil)
       @contents = []
+      @contents_text = ''
 
       parsed_doc_string = process_source(source)
 
@@ -71,6 +77,7 @@ module CucumberAnalytics
 
     def populate_contents(doc_string)
       @contents = doc_string['value'].split($/, -1)
+      @contents_text = doc_string['value']
     end
 
   end

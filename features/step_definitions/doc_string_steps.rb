@@ -25,17 +25,8 @@ Then /^(?:the )?(?:feature "([^"]*)" )?(?:test(?: "([^"]*)")? )?(?:step(?: "([^"
   test ||= 1
   step ||= 1
 
-  expected = contents.raw.flatten.collect do |cell_value|
-    if cell_value.start_with? "'"
-      cell_value.slice(1..cell_value.length - 2)
-    else
-      cell_value
-    end
-  end
-
-  actual = @parsed_files[file - 1].feature.tests[test - 1].steps[step - 1].block.contents
-
-  assert(actual == expected, "Expected: #{expected}\n but was: #{actual}")
+  @parsed_files[file - 1].feature.tests[test - 1].steps[step - 1].block.contents.should == contents.split("\n", -1)
+  @parsed_files[file - 1].feature.tests[test - 1].steps[step - 1].block.contents_text.should == contents
 end
 
 Then /^(?:the )?(?:feature "([^"]*)" )?(?:test(?: "([^"]*)")? )?(?:step(?: "([^"]*)") )?doc string contents are empty$/ do |file, test, step|
