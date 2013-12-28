@@ -28,6 +28,14 @@ describe 'Feature, Unit' do
     @element.name.should == 'test feature'
   end
 
+  it 'will complain about unknown element types' do
+    parsed_element = {'description' => '',
+                      'elements' => [{'keyword' => 'Scenario', 'description' => ''},
+                                     {'keyword' => 'New Type', 'description' => ''}]}
+
+    expect { clazz.new(parsed_element) }.to raise_error(ArgumentError)
+  end
+
   it 'has a background - #background' do
     @feature.should respond_to(:background)
   end
