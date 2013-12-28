@@ -9,12 +9,15 @@ Then /^(?:the )?(?:feature "([^"]*)" )?test(?: "([^"]*)")? is found to have the 
   end
 end
 
-Then /^(?:the )?(?:feature "([^"]*)" )?test(?: "([^"]*)")? descriptive lines are as follows:$/ do |file, test, lines|
+Then /^(?:the )?(?:feature "([^"]*)" )?test(?: "([^"]*)")? has the following description:$/ do |file, test, text|
   file ||= 1
   test ||= 1
-  lines = lines.raw.flatten
 
-  assert @parsed_files[file - 1].feature.tests[test - 1].description == lines
+  new_description = @parsed_files[file - 1].feature.tests[test - 1].description_text
+  old_description = @parsed_files[file - 1].feature.tests[test - 1].description
+
+  new_description.should == text
+  old_description.should == remove_whitespace(text)
 end
 
 Then /^(?:the )?(?:feature "([^"]*)" )?test(?: "([^"]*)")? steps are as follows:$/ do |file, test, steps|

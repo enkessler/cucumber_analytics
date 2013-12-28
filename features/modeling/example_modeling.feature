@@ -27,14 +27,16 @@ Feature: Example elements can be modeled.
         * a step
 
       Examples: text describing the significance of the examples
-          Example description
-          more description
+            
+        Some example description.
+    
+      Some more.
+          Even more.
         |param1| param2 | extra param |
         |x     | y      |      ?      |
         |1     | 2      |      3      |
       @example_tag @another_one
       Examples: some examples with different significance and a tag
-          Description
         | param1 |
         | a      |
     """
@@ -49,7 +51,7 @@ Feature: Example elements can be modeled.
     Then the test example block "1" is found to have the following properties:
       | source_line | 8 |
     And the test example block "2" is found to have the following properties:
-      | source_line | 15 |
+      | source_line | 18 |
 
   Scenario: The examples' name is modeled.
     Then the test example block "1" is found to have the following properties:
@@ -58,11 +60,15 @@ Feature: Example elements can be modeled.
       | name | some examples with different significance and a tag |
 
   Scenario: The examples' description is modeled.
-    Then the test example block "1" descriptive lines are as follows:
-      | Example description |
-      | more description    |
-    And the test example block "2" descriptive lines are as follows:
-      | Description |
+    Then the test example block "1" has the following description:
+      """
+          
+      Some example description.
+  
+      Some more.
+        Even more.
+      """
+    And the test example block "2" has no description
 
   Scenario: The examples' tags are modeled.
     Then the test example block "1" has no tags

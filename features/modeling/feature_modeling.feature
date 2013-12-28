@@ -23,11 +23,14 @@ Feature: Features can be modeled.
     """
     @a_feature_level_tag @and_another
 
-     Feature:The test feature name.
+    Feature: The test feature name.
+          
       Some feature description.
-      And some more.
 
-      Background:Some general test setup stuff.
+    Some more.
+        And some more.
+
+      Background: Some general test setup stuff.
         * some setup step
 
       Scenario: The first scenario's name.
@@ -88,11 +91,16 @@ Feature: Features can be modeled.
       | source_line     | 1 |
 
   Scenario: The feature's description is modeled.
-    Then the descriptive lines of feature "1" are as follows:
-      | Some feature description. |
-      | And some more.            |
-    And feature "2" has no descriptive lines
-    And feature "3" has no descriptive lines
+    Then feature "1" has the following description:
+      """
+          
+      Some feature description.
+
+      Some more.
+        And some more.
+      """
+    And feature "2" has no description
+    And feature "3" has no description
 
   Scenario: The feature's tags are modeled.
     Then feature "1" is found to have the following tags:

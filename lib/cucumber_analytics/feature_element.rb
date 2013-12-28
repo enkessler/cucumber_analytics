@@ -12,15 +12,21 @@ module CucumberAnalytics
     # The name of the FeatureElement
     attr_accessor :name
 
+    # Deprecated
+    #
     # The description of the FeatureElement
     attr_accessor :description
+
+    # The description of the FeatureElement
+    attr_accessor :description_text
 
 
     # Creates a new FeatureElement object and, if *parsed_element* is provided,
     # populates the object.
     def initialize(parsed_element = nil)
       @name = ''
-      @description =[]
+      @description = []
+      @description_text = ''
 
       build_feature_element(parsed_element) if parsed_element
     end
@@ -41,6 +47,7 @@ module CucumberAnalytics
     end
 
     def populate_feature_element_description(parsed_element)
+      @description_text = parsed_element['description']
       @description = parsed_element['description'].split("\n").collect { |line| line.strip }
       @description.delete('')
     end

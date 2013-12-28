@@ -16,7 +16,7 @@ Then /^(?:the )?(?:feature "([^"]*)" )?test(?: "([^"]*)")? example block(?: "([^
   properties = properties.rows_hash
 
   properties.each do |property, value|
-    assert value == @parsed_files[file - 1].feature.tests[test - 1].examples[example - 1].send(property.to_sym).to_s
+    @parsed_files[file - 1].feature.tests[test - 1].examples[example - 1].send(property.to_sym).to_s.should == value
   end
 end
 
@@ -36,14 +36,28 @@ Then /^(?:the )?(?:feature "([^"]*)" )?test(?: "([^"]*)")? example block(?: "([^
   end
 end
 
-Then /^(?:the )?(?:feature "([^"]*)" )?test(?: "([^"]*)")? example block(?: "([^"]*)")? descriptive lines are as follows:$/ do |file, test, example, lines|
+Then /^(?:the )?(?:feature "([^"]*)" )?test(?: "([^"]*)")? example block(?: "([^"]*)")? has the following description:$/ do |file, test, example, text|
   file ||= 1
   test ||= 1
   example ||= 1
 
-  lines = lines.raw.flatten
+  new_description = @parsed_files[file - 1].feature.tests[test - 1].examples[example - 1].description_text
+  old_description = @parsed_files[file - 1].feature.tests[test - 1].examples[example - 1].description
 
-  assert @parsed_files[file - 1].feature.tests[test - 1].examples[example - 1].description == lines
+  new_description.should == text
+  old_description.should == remove_whitespace(text)
+end
+
+Then /^(?:the )?(?:feature "([^"]*)" )?test(?: "([^"]*)")? example block(?: "([^"]*)")? has no description$/ do |file, test, example|
+  file ||= 1
+  test ||= 1
+  example ||= 1
+
+  new_description = @parsed_files[file - 1].feature.tests[test - 1].examples[example - 1].description_text
+  old_description = @parsed_files[file - 1].feature.tests[test - 1].examples[example - 1].description
+
+  new_description.should == ''
+  old_description.should == []
 end
 
 Then /^(?:the )?(?:feature "([^"]*)" )?test(?: "([^"]*)")? example block(?: "([^"]*)")? is found to have the following tags:$/ do |file, test, example, expected_tags|

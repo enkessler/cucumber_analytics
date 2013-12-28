@@ -19,8 +19,11 @@ Feature: Background elements can be modeled.
     Feature:
 
       Background: Some general test setup stuff.
-          Some background description
-          Some more description
+            
+        Some background description.
+    
+      Some more.
+          Even more.
 
         Given a setup step
         And another setup step
@@ -42,9 +45,14 @@ Feature: Background elements can be modeled.
       | name | Some general test setup stuff. |
 
   Scenario: The background description is modeled.
-    Then the background's descriptive lines are as follows:
-      | Some background description |
-      | Some more description       |
+    Then the background has the following description:
+      """
+          
+      Some background description.
+
+      Some more.
+        Even more.
+      """
 
   Scenario: The background steps are modeled.
     Then the background's steps are as follows:

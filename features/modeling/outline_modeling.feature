@@ -24,8 +24,11 @@ Feature: Outline elements can be modeled.
 
       @outline_tag
       Scenario Outline: The scenario outline's name.
-          Some outline description
-          Some more description
+            
+        Some outline description.
+    
+      Some more.
+          Even more.
 
         Given a <setup> step
         When an action step
@@ -54,9 +57,14 @@ Feature: Outline elements can be modeled.
       | name | The scenario outline's name. |
 
   Scenario: The outline description is modeled.
-    Then the test descriptive lines are as follows:
-      | Some outline description |
-      | Some more description    |
+    Then the test has the following description:
+      """
+          
+      Some outline description.
+
+      Some more.
+        Even more.
+      """
 
   Scenario: The outline steps are modeled.
     Then the test steps are as follows:

@@ -24,8 +24,11 @@ Feature: Scenario elements can be modeled.
       @a_tag
       @another_tag
       Scenario:The first scenario's name.
-          Some scenario description
-          Some more description
+            
+        Some scenario description.
+    
+      Some more.
+          Even more.
 
         Given a setup step
         When an action step
@@ -47,9 +50,14 @@ Feature: Scenario elements can be modeled.
       | name | The first scenario's name. |
 
   Scenario: The scenario description is modeled.
-    Then the test descriptive lines are as follows:
-      | Some scenario description |
-      | Some more description     |
+    Then the test has the following description:
+      """
+          
+      Some scenario description.
+
+      Some more.
+        Even more.
+      """
 
   Scenario: The scenario steps are modeled.
     Then the test steps are as follows:
