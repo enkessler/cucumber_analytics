@@ -59,7 +59,7 @@ Feature: Outputting example elements
       | param |
     """
 
-  Scenario: Output of an example that has a description
+  Scenario: Output of an example that has a description, no first line buffer
     Given an example element based on the following gherkin:
     """
     Examples:
@@ -72,8 +72,48 @@ Feature: Outputting example elements
     """
     Examples:
 
-        Some description.
-        Some more description.
+      Some description.
+      Some more description.
+
+      | param |
+    """
+
+  Scenario: Output of an example that has a description, first line is blank
+    Given an example element based on the following gherkin:
+    """
+    Examples:
+
+    Some description.
+    Some more description.
+    |param|
+    """
+    When it is outputted
+    Then the following text is provided:
+    """
+    Examples:
+      
+      Some description.
+      Some more description.
+
+      | param |
+    """
+
+  Scenario: Output of an example that has a description, first line is only whitespace
+    Given an example element based on the following gherkin:
+    """
+    Examples:
+       
+    Some description.
+    Some more description.
+    |param|
+    """
+    When it is outputted
+    Then the following text is provided:
+    """
+    Examples:
+       
+      Some description.
+      Some more description.
 
       | param |
     """
@@ -128,8 +168,8 @@ Feature: Outputting example elements
     @tag1 @tag2 @tag3
     Examples: with a name
 
-        Some description.
-        Some more description.
+      Some description.
+      Some more description.
 
       | param1 | param2 |
       | value1 | value2 |

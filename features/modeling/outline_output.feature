@@ -40,7 +40,7 @@ Feature: Outputting outline elements
     Scenario Outline:
     """
 
-  Scenario: Output of an outline that has a description
+  Scenario: Output of an outline that has a description, no first line buffer
     Given an outline element based on the following gherkin:
     """
     Scenario Outline:
@@ -52,8 +52,42 @@ Feature: Outputting outline elements
     """
     Scenario Outline:
 
-        Some description.
-        Some more description.
+      Some description.
+      Some more description.
+    """
+
+  Scenario: Output of an outline that has a description, first line is blank
+    Given an outline element based on the following gherkin:
+    """
+    Scenario Outline:
+
+    Some description.
+    Some more description.
+    """
+    When it is outputted
+    Then the following text is provided:
+    """
+    Scenario Outline:
+      
+      Some description.
+      Some more description.
+    """
+
+  Scenario: Output of an outline that has a description, first line is only whitespace
+    Given an outline element based on the following gherkin:
+    """
+    Scenario Outline:
+       
+    Some description.
+    Some more description.
+    """
+    When it is outputted
+    Then the following text is provided:
+    """
+    Scenario Outline:
+       
+      Some description.
+      Some more description.
     """
 
   Scenario: Output of an outline that has steps
@@ -138,8 +172,8 @@ Feature: Outputting outline elements
     @tag1 @tag2 @tag3
     Scenario Outline: An outline with everything it could have
 
-        Some description.
-        Some more description.
+      Some description.
+      Some more description.
 
       * a step
         | value |
@@ -150,8 +184,8 @@ Feature: Outputting outline elements
 
     Examples:
 
-        Some description.
-        Some more description.
+      Some description.
+      Some more description.
 
       | value |
       | x     |

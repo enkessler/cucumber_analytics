@@ -111,7 +111,7 @@ describe 'Feature, Unit' do
     end
 
     it 'can output a feature that has only a description' do
-      @feature.description = ['a description']
+      @feature.description_text = 'a description'
 
       expect { @feature.to_s }.to_not raise_error
     end

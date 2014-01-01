@@ -26,7 +26,7 @@ Feature: Outputting background elements
     Background: with a name
     """
 
-  Scenario: Output of a background that has a description
+  Scenario: Output of a background that has a description, no first line buffer
     Given a background element based on the following gherkin:
     """
     Background:
@@ -38,8 +38,42 @@ Feature: Outputting background elements
     """
     Background:
 
-        Some description.
-        Some more description.
+      Some description.
+      Some more description.
+    """
+
+  Scenario: Output of a background that has a description, first line is blank
+    Given a background element based on the following gherkin:
+    """
+    Background:
+
+    Some description.
+    Some more description.
+    """
+    When it is outputted
+    Then the following text is provided:
+    """
+    Background:
+      
+      Some description.
+      Some more description.
+    """
+
+  Scenario: Output of a background that has a description, first line is only whitespace
+    Given a background element based on the following gherkin:
+    """
+    Background:
+       
+    Some description.
+    Some more description.
+    """
+    When it is outputted
+    Then the following text is provided:
+    """
+    Background:
+       
+      Some description.
+      Some more description.
     """
 
   Scenario: Output of a background that has steps
@@ -84,8 +118,8 @@ Feature: Outputting background elements
     """
     Background: A background with everything it could have
 
-        Including a description
-        and then some.
+      Including a description
+      and then some.
 
       * a step
         | value |

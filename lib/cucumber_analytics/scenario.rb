@@ -33,10 +33,13 @@ module CucumberAnalytics
       name_text += " #{name}" unless name == ''
       text << name_text
 
-      unless description.empty?
-        description_text = "\n"
-        description_text += description.collect { |line| "\n    #{line}" }.join
-        text << description_text
+      unless description_text.empty?
+        text << "\n"
+
+        description_lines = description_text.split("\n")
+        text << "\n" if description_lines.first =~ /\S/
+
+        text << description_lines.collect { |line| "  #{line}" }.join("\n")
         text << "\n" unless steps.empty?
       end
 

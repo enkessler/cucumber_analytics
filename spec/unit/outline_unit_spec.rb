@@ -75,7 +75,7 @@ describe 'Outline, Unit' do
     end
 
     it 'can output an outline that has only a description' do
-      @outline.description = ['a description']
+      @outline.description_text = 'a description'
 
       expect { @outline.to_s }.to_not raise_error
     end
