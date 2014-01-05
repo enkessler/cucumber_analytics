@@ -37,8 +37,8 @@ module CucumberAnalytics
       text << " #{content_type}" if content_type
       text << "\n"
 
-      unless contents.empty?
-        text << contents.join("\n")
+      unless contents_text.empty?
+        text << contents_text.gsub('"""', '\"\"\"')
 
         text << "\n"
       end

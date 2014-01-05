@@ -57,3 +57,7 @@ end
 Given(/^a doc string element based on the following gherkin:$/) do |doc_string_text|
   @element = CucumberAnalytics::DocString.new(doc_string_text)
 end
+
+Given(/^a doc string element based on the string "(.*)"$/) do |string|
+  @element = CucumberAnalytics::DocString.new(string.gsub('\n', "\n"))
+end

@@ -58,3 +58,14 @@ Feature: Outputting doc string elements
     
     \"\"\"
     """
+
+  Scenario: Output of a doc string with a triple quotes in its contents
+
+    Since triple quotes mark the beginning and end of a doc string, any triple
+    quotes inside of the doc string (which would have had to have been escaped
+    to get inside in the first place) will be escaped when outputted so as to
+    retain the quality of being able to use the output directly as gherkin.
+
+    Given a doc string element based on the string """" the type\n* a step\n  \"\"\"\n  that also has a doc string\n  \"\"\"\n""""
+    When it is outputted
+    Then the text provided is """" the type\n* a step\n  \"\"\"\n  that also has a doc string\n  \"\"\"\n""""
