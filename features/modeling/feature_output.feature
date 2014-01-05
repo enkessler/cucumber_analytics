@@ -51,7 +51,7 @@ Feature: Outputting feature elements
     Then the following text is provided:
     """
     Feature:
-
+      
       Some description.
       Some more description.
     """
@@ -196,12 +196,12 @@ Feature: Outputting feature elements
     """
     @tag1 @tag2 @tag3
     Feature: A feature with everything it could have
-
+      
       Including a description
       and then some.
 
       Background:
-
+        
         Background
         description
 
@@ -211,7 +211,7 @@ Feature: Outputting feature elements
 
       @scenario_tag
       Scenario:
-
+        
         Scenario
         description
 
@@ -223,7 +223,7 @@ Feature: Outputting feature elements
 
       @outline_tag
       Scenario Outline:
-
+        
         Outline
         description
 
@@ -236,7 +236,7 @@ Feature: Outputting feature elements
 
       @example_tag
       Examples:
-
+        
         Example
         description
 

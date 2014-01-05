@@ -37,7 +37,7 @@ Feature: Outputting background elements
     Then the following text is provided:
     """
     Background:
-
+      
       Some description.
       Some more description.
     """
@@ -117,7 +117,7 @@ Feature: Outputting background elements
     Then the following text is provided:
     """
     Background: A background with everything it could have
-
+      
       Including a description
       and then some.
 

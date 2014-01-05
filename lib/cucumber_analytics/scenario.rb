@@ -37,7 +37,7 @@ module CucumberAnalytics
         text << "\n"
 
         description_lines = description_text.split("\n")
-        text << "\n" if description_lines.first =~ /\S/
+        text << "  \n" if description_lines.first =~ /\S/
 
         text << description_lines.collect { |line| "  #{line}" }.join("\n")
         text << "\n" unless steps.empty?

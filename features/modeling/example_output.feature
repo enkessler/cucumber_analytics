@@ -71,7 +71,7 @@ Feature: Outputting example elements
     Then the following text is provided:
     """
     Examples:
-
+      
       Some description.
       Some more description.
 
@@ -167,7 +167,7 @@ Feature: Outputting example elements
     """
     @tag1 @tag2 @tag3
     Examples: with a name
-
+      
       Some description.
       Some more description.
 

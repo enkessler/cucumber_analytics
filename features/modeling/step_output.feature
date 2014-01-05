@@ -31,7 +31,7 @@ Feature: Outputting step elements
     * a step
       \"\"\"
       Some text
-
+      
         some more text
       \"\"\"
     """
