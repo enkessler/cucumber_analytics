@@ -29,21 +29,7 @@ module CucumberAnalytics
 
     # Returns a gherkin representation of the table.
     def to_s
-      unless row_elements.empty?
-        table_text = row_elements.collect do |row|
-          row_text = '|'
-
-          row.cells.count.times do |count|
-            row_text += " #{row.cells[count].ljust(determine_buffer_size(count))} |"
-          end
-
-          row_text
-        end
-
-        table_text = table_text.join("\n")
-      end
-
-      table_text || ''
+      row_elements.empty? ? '' : row_elements.collect { |row| row_output_string(row) }.join("\n")
     end
 
 
@@ -82,6 +68,16 @@ module CucumberAnalytics
       table.each do |row|
         @row_elements << build_child_element(TableRow, row)
       end
+    end
+
+    def row_output_string(row)
+      row_text = '|'
+
+      row.cells.count.times do |count|
+        row_text << " #{row.cells[count].ljust(determine_buffer_size(count))} |"
+      end
+
+      row_text
     end
 
     def determine_buffer_size(index)

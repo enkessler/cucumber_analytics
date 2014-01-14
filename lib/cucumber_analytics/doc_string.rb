@@ -33,19 +33,9 @@ module CucumberAnalytics
 
     # Returns a gherkin representation of the doc string.
     def to_s
-      text = '"""'
-      text << " #{content_type}" if content_type
-      text << "\n"
-
-      unless contents_text.empty?
-        text << contents_text.gsub('"""', '\"\"\"')
-
-        text << "\n"
-      end
-
+      text = "\"\"\"#{content_type_output_string}\n"
+      text << contents_output_string
       text << '"""'
-
-      text
     end
 
 
@@ -83,6 +73,14 @@ module CucumberAnalytics
     def populate_contents(doc_string)
       @contents = doc_string['value'].split($/, -1)
       @contents_text = doc_string['value']
+    end
+
+    def content_type_output_string
+      content_type ? " #{content_type}" : ''
+    end
+
+    def contents_output_string
+      contents_text.empty? ? '' : contents_text.gsub('"""', '\"\"\"') + "\n"
     end
 
   end

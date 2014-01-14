@@ -25,7 +25,7 @@ module CucumberAnalytics
 
     # Returns a gherkin representation of the row.
     def to_s
-      cells.empty? ? '' : "| #{cells.join(' | ')} |"
+      "| #{cells.join(' | ')} |"
     end
 
 

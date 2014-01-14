@@ -79,35 +79,11 @@ module CucumberAnalytics
     def to_s
       text = ''
 
-      unless tag_elements.empty?
-        tag_text = tag_elements.collect { |tag| tag.name }.join(' ')
-        text << tag_text + "\n"
-      end
-
-      name_text = 'Feature:'
-      name_text += " #{name}" unless name == ''
-      text << name_text
-
-      unless description.empty?
-        text << "\n"
-
-        description_lines = description_text.split("\n")
-        text << "  \n" if description_lines.first =~ /\S/
-
-        text << description_lines.collect { |line| "  #{line}" }.join("\n")
-      end
-
-      if background
-        background_text = "\n"
-        background_text << background.to_s
-        text << background_text.split("\n").collect { |line| line.empty? ? "\n" : "\n  #{line}" }.join
-      end
-
-      unless tests.empty?
-        test_text = "\n"
-        test_text += tests.collect { |test| test.to_s.split("\n").collect { |line| line.empty? ? "\n" : "\n  #{line}" }.join }.join("\n")
-        text << test_text
-      end
+      text << tag_output_string + "\n" unless tags.empty?
+      text << "Feature:#{name_output_string}"
+      text << "\n" + description_output_string unless description_text.empty?
+      text << "\n\n" + background_output_string if background
+      text << "\n\n" + tests_output_string unless tests.empty?
 
       text
     end
@@ -153,6 +129,18 @@ module CucumberAnalytics
           end
         end
       end
+    end
+
+    def background_output_string
+      test_element_output_string(background)
+    end
+
+    def tests_output_string
+      tests.collect { |test| test_element_output_string(test) }.join("\n\n")
+    end
+
+    def test_element_output_string(test_element)
+      test_element.to_s.split("\n").collect { |line| line.empty? ? '' : "  #{line}" }.join("\n")
     end
 
   end

@@ -23,7 +23,7 @@ module CucumberAnalytics
 
     # Returns gherkin representation of the tag.
     def to_s
-      name ? name : ''
+      name || ''
     end
 
 

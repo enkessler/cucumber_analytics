@@ -82,46 +82,12 @@ module CucumberAnalytics
     def to_s
       text = ''
 
-      unless tag_elements.empty?
-        tag_text = tag_elements.collect { |tag| tag.name }.join(' ')
-        text << tag_text + "\n"
-      end
-
-      name_text = 'Examples:'
-      name_text += " #{name}" unless name == ''
-      text << name_text
-
-      unless description.empty?
-        text << "\n"
-
-        description_lines = description_text.split("\n")
-        text << "  \n" if description_lines.first =~ /\S/
-
-        text << description_lines.collect { |line| "  #{line}" }.join("\n")
-        text << "\n"
-      end
-
-      unless parameters.empty?
-        parameter_text = "\n"
-        parameter_text += "  |"
-        parameters.count.times do |count|
-          parameter_text += " #{parameters[count].ljust(determine_buffer_size(count))} |"
-        end
-
-        text << parameter_text
-      end
-
-      unless rows.empty?
-        rows.each do |row|
-          row_text = "\n"
-          row_text += "  |"
-          row.values.count.times do |count|
-            row_text += " #{row.values[count].ljust(determine_buffer_size(count))} |"
-          end
-
-          text << row_text
-        end
-      end
+      text << tag_output_string + "\n" unless tags.empty?
+      text << "Examples:#{name_output_string}"
+      text << "\n" + description_output_string unless description_text.empty?
+      text << "\n" unless description_text.empty?
+      text << "\n" + parameters_output_string
+      text << "\n" + rows_output_string unless rows.empty?
 
       text
     end
@@ -174,10 +140,39 @@ module CucumberAnalytics
     end
 
     def determine_buffer_size(index)
-      parameter_buffer = parameters[index].length
-      row_buffer = rows.collect { |row| row.values[index].length }.max || 0
+      row_elements.collect { |row| row.cells[index].length }.max || 0
+    end
 
-      [parameter_buffer, row_buffer].max
+    def parameters_output_string
+      text = ''
+
+      unless parameters.empty?
+        text << "  |"
+        parameters.count.times { |index| text << " #{string_for(parameters, index)} |" }
+      end
+
+      text
+    end
+
+    def rows_output_string
+      text = ''
+
+      unless rows.empty?
+
+        rows.each do |row|
+          text << "  |"
+          row.values.count.times { |index| text << " #{string_for(row.values, index)} |" }
+          text << "\n"
+        end
+
+        text.chomp!
+      end
+
+      text
+    end
+
+    def string_for(cells, index)
+      cells[index].ljust(determine_buffer_size(index))
     end
 
   end

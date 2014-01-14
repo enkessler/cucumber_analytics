@@ -52,5 +52,22 @@ module CucumberAnalytics
       @description.delete('')
     end
 
+    def name_output_string
+      name.empty? ? '' : " #{name}"
+    end
+
+    def description_output_string
+      text = ''
+
+      unless description_text.empty?
+        description_lines = description_text.split("\n")
+
+        text << "  \n" if description_lines.first =~ /\S/
+        text << description_lines.collect { |line| "  #{line}" }.join("\n")
+      end
+
+      text
+    end
+
   end
 end

@@ -46,5 +46,9 @@ module CucumberAnalytics
       end
     end
 
+    def tag_output_string
+      tag_elements.collect { |tag| tag.name }.join(' ')
+    end
+
   end
 end

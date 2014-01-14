@@ -65,5 +65,13 @@ module CucumberAnalytics
       end
     end
 
+    def steps_output_string
+      steps.collect { |step| indented_step_text(step) }.join("\n")
+    end
+
+    def indented_step_text(step)
+      step.to_s.split("\n").collect { |line| "  #{line}" }.join("\n")
+    end
+
   end
 end
