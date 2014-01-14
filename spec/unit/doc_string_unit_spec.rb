@@ -39,22 +39,29 @@ describe 'DocString, Unit' do
     @doc_string.content_type.should == nil
   end
 
-  it 'has contents - #contents' do
+  it 'has contents' do
     @doc_string.should respond_to(:contents)
+    @doc_string.should respond_to(:contents_text)
   end
 
-  it 'can get and set its contents - #contents, #contents=' do
+  it 'can get and set its contents' do
     @doc_string.contents = :some_contents
     @doc_string.contents.should == :some_contents
     @doc_string.contents = :some_other_contents
     @doc_string.contents.should == :some_other_contents
+
+    @doc_string.contents_text = :some_contents
+    @doc_string.contents_text.should == :some_contents
+    @doc_string.contents_text = :some_other_contents
+    @doc_string.contents_text.should == :some_other_contents
   end
 
   it 'starts with no contents' do
     @doc_string.contents.should == []
+    @doc_string.contents_text.should == ''
   end
 
-  it 'stores its contents as an array of strings' do
+  it 'stores its contents as an array of strings - deprecated' do
     source = "\"\"\"\nsome text\nsome more text\n\"\"\""
     doc_string = CucumberAnalytics::DocString.new(source)
 
@@ -64,6 +71,33 @@ describe 'DocString, Unit' do
     contents.each do |line|
       line.is_a?(String).should be_true
     end
+  end
+
+  it 'stores its contents as a String' do
+    source = "\"\"\"\nsome text\nsome more text\n\"\"\""
+    doc_string = clazz.new(source)
+
+    contents = doc_string.contents_text
+
+    contents.is_a?(String).should be_true
+  end
+
+  context 'doc string output edge cases' do
+
+    it 'is a String' do
+      @doc_string.to_s.should be_a(String)
+    end
+
+    it 'can output an empty doc string' do
+      expect { @doc_string.to_s }.to_not raise_error
+    end
+
+    it 'can output a doc string that has only a content type' do
+      @doc_string.content_type = 'some type'
+
+      expect { @doc_string.to_s }.to_not raise_error
+    end
+
   end
 
 end

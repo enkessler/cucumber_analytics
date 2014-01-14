@@ -60,5 +60,21 @@ describe 'Scenario, Integration' do
       test.should be_nil
     end
 
+    context 'scenario output edge cases' do
+
+      it 'can output a scenario that has only a tag elements' do
+        @scenario.tag_elements = [CucumberAnalytics::Tag.new]
+
+        expect { @scenario.to_s }.to_not raise_error
+      end
+
+      it 'can output a scenario that has only steps' do
+        @scenario.steps = [CucumberAnalytics::Step.new]
+
+        expect { @scenario.to_s }.to_not raise_error
+      end
+
+    end
+
   end
 end

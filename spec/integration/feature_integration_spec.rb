@@ -120,4 +120,33 @@ describe 'Feature, Integration' do
     end
 
   end
+
+  context 'feature output edge cases' do
+
+    it 'can output a feature that has only a tag elements' do
+      @feature.tag_elements = [CucumberAnalytics::Tag.new]
+
+      expect { @feature.to_s }.to_not raise_error
+    end
+
+    it 'can output a feature that has only a background' do
+      @feature.background = [CucumberAnalytics::Background.new]
+
+      expect { @feature.to_s }.to_not raise_error
+    end
+
+    it 'can output a feature that has only scenarios' do
+      @feature.tests = [CucumberAnalytics::Scenario.new]
+
+      expect { @feature.to_s }.to_not raise_error
+    end
+
+    it 'can output a feature that has only outlines' do
+      @feature.tests = [CucumberAnalytics::Outline.new]
+
+      expect { @feature.to_s }.to_not raise_error
+    end
+
+  end
+
 end

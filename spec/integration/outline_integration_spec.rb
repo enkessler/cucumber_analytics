@@ -66,5 +66,27 @@ describe 'Outline, Integration' do
       test.should be_nil
     end
 
+    context 'outline output edge cases' do
+
+      it 'can output an outline that has only a tag elements' do
+        @outline.tag_elements = [CucumberAnalytics::Tag.new]
+
+        expect { @outline.to_s }.to_not raise_error
+      end
+
+      it 'can output an outline that has only steps' do
+        @outline.steps = [CucumberAnalytics::Step.new]
+
+        expect { @outline.to_s }.to_not raise_error
+      end
+
+      it 'can output an outline that has only examples' do
+        @outline.examples = [CucumberAnalytics::Example.new]
+
+        expect { @outline.to_s }.to_not raise_error
+      end
+
+    end
+
   end
 end

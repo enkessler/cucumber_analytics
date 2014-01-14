@@ -3,13 +3,15 @@ Feature: Step elements can be modeled.
 
   Acceptance criteria
 
-  All conceptual pieces of a Step can be modeled:
-    1. the step's keyword
-    2. the text of the step
-    3. the step's arguments, if any
-    4. the step's associated block, if any
-    5. the step's source line
-    6. the step's raw element
+    1. All conceptual pieces of a step can be modeled:
+      - the step's keyword
+      - the text of the step
+      - the step's arguments, if any
+      - the step's associated block, if any
+      - the step's source line
+      - the step's raw element
+
+    2. Steps can be outputted in a convenient form
 
 
   Background: Test file setup.
@@ -68,8 +70,11 @@ Feature: Step elements can be modeled.
     And step "3" has a "table"
     And step "4" has no block
 
+  Scenario: Convenient output of a step
+    Then the step has convenient output
+
   Scenario Outline: Step models pass all other specifications
-  Exact specifications detailing the API for Step models.
+  Exact specifications detailing the API for step models.
     Given that there are "<additional specifications>" detailing models
     When the corresponding specifications are run
     Then all of those specifications are met

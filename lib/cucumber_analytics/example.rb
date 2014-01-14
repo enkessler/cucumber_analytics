@@ -9,6 +9,9 @@ module CucumberAnalytics
 
 
     # The argument rows in the example table
+    #
+    # todo - Make this a read only method that derives the rows from
+    # the row elements
     attr_accessor :rows
 
     # The parameters for the example table
@@ -75,6 +78,20 @@ module CucumberAnalytics
       @row_elements
     end
 
+    # Returns a gherkin representation of the example.
+    def to_s
+      text = ''
+
+      text << tag_output_string + "\n" unless tags.empty?
+      text << "Examples:#{name_output_string}"
+      text << "\n" + description_output_string unless description_text.empty?
+      text << "\n" unless description_text.empty?
+      text << "\n" + parameters_output_string
+      text << "\n" + rows_output_string unless rows.empty?
+
+      text
+    end
+
 
     private
 
@@ -120,6 +137,42 @@ module CucumberAnalytics
       parsed_example['rows'].each do |row|
         @row_elements << build_child_element(Row, row)
       end
+    end
+
+    def determine_buffer_size(index)
+      row_elements.collect { |row| row.cells[index].length }.max || 0
+    end
+
+    def parameters_output_string
+      text = ''
+
+      unless parameters.empty?
+        text << "  |"
+        parameters.count.times { |index| text << " #{string_for(parameters, index)} |" }
+      end
+
+      text
+    end
+
+    def rows_output_string
+      text = ''
+
+      unless rows.empty?
+
+        rows.each do |row|
+          text << "  |"
+          row.values.count.times { |index| text << " #{string_for(row.values, index)} |" }
+          text << "\n"
+        end
+
+        text.chomp!
+      end
+
+      text
+    end
+
+    def string_for(cells, index)
+      cells[index].ljust(determine_buffer_size(index))
     end
 
   end

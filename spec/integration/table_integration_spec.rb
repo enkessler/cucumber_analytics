@@ -72,4 +72,15 @@ describe 'Table, Integration' do
     end
 
   end
+
+  context 'table output edge cases' do
+
+    it 'can output a table that only has row elements' do
+      table = CucumberAnalytics::Table.new
+      table.row_elements = [CucumberAnalytics::TableRow.new]
+
+      expect { table.to_s }.to_not raise_error
+    end
+
+  end
 end

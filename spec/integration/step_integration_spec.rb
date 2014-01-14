@@ -161,4 +161,24 @@ describe 'Step, Integration' do
     end
 
   end
+
+  context 'step output edge cases' do
+
+    before(:each) do
+      @step = CucumberAnalytics::Step.new
+    end
+
+    it 'can output a step that has only a table' do
+      @step.block = CucumberAnalytics::Table.new
+
+      expect { @step.to_s }.to_not raise_error
+    end
+
+    it 'can output a step that has only a doc string' do
+      @step.block = CucumberAnalytics::DocString.new
+
+      expect { @step.to_s }.to_not raise_error
+    end
+
+  end
 end

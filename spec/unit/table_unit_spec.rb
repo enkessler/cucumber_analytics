@@ -68,4 +68,22 @@ describe 'Table, Unit' do
     end
   end
 
+  context 'table output edge cases' do
+
+    it 'is a String' do
+      @table.to_s.should be_a(String)
+    end
+
+    it 'can output an empty table' do
+      expect { @table.to_s }.to_not raise_error
+    end
+
+    it 'can output a table that only has contents' do
+      @table.contents = ['some contents']
+
+      expect { @table.to_s }.to_not raise_error
+    end
+
+  end
+
 end
