@@ -50,7 +50,7 @@ module CucumberAnalytics
           @row_elements << Row.new("|#{row.join('|')}|")
         when row.is_a?(Hash)
           @rows << row.each_value { |value| value.strip! }
-          @row_elements << Row.new("|#{row.values.join('|')}|")
+          @row_elements << Row.new("|#{ordered_row_values(row).join('|')}|")
         else
           raise(ArgumentError, "Can only add row from a Hash or an Array but received #{row.class}")
       end
@@ -161,7 +161,7 @@ module CucumberAnalytics
 
         rows.each do |row|
           text << "  |"
-          row.values.count.times { |index| text << " #{string_for(row.values, index)} |" }
+          row.values.count.times { |index| text << " #{string_for(ordered_row_values(row), index)} |" }
           text << "\n"
         end
 
@@ -173,6 +173,10 @@ module CucumberAnalytics
 
     def string_for(cells, index)
       cells[index].ljust(determine_buffer_size(index))
+    end
+
+    def ordered_row_values(row_hash)
+      @parameters.collect { |parameter| row_hash[parameter] }
     end
 
   end

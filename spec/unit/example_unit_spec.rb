@@ -81,7 +81,7 @@ describe 'Example, Unit' do
 
     rows = example.rows
 
-    rows.collect { |row| row.values }.should == [['value1', 'value2'], ['value3', 'value4']]
+    rows.should == [{'param1' => 'value1', 'param2' => 'value2'}, {'param1' => 'value3', 'param2' => 'value4'}]
   end
 
   it 'has row elements - #row_elements' do
@@ -112,7 +112,7 @@ describe 'Example, Unit' do
       new_row = {'param1' => 'value3', 'param2' => 'value4'}
       example.add_row(new_row)
 
-      example.rows.collect { |row| row.values }.should == [['value1', 'value2'], ['value3', 'value4']]
+      example.rows.should == [{'param1' => 'value1', 'param2' => 'value2'}, {'param1' => 'value3', 'param2' => 'value4'}]
       example.row_elements.collect { |row| row.cells }[1..example.row_elements.count].should == [['value1', 'value2'], ['value3', 'value4']]
     end
 
@@ -123,7 +123,7 @@ describe 'Example, Unit' do
       new_row = ['value3', 'value4']
       example.add_row(new_row)
 
-      example.rows.collect { |row| row.values }.should == [['value1', 'value2'], ['value3', 'value4']]
+      example.rows.should == [{'param1' => 'value1', 'param2' => 'value2'}, {'param1' => 'value3', 'param2' => 'value4'}]
       example.row_elements.collect { |row| row.cells }[1..example.row_elements.count].should == [['value1', 'value2'], ['value3', 'value4']]
     end
 
@@ -142,7 +142,7 @@ describe 'Example, Unit' do
       example.add_row(hash_row)
       example.add_row(array_row)
 
-      example.rows.collect { |row| row.values }.should == [['value1', 'value2'], ['value3', 'value4'], ['value5', 'value6']]
+      example.rows.should == [{'param1' => 'value1', 'param2' => 'value2'}, {'param1' => 'value3', 'param2' => 'value4'}, {'param1' => 'value5', 'param2' => 'value6'}]
       example.row_elements.collect { |row| row.cells }[1..example.row_elements.count].should == [['value1', 'value2'], ['value3', 'value4'], ['value5', 'value6']]
     end
   end
@@ -160,7 +160,7 @@ describe 'Example, Unit' do
       old_row = {'param1' => 'value3', 'param2' => 'value4'}
       example.remove_row(old_row)
 
-      example.rows.collect { |row| row.values }.should == [['value1', 'value2']]
+      example.rows.should == [{'param1' => 'value1', 'param2' => 'value2'}]
       example.row_elements.collect { |row| row.cells }[1..example.row_elements.count].should == [['value1', 'value2']]
     end
 
@@ -171,7 +171,7 @@ describe 'Example, Unit' do
       old_row = ['value3', 'value4']
       example.remove_row(old_row)
 
-      example.rows.collect { |row| row.values }.should == [['value1', 'value2']]
+      example.rows.should == [{'param1' => 'value1', 'param2' => 'value2'}]
       example.row_elements.collect { |row| row.cells }[1..example.row_elements.count].should == [['value1', 'value2']]
     end
 
@@ -190,7 +190,7 @@ describe 'Example, Unit' do
       example.remove_row(hash_row)
       example.remove_row(array_row)
 
-      example.rows.collect { |row| row.values }.should == [['value1', 'value2']]
+      example.rows.should == [{'param1' => 'value1', 'param2' => 'value2'}]
       example.row_elements.collect { |row| row.cells }[1..example.row_elements.count].should == [['value1', 'value2']]
     end
   end
