@@ -108,7 +108,7 @@ describe 'Step, Integration' do
       expected_output = ['a test step with -parameter 1- ^and@ *parameter 2!!',
                          '|a block|']
 
-      @step.step_text(with_keywords: false).should == expected_output
+      @step.step_text(:with_keywords => false).should == expected_output
     end
 
   end

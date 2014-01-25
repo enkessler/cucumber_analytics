@@ -47,7 +47,7 @@ module CucumberAnalytics
           @row_elements << Row.new("|#{row.join('|')}|")
         when row.is_a?(Hash)
           @rows << row.each_value { |value| value.strip! }
-          @row_elements << Row.new("|#{row.values.join('|')}|")
+          @row_elements << Row.new("|#{ordered_row_values(row).join('|')}|")
         else
           raise(ArgumentError, "Can only add row from a Hash or an Array but received #{row.class}")
       end
@@ -122,5 +122,8 @@ module CucumberAnalytics
       end
     end
 
+    def ordered_row_values(row_hash)
+      @parameters.collect { |parameter| row_hash[parameter] }
+    end
   end
 end
