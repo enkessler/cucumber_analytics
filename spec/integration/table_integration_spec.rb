@@ -74,7 +74,7 @@ describe 'Table, Integration' do
   end
 
   context 'table output edge cases' do
-
+    # todo - remove once #contents is no longer supported
     it 'can output a table that only has row elements' do
       table = CucumberAnalytics::Table.new
       table.row_elements = [CucumberAnalytics::TableRow.new]

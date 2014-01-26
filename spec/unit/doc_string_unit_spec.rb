@@ -17,6 +17,8 @@ describe 'DocString, Unit' do
     expect { @element = clazz.new(source) }.to_not raise_error
 
     # Sanity check in case instantiation failed in a non-explosive manner
+    @element.contents_text.should == "some doc string"
+    #todo Remove once Array contents is no longer supported
     @element.contents.should == ["some doc string"]
   end
 
@@ -40,11 +42,13 @@ describe 'DocString, Unit' do
   end
 
   it 'has contents' do
+    #todo Remove once Array contents is no longer supported
     @doc_string.should respond_to(:contents)
     @doc_string.should respond_to(:contents_text)
   end
 
   it 'can get and set its contents' do
+    #todo Remove once Array contents is no longer supported
     @doc_string.contents = :some_contents
     @doc_string.contents.should == :some_contents
     @doc_string.contents = :some_other_contents
@@ -57,10 +61,12 @@ describe 'DocString, Unit' do
   end
 
   it 'starts with no contents' do
+    #todo Remove once Array contents is no longer supported
     @doc_string.contents.should == []
     @doc_string.contents_text.should == ''
   end
 
+  #todo Remove once Array contents is no longer supported
   it 'stores its contents as an array of strings - deprecated' do
     source = "\"\"\"\nsome text\nsome more text\n\"\"\""
     doc_string = CucumberAnalytics::DocString.new(source)

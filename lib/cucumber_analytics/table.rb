@@ -10,6 +10,8 @@ module CucumberAnalytics
 
 
     # The contents of the table
+    #
+    # Deprecated
     attr_accessor :contents
 
     # The row elements that make up the table

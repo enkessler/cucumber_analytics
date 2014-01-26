@@ -4,9 +4,10 @@ Then /^(?:the )?(?:feature "([^"]*)" )?(?:test(?: "([^"]*)")? )?(?:step(?: "([^"
   step ||= 1
 
   expected = contents.raw
-  actual = @parsed_files[file - 1].feature.tests[test - 1].steps[step - 1].block.row_elements.collect { |row| row.cells }
 
-  assert(actual == expected, "Expected: #{expected}\n but was: #{actual}")
+  @parsed_files[file - 1].feature.tests[test - 1].steps[step - 1].block.row_elements.collect { |row| row.cells }.should == expected
+  # todo - remove once #contents is no longer supported
+  @parsed_files[file - 1].feature.tests[test - 1].steps[step - 1].block.contents.should == expected
 end
 
 Then /^(?:the )?(?:feature "([^"]*)" )?(?:test(?: "([^"]*)")? )?(?:step(?: "([^"]*)") )?table correctly stores its underlying implementation$/ do |file, test, step|

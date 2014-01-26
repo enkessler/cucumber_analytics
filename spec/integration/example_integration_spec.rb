@@ -83,6 +83,7 @@ describe 'Example, Integration' do
       expect { @example.to_s }.to_not raise_error
     end
 
+    #todo - remove once Hash rows are no longer supported
     it 'can output an example that has only row elements' do
       @example.row_elements = [CucumberAnalytics::Row.new]
 

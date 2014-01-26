@@ -69,6 +69,7 @@ module CucumberAnalytics
           raise(ArgumentError, "Can only remove row from a Hash or an Array but received #{row.class}")
       end
 
+      #todo - remove once Hash rows are no longer supported
       @rows.delete_at(location) if location
       @row_elements.delete_at(location + 1) if location
     end

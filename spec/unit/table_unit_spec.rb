@@ -17,6 +17,8 @@ describe 'Table, Unit' do
     expect { @element = clazz.new(source) }.to_not raise_error
 
     # Sanity check in case instantiation failed in a non-explosive manner
+    @element.row_elements.collect { |row| row.cells }.should == [['a table']]
+    # todo - remove once #contents is no longer supported
     @element.contents.should == [['a table']]
   end
 
@@ -24,10 +26,12 @@ describe 'Table, Unit' do
     @table = clazz.new
   end
 
+  # todo - remove once #contents is no longer supported
   it 'has contents - #contents' do
     @table.should respond_to(:contents)
   end
 
+  # todo - remove once #contents is no longer supported
   it 'can get and set its contents - #contents, #contents=' do
     @table.contents = :some_contents
     @table.contents.should == :some_contents
@@ -35,6 +39,7 @@ describe 'Table, Unit' do
     @table.contents.should == :some_other_contents
   end
 
+  # todo - remove once #contents is no longer supported
   it 'starts with no contents' do
     @table.contents.should == []
   end
@@ -54,6 +59,7 @@ describe 'Table, Unit' do
     @table.row_elements.should == []
   end
 
+  # todo - remove once #contents is no longer supported
   it 'stores its contents as a nested array of strings' do
     source = "| cell 1 | cell 2 |\n| cell 3 | cell 4 |"
     table = CucumberAnalytics::Table.new(source)
@@ -78,6 +84,7 @@ describe 'Table, Unit' do
       expect { @table.to_s }.to_not raise_error
     end
 
+    # todo - remove once #contents is no longer supported
     it 'can output a table that only has contents' do
       @table.contents = ['some contents']
 

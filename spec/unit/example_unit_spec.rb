@@ -53,6 +53,7 @@ describe 'Example, Unit' do
     @example.should respond_to(:rows)
   end
 
+  #todo - remove once Hash rows are no longer supported
   it 'can get and set its rows - #rows, #rows=' do
     @example.rows = :some_rows
     @example.rows.should == :some_rows
@@ -60,10 +61,12 @@ describe 'Example, Unit' do
     @example.rows.should == :some_other_rows
   end
 
+  #todo - remove once Hash rows are no longer supported
   it 'starts with no rows' do
     @example.rows.should == []
   end
 
+  #todo - remove once Hash rows are no longer supported
   it 'stores its rows as an nested array of hashes' do
     source = "Examples:\n|param1|param2|\n|value1|value2|"
     example = CucumberAnalytics::Example.new(source)
@@ -112,6 +115,7 @@ describe 'Example, Unit' do
       new_row = {'param1' => 'value3', 'param2' => 'value4'}
       example.add_row(new_row)
 
+      #todo - remove once Hash rows are no longer supported
       example.rows.should == [{'param1' => 'value1', 'param2' => 'value2'}, {'param1' => 'value3', 'param2' => 'value4'}]
       example.row_elements.collect { |row| row.cells }[1..example.row_elements.count].should == [['value1', 'value2'], ['value3', 'value4']]
     end
@@ -123,6 +127,7 @@ describe 'Example, Unit' do
       new_row = ['value3', 'value4']
       example.add_row(new_row)
 
+      #todo - remove once Hash rows are no longer supported
       example.rows.should == [{'param1' => 'value1', 'param2' => 'value2'}, {'param1' => 'value3', 'param2' => 'value4'}]
       example.row_elements.collect { |row| row.cells }[1..example.row_elements.count].should == [['value1', 'value2'], ['value3', 'value4']]
     end
@@ -142,6 +147,7 @@ describe 'Example, Unit' do
       example.add_row(hash_row)
       example.add_row(array_row)
 
+      #todo - remove once Hash rows are no longer supported
       example.rows.should == [{'param1' => 'value1', 'param2' => 'value2'}, {'param1' => 'value3', 'param2' => 'value4'}, {'param1' => 'value5', 'param2' => 'value6'}]
       example.row_elements.collect { |row| row.cells }[1..example.row_elements.count].should == [['value1', 'value2'], ['value3', 'value4'], ['value5', 'value6']]
     end
@@ -160,6 +166,7 @@ describe 'Example, Unit' do
       old_row = {'param1' => 'value3', 'param2' => 'value4'}
       example.remove_row(old_row)
 
+      #todo - remove once Hash rows are no longer supported
       example.rows.should == [{'param1' => 'value1', 'param2' => 'value2'}]
       example.row_elements.collect { |row| row.cells }[1..example.row_elements.count].should == [['value1', 'value2']]
     end
@@ -171,6 +178,7 @@ describe 'Example, Unit' do
       old_row = ['value3', 'value4']
       example.remove_row(old_row)
 
+      #todo - remove once Hash rows are no longer supported
       example.rows.should == [{'param1' => 'value1', 'param2' => 'value2'}]
       example.row_elements.collect { |row| row.cells }[1..example.row_elements.count].should == [['value1', 'value2']]
     end
@@ -190,6 +198,7 @@ describe 'Example, Unit' do
       example.remove_row(hash_row)
       example.remove_row(array_row)
 
+      #todo - remove once Hash rows are no longer supported
       example.rows.should == [{'param1' => 'value1', 'param2' => 'value2'}]
       example.row_elements.collect { |row| row.cells }[1..example.row_elements.count].should == [['value1', 'value2']]
     end
@@ -223,12 +232,14 @@ describe 'Example, Unit' do
       expect { @example.to_s }.to_not raise_error
     end
 
+    #todo - remove once Hash rows are no longer supported
     it 'can output an example that only has parameters' do
       @example.parameters = ['param1']
 
       expect { @example.to_s }.to_not raise_error
     end
 
+    #todo - remove once Hash rows are no longer supported
     it 'can output an example that only has rows' do
       @example.parameters = ['row1']
 

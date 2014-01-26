@@ -100,9 +100,13 @@ Then /^(?:the )?(?:feature "([^"]*)" )?test(?: "([^"]*)")? example block(?: "([^
   example = @parsed_files[file - 1].feature.tests[test - 1].examples[example - 1]
 
   expected = rows.collect { |row| row.split(',') }
-  actual = example.row_elements[1..example.row_elements.count].collect { |row| row.cells }
 
+  actual = example.row_elements[1..example.row_elements.count].collect { |row| row.cells }
   assert(actual == expected, "Expected: #{expected}\n but was: #{actual}")
+
+  # todo - remove once Hash rows are no longer supported
+  actual = example.rows.collect { |row| example.parameters.collect { |parameter| row[parameter] } }
+  assert(actual == expected, "Expected: #{expected.inspect}\n but was: #{actual.inspect}")
 end
 
 When /^(?:the )?(?:feature "([^"]*)" )?test(?: "([^"]*)")? example block(?: "([^"]*)")? has the following rows added to it:$/ do |file, test, example, rows|
@@ -177,10 +181,9 @@ Then /^(?:the )?(?:feature "([^"]*)" )?test(?: "([^"]*)")? example block(?: "([^
 
   example = @parsed_files[file - 1].feature.tests[test - 1].examples[example - 1]
 
-  expected = []
-  actual = example.row_elements[1..example.row_elements.count]
-
-  assert(actual == expected, "Expected: #{expected}\n but was: #{actual}")
+  example.row_elements[1..example.row_elements.count].should be_empty
+  #todo - remove once Hash rows are no longer supported
+  example.rows.should be_empty
 end
 
 Then /^(?:the )?(?:feature "([^"]*)" )?test(?: "([^"]*)")? example block(?: "([^"]*)")? row(?: "([^"]*)")? correctly stores its underlying implementation$/ do |file, test, example, row|
@@ -234,7 +237,10 @@ end
 
 When(/^the example element has no parameters or rows$/) do
   @element.parameters = []
+
+  #todo - remove once Hash rows are no longer supported
   @element.rows = []
+  @element.row_elements = []
 end
 
 Then(/^the outline has convenient output$/) do

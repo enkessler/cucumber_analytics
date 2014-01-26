@@ -25,8 +25,9 @@ Then /^(?:the )?(?:feature "([^"]*)" )?(?:test(?: "([^"]*)")? )?(?:step(?: "([^"
   test ||= 1
   step ||= 1
 
-  @parsed_files[file - 1].feature.tests[test - 1].steps[step - 1].block.contents.should == contents.split("\n", -1)
   @parsed_files[file - 1].feature.tests[test - 1].steps[step - 1].block.contents_text.should == contents
+  # Remove once Array contents is no longer supported
+  @parsed_files[file - 1].feature.tests[test - 1].steps[step - 1].block.contents.should == contents.split("\n", -1)
 end
 
 Then /^(?:the )?(?:feature "([^"]*)" )?(?:test(?: "([^"]*)")? )?(?:step(?: "([^"]*)") )?doc string contents are empty$/ do |file, test, step|
@@ -34,10 +35,9 @@ Then /^(?:the )?(?:feature "([^"]*)" )?(?:test(?: "([^"]*)")? )?(?:step(?: "([^"
   test ||= 1
   step ||= 1
 
-  expected = []
-  actual = @parsed_files[file - 1].feature.tests[test - 1].steps[step - 1].block.contents
-
-  assert(actual == expected, "Expected: #{expected}\n but was: #{actual}")
+  #todo Remove once Array contents is no longer supported
+  @parsed_files[file - 1].feature.tests[test - 1].steps[step - 1].block.contents.should be_empty
+  @parsed_files[file - 1].feature.tests[test - 1].steps[step - 1].block.contents_text.should be_empty
 end
 
 Then(/^(?:the )?(?:feature "([^"]*)" )?(?:test(?: "([^"]*)")? )?(?:step(?: "([^"]*)") )?doc string correctly stores its underlying implementation$/) do |file, test, step|
