@@ -173,7 +173,7 @@ module CucumberAnalytics
     end
 
     def string_for(cells, index)
-      cells[index].ljust(determine_buffer_size(index))
+      cells[index] ? cells[index].ljust(determine_buffer_size(index)) : ''
     end
 
     def ordered_row_values(row_hash)

@@ -241,7 +241,7 @@ describe 'Example, Unit' do
 
     #todo - remove once Hash rows are no longer supported
     it 'can output an example that only has rows' do
-      @example.parameters = ['row1']
+      @example.rows = [{:param1 => 'row1'}]
 
       expect { @example.to_s }.to_not raise_error
     end
