@@ -210,25 +210,25 @@ describe 'Step, Unit' do
     it 'can provide the step\'s text without the arguments' do
       expected_output = ['Given a test step with -- ^and@ *parameter 2!!']
 
-      @step.step_text(with_arguments: false).should == expected_output
+      @step.step_text(:with_arguments => false).should == expected_output
     end
 
     it 'can determine its arguments based on delimiters' do
       expected_output = ['Given a test step with -parameter 1- ^@ *parameter 2!!']
 
-      @step.step_text(with_arguments: false, left_delimiter: '^', right_delimiter: '@').should == expected_output
+      @step.step_text(:with_arguments => false, :left_delimiter => '^', :right_delimiter => '@').should == expected_output
     end
 
     it 'can use delimiters of varying lengths' do
       expected_output = ['Given a test step with -parameter 1- ^and@ *!!']
 
-      @step.step_text(with_arguments: false, left_delimiter: '*', right_delimiter: '!!').should == expected_output
+      @step.step_text(:with_arguments => false, :left_delimiter => '*', :right_delimiter => '!!').should == expected_output
     end
 
     it 'can handle delimiters with special regular expression characters' do
       expected_output = ['Given a test step with -parameter 1- ^and@ *!!']
 
-      @step.step_text(with_arguments: false, left_delimiter: '*', right_delimiter: '!!').should == expected_output
+      @step.step_text(:with_arguments => false, :left_delimiter => '*', :right_delimiter => '!!').should == expected_output
     end
 
   end
