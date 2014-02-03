@@ -1,6 +1,8 @@
 require 'stringio'
 require 'gherkin/formatter/json_formatter'
 require 'gherkin'
+require 'json'
+require 'multi_json'
 
 module CucumberAnalytics
 
