@@ -21,7 +21,7 @@ module CucumberAnalytics
         parser.parse(source_text, 'fake_file.txt', 0)
         formatter.done
 
-        JSON.parse(io.string)
+        MultiJson.load(io.string)
       end
 
     end
