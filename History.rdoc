@@ -1,3 +1,10 @@
+=== Version 1.5.0 / 2014-02-04
+
+* Version ranges have been added for gem dependencies.
+* #to_s has been overridden for elements so that it returns text suitable for
+  use as gherkin source code.
+
+
 === Version 1.4.2 / 2014-01-26
 
 * Bug fix: Example#add_row no longer assumes that the key/value pairs in a

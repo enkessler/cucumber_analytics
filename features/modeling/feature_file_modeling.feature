@@ -3,10 +3,12 @@ Feature: Feature files can be modeled.
 
   Acceptance criteria
 
-  All conceptual pieces of a .feature file can be modeled:
-    1. the files's name
-    2. the file's full path
-    3. the file's features (one or zero per file)
+    1. All conceptual pieces of a .feature file can be modeled:
+      - the file's name
+      - the file's full path
+      - the file's features (one or zero per file)
+
+    2. Feature files can be outputted in a convenient form
 
 
   Background: Test file setup.
@@ -46,6 +48,9 @@ Feature: Feature files can be modeled.
       | path          | path_to/why_would_you_make_an_empty_file.feature |
       | feature_count | 0                                                |
     And file "3" has no features
+
+  Scenario: Convenient output of a feature file
+    Then the feature file has convenient output
 
   Scenario Outline: Feature file models pass all other specifications
   Exact specifications detailing the API for .feature file models.

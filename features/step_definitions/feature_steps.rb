@@ -10,11 +10,12 @@ Then /^(?:the )?feature(?: "([^"]*)")? is found to have the following properties
   end
 end
 
-Then /^the descriptive lines of feature "([^"]*)" are as follows:$/ do |file, lines|
-  expected = lines.raw.flatten
-  actual = @parsed_files[file - 1].feature.description
+Then /^(?:the )?feature "([^"]*)" has the following description:$/ do |file, text|
+  new_description = @parsed_files[file - 1].feature.description_text
+  old_description = @parsed_files[file - 1].feature.description
 
-  assert(actual == expected, "Expected: #{expected}\n but was: #{actual}")
+  new_description.should == text
+  old_description.should == remove_whitespace(text)
 end
 
 Then /^feature "([^"]*)" is found to have the following tags:$/ do |file, expected_tags|
@@ -24,8 +25,9 @@ Then /^feature "([^"]*)" is found to have the following tags:$/ do |file, expect
   @parsed_files[file - 1].feature.tag_elements.collect { |tag| tag.name }.should == expected_tags
 end
 
-Then /^feature "([^"]*)" has no descriptive lines$/ do |file|
-  assert @parsed_files[file - 1].feature.description == []
+Then /^feature "([^"]*)" has no description$/ do |file|
+  @parsed_files[file - 1].feature.description_text.should == ''
+  @parsed_files[file - 1].feature.description.should == []
 end
 
 Then /^feature "([^"]*)" has no tags$/ do |file|
@@ -76,4 +78,19 @@ Then /^(?:the )?feature(?: "([^"]*)")? correctly stores its underlying implement
   raw_element = @parsed_files[file - 1].feature.raw_element
 
   raw_element.has_key?('elements').should be_true
+end
+
+Then(/^the feature has convenient output$/) do
+  @parsed_files.first.feature.method(:to_s).owner.should == CucumberAnalytics::Feature
+end
+
+Given(/^a feature element based on the following gherkin:$/) do |feature_text|
+  @element = CucumberAnalytics::Feature.new(feature_text)
+end
+
+def remove_whitespace(text)
+  stripped_text = text.split("\n").collect { |line| line.strip }
+  stripped_text.delete('')
+  
+  stripped_text
 end

@@ -11,7 +11,7 @@ end
 
 desc 'Run all acceptance tests for the gem'
 Cucumber::Rake::Task.new(:tests) do |t|
-  t.cucumber_opts = "-t ~@wip -t ~@off"
+  t.cucumber_opts = "-t ~@wip -t ~@off -f progress"
 end
 
 desc 'Run all API specifications for the gem'

@@ -3,21 +3,27 @@ Feature: Background elements can be modeled.
 
   Acceptance criteria
 
-  All conceptual pieces of a Background can be modeled:
-    1. the background's name
-    2. the background's description
-    3. the background's steps
-    4. the background's source line
-    5. the background's raw element
+    1. All conceptual pieces of a background can be modeled:
+      - the background's name
+      - the background's description
+      - the background's steps
+      - the background's source line
+      - the background's raw element
 
+    2. Backgrounds can be outputted in a convenient form
+
+  
   Background: Test file setup.
     Given the following feature file:
     """
     Feature:
 
-      Background:Some general test setup stuff.
-          Some background description
-          Some more description
+      Background: Some general test setup stuff.
+            
+        Some background description.
+    
+      Some more.
+          Even more.
 
         Given a setup step
         And another setup step
@@ -39,9 +45,14 @@ Feature: Background elements can be modeled.
       | name | Some general test setup stuff. |
 
   Scenario: The background description is modeled.
-    Then the background's descriptive lines are as follows:
-      | Some background description |
-      | Some more description       |
+    Then the background has the following description:
+      """
+          
+      Some background description.
+
+      Some more.
+        Even more.
+      """
 
   Scenario: The background steps are modeled.
     Then the background's steps are as follows:
@@ -49,8 +60,11 @@ Feature: Background elements can be modeled.
       | another setup step |
       | an action step     |
 
+  Scenario: Convenient output of a background
+    Then the background has convenient output
+
   Scenario Outline: Background models pass all other specifications
-  Exact specifications detailing the API for Background models.
+  Exact specifications detailing the API for background models.
     Given that there are "<additional specifications>" detailing models
     When the corresponding specifications are run
     Then all of those specifications are met

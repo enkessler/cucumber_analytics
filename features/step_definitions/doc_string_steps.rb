@@ -25,17 +25,9 @@ Then /^(?:the )?(?:feature "([^"]*)" )?(?:test(?: "([^"]*)")? )?(?:step(?: "([^"
   test ||= 1
   step ||= 1
 
-  expected = contents.raw.flatten.collect do |cell_value|
-    if cell_value.start_with? "'"
-      cell_value.slice(1..cell_value.length - 2)
-    else
-      cell_value
-    end
-  end
-
-  actual = @parsed_files[file - 1].feature.tests[test - 1].steps[step - 1].block.contents
-
-  assert(actual == expected, "Expected: #{expected}\n but was: #{actual}")
+  @parsed_files[file - 1].feature.tests[test - 1].steps[step - 1].block.contents_text.should == contents
+  # Remove once Array contents is no longer supported
+  @parsed_files[file - 1].feature.tests[test - 1].steps[step - 1].block.contents.should == contents.split("\n", -1)
 end
 
 Then /^(?:the )?(?:feature "([^"]*)" )?(?:test(?: "([^"]*)")? )?(?:step(?: "([^"]*)") )?doc string contents are empty$/ do |file, test, step|
@@ -43,10 +35,9 @@ Then /^(?:the )?(?:feature "([^"]*)" )?(?:test(?: "([^"]*)")? )?(?:step(?: "([^"
   test ||= 1
   step ||= 1
 
-  expected = []
-  actual = @parsed_files[file - 1].feature.tests[test - 1].steps[step - 1].block.contents
-
-  assert(actual == expected, "Expected: #{expected}\n but was: #{actual}")
+  #todo Remove once Array contents is no longer supported
+  @parsed_files[file - 1].feature.tests[test - 1].steps[step - 1].block.contents.should be_empty
+  @parsed_files[file - 1].feature.tests[test - 1].steps[step - 1].block.contents_text.should be_empty
 end
 
 Then(/^(?:the )?(?:feature "([^"]*)" )?(?:test(?: "([^"]*)")? )?(?:step(?: "([^"]*)") )?doc string correctly stores its underlying implementation$/) do |file, test, step|
@@ -57,4 +48,16 @@ Then(/^(?:the )?(?:feature "([^"]*)" )?(?:test(?: "([^"]*)")? )?(?:step(?: "([^"
   raw_element = @parsed_files[file - 1].feature.tests[test - 1].steps[step - 1].block.raw_element
 
   raw_element.has_key?('content_type').should be_true
+end
+
+Then(/^the doc string has convenient output$/) do
+  @parsed_files.first.feature.tests.first.steps.first.block.method(:to_s).owner.should == CucumberAnalytics::DocString
+end
+
+Given(/^a doc string element based on the following gherkin:$/) do |doc_string_text|
+  @element = CucumberAnalytics::DocString.new(doc_string_text)
+end
+
+Given(/^a doc string element based on the string "(.*)"$/) do |string|
+  @element = CucumberAnalytics::DocString.new(string.gsub('\n', "\n"))
 end

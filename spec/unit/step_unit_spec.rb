@@ -187,7 +187,7 @@ describe 'Step, Unit' do
     @element.base.should == 'test step'
   end
 
-  context '#step_text ' do
+  context '#step_text' do
 
     before(:each) do
       source = "Given a test step with -parameter 1- ^and@ *parameter 2!!\n|a block|"
@@ -229,6 +229,30 @@ describe 'Step, Unit' do
       expected_output = ['Given a test step with -parameter 1- ^and@ *!!']
 
       @step.step_text(:with_arguments => false, :left_delimiter => '*', :right_delimiter => '!!').should == expected_output
+    end
+
+  end
+
+  context 'step output edge cases' do
+
+    it 'is a String' do
+      @step.to_s.should be_a(String)
+    end
+
+    it 'can output an empty step' do
+      expect { @step.to_s }.to_not raise_error
+    end
+
+    it 'can output a step that has only a keyword' do
+      @step.keyword = '*'
+
+      expect { @step.to_s }.to_not raise_error
+    end
+
+    it 'can output a step that has only a base' do
+      @step.base = 'step base'
+
+      expect { @step.to_s }.to_not raise_error
     end
 
   end
