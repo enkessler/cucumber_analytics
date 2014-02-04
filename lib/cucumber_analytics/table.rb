@@ -10,6 +10,8 @@ module CucumberAnalytics
 
 
     # The contents of the table
+    #
+    # Deprecated
     attr_accessor :contents
 
     # The row elements that make up the table
@@ -25,6 +27,11 @@ module CucumberAnalytics
       parsed_table = process_source(source)
 
       build_table(parsed_table) if parsed_table
+    end
+
+    # Returns a gherkin representation of the table.
+    def to_s
+      row_elements.empty? ? '' : row_elements.collect { |row| row_output_string(row) }.join("\n")
     end
 
 
@@ -63,6 +70,20 @@ module CucumberAnalytics
       table.each do |row|
         @row_elements << build_child_element(TableRow, row)
       end
+    end
+
+    def row_output_string(row)
+      row_text = '|'
+
+      row.cells.count.times do |count|
+        row_text << " #{row.cells[count].ljust(determine_buffer_size(count))} |"
+      end
+
+      row_text
+    end
+
+    def determine_buffer_size(index)
+      row_elements.collect { |row| row.cells[index].length }.max || 0
     end
 
   end

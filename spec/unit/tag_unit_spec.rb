@@ -36,4 +36,16 @@ describe 'Tag, Unit' do
     @element.name.should == :some_other_name
   end
 
+  context 'tag output edge cases' do
+
+    it 'is a String' do
+      @element.to_s.should be_a(String)
+    end
+
+    it 'can output an empty tag' do
+      expect { @element.to_s }.to_not raise_error
+    end
+
+  end
+
 end

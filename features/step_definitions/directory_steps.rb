@@ -39,3 +39,14 @@ When /^(?:the )?directory(?: "([^"]*)")? has no directories$/ do |directory|
 
   assert(actual == expected, "Expected: #{expected}\n but was: #{actual}")
 end
+
+Given(/^a directory element based on "([^"]*)"$/) do |directory_name|
+  directory_path = "#{@default_file_directory}/#{directory_name}"
+  FileUtils.mkdir(directory_path) unless File.exists?(directory_path)
+
+  @element = CucumberAnalytics::Directory.new(directory_path)
+end
+
+Then(/^the directory has convenient output$/) do
+  @parsed_directories.first.method(:to_s).owner.should == CucumberAnalytics::Directory
+end

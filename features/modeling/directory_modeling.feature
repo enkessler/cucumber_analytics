@@ -3,11 +3,13 @@ Feature: Directories can be modeled.
 
   Acceptance criteria
 
-  Directories containing feature files can be modeled:
-    1. the directory's name
-    2. the directory's full path
-    3. all feature files contained
-    4. all directories contained
+    1. Directories containing feature files can be modeled:
+      - the directory's name
+      - the directory's full path
+      - all feature files contained
+      - all directories contained
+
+    2. Directories can be outputted in a convenient form
 
 
   Background: Setup test directories
@@ -69,7 +71,7 @@ Feature: Directories can be modeled.
     When the directory "feature_directory" is read
     And the directory "feature_directory/nested_directory" is read
 
-  Scenario: The directory's name is  modeled.
+  Scenario: The directory's name is modeled.
     Then directory "1" is found to have the following properties:
       | name | feature_directory |
     And directory "2" is found to have the following properties:
@@ -102,6 +104,9 @@ Feature: Directories can be modeled.
     Then directory "2" is found to have the following properties:
       | directory_count | 0 |
     And directory "2" has no directories
+
+  Scenario: Convenient output of a directory
+    Then the directory has convenient output
 
   Scenario Outline: Directory models pass all other specifications
   Exact specifications detailing the API for directory models.

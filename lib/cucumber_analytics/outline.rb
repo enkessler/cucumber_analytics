@@ -31,6 +31,20 @@ module CucumberAnalytics
       @examples + @steps
     end
 
+    # Returns a gherkin representation of the outline.
+    def to_s
+      text = ''
+
+      text << tag_output_string + "\n" unless tags.empty?
+      text << "Scenario Outline:#{name_output_string}"
+      text << "\n" + description_output_string unless description_text.empty?
+      text << "\n" unless steps.empty? || description_text.empty?
+      text << "\n" + steps_output_string unless steps.empty?
+      text << "\n\n" + examples_output_string unless examples.empty?
+
+      text
+    end
+
 
     private
 
@@ -44,6 +58,10 @@ module CucumberAnalytics
       parsed_examples.each do |example|
         @examples << build_child_element(Example, example)
       end
+    end
+
+    def examples_output_string
+      examples.empty? ? '' : examples.collect { |example| example.to_s }.join("\n\n")
     end
 
   end

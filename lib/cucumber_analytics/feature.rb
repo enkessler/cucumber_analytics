@@ -75,6 +75,20 @@ module CucumberAnalytics
     end
 
 
+    # Returns gherkin representation of the feature.
+    def to_s
+      text = ''
+
+      text << tag_output_string + "\n" unless tags.empty?
+      text << "Feature:#{name_output_string}"
+      text << "\n" + description_output_string unless description_text.empty?
+      text << "\n\n" + background_output_string if background
+      text << "\n\n" + tests_output_string unless tests.empty?
+
+      text
+    end
+
+
     private
 
 
@@ -115,6 +129,18 @@ module CucumberAnalytics
           end
         end
       end
+    end
+
+    def background_output_string
+      test_element_output_string(background)
+    end
+
+    def tests_output_string
+      tests.collect { |test| test_element_output_string(test) }.join("\n\n")
+    end
+
+    def test_element_output_string(test_element)
+      test_element.to_s.split("\n").collect { |line| line.empty? ? '' : "  #{line}" }.join("\n")
     end
 
   end

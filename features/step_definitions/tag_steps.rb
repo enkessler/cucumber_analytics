@@ -51,3 +51,11 @@ When(/^the example tag source line "([^"]*)"$/) do |line|
 
   tag.source_line.should == line
 end
+
+Then(/^the tag has convenient output$/) do
+  @parsed_files.first.feature.tag_elements.first.method(:to_s).owner.should == CucumberAnalytics::Tag
+end
+
+Given(/^a tag element based on the following gherkin:$/) do |tag_text|
+  @element = CucumberAnalytics::Tag.new(tag_text)
+end

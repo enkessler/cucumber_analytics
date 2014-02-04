@@ -3,15 +3,17 @@ Feature: Example elements can be modeled.
 
   Acceptance criteria
 
-  All conceptual pieces of an Examples block can be modeled:
-    1. the example's name
-    2. the example's description
-    3. the example's parameters
-    4. the example's rows
-    5. the example's tags
-    6. the example's applied tags
-    7. the example's source line
-    8. the example's raw element
+    1. All conceptual pieces of an example block can be modeled:
+      - the example's name
+      - the example's description
+      - the example's parameters
+      - the example's rows
+      - the example's tags
+      - the example's applied tags
+      - the example's source line
+      - the example's raw element
+
+    2. Example blocks can be outputted in a convenient form
 
 
   Background: Test file setup.
@@ -25,14 +27,16 @@ Feature: Example elements can be modeled.
         * a step
 
       Examples: text describing the significance of the examples
-          Example description
-          more description
+            
+        Some example description.
+    
+      Some more.
+          Even more.
         |param1| param2 | extra param |
         |x     | y      |      ?      |
         |1     | 2      |      3      |
       @example_tag @another_one
       Examples: some examples with different significance and a tag
-          Description
         | param1 |
         | a      |
     """
@@ -47,7 +51,7 @@ Feature: Example elements can be modeled.
     Then the test example block "1" is found to have the following properties:
       | source_line | 8 |
     And the test example block "2" is found to have the following properties:
-      | source_line | 15 |
+      | source_line | 18 |
 
   Scenario: The examples' name is modeled.
     Then the test example block "1" is found to have the following properties:
@@ -56,11 +60,15 @@ Feature: Example elements can be modeled.
       | name | some examples with different significance and a tag |
 
   Scenario: The examples' description is modeled.
-    Then the test example block "1" descriptive lines are as follows:
-      | Example description |
-      | more description    |
-    And the test example block "2" descriptive lines are as follows:
-      | Description |
+    Then the test example block "1" has the following description:
+      """
+          
+      Some example description.
+  
+      Some more.
+        Even more.
+      """
+    And the test example block "2" has no description
 
   Scenario: The examples' tags are modeled.
     Then the test example block "1" has no tags
@@ -88,8 +96,11 @@ Feature: Example elements can be modeled.
     And the test example block "2" rows are as follows:
       | a |
 
+  Scenario: Convenient output of an example block
+    Then the example block has convenient output
+
   Scenario Outline: Example models pass all other specifications
-  Exact specifications detailing the API for Examples models.
+  Exact specifications detailing the API for example block models.
     Given that there are "<additional specifications>" detailing models
     When the corresponding specifications are run
     Then all of those specifications are met

@@ -87,5 +87,17 @@ describe 'Directory, Unit' do
     @directory.contains.should =~ everything
   end
 
+  context 'directory output edge cases' do
+
+    it 'is a String' do
+      @directory.to_s.should be_a(String)
+    end
+
+    it 'can output an empty directory' do
+      expect { @directory.to_s }.to_not raise_error
+    end
+
+  end
+
 end
 
