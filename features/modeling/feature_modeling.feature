@@ -152,6 +152,7 @@ Feature: Features can be modeled.
   Scenario: Convenient output of a feature
     Then the feature has convenient output
 
+  @redundant
   Scenario Outline: Feature models pass all other specifications
   Exact specifications detailing the API for feature models.
     Given that there are "<additional specifications>" detailing models

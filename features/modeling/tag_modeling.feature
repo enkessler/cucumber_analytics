@@ -46,6 +46,7 @@ Feature: Tag elements can be modeled.
   Scenario: Convenient output of a tag
     Then the tag has convenient output
 
+  @redundant
   Scenario Outline: Tag models pass all other specifications
   Exact specifications detailing the API for tag models.
     Given that there are "<additional specifications>" detailing models

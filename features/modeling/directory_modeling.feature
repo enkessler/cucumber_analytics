@@ -108,6 +108,7 @@ Feature: Directories can be modeled.
   Scenario: Convenient output of a directory
     Then the directory has convenient output
 
+  @redundant
   Scenario Outline: Directory models pass all other specifications
   Exact specifications detailing the API for directory models.
     Given that there are "<additional specifications>" detailing models

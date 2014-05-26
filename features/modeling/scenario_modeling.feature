@@ -77,6 +77,7 @@ Feature: Scenario elements can be modeled.
   Scenario: Convenient output of a scenario
    Then the scenario has convenient output
 
+  @redundant
   Scenario Outline: Scenario models pass all other specifications
   Exact specifications detailing the API for scenario models.
     Given that there are "<additional specifications>" detailing models

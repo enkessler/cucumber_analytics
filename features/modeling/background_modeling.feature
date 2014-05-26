@@ -63,6 +63,7 @@ Feature: Background elements can be modeled.
   Scenario: Convenient output of a background
     Then the background has convenient output
 
+  @redundant
   Scenario Outline: Background models pass all other specifications
   Exact specifications detailing the API for background models.
     Given that there are "<additional specifications>" detailing models
