@@ -1,12 +1,14 @@
-Feature: Doc String elements can be modeled.
+Feature: Doc string elements can be modeled.
 
 
   Acceptance criteria
 
-  All conceptual pieces of a Doc String can be modeled:
-    1. the doc string's content type
-    2. the doc string's contents
-    3. the doc string's raw element
+    1. All conceptual pieces of a doc string can be modeled:
+      - the doc string's content type
+      - the doc string's contents
+      - the doc string's raw element
+
+    2. Doc string can be outputted in a convenient form
 
 
   Background: Test file setup.
@@ -38,14 +40,20 @@ Feature: Doc String elements can be modeled.
 
   Scenario: The doc string's contents are modeled.
     Then the step "1" doc string has the following contents:
-      | 'some text'          |
-      | '  '                 |
-      | '    some more text' |
-      | ''                   |
+      """
+      some text
+        
+          some more text
+      
+      """
     And the step "2" doc string contents are empty
 
-  Scenario Outline: Doc String models pass all other specifications
-  Exact specifications detailing the API for Doc String models.
+  Scenario: Convenient output of an a doc string
+    Then the doc string has convenient output
+
+  @redundant
+  Scenario Outline: Doc string models pass all other specifications
+  Exact specifications detailing the API for doc string models.
     Given that there are "<additional specifications>" detailing models
     When the corresponding specifications are run
     Then all of those specifications are met

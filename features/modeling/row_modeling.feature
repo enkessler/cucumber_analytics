@@ -3,10 +3,12 @@ Feature: Row elements can be modeled.
 
   Acceptance criteria
 
-  All conceptual pieces of a Row can be modeled:
-  1. the row's source line
-  2. the row's cells
-  3. the row's raw element
+    1. All conceptual pieces of a Row can be modeled:
+      - the row's source line
+      - the row's cells
+      - the row's raw element
+
+    2. Rows can be outputted in a convenient form
 
 
   Background: Test file setup.
@@ -61,6 +63,10 @@ Feature: Row elements can be modeled.
     And the test example block "2" row "2" cells are as follows:
       | a |
 
+  Scenario: Convenient output of a row
+    Then the row has convenient output
+
+  @redundant
   Scenario Outline: Row models pass all other specifications
   Exact specifications detailing the API for Row models.
     Given that there are "<additional specifications>" detailing models

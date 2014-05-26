@@ -3,10 +3,12 @@ Feature: Tag elements can be modeled.
 
   Acceptance criteria
 
-  All conceptual pieces of a Tag can be modeled:
-    1. the tag's name
-    2. the tags's source line
-    3. the tags's raw element
+    1. All conceptual pieces of a tag can be modeled:
+      - the tag's name
+      - the tags's source line
+      - the tags's raw element
+
+    2. Features can be outputted in a convenient form
 
 
   Background: Test file setup.
@@ -41,8 +43,12 @@ Feature: Tag elements can be modeled.
     And the test tag name is "@outline_tag"
     And the example tag name is "@example_tag"
 
+  Scenario: Convenient output of a tag
+    Then the tag has convenient output
+
+  @redundant
   Scenario Outline: Tag models pass all other specifications
-  Exact specifications detailing the API for Tag models.
+  Exact specifications detailing the API for tag models.
     Given that there are "<additional specifications>" detailing models
     When the corresponding specifications are run
     Then all of those specifications are met

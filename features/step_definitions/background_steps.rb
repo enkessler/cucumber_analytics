@@ -10,12 +10,16 @@ Then /^the(?: feature "([^"]*)")? background is found to have the following prop
   end
 end
 
-Then /^the(?: feature "([^"]*)")? background's descriptive lines are as follows:$/ do |file, lines|
+Then /^the(?: feature "([^"]*)")? background has the following description:/ do |file, text|
   file ||= 1
-  expected_description = lines.raw.flatten
-  actual_description = @parsed_files[file - 1].feature.background.description
 
-  actual_description.should == expected_description
+  expected = text
+
+  new_description = @parsed_files[file - 1].feature.background.description_text
+  old_description = @parsed_files[file - 1].feature.background.description
+
+  new_description.should == expected
+  old_description.should == remove_whitespace(expected)
 end
 
 Then /^the(?: feature "([^"]*)")? background's steps are as follows:$/ do |file, steps|
@@ -66,3 +70,12 @@ Then(/^the(?: feature "([^"]*)")? background correctly stores its underlying imp
 
   assert(actual == expected, "Expected: #{expected}\n but was: #{actual}")
 end
+
+Given(/^a background element based on the following gherkin:$/) do |background_text|
+  @element = CucumberAnalytics::Background.new(background_text)
+end
+
+Then /^the background has convenient output$/ do
+  @parsed_files.first.feature.background.method(:to_s).owner.should == CucumberAnalytics::Background
+end
+

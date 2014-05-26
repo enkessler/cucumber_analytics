@@ -79,4 +79,16 @@ describe 'FeatureFile, Unit' do
     @feature_file.feature.should == :a_feature
   end
 
+  context 'feature file output edge cases' do
+
+    it 'is a String' do
+      @feature_file.to_s.should be_a(String)
+    end
+
+    it 'can output an empty feature file' do
+      expect { @feature_file.to_s }.to_not raise_error
+    end
+
+  end
+
 end

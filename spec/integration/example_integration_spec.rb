@@ -70,4 +70,25 @@ describe 'Example, Integration' do
     end
 
   end
+
+  context 'example output edge cases' do
+
+    before(:each) do
+      @example = CucumberAnalytics::Example.new
+    end
+
+    it 'can output an example that has only a tag elements' do
+      @example.tag_elements = [CucumberAnalytics::Tag.new]
+
+      expect { @example.to_s }.to_not raise_error
+    end
+
+    #todo - remove once Hash rows are no longer supported
+    it 'can output an example that has only row elements' do
+      @example.row_elements = [CucumberAnalytics::Row.new]
+
+      expect { @example.to_s }.to_not raise_error
+    end
+
+  end
 end

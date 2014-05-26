@@ -1,17 +1,19 @@
-Feature: Scenario Outline elements can be modeled.
+Feature: Outline elements can be modeled.
 
 
   Acceptance criteria
 
-  All conceptual pieces of a Scenario Outline can be modeled:
-    1. the outline's name
-    2. the outline's description
-    3. the outline's steps
-    4. the outline's tags
-    5. the outline's applied tags
-    6. the outline's example blocks
-    7. the outline's source line
-    8. the outline's raw element
+    1. All conceptual pieces of an outline can be modeled:
+      - the outline's name
+      - the outline's description
+      - the outline's steps
+      - the outline's tags
+      - the outline's applied tags
+      - the outline's example blocks
+      - the outline's source line
+      - the outline's raw element
+
+    2. Outlines can be outputted in a convenient form
 
 
   Background: Test file setup.
@@ -22,8 +24,11 @@ Feature: Scenario Outline elements can be modeled.
 
       @outline_tag
       Scenario Outline: The scenario outline's name.
-          Some outline description
-          Some more description
+            
+        Some outline description.
+    
+      Some more.
+          Even more.
 
         Given a <setup> step
         When an action step
@@ -52,9 +57,14 @@ Feature: Scenario Outline elements can be modeled.
       | name | The scenario outline's name. |
 
   Scenario: The outline description is modeled.
-    Then the test descriptive lines are as follows:
-      | Some outline description |
-      | Some more description    |
+    Then the test has the following description:
+      """
+          
+      Some outline description.
+
+      Some more.
+        Even more.
+      """
 
   Scenario: The outline steps are modeled.
     Then the test steps are as follows:
@@ -75,8 +85,12 @@ Feature: Scenario Outline elements can be modeled.
       | example 1 |
       | example 2 |
 
+  Scenario: Convenient output of an an outline
+    Then the outline has convenient output
+
+  @redundant
   Scenario Outline: Outline models pass all other specifications
-  Exact specifications detailing the API for Scenario Outline models.
+  Exact specifications detailing the API for outline models.
     Given that there are "<additional specifications>" detailing models
     When the corresponding specifications are run
     Then all of those specifications are met

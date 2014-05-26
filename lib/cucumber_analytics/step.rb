@@ -131,6 +131,14 @@ module CucumberAnalytics
       @arguments = @base.scan(pattern).flatten
     end
 
+    # Returns a gherkin representation of the step.
+    def to_s
+      text = "#{keyword} #{base}"
+      text << "\n" + block.to_s.split("\n").collect { |line| "  #{line}" }.join("\n") if block
+
+      text
+    end
+
 
     private
 

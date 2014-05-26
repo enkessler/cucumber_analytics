@@ -52,6 +52,11 @@ module CucumberAnalytics
       @features.first
     end
 
+    # Returns the path of the feature file.
+    def to_s
+      path.to_s
+    end
+
 
     private
 

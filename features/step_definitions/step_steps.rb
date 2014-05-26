@@ -149,3 +149,11 @@ Then /^(?:the )?(?:feature "([^"]*)" )?(?:test(?: "([^"]*)")? )?step(?: "([^"]*)
 
   assert(actual == expected, "Expected: #{expected}\n but was: #{actual}")
 end
+
+Given(/^a step element based on the following gherkin:$/) do |step_text|
+  @element = CucumberAnalytics::Step.new(step_text)
+end
+
+Then(/^the step has convenient output$/) do
+  @parsed_files.first.feature.tests.first.steps.first.method(:to_s).owner.should == CucumberAnalytics::Step
+end

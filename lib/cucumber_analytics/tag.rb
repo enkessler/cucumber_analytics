@@ -21,6 +21,11 @@ module CucumberAnalytics
       build_tag(parsed_tag) if parsed_tag
     end
 
+    # Returns gherkin representation of the tag.
+    def to_s
+      name || ''
+    end
+
 
     private
 

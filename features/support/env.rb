@@ -3,6 +3,7 @@ unless RUBY_VERSION.to_s < '1.9.0'
   SimpleCov.command_name('cucumber_tests')
 end
 
+require 'test/unit/assertions'
 include Test::Unit::Assertions
 
 require File.dirname(__FILE__) + '/../../lib/cucumber_analytics'
