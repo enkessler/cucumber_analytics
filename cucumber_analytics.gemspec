@@ -17,7 +17,7 @@ Gem::Specification.new do |gem|
   gem.require_paths = ['lib']
   gem.version       = CucumberAnalytics::VERSION
 
-  gem.add_runtime_dependency('gherkin', '~> 2.11.0')
+  gem.add_runtime_dependency('gherkin')
   gem.add_runtime_dependency('json', '~> 1.0')
   gem.add_runtime_dependency('multi_json', '~> 1.0')
 
