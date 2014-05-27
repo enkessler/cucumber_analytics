@@ -73,6 +73,7 @@ Feature: Step elements can be modeled.
   Scenario: Convenient output of a step
     Then the step has convenient output
 
+  @redundant
   Scenario Outline: Step models pass all other specifications
   Exact specifications detailing the API for step models.
     Given that there are "<additional specifications>" detailing models

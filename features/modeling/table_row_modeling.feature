@@ -55,6 +55,7 @@ Feature: Table Row elements can be modeled.
   Scenario: Convenient output of a table row
     Then the table row has convenient output
 
+  @redundant
   Scenario Outline: Table row models pass all other specifications
   Exact specifications detailing the API for table table row models.
     Given that there are "<additional specifications>" detailing models

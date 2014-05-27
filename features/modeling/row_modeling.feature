@@ -66,6 +66,7 @@ Feature: Row elements can be modeled.
   Scenario: Convenient output of a row
     Then the row has convenient output
 
+  @redundant
   Scenario Outline: Row models pass all other specifications
   Exact specifications detailing the API for Row models.
     Given that there are "<additional specifications>" detailing models
