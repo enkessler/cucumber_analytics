@@ -52,6 +52,7 @@ Feature: Feature files can be modeled.
   Scenario: Convenient output of a feature file
     Then the feature file has convenient output
 
+  @redundant
   Scenario Outline: Feature file models pass all other specifications
   Exact specifications detailing the API for .feature file models.
     Given that there are "<additional specifications>" detailing models

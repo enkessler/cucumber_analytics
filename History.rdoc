@@ -1,3 +1,11 @@
+=== Version 1.5.1 / 2014-05-26
+
+* Version ranges have been removed for the gherkin gem. Since this gem can work 
+  with any version of gherkin, ensuring that the avaialble version of the 
+  gherkin gem actually works on the user's version of Ruby is left as a concern 
+  best handled externally.
+
+
 === Version 1.5.0 / 2014-02-04
 
 * Version ranges have been added for gem dependencies.

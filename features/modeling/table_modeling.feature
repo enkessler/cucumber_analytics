@@ -40,6 +40,7 @@ Feature: Table elements can be modeled.
   Scenario: Convenient output of a table
     Then the table has convenient output
 
+  @redundant
   Scenario Outline: Table models pass all other specifications
   Exact specifications detailing the API for table models.
     Given that there are "<additional specifications>" detailing models

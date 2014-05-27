@@ -3,6 +3,16 @@ require "bundler/gem_tasks"
 require 'cucumber/rake/task'
 require 'rspec/core/rake_task'
 
+
+def set_cucumber_options(options)
+  ENV['CUCUMBER_OPTS'] = options
+end
+
+def combine_options(set_1, set_2)
+  set_2 ? "#{set_1} #{set_2}" : set_1
+end
+
+
 task :clear_coverage do
   code_coverage_directory = "#{File.dirname(__FILE__)}/coverage"
 
@@ -10,9 +20,10 @@ task :clear_coverage do
 end
 
 desc 'Run all acceptance tests for the gem'
-Cucumber::Rake::Task.new(:tests) do |t|
-  t.cucumber_opts = "-t ~@wip -t ~@off -f progress"
+task :tests, [:options] do |t, args|
+  set_cucumber_options(combine_options("-t ~@wip -t ~@off -f progress", args[:options]))
 end
+Cucumber::Rake::Task.new(:tests)
 
 desc 'Run all API specifications for the gem'
 RSpec::Core::RakeTask.new(:specs) do |t|
@@ -22,7 +33,7 @@ end
 desc 'Run All The Things'
 task :everything => :clear_coverage do
   Rake::Task[:specs].invoke
-  Rake::Task[:tests].invoke
+  Rake::Task[:tests].invoke('-t ~@redundant')
 end
 
 task :default => :everything

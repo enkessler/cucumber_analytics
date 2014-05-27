@@ -51,6 +51,7 @@ Feature: Doc string elements can be modeled.
   Scenario: Convenient output of an a doc string
     Then the doc string has convenient output
 
+  @redundant
   Scenario Outline: Doc string models pass all other specifications
   Exact specifications detailing the API for doc string models.
     Given that there are "<additional specifications>" detailing models

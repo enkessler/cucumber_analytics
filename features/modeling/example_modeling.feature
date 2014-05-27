@@ -99,6 +99,7 @@ Feature: Example elements can be modeled.
   Scenario: Convenient output of an example block
     Then the example block has convenient output
 
+  @redundant
   Scenario Outline: Example models pass all other specifications
   Exact specifications detailing the API for example block models.
     Given that there are "<additional specifications>" detailing models
