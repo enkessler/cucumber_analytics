@@ -18,7 +18,7 @@ describe 'Row, Unit' do
     expect { @element = clazz.new(source) }.to_not raise_error
 
     # Sanity check in case instantiation failed in a non-explosive manner
-    @element.cells.should == ['a', 'row']
+    expect(@element.cells).to eq(['a', 'row'])
   end
 
   before(:each) do
@@ -26,24 +26,24 @@ describe 'Row, Unit' do
   end
 
   it 'has cells - #cells' do
-    @row.should respond_to(:cells)
+    expect(@row.respond_to?(:cells)).to be true
   end
 
   it 'can get and set its cells - #cells, #cells=' do
     @row.cells = :some_cells
-    @row.cells.should == :some_cells
+    expect(@row.cells).to eq(:some_cells)
     @row.cells = :some_other_cells
-    @row.cells.should == :some_other_cells
+    expect(@row.cells).to eq(:some_other_cells)
   end
 
   it 'starts with no cells' do
-    @row.cells.should == []
+    expect(@row.cells).to eq([])
   end
 
   context 'row output edge cases' do
 
     it 'is a String' do
-      @row.to_s.should be_a(String)
+      expect(@row.to_s).to be_a(String)
     end
 
     it 'can output an empty row' do

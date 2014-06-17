@@ -26,7 +26,7 @@ describe 'Directory, Unit' do
 
     directory = CucumberAnalytics::Directory.new(path)
 
-    directory.name.should == 'temp_files'
+    expect(directory.name).to eq('temp_files')
   end
 
   it 'knows the path of the directory that it is modeling' do
@@ -34,46 +34,46 @@ describe 'Directory, Unit' do
 
     directory = CucumberAnalytics::Directory.new(path)
 
-    directory.path.should == path
+    expect(directory.path).to eq(path)
   end
 
   it 'has feature files - #feature_files' do
-    @directory.should respond_to(:feature_files)
+    expect(@directory.respond_to?(:feature_files)).to be true
   end
 
   it 'can get and set its feature files - #feature_files, #feature_files=' do
     @directory.feature_files = :some_feature_files
-    @directory.feature_files.should == :some_feature_files
+    expect(@directory.feature_files).to eq(:some_feature_files)
     @directory.feature_files = :some_other_feature_files
-    @directory.feature_files.should == :some_other_feature_files
+    expect(@directory.feature_files).to eq(:some_other_feature_files)
   end
 
   it 'knows how many feature files it has - #feature_file_count' do
     @directory.feature_files = [:file_1, :file_2, :file_3]
 
-    @directory.feature_file_count.should == 3
+    expect(@directory.feature_file_count).to eq(3)
   end
 
   it 'has directories - #directories' do
-    @directory.should respond_to(:directories)
+    expect(@directory.respond_to?(:directories)).to be true
   end
 
   it 'can get and set its directories - #directories, #directories=' do
     @directory.directories = :some_directories
-    @directory.directories.should == :some_directories
+    expect(@directory.directories).to eq(:some_directories)
     @directory.directories = :some_other_directories
-    @directory.directories.should == :some_other_directories
+    expect(@directory.directories).to eq(:some_other_directories)
   end
 
   it 'knows how many directories it has - #directory_count' do
     @directory.directories = [:directory_1, :directory_2, :directory_3]
 
-    @directory.directory_count.should == 3
+    expect(@directory.directory_count).to eq(3)
   end
 
   it 'starts with no feature files or directories' do
-    @directory.feature_files.should == []
-    @directory.directories.should == []
+    expect(@directory.feature_files).to eq([])
+    expect(@directory.directories).to eq([])
   end
 
   it 'contains feature files and directories' do
@@ -84,13 +84,13 @@ describe 'Directory, Unit' do
     @directory.directories = directories
     @directory.feature_files = files
 
-    @directory.contains.should =~ everything
+    expect(@directory.contains).to match_array(everything)
   end
 
   context 'directory output edge cases' do
 
     it 'is a String' do
-      @directory.to_s.should be_a(String)
+      expect(@directory.to_s).to be_a(String)
     end
 
     it 'can output an empty directory' do

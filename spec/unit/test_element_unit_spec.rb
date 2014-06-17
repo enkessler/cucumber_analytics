@@ -21,7 +21,7 @@ describe 'TestElement, Unit' do
     steps = [:step_1, :step_2, :step_3]
     @element.steps = steps
 
-    @element.contains.should =~ steps
+    expect(@element.contains).to match_array(steps)
   end
 
   it 'can determine its equality with another TestElement - #==' do
@@ -33,8 +33,8 @@ describe 'TestElement, Unit' do
     element_2.steps = :some_steps
     element_3.steps = :some_other_steps
 
-    (element_1 == element_2).should be_true
-    (element_1 == element_3).should be_false
+    expect(element_1).to eq(element_2)
+    expect(element_1).to_not eq(element_3)
   end
 
 end

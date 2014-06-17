@@ -11,49 +11,49 @@ describe 'World, Unit' do
   end
 
   it 'has left and right delimiters used for step argument parsing - #left_delimiter, #right_delimiter' do
-    @world.should respond_to(:left_delimiter)
-    @world.should respond_to(:right_delimiter)
+    expect(@world.respond_to?(:left_delimiter)).to be true
+    expect(@world.respond_to?(:right_delimiter)).to be true
   end
 
   it 'can get and set the delimiters used for step argument parsing' do
     @world.left_delimiter = '"'
     @world.right_delimiter = '"'
-    @world.left_delimiter.should == '"'
-    @world.right_delimiter.should == '"'
+    expect(@world.left_delimiter).to eq('"')
+    expect(@world.right_delimiter).to eq('"')
 
     @world.left_delimiter = '!'
     @world.right_delimiter = '!'
-    @world.left_delimiter.should == '!'
-    @world.right_delimiter.should == '!'
+    expect(@world.left_delimiter).to eq('!')
+    expect(@world.right_delimiter).to eq('!')
   end
 
   it 'can have different left and right delimiters' do
     @world.left_delimiter = '"'
     @world.right_delimiter = '*'
 
-    (@world.left_delimiter != @world.right_delimiter).should be_true
+    expect(@world.left_delimiter).to_not eq(@world.right_delimiter)
   end
 
   it 'can set both of its delimiters at once - #delimiter=' do
     @world.delimiter = '*'
 
-    @world.left_delimiter.should == '*'
-    @world.right_delimiter.should == '*'
+    expect(@world.left_delimiter).to eq('*')
+    expect(@world.right_delimiter).to eq('*')
   end
 
   it 'starts with no delimiters' do
-    @world.left_delimiter.should == nil
-    @world.right_delimiter.should == nil
+    expect(@world.left_delimiter).to be_nil
+    expect(@world.right_delimiter).to be_nil
   end
 
   context 'step patterns' do
 
     it 'can load step patterns - #load_step_pattern' do
-      @world.should respond_to(:load_step_pattern)
+      expect(@world.respond_to?(:load_step_pattern)).to be true
     end
 
     it 'starts with no patterns loaded' do
-      @world.loaded_step_patterns.should == []
+      expect(@world.loaded_step_patterns).to eq([])
     end
 
     it 'keeps track of loaded step patterns - #loaded_step_patterns' do
@@ -63,7 +63,7 @@ describe 'World, Unit' do
         @world.load_step_pattern(pattern)
       end
 
-      @world.loaded_step_patterns.should =~ patterns
+      expect(@world.loaded_step_patterns).to match_array(patterns)
     end
 
     it 'can load step definition files - #load_step_file' do
@@ -78,7 +78,7 @@ describe 'World, Unit' do
 
       @world.load_step_file(file_path)
 
-      @world.loaded_step_patterns.should =~ patterns
+      expect(@world.loaded_step_patterns).to match_array(patterns)
     end
 
     it 'can handle different step keywords - #load_step_file' do
@@ -95,7 +95,7 @@ describe 'World, Unit' do
 
       @world.load_step_file(file_path)
 
-      @world.loaded_step_patterns.should =~ patterns
+      expect(@world.loaded_step_patterns).to match_array(patterns)
     end
 
     it 'can handle a variety of declaration structures - #load_step_file' do
@@ -110,7 +110,7 @@ describe 'World, Unit' do
 
       @world.load_step_file(file_path)
 
-      @world.loaded_step_patterns.should =~ patterns
+      expect(@world.loaded_step_patterns).to match_array(patterns)
     end
 
     it 'can clear its loaded step patterns - #clear_step_patterns' do
@@ -120,9 +120,9 @@ describe 'World, Unit' do
         @world.load_step_pattern(pattern)
       end
 
-      @world.loaded_step_patterns.should =~ patterns
+      expect(@world.loaded_step_patterns).to match_array(patterns)
       @world.clear_step_patterns
-      @world.loaded_step_patterns.should == []
+      expect(@world.loaded_step_patterns).to eq([])
     end
 
   end
@@ -138,43 +138,43 @@ describe 'World, Unit' do
       nested_container = double(:tags => @set_2, :tag_elements => @set_2)
       container = double(:tags => @set_1, :tag_elements => @set_1, :contains => [nested_container])
 
-      @world.tags_in(container).should =~ (@set_1 + @set_2)
-      @world.tag_elements_in(container).should =~ (@set_1 + @set_2)
+      expect(@world.tags_in(container)).to match_array((@set_1 + @set_2))
+      expect(@world.tag_elements_in(container)).to match_array((@set_1 + @set_2))
     end
 
     it 'can collect directories from containers' do
       nested_container = double(:directories => @set_2)
       container = double(:directories => @set_1, :contains => [nested_container])
 
-      @world.directories_in(container).should =~ (@set_1 + @set_2)
+      expect(@world.directories_in(container)).to match_array((@set_1 + @set_2))
     end
 
     it 'can collect feature files from containers' do
       nested_container = double(:feature_files => @set_2)
       container = double(:feature_files => @set_1, :contains => [nested_container])
 
-      @world.feature_files_in(container).should =~ (@set_1 + @set_2)
+      expect(@world.feature_files_in(container)).to match_array((@set_1 + @set_2))
     end
 
     it 'can collect features from containers' do
       nested_container = double(:features => @set_2)
       container = double(:features => @set_1, :contains => [nested_container])
 
-      @world.features_in(container).should =~ (@set_1 + @set_2)
+      expect(@world.features_in(container)).to match_array((@set_1 + @set_2))
     end
 
     it 'can collect tests from containers' do
       nested_container = double(:tests => @set_2)
       container = double(:tests => @set_1, :contains => [nested_container])
 
-      @world.tests_in(container).should =~ (@set_1 + @set_2)
+      expect(@world.tests_in(container)).to match_array((@set_1 + @set_2))
     end
 
     it 'can collect steps from containers' do
       nested_container = double(:steps => @set_2)
       container = double(:steps => @set_1, :contains => [nested_container])
 
-      @world.steps_in(container).should =~ (@set_1 + @set_2)
+      expect(@world.steps_in(container)).to match_array((@set_1 + @set_2))
     end
 
   end

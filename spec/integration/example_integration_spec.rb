@@ -15,9 +15,9 @@ describe 'Example, Integration' do
     rows = example.row_elements
     tag = example.tag_elements.first
 
-    rows[0].parent_element.should equal example
-    rows[1].parent_element.should equal example
-    tag.parent_element.should equal example
+    expect(rows[0].parent_element).to be(example)
+    expect(rows[1].parent_element).to be(example)
+    expect(tag.parent_element).to be(example)
   end
 
   context 'getting stuff' do
@@ -42,31 +42,31 @@ describe 'Example, Integration' do
     it 'can get its directory' do
       directory = @example.get_ancestor(:directory)
 
-      directory.should equal @directory
+      expect(directory).to be(@directory)
     end
 
     it 'can get its feature file' do
       feature_file = @example.get_ancestor(:feature_file)
 
-      feature_file.should equal @directory.feature_files.first
+      expect(feature_file).to be(@directory.feature_files.first)
     end
 
     it 'can get its feature' do
       feature = @example.get_ancestor(:feature)
 
-      feature.should equal @directory.feature_files.first.features.first
+      expect(feature).to be(@directory.feature_files.first.features.first)
     end
 
     it 'can get its test' do
       test = @example.get_ancestor(:test)
 
-      test.should equal @directory.feature_files.first.features.first.tests.first
+      expect(test).to be(@directory.feature_files.first.features.first.tests.first)
     end
 
     it 'returns nil if it does not have the requested type of ancestor' do
       example = @example.get_ancestor(:example)
 
-      example.should be_nil
+      expect(example).to be_nil
     end
 
   end

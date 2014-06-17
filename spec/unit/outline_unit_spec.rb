@@ -23,7 +23,7 @@ describe 'Outline, Unit' do
     expect { @element = clazz.new(source) }.to_not raise_error
 
     # Sanity check in case instantiation failed in a non-explosive manner
-    @element.name.should == 'test outline'
+    expect(@element.name).to eq('test outline')
   end
 
 
@@ -33,18 +33,18 @@ describe 'Outline, Unit' do
 
 
   it 'has examples - #examples' do
-    @outline.should respond_to(:examples)
+    expect(@outline.respond_to?(:examples)).to be true
   end
 
   it 'can get and set its examples - #examples, #examples=' do
     @outline.examples = :some_examples
-    @outline.examples.should == :some_examples
+    expect(@outline.examples).to eq(:some_examples)
     @outline.examples = :some_other_examples
-    @outline.examples.should == :some_other_examples
+    expect(@outline.examples).to eq(:some_other_examples)
   end
 
   it 'starts with no examples' do
-    @outline.examples.should == []
+    expect(@outline.examples).to eq([])
   end
 
   it 'contains steps and examples' do
@@ -55,13 +55,13 @@ describe 'Outline, Unit' do
     @outline.steps = steps
     @outline.examples = examples
 
-    @outline.contains.should =~ everything
+    expect(@outline.contains).to match_array(everything)
   end
 
   context 'outline output edge cases' do
 
     it 'is a String' do
-      @outline.to_s.should be_a(String)
+      expect(@outline.to_s).to be_a(String)
     end
 
     it 'can output an empty outline' do

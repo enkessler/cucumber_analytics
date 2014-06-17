@@ -25,14 +25,14 @@ describe 'World, Integration' do
       nested_container = double(:steps => @defined_steps)
       container = double(:steps => @undefined_steps, :contains => [nested_container])
 
-      @defined_steps.should =~ @world.defined_steps_in(container)
+      expect(@defined_steps).to match_array(@world.defined_steps_in(container))
     end
 
     it 'can collect undefined steps from containers' do
       nested_container = double(:steps => @defined_steps)
       container = double(:steps => @undefined_steps, :contains => [nested_container])
 
-      @undefined_steps.should =~ @world.undefined_steps_in(container)
+      expect(@undefined_steps).to match_array(@world.undefined_steps_in(container))
     end
 
   end

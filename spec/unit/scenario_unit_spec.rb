@@ -22,7 +22,7 @@ describe 'Scenario, Unit' do
     expect { @element = clazz.new(source) }.to_not raise_error
 
     # Sanity check in case instantiation failed in a non-explosive manner
-    @element.name.should == 'test scenario'
+    expect(@element.name).to eq('test scenario')
   end
 
   before(:each) do
@@ -35,13 +35,13 @@ describe 'Scenario, Unit' do
 
     @scenario.steps = steps
 
-    @scenario.contains.should =~ everything
+    expect(@scenario.contains).to match_array(everything)
   end
 
   context 'scenario output edge cases' do
 
     it 'is a String' do
-      @scenario.to_s.should be_a(String)
+      expect(@scenario.to_s).to be_a(String)
     end
 
     it 'can output an empty scenario' do

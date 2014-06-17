@@ -30,7 +30,7 @@ When /^(?:the )?file(?: "([^"]*)")? has no features$/ do |file|
 end
 
 Then(/^the feature file has convenient output$/) do
-  @parsed_files.first.method(:to_s).owner.should == CucumberAnalytics::FeatureFile
+  expect(@parsed_files.first.method(:to_s).owner).to eq(CucumberAnalytics::FeatureFile)
 end
 
 Given(/^a feature file element based on "([^"]*)"$/) do |file_name|

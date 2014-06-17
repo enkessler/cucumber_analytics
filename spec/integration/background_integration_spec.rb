@@ -12,7 +12,7 @@ describe 'Background, Integration' do
     background = CucumberAnalytics::Background.new(source)
     step = background.steps.first
 
-    step.parent_element.should equal background
+    expect(step.parent_element).to be(background)
   end
 
   context 'getting stuff' do
@@ -35,25 +35,25 @@ describe 'Background, Integration' do
     it 'can get its directory' do
       directory = @background.get_ancestor(:directory)
 
-      directory.should equal @directory
+      expect(directory).to be(@directory)
     end
 
     it 'can get its feature file' do
       feature_file = @background.get_ancestor(:feature_file)
 
-      feature_file.should equal @directory.feature_files.first
+      expect(feature_file).to be(@directory.feature_files.first)
     end
 
     it 'can get its feature' do
       feature = @background.get_ancestor(:feature)
 
-      feature.should equal @directory.feature_files.first.features.first
+      expect(feature).to be(@directory.feature_files.first.features.first)
     end
 
     it 'returns nil if it does not have the requested type of ancestor' do
       example = @background.get_ancestor(:example)
 
-      example.should be_nil
+      expect(example).to be_nil
     end
 
   end

@@ -25,7 +25,7 @@ describe 'Feature, Unit' do
     expect { @element = clazz.new(source) }.to_not raise_error
 
     # Sanity check in case instantiation failed in a non-explosive manner
-    @element.name.should == 'test feature'
+    expect(@element.name).to eq('test feature')
   end
 
   it 'will complain about unknown element types' do
@@ -37,39 +37,39 @@ describe 'Feature, Unit' do
   end
 
   it 'has a background - #background' do
-    @feature.should respond_to(:background)
+    expect(@feature.respond_to?(:background)).to be true
   end
 
   it 'can get and set its background - #background, #background=' do
     @feature.background = :some_background
-    @feature.background.should == :some_background
+    expect(@feature.background).to eq(:some_background)
     @feature.background = :some_other_background
-    @feature.background.should == :some_other_background
+    expect(@feature.background).to eq(:some_other_background)
   end
 
   it 'knows whether or not it presently has a background - has_background?' do
     @feature.background = :a_background
-    @feature.has_background?.should be_true
+    expect(@feature).to have_background
     @feature.background = nil
-    @feature.has_background?.should be_false
+    expect(@feature).to_not have_background
   end
 
   it 'has tests - #tests' do
-    @feature.should respond_to(:tests)
+    expect(@feature.respond_to?(:tests)).to be true
   end
 
   it 'can get and set its tests - #tests, #tests=' do
     @feature.tests = :some_tests
-    @feature.tests.should == :some_tests
+    expect(@feature.tests).to eq(:some_tests)
     @feature.tests = :some_other_tests
-    @feature.tests.should == :some_other_tests
+    expect(@feature.tests).to eq(:some_other_tests)
   end
 
   it 'knows how many tests it has - #test_count' do
     @feature.tests = []
-    @feature.test_count.should == 0
+    expect(@feature.test_count).to eq(0)
     @feature.tests = [:test_1, :test_2]
-    @feature.test_count.should == 2
+    expect(@feature.test_count).to eq(2)
   end
 
   it 'contains backgrounds and tests' do
@@ -80,7 +80,7 @@ describe 'Feature, Unit' do
     @feature.background = background
     @feature.tests = tests
 
-    @feature.contains.should =~ everything
+    expect(@feature.contains).to match_array(everything)
   end
 
   it 'contains a background only if one is present' do
@@ -91,21 +91,21 @@ describe 'Feature, Unit' do
     @feature.background = background
     @feature.tests = tests
 
-    @feature.contains.should =~ everything
+    expect(@feature.contains).to match_array(everything)
   end
 
   it 'starts with no background' do
-    @feature.background.should == nil
+    expect(@feature.background).to be_nil
   end
 
   it 'starts with no tests' do
-    @feature.tests.should == []
+    expect(@feature.tests).to eq([])
   end
 
   context 'feature output edge cases' do
 
     it 'is a String' do
-      @feature.to_s.should be_a(String)
+      expect(@feature.to_s).to be_a(String)
     end
 
     it 'can output an empty feature' do

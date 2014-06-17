@@ -14,8 +14,8 @@ describe 'Scenario, Integration' do
     step = scenario.steps.first
     tag = scenario.tag_elements.first
 
-    step.parent_element.should equal scenario
-    tag.parent_element.should equal scenario
+    expect(step.parent_element).to be(scenario)
+    expect(tag.parent_element).to be(scenario)
   end
 
 
@@ -39,25 +39,25 @@ describe 'Scenario, Integration' do
     it 'can get its directory' do
       directory = @scenario.get_ancestor(:directory)
 
-      directory.should equal @directory
+      expect(directory).to be(@directory)
     end
 
     it 'can get its feature file' do
       feature_file = @scenario.get_ancestor(:feature_file)
 
-      feature_file.should equal @directory.feature_files.first
+      expect(feature_file).to be(@directory.feature_files.first)
     end
 
     it 'can get its feature' do
       feature = @scenario.get_ancestor(:feature)
 
-      feature.should equal @directory.feature_files.first.features.first
+      expect(feature).to be(@directory.feature_files.first.features.first)
     end
 
     it 'returns nil if it does not have the requested type of ancestor' do
       test = @scenario.get_ancestor(:test)
 
-      test.should be_nil
+      expect(test).to be_nil
     end
 
     context 'scenario output edge cases' do

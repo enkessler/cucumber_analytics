@@ -11,7 +11,7 @@ describe 'Sourceable, Unit' do
   end
 
   it 'has a source line - #source_line' do
-    @element.should respond_to(:source_line)
+    expect(@element.respond_to?(:source_line)).to be true
   end
 
 end
