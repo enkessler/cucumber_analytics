@@ -67,6 +67,8 @@ module CucumberAnalytics
     # Returns true if the two steps have the same text, minus any keywords
     # and arguments, and false otherwise.
     def ==(other_step)
+      return false unless other_step.respond_to?(:step_text)
+
       left_step = step_text(:with_keywords => false, :with_arguments => false)
       right_step = other_step.step_text(:with_keywords => false, :with_arguments => false)
 
@@ -79,7 +81,7 @@ module CucumberAnalytics
     # exclude certain portions of the text. *left_delimiter* and *right_delimiter*
     # are used to determine which parts of the step are arguments.
     #
-    #  a_step = CucumberAnalytics.new("Given *some* step with a block:\n|block line 1|\n|block line 2|")
+    #  a_step = CucumberAnalytics::Step.new("Given *some* step with a block:\n|block line 1|\n|block line 2|")
     #
     #  a_step.step_text
     #  #=> ['Given *some* step with a block:', '|block line 1|', '|block line 2|']
