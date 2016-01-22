@@ -21,7 +21,7 @@ describe 'Background, Unit' do
     expect { @element = clazz.new(source) }.to_not raise_error
 
     # Sanity check in case instantiation failed in a non-explosive manner
-    @element.name.should == 'test background'
+    expect(@element.name).to eq('test background')
   end
 
   context 'background output edge cases' do
@@ -31,7 +31,7 @@ describe 'Background, Unit' do
     end
 
     it 'is a String' do
-      @background.to_s.should be_a(String)
+      expect(@background.to_s).to be_a(String)
     end
 
     it 'can output an empty background' do

@@ -14,20 +14,20 @@ Then /^(?:the )?feature "([^"]*)" has the following description:$/ do |file, tex
   new_description = @parsed_files[file - 1].feature.description_text
   old_description = @parsed_files[file - 1].feature.description
 
-  new_description.should == text
-  old_description.should == remove_whitespace(text)
+  expect(new_description).to eq(text)
+  expect(old_description).to eq(remove_whitespace(text))
 end
 
 Then /^feature "([^"]*)" is found to have the following tags:$/ do |file, expected_tags|
   expected_tags = expected_tags.raw.flatten
 
-  @parsed_files[file - 1].feature.tags.should == expected_tags
-  @parsed_files[file - 1].feature.tag_elements.collect { |tag| tag.name }.should == expected_tags
+  expect(@parsed_files[file - 1].feature.tags).to eq(expected_tags)
+  expect(@parsed_files[file - 1].feature.tag_elements.collect { |tag| tag.name }).to eq(expected_tags)
 end
 
 Then /^feature "([^"]*)" has no description$/ do |file|
-  @parsed_files[file - 1].feature.description_text.should == ''
-  @parsed_files[file - 1].feature.description.should == []
+  expect(@parsed_files[file - 1].feature.description_text).to eq('')
+  expect(@parsed_files[file - 1].feature.description).to eq([])
 end
 
 Then /^feature "([^"]*)" has no tags$/ do |file|
@@ -57,7 +57,7 @@ end
 When /^(?:the )?feature(?: "([^"]*)")? background is as follows:$/ do |file, background|
   file ||= 1
 
-  @parsed_files[file - 1].feature.background.name.should == background.raw.flatten.first
+  expect(@parsed_files[file - 1].feature.background.name).to eq(background.raw.flatten.first)
 end
 
 When /^feature "([^"]*)" has no scenarios$/ do |file|
@@ -77,11 +77,11 @@ Then /^(?:the )?feature(?: "([^"]*)")? correctly stores its underlying implement
 
   raw_element = @parsed_files[file - 1].feature.raw_element
 
-  raw_element.has_key?('elements').should be_true
+  expect(raw_element).to have_key('elements')
 end
 
 Then(/^the feature has convenient output$/) do
-  @parsed_files.first.feature.method(:to_s).owner.should == CucumberAnalytics::Feature
+  expect(@parsed_files.first.feature.method(:to_s).owner).to eq(CucumberAnalytics::Feature)
 end
 
 Given(/^a feature element based on the following gherkin:$/) do |feature_text|
@@ -91,6 +91,6 @@ end
 def remove_whitespace(text)
   stripped_text = text.split("\n").collect { |line| line.strip }
   stripped_text.delete('')
-  
+
   stripped_text
 end

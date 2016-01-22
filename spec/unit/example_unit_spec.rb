@@ -25,7 +25,7 @@ describe 'Example, Unit' do
     expect { @element = clazz.new(source) }.to_not raise_error
 
     # Sanity check in case instantiation failed in a non-explosive manner
-    @element.name.should == 'test example'
+    expect(@element.name).to eq('test example')
   end
 
 
@@ -35,35 +35,35 @@ describe 'Example, Unit' do
 
 
   it 'has parameters - #parameters' do
-    @example.should respond_to(:parameters)
+    expect(@example.respond_to?(:parameters)).to be true
   end
 
   it 'can get and set its parameters - #parameters, #parameters=' do
     @example.parameters = :some_parameters
-    @example.parameters.should == :some_parameters
+    expect(@example.parameters).to eq(:some_parameters)
     @example.parameters = :some_other_parameters
-    @example.parameters.should == :some_other_parameters
+    expect(@example.parameters).to eq(:some_other_parameters)
   end
 
   it 'starts with no parameters' do
-    @example.parameters.should == []
+    expect(@example.parameters).to eq([])
   end
 
   it 'has rows - #rows' do
-    @example.should respond_to(:rows)
+    expect(@example.respond_to?(:rows)).to be true
   end
 
   #todo - remove once Hash rows are no longer supported
   it 'can get and set its rows - #rows, #rows=' do
     @example.rows = :some_rows
-    @example.rows.should == :some_rows
+    expect(@example.rows).to eq(:some_rows)
     @example.rows = :some_other_rows
-    @example.rows.should == :some_other_rows
+    expect(@example.rows).to eq(:some_other_rows)
   end
 
   #todo - remove once Hash rows are no longer supported
   it 'starts with no rows' do
-    @example.rows.should == []
+    expect(@example.rows).to eq([])
   end
 
   #todo - remove once Hash rows are no longer supported
@@ -73,9 +73,9 @@ describe 'Example, Unit' do
 
     rows = example.rows
 
-    rows.is_a?(Array).should be_true
-    rows.empty?.should be_false
-    rows.each { |row| row.is_a?(Hash).should be_true }
+    expect(rows).to be_a(Array)
+    expect(rows.empty?).to be false
+    rows.each { |row| expect(row).to be_a(Hash) }
   end
 
   it 'does not include the parameter row as a row' do
@@ -84,28 +84,28 @@ describe 'Example, Unit' do
 
     rows = example.rows
 
-    rows.should == [{'param1' => 'value1', 'param2' => 'value2'}, {'param1' => 'value3', 'param2' => 'value4'}]
+    expect(rows).to eq([{'param1' => 'value1', 'param2' => 'value2'}, {'param1' => 'value3', 'param2' => 'value4'}])
   end
 
   it 'has row elements - #row_elements' do
-    @example.should respond_to(:row_elements)
+    expect(@example.respond_to?(:row_elements)).to be true
   end
 
   it 'can get and set its row elements - #row_elements, #row_elements=' do
     @example.row_elements = :some_row_elements
-    @example.row_elements.should == :some_row_elements
+    expect(@example.row_elements).to eq(:some_row_elements)
     @example.row_elements = :some_other_row_elements
-    @example.row_elements.should == :some_other_row_elements
+    expect(@example.row_elements).to eq(:some_other_row_elements)
   end
 
   it 'starts with no row elements' do
-    @example.row_elements.should == []
+    expect(@example.row_elements).to eq([])
   end
 
   context '#add_row' do
 
     it 'can add a new example row' do
-      clazz.new.should respond_to(:add_row)
+      expect(clazz.new.respond_to?(:add_row)).to be true
     end
 
     it 'can add a new row as a hash' do
@@ -116,8 +116,8 @@ describe 'Example, Unit' do
       example.add_row(new_row)
 
       #todo - remove once Hash rows are no longer supported
-      example.rows.should == [{'param1' => 'value1', 'param2' => 'value2'}, {'param1' => 'value3', 'param2' => 'value4'}]
-      example.row_elements.collect { |row| row.cells }[1..example.row_elements.count].should == [['value1', 'value2'], ['value3', 'value4']]
+      expect(example.rows).to eq([{'param1' => 'value1', 'param2' => 'value2'}, {'param1' => 'value3', 'param2' => 'value4'}])
+      expect(example.row_elements.collect { |row| row.cells }[1..example.row_elements.count]).to eq([['value1', 'value2'], ['value3', 'value4']])
     end
 
     it 'can add a new row as an array' do
@@ -128,8 +128,8 @@ describe 'Example, Unit' do
       example.add_row(new_row)
 
       #todo - remove once Hash rows are no longer supported
-      example.rows.should == [{'param1' => 'value1', 'param2' => 'value2'}, {'param1' => 'value3', 'param2' => 'value4'}]
-      example.row_elements.collect { |row| row.cells }[1..example.row_elements.count].should == [['value1', 'value2'], ['value3', 'value4']]
+      expect(example.rows).to eq([{'param1' => 'value1', 'param2' => 'value2'}, {'param1' => 'value3', 'param2' => 'value4'}])
+      expect(example.row_elements.collect { |row| row.cells }[1..example.row_elements.count]).to eq([['value1', 'value2'], ['value3', 'value4']])
     end
 
     it 'can only use a Hash or an Array to add a new row' do
@@ -148,15 +148,15 @@ describe 'Example, Unit' do
       example.add_row(array_row)
 
       #todo - remove once Hash rows are no longer supported
-      example.rows.should == [{'param1' => 'value1', 'param2' => 'value2'}, {'param1' => 'value3', 'param2' => 'value4'}, {'param1' => 'value5', 'param2' => 'value6'}]
-      example.row_elements.collect { |row| row.cells }[1..example.row_elements.count].should == [['value1', 'value2'], ['value3', 'value4'], ['value5', 'value6']]
+      expect(example.rows).to eq([{'param1' => 'value1', 'param2' => 'value2'}, {'param1' => 'value3', 'param2' => 'value4'}, {'param1' => 'value5', 'param2' => 'value6'}])
+      expect(example.row_elements.collect { |row| row.cells }[1..example.row_elements.count]).to eq([['value1', 'value2'], ['value3', 'value4'], ['value5', 'value6']])
     end
   end
 
   context '#remove_row' do
 
     it 'can remove an existing example row' do
-      clazz.new.should respond_to(:remove_row)
+      expect(clazz.new.respond_to?(:remove_row)).to be true
     end
 
     it 'can remove an existing row as a hash' do
@@ -167,8 +167,8 @@ describe 'Example, Unit' do
       example.remove_row(old_row)
 
       #todo - remove once Hash rows are no longer supported
-      example.rows.should == [{'param1' => 'value1', 'param2' => 'value2'}]
-      example.row_elements.collect { |row| row.cells }[1..example.row_elements.count].should == [['value1', 'value2']]
+      expect(example.rows).to eq([{'param1' => 'value1', 'param2' => 'value2'}])
+      expect(example.row_elements.collect { |row| row.cells }[1..example.row_elements.count]).to eq([['value1', 'value2']])
     end
 
     it 'can remove an existing row as an array' do
@@ -179,8 +179,8 @@ describe 'Example, Unit' do
       example.remove_row(old_row)
 
       #todo - remove once Hash rows are no longer supported
-      example.rows.should == [{'param1' => 'value1', 'param2' => 'value2'}]
-      example.row_elements.collect { |row| row.cells }[1..example.row_elements.count].should == [['value1', 'value2']]
+      expect(example.rows).to eq([{'param1' => 'value1', 'param2' => 'value2'}])
+      expect(example.row_elements.collect { |row| row.cells }[1..example.row_elements.count]).to eq([['value1', 'value2']])
     end
 
     it 'can only use a Hash or an Array to remove an existing row' do
@@ -199,15 +199,15 @@ describe 'Example, Unit' do
       example.remove_row(array_row)
 
       #todo - remove once Hash rows are no longer supported
-      example.rows.should == [{'param1' => 'value1', 'param2' => 'value2'}]
-      example.row_elements.collect { |row| row.cells }[1..example.row_elements.count].should == [['value1', 'value2']]
+      expect(example.rows).to eq([{'param1' => 'value1', 'param2' => 'value2'}])
+      expect(example.row_elements.collect { |row| row.cells }[1..example.row_elements.count]).to eq([['value1', 'value2']])
     end
   end
 
   context 'example output edge cases' do
 
     it 'is a String' do
-      @example.to_s.should be_a(String)
+      expect(@example.to_s).to be_a(String)
     end
 
     it 'can output an empty example' do

@@ -16,8 +16,8 @@ Then /^(?:the )?(?:feature "([^"]*)" )?test(?: "([^"]*)")? has the following des
   new_description = @parsed_files[file - 1].feature.tests[test - 1].description_text
   old_description = @parsed_files[file - 1].feature.tests[test - 1].description
 
-  new_description.should == text
-  old_description.should == remove_whitespace(text)
+  expect(new_description).to eq(text)
+  expect(old_description).to eq(remove_whitespace(text))
 end
 
 Then /^(?:the )?(?:feature "([^"]*)" )?test(?: "([^"]*)")? steps are as follows:$/ do |file, test, steps|
@@ -47,8 +47,8 @@ Then /^(?:the )?(?:feature "([^"]*)" )?test(?: "([^"]*)")? is found to have the 
 
   expected_tags = expected_tags.raw.flatten
 
-  @parsed_files[file - 1].feature.tests[test - 1].tags.should == expected_tags
-  @parsed_files[file - 1].feature.tests[test - 1].tag_elements.collect { |tag| tag.name }.should == expected_tags
+  expect(@parsed_files[file - 1].feature.tests[test - 1].tags).to eq(expected_tags)
+  expect(@parsed_files[file - 1].feature.tests[test - 1].tag_elements.collect { |tag| tag.name }).to eq(expected_tags)
 end
 
 Then /^(?:the )?(?:feature "([^"]*)" )?test(?: "([^"]*)")? is found to have the following applied tags:$/ do |file, test, expected_tags|
@@ -57,8 +57,8 @@ Then /^(?:the )?(?:feature "([^"]*)" )?test(?: "([^"]*)")? is found to have the 
 
   expected_tags = expected_tags.raw.flatten
 
-  @parsed_files[file - 1].feature.tests[test - 1].applied_tags.should == expected_tags
-  @parsed_files[file - 1].feature.tests[test - 1].applied_tag_elements.collect { |tag| tag.name }.should == expected_tags
+  expect(@parsed_files[file - 1].feature.tests[test - 1].applied_tags).to eq(expected_tags)
+  expect(@parsed_files[file - 1].feature.tests[test - 1].applied_tag_elements.collect { |tag| tag.name }).to eq(expected_tags)
 end
 
 Then /^(?:the )?(?:feature "([^"]*)" )?test(?: "([^"]*)")? step "([^"]*)" has the following block:$/ do |file, test, step, block|
@@ -102,11 +102,11 @@ Then /^(?:the )?(?:feature "([^"]*)" )?test(?: "([^"]*)")? correctly stores its 
   expected = ['Scenario', 'Scenario Outline']
   actual = raw_element['keyword']
 
-  expected.include?(actual).should be_true
+  expect(expected).to include(actual)
 end
 
 Then(/^the scenario has convenient output$/) do
-  @parsed_files.first.feature.tests.first.method(:to_s).owner.should == CucumberAnalytics::Scenario
+  expect(@parsed_files.first.feature.tests.first.method(:to_s).owner).to eq(CucumberAnalytics::Scenario)
 end
 
 Given(/^a scenario element based on the following gherkin:$/) do |scenario_text|

@@ -28,7 +28,7 @@ describe 'FeatureFile, Unit' do
 
     feature = CucumberAnalytics::FeatureFile.new(path)
 
-    feature.name.should == DEFAULT_FEATURE_FILE_NAME
+    expect(feature.name).to eq(DEFAULT_FEATURE_FILE_NAME)
   end
 
   it 'knows the path of the file that it is modeling' do
@@ -37,29 +37,29 @@ describe 'FeatureFile, Unit' do
 
     directory = CucumberAnalytics::FeatureFile.new(path)
 
-    directory.path.should == path
+    expect(directory.path).to eq(path)
   end
 
   it 'has features - #features' do
-    @feature_file.should respond_to(:features)
+    expect(@feature_file.respond_to?(:features)).to be true
   end
 
   it 'can get and set its features - #features, #features=' do
     @feature_file.features = :some_features
-    @feature_file.features.should == :some_features
+    expect(@feature_file.features).to eq(:some_features)
     @feature_file.features = :some_other_features
-    @feature_file.features.should == :some_other_features
+    expect(@feature_file.features).to eq(:some_other_features)
   end
 
   it 'knows how many features it has - #feature_count' do
     @feature_file.features = [:a_feature]
-    @feature_file.feature_count.should == 1
+    expect(@feature_file.feature_count).to eq(1)
     @feature_file.features = []
-    @feature_file.feature_count.should == 0
+    expect(@feature_file.feature_count).to eq(0)
   end
 
   it 'starts with no features' do
-    @feature_file.features.should == []
+    expect(@feature_file.features).to eq([])
   end
 
   it 'contains features' do
@@ -68,21 +68,21 @@ describe 'FeatureFile, Unit' do
 
     @feature_file.features = features
 
-    @feature_file.contains.should =~ everything
+    expect(@feature_file.contains).to match_array(everything)
   end
 
   it 'can easily access its sole feature' do
     @feature_file.features = []
-    @feature_file.feature.should be_nil
+    expect(@feature_file.feature).to be_nil
 
     @feature_file.features = [:a_feature]
-    @feature_file.feature.should == :a_feature
+    expect(@feature_file.feature).to eq(:a_feature)
   end
 
   context 'feature file output edge cases' do
 
     it 'is a String' do
-      @feature_file.to_s.should be_a(String)
+      expect(@feature_file.to_s).to be_a(String)
     end
 
     it 'can output an empty feature file' do

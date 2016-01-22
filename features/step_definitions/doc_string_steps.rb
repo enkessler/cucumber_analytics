@@ -25,9 +25,9 @@ Then /^(?:the )?(?:feature "([^"]*)" )?(?:test(?: "([^"]*)")? )?(?:step(?: "([^"
   test ||= 1
   step ||= 1
 
-  @parsed_files[file - 1].feature.tests[test - 1].steps[step - 1].block.contents_text.should == contents
+  expect(@parsed_files[file - 1].feature.tests[test - 1].steps[step - 1].block.contents_text).to eq(contents)
   # Remove once Array contents is no longer supported
-  @parsed_files[file - 1].feature.tests[test - 1].steps[step - 1].block.contents.should == contents.split("\n", -1)
+  expect(@parsed_files[file - 1].feature.tests[test - 1].steps[step - 1].block.contents).to eq(contents.split("\n", -1))
 end
 
 Then /^(?:the )?(?:feature "([^"]*)" )?(?:test(?: "([^"]*)")? )?(?:step(?: "([^"]*)") )?doc string contents are empty$/ do |file, test, step|
@@ -36,8 +36,8 @@ Then /^(?:the )?(?:feature "([^"]*)" )?(?:test(?: "([^"]*)")? )?(?:step(?: "([^"
   step ||= 1
 
   #todo Remove once Array contents is no longer supported
-  @parsed_files[file - 1].feature.tests[test - 1].steps[step - 1].block.contents.should be_empty
-  @parsed_files[file - 1].feature.tests[test - 1].steps[step - 1].block.contents_text.should be_empty
+  expect(@parsed_files[file - 1].feature.tests[test - 1].steps[step - 1].block.contents).to be_empty
+  expect(@parsed_files[file - 1].feature.tests[test - 1].steps[step - 1].block.contents_text).to be_empty
 end
 
 Then(/^(?:the )?(?:feature "([^"]*)" )?(?:test(?: "([^"]*)")? )?(?:step(?: "([^"]*)") )?doc string correctly stores its underlying implementation$/) do |file, test, step|
@@ -47,11 +47,11 @@ Then(/^(?:the )?(?:feature "([^"]*)" )?(?:test(?: "([^"]*)")? )?(?:step(?: "([^"
 
   raw_element = @parsed_files[file - 1].feature.tests[test - 1].steps[step - 1].block.raw_element
 
-  raw_element.has_key?('content_type').should be_true
+  expect(raw_element).to have_key('content_type')
 end
 
 Then(/^the doc string has convenient output$/) do
-  @parsed_files.first.feature.tests.first.steps.first.block.method(:to_s).owner.should == CucumberAnalytics::DocString
+  expect(@parsed_files.first.feature.tests.first.steps.first.block.method(:to_s).owner).to eq(CucumberAnalytics::DocString)
 end
 
 Given(/^a doc string element based on the following gherkin:$/) do |doc_string_text|

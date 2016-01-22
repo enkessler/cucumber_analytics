@@ -48,5 +48,5 @@ Given(/^a directory element based on "([^"]*)"$/) do |directory_name|
 end
 
 Then(/^the directory has convenient output$/) do
-  @parsed_directories.first.method(:to_s).owner.should == CucumberAnalytics::Directory
+  expect(@parsed_directories.first.method(:to_s).owner).to eq(CucumberAnalytics::Directory)
 end

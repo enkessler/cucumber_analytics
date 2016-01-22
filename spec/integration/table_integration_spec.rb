@@ -13,8 +13,8 @@ describe 'Table, Integration' do
     row_1 = table.row_elements[0]
     row_2 = table.row_elements[1]
 
-    row_1.parent_element.should equal table
-    row_2.parent_element.should equal table
+    expect(row_1.parent_element).to be(table)
+    expect(row_2.parent_element).to be(table)
   end
 
   context 'getting stuff' do
@@ -38,37 +38,37 @@ describe 'Table, Integration' do
     it 'can get its directory' do
       directory = @table.get_ancestor(:directory)
 
-      directory.should equal @directory
+      expect(directory).to be(@directory)
     end
 
     it 'can get its feature file' do
       feature_file = @table.get_ancestor(:feature_file)
 
-      feature_file.should equal @directory.feature_files.first
+      expect(feature_file).to be(@directory.feature_files.first)
     end
 
     it 'can get its feature' do
       feature = @table.get_ancestor(:feature)
 
-      feature.should equal @directory.feature_files.first.features.first
+      expect(feature).to be(@directory.feature_files.first.features.first)
     end
 
     it 'can get its test' do
       test = @table.get_ancestor(:test)
 
-      test.should equal @directory.feature_files.first.features.first.tests.first
+      expect(test).to be(@directory.feature_files.first.features.first.tests.first)
     end
 
     it 'can get its step' do
       step = @table.get_ancestor(:step)
 
-      step.should equal @directory.feature_files.first.features.first.tests.first.steps.first
+      expect(step).to be(@directory.feature_files.first.features.first.tests.first.steps.first)
     end
 
     it 'returns nil if it does not have the requested type of ancestor' do
       example = @table.get_ancestor(:example)
 
-      example.should be_nil
+      expect(example).to be_nil
     end
 
   end

@@ -17,9 +17,9 @@ describe 'DocString, Unit' do
     expect { @element = clazz.new(source) }.to_not raise_error
 
     # Sanity check in case instantiation failed in a non-explosive manner
-    @element.contents_text.should == "some doc string"
+    expect(@element.contents_text).to eq("some doc string")
     #todo Remove once Array contents is no longer supported
-    @element.contents.should == ["some doc string"]
+    expect(@element.contents).to eq(["some doc string"])
   end
 
   before(:each) do
@@ -27,43 +27,43 @@ describe 'DocString, Unit' do
   end
 
   it 'has a content type - #content_type' do
-    @doc_string.should respond_to(:content_type)
+    expect(@doc_string.respond_to?(:content_type)).to be true
   end
 
   it 'can get and set its content type - #content_type, #content_type=' do
     @doc_string.content_type = :some_content_type
-    @doc_string.content_type.should == :some_content_type
+    expect(@doc_string.content_type).to eq(:some_content_type)
     @doc_string.content_type = :some_other_content_type
-    @doc_string.content_type.should == :some_other_content_type
+    expect(@doc_string.content_type).to eq(:some_other_content_type)
   end
 
   it 'starts with no content type' do
-    @doc_string.content_type.should == nil
+    expect(@doc_string.content_type).to be_nil
   end
 
   it 'has contents' do
     #todo Remove once Array contents is no longer supported
-    @doc_string.should respond_to(:contents)
-    @doc_string.should respond_to(:contents_text)
+    expect(@doc_string.respond_to?(:contents)).to be true
+    expect(@doc_string.respond_to?(:contents_text)).to be true
   end
 
   it 'can get and set its contents' do
     #todo Remove once Array contents is no longer supported
     @doc_string.contents = :some_contents
-    @doc_string.contents.should == :some_contents
+    expect(@doc_string.contents).to eq(:some_contents)
     @doc_string.contents = :some_other_contents
-    @doc_string.contents.should == :some_other_contents
+    expect(@doc_string.contents).to eq(:some_other_contents)
 
     @doc_string.contents_text = :some_contents
-    @doc_string.contents_text.should == :some_contents
+    expect(@doc_string.contents_text).to eq(:some_contents)
     @doc_string.contents_text = :some_other_contents
-    @doc_string.contents_text.should == :some_other_contents
+    expect(@doc_string.contents_text).to eq(:some_other_contents)
   end
 
   it 'starts with no contents' do
     #todo Remove once Array contents is no longer supported
-    @doc_string.contents.should == []
-    @doc_string.contents_text.should == ''
+    expect(@doc_string.contents).to eq([])
+    expect(@doc_string.contents_text).to eq('')
   end
 
   #todo Remove once Array contents is no longer supported
@@ -73,9 +73,9 @@ describe 'DocString, Unit' do
 
     contents = doc_string.contents
 
-    contents.is_a?(Array).should be_true
+    expect(contents).to be_a(Array)
     contents.each do |line|
-      line.is_a?(String).should be_true
+      expect(line).to be_a(String)
     end
   end
 
@@ -85,13 +85,13 @@ describe 'DocString, Unit' do
 
     contents = doc_string.contents_text
 
-    contents.is_a?(String).should be_true
+    expect(contents).to be_a(String)
   end
 
   context 'doc string output edge cases' do
 
     it 'is a String' do
-      @doc_string.to_s.should be_a(String)
+      expect(@doc_string.to_s).to be_a(String)
     end
 
     it 'can output an empty doc string' do

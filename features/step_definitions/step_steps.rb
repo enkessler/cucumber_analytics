@@ -35,7 +35,7 @@ Then /^(?:the )?(?:feature "([^"]*)" )?(?:test(?: "([^"]*)")? )?step(?: "([^"]*)
   expected = nil
   actual = @parsed_files[file - 1].feature.tests[test - 1].steps[step - 1].block
 
-  actual.should == expected
+  expect(actual).to eq(expected)
 end
 
 Then /^(?:the )?(?:feature "([^"]*)" )?test(?: "([^"]*)")? step(?: "([^"]*)")? text is "([^"]*)"$/ do |file, test, step, text|
@@ -87,7 +87,7 @@ Then /^(?:the )?(?:feature "([^"]*)" )?(?:test(?: "([^"]*)")? )?step(?: "([^"]*)
 
   actual = @parsed_files[file - 1].feature.tests[test - 1].steps[step - 1].block.class
 
-  actual.should == expected
+  expect(actual).to eq(expected)
 end
 
 Then /^(?:the )?(?:feature "([^"]*)" )?(?:test(?: "([^"]*)")? )?step(?: "([^"]*)")? source line is "([^"]*)"$/ do |file, test, step, line_number|
@@ -98,7 +98,7 @@ Then /^(?:the )?(?:feature "([^"]*)" )?(?:test(?: "([^"]*)")? )?step(?: "([^"]*)
   expected = line_number.to_i
   actual = @parsed_files[file - 1].feature.tests[test - 1].steps[step - 1].source_line
 
-  actual.should == expected
+  expect(actual).to eq(expected)
 end
 
 Then /^(?:the )?(?:feature "([^"]*)" )?test(?: "([^"]*)")? step(?: "([^"]*)")? correctly stores its underlying implementation$/ do |file, test, step|
@@ -108,7 +108,7 @@ Then /^(?:the )?(?:feature "([^"]*)" )?test(?: "([^"]*)")? step(?: "([^"]*)")? c
 
   raw_element = @parsed_files[file - 1].feature.tests[test - 1].steps[step - 1].raw_element
 
-  raw_element.has_key?('keyword').should be_true
+  expect(raw_element).to have_key('keyword')
 end
 
 Then /^(?:the )?(?:feature "([^"]*)" )?(?:test(?: "([^"]*)")? )?step(?: "([^"]*)")? table row(?: "([^"]*)")? is found to have the following properties:$/ do |file, test, step, row, properties|
@@ -135,7 +135,7 @@ Then /^(?:the )?(?:feature "([^"]*)" )?(?:test(?: "([^"]*)")? )?step(?: "([^"]*)
 
   raw_element = @parsed_files[file - 1].feature.tests[test - 1].steps[step - 1].block.row_elements[row - 1].raw_element
 
-  raw_element.has_key?('cells').should be_true
+  expect(raw_element).to have_key('cells')
 end
 
 Then /^(?:the )?(?:feature "([^"]*)" )?(?:test(?: "([^"]*)")? )?step(?: "([^"]*)")? table row(?: "([^"]*)")? cells are as follows:$/ do |file, test, step, row, cells|
@@ -155,5 +155,5 @@ Given(/^a step element based on the following gherkin:$/) do |step_text|
 end
 
 Then(/^the step has convenient output$/) do
-  @parsed_files.first.feature.tests.first.steps.first.method(:to_s).owner.should == CucumberAnalytics::Step
+  expect(@parsed_files.first.feature.tests.first.steps.first.method(:to_s).owner).to eq(CucumberAnalytics::Step)
 end

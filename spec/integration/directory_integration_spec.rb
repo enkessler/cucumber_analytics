@@ -17,8 +17,8 @@ describe 'Directory, Integration' do
     nested_directory = directory.directories.first
     file = directory.feature_files.first
 
-    nested_directory.parent_element.should equal directory
-    file.parent_element.should equal directory
+    expect(nested_directory.parent_element).to be(directory)
+    expect(file.parent_element).to be(directory)
   end
 
   context 'getting stuff' do
@@ -35,13 +35,13 @@ describe 'Directory, Integration' do
     it 'can get its directory' do
       directory = @nested_directory.get_ancestor(:directory)
 
-      directory.should equal @directory
+      expect(directory).to be(@directory)
     end
 
     it 'returns nil if it does not have the requested type of ancestor' do
       example = @nested_directory.get_ancestor(:example)
 
-      example.should be_nil
+      expect(example).to be_nil
     end
 
   end

@@ -1,3 +1,9 @@
+=== Version 1.5.2 / 2016-01-21
+
+* Bug fix: Fixed an error caused by comparing elements with step objects to
+  anything that did not have step objects.
+
+
 === Version 1.5.1 / 2014-05-26
 
 * Version ranges have been removed for the gherkin gem. Since this gem can work 

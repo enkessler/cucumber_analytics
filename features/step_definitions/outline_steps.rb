@@ -16,7 +16,7 @@ Then /^(?:the )?(?:feature "([^"]*)" )?test(?: "([^"]*)")? example block(?: "([^
   properties = properties.rows_hash
 
   properties.each do |property, value|
-    @parsed_files[file - 1].feature.tests[test - 1].examples[example - 1].send(property.to_sym).to_s.should == value
+    expect(@parsed_files[file - 1].feature.tests[test - 1].examples[example - 1].send(property.to_sym).to_s).to eq(value)
   end
 end
 
@@ -44,8 +44,8 @@ Then /^(?:the )?(?:feature "([^"]*)" )?test(?: "([^"]*)")? example block(?: "([^
   new_description = @parsed_files[file - 1].feature.tests[test - 1].examples[example - 1].description_text
   old_description = @parsed_files[file - 1].feature.tests[test - 1].examples[example - 1].description
 
-  new_description.should == text
-  old_description.should == remove_whitespace(text)
+  expect(new_description).to eq(text)
+  expect(old_description).to eq(remove_whitespace(text))
 end
 
 Then /^(?:the )?(?:feature "([^"]*)" )?test(?: "([^"]*)")? example block(?: "([^"]*)")? has no description$/ do |file, test, example|
@@ -56,8 +56,8 @@ Then /^(?:the )?(?:feature "([^"]*)" )?test(?: "([^"]*)")? example block(?: "([^
   new_description = @parsed_files[file - 1].feature.tests[test - 1].examples[example - 1].description_text
   old_description = @parsed_files[file - 1].feature.tests[test - 1].examples[example - 1].description
 
-  new_description.should == ''
-  old_description.should == []
+  expect(new_description).to eq('')
+  expect(old_description).to eq([])
 end
 
 Then /^(?:the )?(?:feature "([^"]*)" )?test(?: "([^"]*)")? example block(?: "([^"]*)")? is found to have the following tags:$/ do |file, test, example, expected_tags|
@@ -67,8 +67,8 @@ Then /^(?:the )?(?:feature "([^"]*)" )?test(?: "([^"]*)")? example block(?: "([^
 
   expected_tags = expected_tags.raw.flatten
 
-  @parsed_files[file - 1].feature.tests[test - 1].examples[example - 1].tags.should == expected_tags
-  @parsed_files[file - 1].feature.tests[test - 1].examples[example - 1].tag_elements.collect { |tag| tag.name }.should == expected_tags
+  expect(@parsed_files[file - 1].feature.tests[test - 1].examples[example - 1].tags).to eq(expected_tags)
+  expect(@parsed_files[file - 1].feature.tests[test - 1].examples[example - 1].tag_elements.collect { |tag| tag.name }).to eq(expected_tags)
 end
 
 Then /^(?:the )?(?:feature "([^"]*)" )?test(?: "([^"]*)")? example block(?: "([^"]*)")? is found to have the following applied tags:$/ do |file, test, example, expected_tags|
@@ -78,8 +78,8 @@ Then /^(?:the )?(?:feature "([^"]*)" )?test(?: "([^"]*)")? example block(?: "([^
 
   expected_tags = expected_tags.raw.flatten.sort
 
-  @parsed_files[file - 1].feature.tests[test - 1].examples[example - 1].applied_tags.sort.should == expected_tags
-  @parsed_files[file - 1].feature.tests[test - 1].examples[example - 1].applied_tag_elements.collect { |tag| tag.name }.sort.should == expected_tags
+  expect(@parsed_files[file - 1].feature.tests[test - 1].examples[example - 1].applied_tags.sort).to eq(expected_tags)
+  expect(@parsed_files[file - 1].feature.tests[test - 1].examples[example - 1].applied_tag_elements.collect { |tag| tag.name }.sort).to eq(expected_tags)
 end
 
 Then /^(?:the )?(?:feature "([^"]*)" )?test(?: "([^"]*)")? example block(?: "([^"]*)")? has no tags$/ do |file, test, example|
@@ -87,8 +87,8 @@ Then /^(?:the )?(?:feature "([^"]*)" )?test(?: "([^"]*)")? example block(?: "([^
   test ||= 1
   example ||= 1
 
-  @parsed_files[file - 1].feature.tests[test - 1].examples[example - 1].tags.should == []
-  @parsed_files[file - 1].feature.tests[test - 1].examples[example - 1].tag_elements.collect { |tag| tag.name }.should == []
+  expect(@parsed_files[file - 1].feature.tests[test - 1].examples[example - 1].tags).to eq([])
+  expect(@parsed_files[file - 1].feature.tests[test - 1].examples[example - 1].tag_elements.collect { |tag| tag.name }).to eq([])
 end
 
 Then /^(?:the )?(?:feature "([^"]*)" )?test(?: "([^"]*)")? example block(?: "([^"]*)")? rows are as follows:$/ do |file, test, example, rows|
@@ -181,9 +181,9 @@ Then /^(?:the )?(?:feature "([^"]*)" )?test(?: "([^"]*)")? example block(?: "([^
 
   example = @parsed_files[file - 1].feature.tests[test - 1].examples[example - 1]
 
-  example.row_elements[1..example.row_elements.count].should be_empty
+  expect(example.row_elements[1..example.row_elements.count]).to be_empty
   #todo - remove once Hash rows are no longer supported
-  example.rows.should be_empty
+  expect(example.rows).to be_empty
 end
 
 Then /^(?:the )?(?:feature "([^"]*)" )?test(?: "([^"]*)")? example block(?: "([^"]*)")? row(?: "([^"]*)")? correctly stores its underlying implementation$/ do |file, test, example, row|
@@ -194,7 +194,7 @@ Then /^(?:the )?(?:feature "([^"]*)" )?test(?: "([^"]*)")? example block(?: "([^
 
   raw_element = @parsed_files[file - 1].feature.tests[test - 1].examples[example - 1].row_elements[row - 1].raw_element
 
-  raw_element.has_key?('cells').should be_true
+  expect(raw_element).to have_key('cells')
 end
 
 Then /^(?:the )?(?:feature "([^"]*)" )?test(?: "([^"]*)")? example block(?: "([^"]*)")? correctly stores its underlying implementation$/ do |file, test, example|
@@ -204,11 +204,11 @@ Then /^(?:the )?(?:feature "([^"]*)" )?test(?: "([^"]*)")? example block(?: "([^
 
   raw_element = @parsed_files[file - 1].feature.tests[test - 1].examples[example - 1].raw_element
 
-  raw_element.has_key?('rows').should be_true
+  expect(raw_element).to have_key('rows')
 end
 
 Then(/^the row has convenient output$/) do
-  @parsed_files.first.feature.tests.first.examples.first.row_elements.first.method(:to_s).owner.should == CucumberAnalytics::Row
+  expect(@parsed_files.first.feature.tests.first.examples.first.row_elements.first.method(:to_s).owner).to eq(CucumberAnalytics::Row)
 end
 
 Given(/^a row element based on the following gherkin:$/) do |row_text|
@@ -224,7 +224,7 @@ When(/^the row element has no cells$/) do
 end
 
 Then(/^the example block has convenient output$/) do
-  @parsed_files.first.feature.tests.first.examples.first.method(:to_s).owner.should == CucumberAnalytics::Example
+  expect(@parsed_files.first.feature.tests.first.examples.first.method(:to_s).owner).to eq(CucumberAnalytics::Example)
 end
 
 Given(/^an example element based on the following gherkin:$/) do |example_text|
@@ -244,7 +244,7 @@ When(/^the example element has no parameters or rows$/) do
 end
 
 Then(/^the outline has convenient output$/) do
-  @parsed_files.first.feature.tests.first.method(:to_s).owner.should == CucumberAnalytics::Outline
+  expect(@parsed_files.first.feature.tests.first.method(:to_s).owner).to eq(CucumberAnalytics::Outline)
 end
 
 Given(/^an outline element based on the following gherkin:$/) do |outline_text|
