@@ -17,7 +17,7 @@ describe 'Tag, Unit' do
     source = '@a_tag'
 
     expect { @element = clazz.new(source) }.to_not raise_error
-    @element.name.should == '@a_tag'
+    expect(@element.name).to eq('@a_tag')
   end
 
   before(:each) do
@@ -26,20 +26,20 @@ describe 'Tag, Unit' do
 
 
   it 'has a name' do
-    @element.should respond_to(:name)
+    expect(@element.respond_to?(:name)).to be true
   end
 
   it 'can get and set its name' do
     @element.name = :some_name
-    @element.name.should == :some_name
+    expect(@element.name).to eq(:some_name)
     @element.name = :some_other_name
-    @element.name.should == :some_other_name
+    expect(@element.name).to eq(:some_other_name)
   end
 
   context 'tag output edge cases' do
 
     it 'is a String' do
-      @element.to_s.should be_a(String)
+      expect(@element.to_s).to be_a(String)
     end
 
     it 'can output an empty tag' do

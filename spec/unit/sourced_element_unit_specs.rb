@@ -8,11 +8,11 @@ shared_examples_for 'a sourced element' do |clazz|
 
 
   it 'has a source line - #source_line' do
-    @element.should respond_to(:source_line)
+    expect(@element.respond_to?(:source_line)).to be true
   end
 
   it 'starts with no source line' do
-    @element.source_line.should == nil
+    expect(@element.source_line).to be_nil
   end
 
 end

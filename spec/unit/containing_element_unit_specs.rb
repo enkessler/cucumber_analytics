@@ -7,11 +7,11 @@ shared_examples_for 'a containing element' do |clazz|
   end
 
   it 'has children - #contains' do
-    @element.should respond_to(:contains)
+    expect(@element.respond_to?(:contains)).to be true
   end
 
   it 'returns a collection of children - #contains' do
-    @element.contains.is_a?(Array).should be_true
+    expect(@element.contains).to be_a(Array)
   end
 
 end

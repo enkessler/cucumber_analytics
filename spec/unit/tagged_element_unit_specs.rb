@@ -7,30 +7,30 @@ shared_examples_for 'a tagged element' do |clazz|
   end
 
   it 'has tags' do
-    @element.should respond_to(:tags)
-    @element.should respond_to(:tag_elements)
+    expect(@element.respond_to?(:tags)).to be true
+    expect(@element.respond_to?(:tag_elements)).to be true
   end
 
   it 'can get and set its tags' do
     @element.tags = :some_tags
-    @element.tags.should == :some_tags
+    expect(@element.tags).to eq(:some_tags)
     @element.tags = :some_other_tags
-    @element.tags.should == :some_other_tags
+    expect(@element.tags).to eq(:some_other_tags)
 
     @element.tag_elements = :some_tag_elements
-    @element.tag_elements.should == :some_tag_elements
+    expect(@element.tag_elements).to eq(:some_tag_elements)
     @element.tag_elements = :some_other_tag_elements
-    @element.tag_elements.should == :some_other_tag_elements
+    expect(@element.tag_elements).to eq(:some_other_tag_elements)
   end
 
   it 'starts with no tags' do
-    @element.tags.should == []
-    @element.tag_elements.should == []
+    expect(@element.tags).to eq([])
+    expect(@element.tag_elements).to eq([])
   end
 
   it 'has applied tags' do
-    @element.should respond_to(:applied_tags)
-    @element.should respond_to(:applied_tag_elements)
+    expect(@element.respond_to?(:applied_tags)).to be true
+    expect(@element.respond_to?(:applied_tag_elements)).to be true
   end
 
   it 'inherits its applied tags from its ancestors' do
@@ -40,8 +40,8 @@ shared_examples_for 'a tagged element' do |clazz|
 
     @element.parent_element = parent
 
-    @element.applied_tags.should == all_parent_tags
-    @element.applied_tag_elements.should == all_parent_tag_elements
+    expect(@element.applied_tags).to eq(all_parent_tags)
+    expect(@element.applied_tag_elements).to eq(all_parent_tag_elements)
   end
 
   it 'knows all of its applicable tags' do
@@ -56,8 +56,8 @@ shared_examples_for 'a tagged element' do |clazz|
     @element.tags = own_tags
     @element.tag_elements = own_tag_elements
 
-    @element.all_tags.should == all_parent_tags + own_tags
-    @element.all_tag_elements.should == all_parent_tag_elements + own_tag_elements
+    expect(@element.all_tags).to eq(all_parent_tags + own_tags)
+    expect(@element.all_tag_elements).to eq(all_parent_tag_elements + own_tag_elements)
   end
 
 end

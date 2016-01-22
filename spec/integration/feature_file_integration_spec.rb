@@ -14,7 +14,7 @@ describe 'FeatureFile, Integration' do
     file = CucumberAnalytics::FeatureFile.new(file_path)
     feature = file.feature
 
-    feature.parent_element.should equal file
+    expect(feature.parent_element).to be(file)
   end
 
   context 'getting stuff' do
@@ -31,13 +31,13 @@ describe 'FeatureFile, Integration' do
     it 'can get its directory' do
       directory = @feature_file.get_ancestor(:directory)
 
-      directory.should equal @directory
+      expect(directory).to be(@directory)
     end
 
     it 'returns nil if it does not have the requested type of ancestor' do
       example = @feature_file.get_ancestor(:example)
 
-      example.should be_nil
+      expect(example).to be_nil
     end
 
   end

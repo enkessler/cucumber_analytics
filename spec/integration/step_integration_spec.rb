@@ -19,8 +19,8 @@ describe 'Step, Integration' do
     doc_string = step_1.block
     table = step_2.block
 
-    doc_string.parent_element.should equal step_1
-    table.parent_element.should equal step_2
+    expect(doc_string.parent_element).to be(step_1)
+    expect(table.parent_element).to be(step_2)
   end
 
   it 'defaults to the World delimiters if its own are not set' do
@@ -32,8 +32,8 @@ describe 'Step, Integration' do
     step.right_delimiter = nil
     step.left_delimiter = nil
 
-    step.right_delimiter.should == '"'
-    step.left_delimiter.should == '"'
+    expect(step.right_delimiter).to eq('"')
+    expect(step.left_delimiter).to eq('"')
   end
 
   it 'attempts to determine its arguments during creation' do
@@ -45,7 +45,7 @@ describe 'Step, Integration' do
 
     step = CucumberAnalytics::Step.new(source)
 
-    step.arguments.should == ['parameter 2']
+    expect(step.arguments).to eq(['parameter 2'])
   end
 
   it 'finds nothing when no regular expression or delimiters are available' do
@@ -58,7 +58,7 @@ describe 'Step, Integration' do
 
     step.scan_arguments
 
-    step.arguments.should == []
+    expect(step.arguments).to eq([])
   end
 
   it 'can determine its equality with another Step' do
@@ -74,9 +74,8 @@ describe 'Step, Integration' do
     step_2.delimiter = '*'
     step_3.delimiter = '*'
 
-
-    (step_1 == step_2).should be_true
-    (step_1 == step_3).should be_false
+    expect(step_1).to eq(step_2)
+    expect(step_1).to_not eq(step_3)
   end
 
   context '#step_text ' do
@@ -94,21 +93,21 @@ describe 'Step, Integration' do
       expected_output = ['Given a test step with -parameter 1- ^and@ *parameter 2!!',
                          '|a block|']
 
-      step_with_block.step_text.should == expected_output
+      expect(step_with_block.step_text).to eq(expected_output)
 
       source = 'Given a test step with -parameter 1- ^and@ *parameter 2!!'
       step_without_block = CucumberAnalytics::Step.new(source)
 
       expected_output = ['Given a test step with -parameter 1- ^and@ *parameter 2!!']
 
-      step_without_block.step_text.should == expected_output
+      expect(step_without_block.step_text).to eq(expected_output)
     end
 
     it 'can provide the step\'s text without the keyword' do
       expected_output = ['a test step with -parameter 1- ^and@ *parameter 2!!',
                          '|a block|']
 
-      @step.step_text(:with_keywords => false).should == expected_output
+      expect(@step.step_text(:with_keywords => false)).to eq(expected_output)
     end
 
   end
@@ -133,31 +132,31 @@ describe 'Step, Integration' do
     it 'can get its directory' do
       directory = @step.get_ancestor(:directory)
 
-      directory.should equal @directory
+      expect(directory).to be(@directory)
     end
 
     it 'can get its feature file' do
       feature_file = @step.get_ancestor(:feature_file)
 
-      feature_file.should equal @directory.feature_files.first
+      expect(feature_file).to be(@directory.feature_files.first)
     end
 
     it 'can get its feature' do
       feature = @step.get_ancestor(:feature)
 
-      feature.should equal @directory.feature_files.first.features.first
+      expect(feature).to be(@directory.feature_files.first.features.first)
     end
 
     it 'can get its test' do
       test = @step.get_ancestor(:test)
 
-      test.should equal @directory.feature_files.first.features.first.tests.first
+      expect(test).to be(@directory.feature_files.first.features.first.tests.first)
     end
 
     it 'returns nil if it does not have the requested type of ancestor' do
       example = @step.get_ancestor(:example)
 
-      example.should be_nil
+      expect(example).to be_nil
     end
 
   end

@@ -6,7 +6,7 @@ Then /^the(?: feature "([^"]*)")? background is found to have the following prop
     expected = expected_value
     actual = @parsed_files[file - 1].feature.background.send(property.to_sym).to_s
 
-    actual.should == expected
+    expect(actual).to eq(expected)
   end
 end
 
@@ -18,8 +18,8 @@ Then /^the(?: feature "([^"]*)")? background has the following description:/ do 
   new_description = @parsed_files[file - 1].feature.background.description_text
   old_description = @parsed_files[file - 1].feature.background.description
 
-  new_description.should == expected
-  old_description.should == remove_whitespace(expected)
+  expect(new_description).to eq(expected)
+  expect(old_description).to eq(remove_whitespace(expected))
 end
 
 Then /^the(?: feature "([^"]*)")? background's steps are as follows:$/ do |file, steps|
@@ -76,6 +76,6 @@ Given(/^a background element based on the following gherkin:$/) do |background_t
 end
 
 Then /^the background has convenient output$/ do
-  @parsed_files.first.feature.background.method(:to_s).owner.should == CucumberAnalytics::Background
+  expect(@parsed_files.first.feature.background.method(:to_s).owner).to eq(CucumberAnalytics::Background)
 end
 

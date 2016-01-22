@@ -17,9 +17,9 @@ describe 'Table, Unit' do
     expect { @element = clazz.new(source) }.to_not raise_error
 
     # Sanity check in case instantiation failed in a non-explosive manner
-    @element.row_elements.collect { |row| row.cells }.should == [['a table']]
+    expect(@element.row_elements.collect { |row| row.cells }).to eq([['a table']])
     # todo - remove once #contents is no longer supported
-    @element.contents.should == [['a table']]
+    expect(@element.contents).to eq([['a table']])
   end
 
   before(:each) do
@@ -28,35 +28,35 @@ describe 'Table, Unit' do
 
   # todo - remove once #contents is no longer supported
   it 'has contents - #contents' do
-    @table.should respond_to(:contents)
+    expect(@table.respond_to?(:contents)).to be true
   end
 
   # todo - remove once #contents is no longer supported
   it 'can get and set its contents - #contents, #contents=' do
     @table.contents = :some_contents
-    @table.contents.should == :some_contents
+    expect(@table.contents).to eq(:some_contents)
     @table.contents = :some_other_contents
-    @table.contents.should == :some_other_contents
+    expect(@table.contents).to eq(:some_other_contents)
   end
 
   # todo - remove once #contents is no longer supported
   it 'starts with no contents' do
-    @table.contents.should == []
+    expect(@table.contents).to eq([])
   end
 
   it 'has row elements' do
-    @table.should respond_to(:row_elements)
+    expect(@table.respond_to?(:row_elements)).to be true
   end
 
   it 'can get and set its row elements' do
     @table.row_elements = :some_row_elements
-    @table.row_elements.should == :some_row_elements
+    expect(@table.row_elements).to eq(:some_row_elements)
     @table.row_elements = :some_other_row_elements
-    @table.row_elements.should == :some_other_row_elements
+    expect(@table.row_elements).to eq(:some_other_row_elements)
   end
 
   it 'starts with no row elements' do
-    @table.row_elements.should == []
+    expect(@table.row_elements).to eq([])
   end
 
   # todo - remove once #contents is no longer supported
@@ -66,18 +66,18 @@ describe 'Table, Unit' do
 
     contents = table.contents
 
-    contents.is_a?(Array).should be_true
+    expect(contents).to be_a(Array)
 
     contents.each do |row|
-      row.is_a?(Array).should be_true
-      row.each { |cell| cell.is_a?(String).should be_true }
+      expect(row).to be_a(Array)
+      row.each { |cell| expect(cell).to be_a(String) }
     end
   end
 
   context 'table output edge cases' do
 
     it 'is a String' do
-      @table.to_s.should be_a(String)
+      expect(@table.to_s).to be_a(String)
     end
 
     it 'can output an empty table' do

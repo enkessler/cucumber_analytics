@@ -7,40 +7,40 @@ shared_examples_for 'a feature element' do |clazz|
   end
 
   it 'has a name - #name' do
-    @element.should respond_to(:name)
+    expect(@element.respond_to?(:name)).to be true
   end
 
   it 'can get and set its name - #name, #name=' do
     @element.name = :some_name
-    @element.name.should == :some_name
+    expect(@element.name).to eq(:some_name)
     @element.name = :some_other_name
-    @element.name.should == :some_other_name
+    expect(@element.name).to eq(:some_other_name)
   end
 
   it 'has a description' do
-    @element.should respond_to(:description)
-    @element.should respond_to(:description_text)
+    expect(@element.respond_to?(:description)).to be true
+    expect(@element.respond_to?(:description_text)).to be true
   end
 
   it 'can get and set its description' do
     @element.description = :some_description
-    @element.description.should == :some_description
+    expect(@element.description).to eq(:some_description)
     @element.description = :some_other_description
-    @element.description.should == :some_other_description
+    expect(@element.description).to eq(:some_other_description)
 
     @element.description_text = :some_description
-    @element.description_text.should == :some_description
+    expect(@element.description_text).to eq(:some_description)
     @element.description_text = :some_other_description
-    @element.description_text.should == :some_other_description
+    expect(@element.description_text).to eq(:some_other_description)
   end
 
   it 'starts with no name' do
-    @element.name.should == ''
+    expect(@element.name).to eq('')
   end
 
   it 'starts with no description' do
-    @element.description.should == []
-    @element.description_text.should == ''
+    expect(@element.description).to eq([])
+    expect(@element.description_text).to eq('')
   end
 
 end
