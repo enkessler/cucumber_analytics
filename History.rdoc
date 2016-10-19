@@ -1,3 +1,31 @@
+=== Version 1.5.2 / 2016-01-21
+
+* Bug fix: Fixed an error caused by comparing elements with step objects to
+  anything that did not have step objects.
+
+
+=== Version 1.5.1 / 2014-05-26
+
+* Version ranges have been removed for the gherkin gem. Since this gem can work 
+  with any version of gherkin, ensuring that the avaialble version of the 
+  gherkin gem actually works on the user's version of Ruby is left as a concern 
+  best handled externally.
+
+
+=== Version 1.5.0 / 2014-02-04
+
+* Version ranges have been added for gem dependencies.
+* #to_s has been overridden for elements so that it returns text suitable for
+  use as gherkin source code.
+
+
+=== Version 1.4.2 / 2014-01-26
+
+* Bug fix: Example#add_row no longer assumes that the key/value pairs in a
+  Hash are ordered. This was causing values in the added row to be assigned
+  to the incorrect parameter when using versions of Ruby before 1.9.x.
+
+
 === Version 1.4.1 / 2013-12-25
 
 * Bug fix: Trailing empty lines are no longer left out of the contents of doc
