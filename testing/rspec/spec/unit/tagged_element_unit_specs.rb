@@ -1,4 +1,4 @@
-require 'spec_helper'
+require "#{File.dirname(__FILE__)}/../spec_helper"
 
 shared_examples_for 'a tagged element' do |clazz|
 

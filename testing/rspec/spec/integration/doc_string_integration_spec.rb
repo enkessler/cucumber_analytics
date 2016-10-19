@@ -1,4 +1,4 @@
-require 'spec_helper'
+require "#{File.dirname(__FILE__)}/../spec_helper"
 
 SimpleCov.command_name('DocString') unless RUBY_VERSION.to_s < '1.9.0'
 
