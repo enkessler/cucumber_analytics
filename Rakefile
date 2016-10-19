@@ -1,5 +1,6 @@
 #!/usr/bin/env rake
 require "bundler/gem_tasks"
+require 'coveralls/rake/task'
 require 'racatt'
 
 namespace 'cucumber_analytics' do
@@ -23,6 +24,10 @@ namespace 'cucumber_analytics' do
 
     Rake::Task['cucumber_analytics:test_everything'].invoke(rspec_args, cucumber_args)
   end
+
+  # The task that CI will use
+  Coveralls::RakeTask.new
+  task :ci_build => [:test_project, 'coveralls:push']
 
 end
 
