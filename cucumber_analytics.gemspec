@@ -17,13 +17,13 @@ Gem::Specification.new do |gem|
   gem.require_paths = ['lib']
   gem.version       = CucumberAnalytics::VERSION
 
-  gem.add_runtime_dependency('gherkin')
+  gem.add_runtime_dependency('gherkin', '< 3.0')
   gem.add_runtime_dependency('json', '~> 1.0')
   gem.add_runtime_dependency('multi_json', '~> 1.0')
 
-  gem.add_development_dependency('rake')
-  gem.add_development_dependency('cucumber')
-  gem.add_development_dependency('rspec')
-  gem.add_development_dependency('simplecov')
-  gem.add_development_dependency('racatt', '>= 0.0.3', '< 1.0.0' )
+  gem.add_development_dependency 'rake', '< 12.0.0'
+  gem.add_development_dependency 'cucumber', '< 3.0.0'
+  gem.add_development_dependency 'rspec', '~> 3.0'
+  gem.add_development_dependency 'simplecov', '< 1.0.0'
+  gem.add_development_dependency 'racatt', '~> 1.0'
 end
