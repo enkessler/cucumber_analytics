@@ -1,5 +1,6 @@
 #!/usr/bin/env rake
 require "bundler/gem_tasks"
+require 'coveralls/rake/task'
 require 'racatt'
 
 namespace 'cucumber_analytics' do
@@ -14,9 +15,21 @@ namespace 'cucumber_analytics' do
   Racatt.create_tasks
 
   # Redefining the task from 'racatt' in order to clear the code coverage results
-  task :test_everything, [:command_options] => :clear_coverage
+  task :test_everything => :clear_coverage
+
+
+  task :test_project do |t, args|
+    rspec_args = '--tag ~@wip --pattern testing/rspec/spec/**/*_spec.rb'
+    cucumber_args = 'testing/cucumber/features -r testing/cucumber/support -r testing/cucumber/step_definitions -f progress -t ~@wip'
+
+    Rake::Task['cucumber_analytics:test_everything'].invoke(rspec_args, cucumber_args)
+  end
+
+  # The task that CI will use
+  Coveralls::RakeTask.new
+  task :ci_build => [:test_project, 'coveralls:push']
 
 end
 
 
-task :default => 'cucumber_analytics:test_everything'
+task :default => 'cucumber_analytics:test_project'
