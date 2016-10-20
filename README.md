@@ -6,9 +6,11 @@
 
 
 ---
+
 **Attention**: The purpose and functionality provided by this gem has largely been superseded by the [cuke_modeler](https://github.com/enkessler/cuke_modeler) gem and 
 other gem's that have been built on top of that gem. The only functionality that these new gems do not cover is that which falls outside the scope of feature files 
 and the Gherkin language itself, so you should only need to use this gem if you need the functionality that involves step definitions.  
+
 ---
 
 
