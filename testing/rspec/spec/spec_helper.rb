@@ -1,20 +1,22 @@
 require 'simplecov' unless RUBY_VERSION.to_s < '1.9.0'
 
-require "#{File.dirname(__FILE__)}/../../../lib/cucumber_analytics"
+# Ruby 1.8.x seems to have trouble if relative paths get too nested, so resolving the path before using it here
+this_dir = File.expand_path(File.dirname(__FILE__))
+require "#{this_dir}/../../../lib/cucumber_analytics"
 
-require "#{File.dirname(__FILE__)}/unit/feature_element_unit_specs"
-require "#{File.dirname(__FILE__)}/unit/nested_element_unit_specs"
-require "#{File.dirname(__FILE__)}/unit/tagged_element_unit_specs"
-require "#{File.dirname(__FILE__)}/unit/containing_element_unit_specs"
-require "#{File.dirname(__FILE__)}/unit/bare_bones_unit_specs"
-require "#{File.dirname(__FILE__)}/unit/test_element_unit_specs"
-require "#{File.dirname(__FILE__)}/unit/prepopulated_unit_specs"
-require "#{File.dirname(__FILE__)}/unit/sourced_element_unit_specs"
-require "#{File.dirname(__FILE__)}/unit/raw_element_unit_specs"
+require "#{this_dir}/unit/feature_element_unit_specs"
+require "#{this_dir}/unit/nested_element_unit_specs"
+require "#{this_dir}/unit/tagged_element_unit_specs"
+require "#{this_dir}/unit/containing_element_unit_specs"
+require "#{this_dir}/unit/bare_bones_unit_specs"
+require "#{this_dir}/unit/test_element_unit_specs"
+require "#{this_dir}/unit/prepopulated_unit_specs"
+require "#{this_dir}/unit/sourced_element_unit_specs"
+require "#{this_dir}/unit/raw_element_unit_specs"
 
 
 DEFAULT_FEATURE_FILE_NAME = 'test_feature.feature'
-DEFAULT_FILE_DIRECTORY = "#{File.dirname(__FILE__)}/temp_files"
+DEFAULT_FILE_DIRECTORY = "#{this_dir}/temp_files"
 
 
 RSpec.configure do |config|

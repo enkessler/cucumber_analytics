@@ -6,16 +6,18 @@ end
 require 'test/unit/assertions'
 include Test::Unit::Assertions
 
-require File.dirname(__FILE__) + '/../../../lib/cucumber_analytics'
+# Ruby 1.8.x seems to have trouble if relative paths get too nested, so resolving the path before using it here
+this_dir = File.expand_path(File.dirname(__FILE__))
+require "#{this_dir}/../../../lib/cucumber_analytics"
 
 
 DEFAULT_FEATURE_FILE_NAME = 'test_feature.feature'
 DEFAULT_STEP_FILE_NAME = 'test_steps.rb'
-DEFAULT_FILE_DIRECTORY = "#{File.dirname(__FILE__)}/../temp_files"
-TEST_FILE_DIRECTORY = "#{File.dirname(__FILE__)}/../test_files"
+DEFAULT_FILE_DIRECTORY = "#{this_dir}/../temp_files"
+TEST_FILE_DIRECTORY = "#{this_dir}/../test_files"
 TEST_STEP_FILE_LOCATION = "#{DEFAULT_FILE_DIRECTORY}/#{DEFAULT_STEP_FILE_NAME}"
 
-SPEC_DIRECTORY = "#{File.dirname(__FILE__)}/../../spec"
+SPEC_DIRECTORY = "#{this_dir}/../../spec"
 
 
 Before do
