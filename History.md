@@ -1,3 +1,8 @@
+### Version 1.6.0 / 2016-10-19
+
+* Version limits on all of this gem's dependencies are now declared by the gem.
+
+
 ### Version 1.5.2 / 2016-01-21
 
 * Bug fix: Fixed an error caused by comparing elements with step objects to
