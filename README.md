@@ -1,8 +1,8 @@
-= CucumberAnalytics
+# CucumberAnalytics
 
-{<img src="https://badge.fury.io/rb/cucumber_analytics.png" alt="Gem Version" />}[http://badge.fury.io/rb/cucumber_analytics]
-{<img src="https://gemnasium.com/enkessler/cucumber_analytics.png" alt="Dependency Status" />}[https://gemnasium.com/enkessler/cucumber_analytics]
-{<img src="https://codeclimate.com/github/enkessler/cucumber_analytics.png" />}[https://codeclimate.com/github/enkessler/cucumber_analytics]
+[![Gem Version](https://badge.fury.io/rb/cucumber_analytics.png)](https://badge.fury.io/rb/cucumber_analytics)
+[![Dependency Status](https://gemnasium.com/enkessler/cucumber_analytics.png)](https://gemnasium.com/enkessler/cucumber_analytics)
+[![](https://codeclimate.com/github/enkessler/cucumber_analytics.png)](https://codeclimate.com/github/enkessler/cucumber_analytics)
 
 The intention of this gem is to provide a useful mechanism by which to answer
 all of the burning questions that one might have about their Cucumber test base.
@@ -21,7 +21,7 @@ either through directly providing the answer or by providing sufficient tools
 that determining the answer yourself is just a few straightforward object
 manipulations away.
 
-== Installation
+## Installation
 
 Add this line to your application's Gemfile:
 
@@ -35,35 +35,35 @@ Or install it yourself as:
 
     $ gem install cucumber_analytics
 
-== Usage
+## Usage
 
 First things first. Load up the gem code.
 
-  require 'cucumber_analytics'
+    require 'cucumber_analytics'
 
 Next, let's generate a model for our Cucumber suite.
 
-  directory = CucumberAnalytics::Directory.new('path/to/the/code_directory')
-  world = CucumberAnalytics::World
+      directory = CucumberAnalytics::Directory.new('path/to/the/code_directory')
+      world = CucumberAnalytics::World
 
 Now it's time to take a look around and see what we can see.
 
-  all_tags = world.tags_in(directory)
-  puts all_tags
-  #=> ["@Unit", "@Fragile", "@wip", "@wip", "@Critical", "@Unit", "@wip", "@Deprecated", "@wip", "@wip"]
-
-  puts all_tags.uniq
-  #=> ["@Unit", "@Fragile", "@wip", "@Critical", "@Deprecated"]
-
-  wip_tags = all_tags.select{ |tag| tag == '@wip' }
-
-  puts wip_tags.count.to_f / all_tags.count
-  #=> 0.5
-
-
-  all_steps = world.steps_in(directory)
-  puts all_steps.collect{ |step| step.base}
-  #=> ["some step", "the user logs in", "the user will log in", "another step", "the user \"Bob\" logs in"]
+      all_tags = world.tags_in(directory)
+      puts all_tags
+      #=> ["@Unit", "@Fragile", "@wip", "@wip", "@Critical", "@Unit", "@wip", "@Deprecated", "@wip", "@wip"]
+    
+      puts all_tags.uniq
+      #=> ["@Unit", "@Fragile", "@wip", "@Critical", "@Deprecated"]
+    
+      wip_tags = all_tags.select{ |tag| tag == '@wip' }
+    
+      puts wip_tags.count.to_f / all_tags.count
+      #=> 0.5
+    
+    
+      all_steps = world.steps_in(directory)
+      puts all_steps.collect{ |step| step.base}
+      #=> ["some step", "the user logs in", "the user will log in", "another step", "the user \"Bob\" logs in"]
 
 So with a few simple commands we have discovered that there are five different
 tags in our codebase and that @wip tags account for half of all usages. We have
@@ -71,7 +71,7 @@ also discovered that our team is creating several redundant steps that could be
 rewritten into a single, reusable step.
 
 
-=== Other usages
+### Other usages
 
 * https://gist.github.com/enkessler/6408879 - Creating a step lexicon
 * https://gist.github.com/enkessler/6519022 - Creating unique identifiers for all test cases
@@ -81,7 +81,7 @@ And why stop there? There are so many other tools that can be built with a littl
 * https://github.com/enkessler/cql
 * https://github.com/enkessler/cuke_sniffer
 
-== Contributing
+## Contributing
 
 1. Fork it
 2. Create your feature branch (`git checkout -b my-new-feature`)
