@@ -4,6 +4,14 @@
 [![Dependency Status](https://gemnasium.com/enkessler/cucumber_analytics.png)](https://gemnasium.com/enkessler/cucumber_analytics)
 [![](https://codeclimate.com/github/enkessler/cucumber_analytics.png)](https://codeclimate.com/github/enkessler/cucumber_analytics)
 
+
+---
+**Attention**: The purpose and functionality provided by this gem has largely been superseded by the [cuke_modeler](https://github.com/enkessler/cuke_modeler) gem and 
+other gem's that have been built on top of that gem. The only functionality that these new gems do not cover is that which falls outside the scope of feature files 
+and the Gherkin language itself, so you should only need to use this gem if you need the functionality that involves step definitions.  
+---
+
+
 The intention of this gem is to provide a useful mechanism by which to answer
 all of the burning questions that one might have about their Cucumber test base.
 
