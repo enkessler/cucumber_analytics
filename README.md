@@ -1,8 +1,16 @@
-# CucumberAnalytics
+Basic stuff:
+[![Gem Version](https://badge.fury.io/rb/cucumber_analytics.svg)](https://rubygems.org/gems/cucumber_analytics)
+[![Project License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/mit-license.php)
+[![Downloads](https://img.shields.io/gem/dt/cucumber_analytics.svg)](https://rubygems.org/gems/cucumber_analytics)
 
-[![Gem Version](https://badge.fury.io/rb/cucumber_analytics.png)](https://badge.fury.io/rb/cucumber_analytics)
-[![Dependency Status](https://gemnasium.com/enkessler/cucumber_analytics.png)](https://gemnasium.com/enkessler/cucumber_analytics)
-[![](https://codeclimate.com/github/enkessler/cucumber_analytics.png)](https://codeclimate.com/github/enkessler/cucumber_analytics)
+User stuff:
+[![Yard Docs](http://img.shields.io/badge/Documentation-API-blue.svg)](https://www.rubydoc.info/gems/cucumber_analytics)
+
+Developer stuff:
+[![Build Status](https://travis-ci.org/enkessler/cucumber_analytics.svg?branch=dev)](https://travis-ci.org/enkessler/cucumber_analytics)
+[![Coverage Status](https://coveralls.io/repos/github/enkessler/cucumber_analytics/badge.svg?branch=dev)](https://coveralls.io/github/enkessler/cucumber_analytics?branch=dev)
+[![Maintainability](https://api.codeclimate.com/v1/badges/8d16d3d860fa0b67ee85/maintainability)](https://codeclimate.com/github/enkessler/cucumber_analytics/maintainability)
+[![Inline docs](http://inch-ci.org/github/enkessler/cucumber_analytics.svg?branch=dev)](https://inch-ci.org/github/enkessler/cucumber_analytics?branch=dev)
 
 
 ---
@@ -12,6 +20,9 @@ other gems that have been built on top of that gem. The only functionality that 
 and the Gherkin language itself, so you should only need to use this gem if you need the functionality that involves step definitions.  
 
 ---
+
+
+# CucumberAnalytics
 
 
 The intention of this gem is to provide a useful mechanism by which to answer
